@@ -2,6 +2,7 @@ import App from '../App'
 
 /*home*/
 const home = r => require.ensure([], () => r( require('../page/home/home')), 'home');
+import Category from '../page/category/Category.vue'
 
 // const home = function (r) {
 // 	return require.ensure([], function(){
@@ -16,11 +17,15 @@ export default [
 		children: [
 			{
 				path: '',
-				redirect: '/home'
+				redirect: '/category'
 			},
 			{
 				path: '/home',
 				component: home
+			},
+			{
+				path: '/category',
+				component: Category
 			}
 		]
 	}

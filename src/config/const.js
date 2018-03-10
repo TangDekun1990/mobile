@@ -13,5 +13,5 @@ const url = baseUrl
 
 exports.envConst = {
 	'routerMode': routerMode,
-	'baseUrl': baseUrl
+	'baseUrl': baseUrl,
 }

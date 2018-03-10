@@ -30,7 +30,7 @@ export default {
   components: {
     HelloWorld,
   },
-  created: function() {
+  created: function() {    
     console.log('App route is', this.$router)
   },
   methods: {
