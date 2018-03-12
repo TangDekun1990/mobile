@@ -5,6 +5,9 @@ import App from './App.vue'
 import routes from './router/router'
 import envConst from './config/const'
 
+// scss
+import './style/reset.scss'
+
 Vue.config.productionTip = false
 
 const router = new VueRouter({

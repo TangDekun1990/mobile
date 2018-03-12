@@ -1,5 +1,8 @@
 import App from '../App'
 
+/* login */
+const login = r => require.ensure([], ()=> r( require('../page/login/login')), 'login')
+
 /*home*/
 const home = r => require.ensure([], () => r( require('../page/home/home')), 'home');
 
@@ -21,6 +24,10 @@ export default [
 			{
 				path: '/home',
 				component: home
+			},
+			{
+				path: '/login',
+				component: login
 			}
 		]
 	}
