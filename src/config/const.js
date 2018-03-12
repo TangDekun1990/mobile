@@ -9,9 +9,19 @@ if (process.env.NODE_ENV == 'development') {
 	baseUrl = 'http://v2.api.ecnative.cn';
 }
 
-const url = baseUrl
+// 定义接口请求 添加的请求头
+const reqHeader = {
+	"Content-type": "application/x-www-form-urlencoded"
+}
 
-exports.envConst = {
+const ENCRYPT_KEY = "7yaYA368XgqJc4X7"
+
+const signKey = "8UfkRWocQr6vjgv9"
+
+export default {
 	'routerMode': routerMode,
-	'baseUrl': baseUrl
+	'baseUrl': baseUrl,
+	'reqHeader': reqHeader,
+	'ENCRYPT_KEY': ENCRYPT_KEY,
+	'signKey': signKey
 }
