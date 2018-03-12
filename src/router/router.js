@@ -5,6 +5,7 @@ const login = r => require.ensure([], ()=> r( require('../page/login/login')), '
 
 /*home*/
 const home = r => require.ensure([], () => r( require('../page/home/home')), 'home');
+import Category from '../page/category/Category.vue'
 
 // const home = function (r) {
 // 	return require.ensure([], function(){
@@ -19,7 +20,7 @@ export default [
 		children: [
 			{
 				path: '',
-				redirect: '/home'
+				redirect: '/category'
 			},
 			{
 				path: '/home',
@@ -28,6 +29,10 @@ export default [
 			{
 				path: '/login',
 				component: login
+			},
+			{
+				path: '/category',
+				component: Category
 			}
 		]
 	}
