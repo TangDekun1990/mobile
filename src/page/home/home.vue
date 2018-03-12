@@ -3,7 +3,6 @@
 </template>
 
 <script>
-	import {cityGuess} from '../../service/service'
 	export default {
 		data() {
 			return {
@@ -11,9 +10,6 @@
 			}
 		},
 		mounted() {
-			cityGuess().then(res => {
-				console.log(res);
-			})
 		}
 	}
 </script>

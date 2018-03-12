@@ -5,7 +5,7 @@ import App from './App.vue'
 import routes from './router/router'
 import envConst from './config/const'
 
-// scss
+// todo scss
 import './style/reset.scss'
 
 Vue.config.productionTip = false
