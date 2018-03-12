@@ -1,20 +1,5 @@
 <template>
   <div>
-    <!--div id="app">
-      <img src="./assets/logo.png">
-      <HelloWorld msg="Welcome to Your Vue.js App"/>    
-    </div-->
-    <!--div>
-      <p>router</p>
-      <ul>
-        <li><router-link to="/home">Home</router-link></li>
-        <li><router-link to="/category">Category</router-link></li>
-        <li><router-link to="/cart">Cart</router-link></li>
-        <li><router-link to="/profile">Profile</router-link></li>
-        <li><router-link to="/hello">Hello</router-link></li>
-        <li><router-link to="/tabbar">tabbar</router-link></li>
-      </ul>
-    </div-->
     <template v-if="$route.matched.length">
       <router-view></router-view>
     </template>
@@ -23,12 +8,9 @@
 
 <script>
 
-import HelloWorld from './components/HelloWorld.vue'
-
 export default {
   name: 'app',
   components: {
-    HelloWorld,
   },
   created: function() {    
     console.log('App route is', this.$router)
