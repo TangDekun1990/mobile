@@ -15,7 +15,8 @@
 </template>
 
 <script>
-import { fetchEndpoint } from '../../server/network'
+
+import { loadItems } from '../../service/category'
 export default {
   name: 'Category',
   components: {
@@ -23,8 +24,7 @@ export default {
   data: function() {
     return {
       items: [],
-      isLoading: false,
-      // items: [{'id': 1, 'name': '蔬菜', 'desc': '超时专供'}, {'id': 2, 'name': '水果', 'desc': '急速生鲜'}]
+      isLoading: false, 
     }
   },
   mounted: {
@@ -32,18 +32,14 @@ export default {
   },
   methods: {
     loadItems() {  
-      this.isLoading = true   
-      // this.items = [{'id': 1, 'name': '蔬菜', 'desc': '超时专供'}, {'id': 2, 'name': '水果', 'desc': '急速生鲜'}];     
-      fetchEndpoint('/v2/ecapi.category.list', 'POST', {"page": 1, "per_page": 100}).then(
+      this.isLoading = true 
+      loadItems(null, null).then(
         response => {  
           this.isLoading = false        
-          this.items = Object.assign([], response.categories)
-          console.log('response is:', response)
-          console.log('this itmes', this.items)          
+          this.items = Object.assign([], response.categories)         
         },
         error => {
           this.isLoading = false
-          console.log('error is:', error)
         })
     },
     resetItems() {
