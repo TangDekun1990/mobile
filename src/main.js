@@ -1,34 +1,15 @@
+// The Vue build version to load with the `import` command
+// (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
-import VueRouter from 'vue-router'
-
-import App from './App.vue'
-import routes from './router/router'
-import envConst from './config/const'
-
-// todo scss
-import './style/reset.scss'
+import App from './App'
+import router from './router'
 
 Vue.config.productionTip = false
 
-const router = new VueRouter({
-    routes,
-    mode: envConst.routerMode,
-    strict: process.env.NODE_ENV !== 'production',
-    scrollBehavior (to, from, savedPosition) {
-        if (savedPosition) {
-            return savedPosition
-        } else {
-            if (from.meta.keepAlive) {
-                from.meta.savedPosition = document.body.scrollTop;
-            }
-            return { x: 0, y: to.meta.savedPosition || 0 }
-        }
-    }
-})
-
-Vue.use(VueRouter)
-
+/* eslint-disable no-new */
 new Vue({
+  el: '#app',
   router,
-  render: h => h(App)
-}).$mount('#app')
+  components: { App },
+  template: '<App/>'
+})

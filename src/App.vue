@@ -1,29 +1,14 @@
 <template>
-  <div>
-    <template v-if="$route.matched.length">
-      <router-view></router-view>
-    </template>
-  </div>  
+  <div id="app">
+    <img src="./assets/logo.png">
+    <router-view/>
+  </div>
 </template>
 
 <script>
-
 export default {
-  name: 'app',
-  components: {
-  },
-  created: function() {    
-    console.log('App route is', this.$router)
-  },
-  methods: {
-    goBack () {
-      window.history.length > 1
-        ? this.$router.go(-1)
-        : this.$router.push('/')
-    }
-  }
+  name: 'App'
 }
-
 </script>
 
 <style>
