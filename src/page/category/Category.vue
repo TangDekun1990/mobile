@@ -11,7 +11,7 @@
                 </div>
                 <div class="category-content" v-if='currentItem.more'>
                     <ul>
-                        <li class="item" v-for='item in currentItem.categories' v-bind:key = "item.id">
+                        <li class="item" v-for='item in currentItem.categories' v-bind:key = "item.id" v-on:click='goProduct(item.id)'>
                             <a>{{item.name}}</a>
                         </li>
                     </ul>
@@ -50,8 +50,9 @@
             setIsActiveByClick(item) {
                 this.currentItem = item;
             },
-            getContentById() {
-
+            goProduct(id) {
+                let params = {'categoryId': id, 'brandId':" ", 'shopId': " "};
+                this.$router.push({'name': 'product', 'params': params})
             }
         }
     }

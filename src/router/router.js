@@ -6,6 +6,9 @@ const home = r => require.ensure([], () => r( require('../page/home/home')), 'ho
 /* 分类 */
 const category = r => require.ensure([], () => r( require('../page/category/Category')), 'category');
 
+/* 商品列表 */
+const product = r => require.ensure([], () => r( require('../page/product/product')), 'product');
+
 // const home = function (r) {
 // 	return require.ensure([], function(){
 // 		return r(require('../page/hello/hello.vue'))
@@ -28,6 +31,11 @@ export default [
 			{
 				path: '/category',
 				component: category
+			},
+			{
+				name: 'product',
+				path: '/product/:categoryId/:brandId/:shopId',
+				component: product
 			}
 		]
 	}
