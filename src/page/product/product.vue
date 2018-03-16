@@ -147,6 +147,9 @@
 				// this.params.shop = routerParams.shop;
 				// debugger;
 				// this.params = Object.assign({}, this.params, routerParams);
+			},
+			search() {
+				
 			}
 		}
 	}
