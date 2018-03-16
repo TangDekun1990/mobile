@@ -11,6 +11,8 @@ const category = r => require.ensure([], () => r( require('../page/category/Cate
 // 		return r(require('../page/hello/hello.vue'))
 // 	}, 'home')
 // }
+import Signin from '../page/auth/Signin'
+import Signup from '../page/auth/Signup'
 
 export default [
 	{
@@ -28,7 +30,17 @@ export default [
 			{
 				path: '/category',
 				component: category
-			}
+			},
+			{
+				name: 'signin',
+				path: '/signin',
+				component: Signin
+			},
+			{
+				name: 'signup',
+				path: '/signup',
+				component: Signup
+			},
 		]
 	}
 ]
