@@ -4,12 +4,18 @@
             <div class="category-flex">
                 <div class="category-sidebar">
                     <ul>
-                        <li class="item" v-for='item in items' v-bind:key="item.id">
-                            <a href="">{{ item.name }}</a>
+                        <li class="item" v-for='item in items' v-bind:key="item.id" v-on:click='setIsActiveByClick(item)' v-bind:class="{'sidbaractive': item.id == currentItem.id, 'noActive' : item.id != currentItem.id}">
+                            <a>{{ item.name }}</a>
                         </li>
                     </ul>
                 </div>
-                <div class="category-content"></div>
+                <div class="category-content" v-if='currentItem.more'>
+                    <ul>
+                        <li class="item" v-for='item in currentItem.categories' v-bind:key = "item.id" v-on:click='goProduct(item.id)'>
+                            <a>{{item.name}}</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
 
@@ -24,7 +30,7 @@
         data(){
             return {
                 items: [],
-                isLoading: false, 
+                currentItem: {}
             }
         },
         components: {
@@ -35,12 +41,18 @@
         },
         methods: {
             loadItem() {  
-                this.isLoading = true 
-                loadItems(null, null).then(res => { 
-                    console.log(res)
-                    this.isLoading = false        
-                    this.items = Object.assign([], res.categories)         
+                loadItems(null, null).then(res => {  
+                    let data = res.categories      
+                    this.items = Object.assign([], data, this.items);
+                    this.currentItem = this.items[0]
                 })
+            },
+            setIsActiveByClick(item) {
+                this.currentItem = item;
+            },
+            goProduct(id) {
+                let params = {'categoryId': id, 'brandId':" ", 'shopId': " "};
+                this.$router.push({'name': 'product', 'params': params})
             }
         }
     }
@@ -78,11 +90,38 @@
                                 overflow: hidden;
                             }
                         }
+                        li.noActive {
+                            background-color: #F0F2F5;
+                            border-left: 0px;
+                            a {
+                                color: #4E545D;
+                            }
+                        }
+                        li.sidbaractive{
+                            background-color: #FFFFFF;
+                            border-left: 2px solid #FC2E39;
+                            a {
+                                color: #FC2E39;
+                            }
+                        }
                     }
                 }
                 .category-content {
                     width: 100%;
                     background-color: #fff;
+                    ul {
+                        height: 100%;
+                        overflow: auto;
+                        li {
+                            display: block;
+                            padding: 20px 0px;
+                            text-align: center;
+                            cursor: pointer;
+                            a {
+                                color: #7C7F88;
+                            }
+                        }
+                    }
                 }
             }
         }

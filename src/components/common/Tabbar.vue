@@ -2,8 +2,9 @@
 	<div class="ui-tabbar-wrapper">
 		<div class="tabbar-wrapper">
 			<ul>
-				<li class="item" v-for='item in staticData' v-bind:key="item.key">
-					<img v-bind:src="item.bgurl">
+				<li class="item" v-for='item in staticData' v-bind:key="item.key"  v-on:click='setCurrentActive(item)'>
+					<img v-bind:src="item.bgurl" v-if='currentItem.key != item.key'>
+					<img v-bind:src="item.activeBgurl" v-if='currentItem.key == item.key'>
 					<a v-bind:href="item.link">{{item.name}}</a>
 				</li>
 			</ul>
@@ -18,38 +19,46 @@
 				staticData: [
 					{
 						'name': '首页', 
-						'link':'/home', 
+						'link':'#/home', 
 						'key': 0, 
 						'bgurl': require('../../assets/tabbar-icon/tabbar_home_nor@2x.png'),
-						'activeBgurl': require('../../assets/tabbar-icon/tabbar_home_sel@2x.png')
+						'activeBgurl': require('../../assets/tabbar-icon/tabbar_home_sel@2x.png'),
+						'isActive': false
 					},
 					{
 						'name': '分类', 
-						'link': '/category', 
+						'link': '#/category', 
 						'key': 1, 
 						'bgurl': require('../../assets/tabbar-icon/tabbar_sort_nor@2x.png'),
-						'activeBgurl': require('../../assets/tabbar-icon/tabbar_sort_sel@2x.png')
+						'activeBgurl': require('../../assets/tabbar-icon/tabbar_sort_sel@2x.png'),
+						'isActive': false
 					},
 					{
 						'name': '购物车', 
-						'link': '/cart', 
+						'link': '#/cart', 
 						'key': 2, 
 						'bgurl': require('../../assets/tabbar-icon/tabbar_cart_nor@2x.png'),
-						'activeBgurl': require('../../assets/tabbar-icon/tabbar_cart_sel@2x.png')
+						'activeBgurl': require('../../assets/tabbar-icon/tabbar_cart_sel@2x.png'),
+						'isActive': false
 					},
 					{
 						'name': '我的', 
-						'link': '/profile', 
+						'link': '#/profile', 
 						'key': 3, 
 						'bgurl': require('../../assets/tabbar-icon/tabbar_profile_nor@2x.png'),
-						'activeBgurl': require('../../assets/tabbar-icon/tabbar_profile_sel@2x.png')
+						'activeBgurl': require('../../assets/tabbar-icon/tabbar_profile_sel@2x.png'),
+						'isActive': false
 					}
-				]
+				],
+				currentItem: {}
 			}
 		},
 		methods: {
 			gotoPage(path) {
 				this.$router.push(path)
+			},
+			setCurrentActive(item) {
+				this.currentItem = item
 			}
 		}
 	}

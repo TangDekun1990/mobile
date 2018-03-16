@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import Mint from 'mint-ui';
+import 'mint-ui/lib/style.css';
 
 import App from './App.vue'
 import routes from './router/router'
@@ -27,6 +29,7 @@ const router = new VueRouter({
 })
 
 Vue.use(VueRouter)
+Vue.use(Mint)
 
 new Vue({
   router,
