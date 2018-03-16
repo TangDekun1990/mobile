@@ -34,7 +34,7 @@ export default [
 			},
 			{
 				name: 'product',
-				path: '/product/:categoryId/:brandId/:shopId',
+				path: '/product/:category/:brand/:shop',
 				component: product
 			}
 		]

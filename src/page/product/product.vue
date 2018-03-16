@@ -1,27 +1,29 @@
 <template>
 	<div class="product-wrapper">
 		<!-- search cart@2x.png-->
-		<div class="product-search">
-			<img src="../../assets/change-icon/back@2x.png" class="ui-back">
-			<input type="text" placeholder="请输入您要搜索的商品">
-			<img src="../../assets/change-icon/search@2x.png" class="ui-cart">
-		</div>
+		<form action="search()">
+			<div class="product-search">
+				<img src="../../assets/change-icon/back@2x.png" class="ui-back">
+				<input type="search" placeholder="请输入您要搜索的商品">
+				<img src="../../assets/change-icon/search@2x.png" class="ui-cart">
+			</div>
+		</form>
 		
 		<!-- header -->
 		<div class="product-header">
 			<ul class="header-list">
 				<li class="item" 
 					v-for='item in SORTKEY' 
-					v-bind:key='item.key' 
+					v-bind:key='item.id' 
 					v-on:click='setActiveSortkey(item)' 
-					v-bind:class="{'sortactive': item.key == currentSortKey.key, 'sortnormal' : item.key != currentSortKey.key}">
+					v-bind:class="{'sortactive': item.id == currentSortKey.id, 'sortnormal' : item.id != currentSortKey.id}">
 					<a v-if='!item.isMore'>{{item.name}}</a>
-					<a v-if='item.isMore'>{{sortChild.name}}</a>
+					<a v-if='item.isMore'>{{sortId.name}}</a>
 				</li>
 			</ul>
 
 			<div class="sort-model" v-if='currentSortKey.isMore && isShowMore '>
-				<div v-for='item in currentSortKey.child' v-bind:key='item.key' v-on:click='getSortChild(item)' v-bind:class="{'active': sortChild.key == item.key}">
+				<div v-for='(item, index) in sortChild' v-bind:key='item.id' v-on:click='getSortChild(item)' v-bind:class="{'active': item.id == sortId.id}">
 					<a>{{item.name}}</a>
 					<img src="../../assets/change-icon/d1-yes@2x.png">
 				</div>
@@ -68,7 +70,8 @@
 			return {
 				SORTKEY: SORTKEY,
 				currentSortKey: SORTKEY[0],
-				sortChild: SORTKEY[0].child[0],
+				sortChild: [],
+				sortId: SORTKEY[0].child[0],
 				isShowMore: false,
 				params: {
 					'brand': '',
@@ -94,18 +97,37 @@
 			setActiveSortkey(item) {
 				this.currentSortKey = item
 				if (item.isMore) {
-					this.isShowMore = !this.isShowMore
+					this.isShowMore = !this.isShowMore;
+					this.sortChild = this.currentSortKey.child;
+				} else {
+					this.isShowMore = false;
+					this.sortChild = '';
 				}
+				this.getProductList();
 			},
-			getSortChild(child) {
-				this.sortChild = child
-				this.isShowMore = !this.isShowMore
+			getSortChild(item) {
+				this.sortId = item;
+				this.isShowMore = !this.isShowMore;
+				this.getProductList();
 			},
 			getProductList() {
+				// debugger;
+				// let routerParams = this.$route.params;
+				// this.params = Object.assign({}, this.params, routerParams);
+
 				this.loading = false;
 				this.loaded = true;
 				this.params.page = ++this.params.page;
 				let data = this.params;
+				// 下拉框展示
+				if (this.isShowMore) {
+					data.sort_key = this.sortId.key;
+					data.sort_value = this.sortId.value;
+				} else {
+					data.sort_key = this.currentSortKey.key;
+					data.sort_value = this.currentSortKey.value;
+				}
+				console.log(data);
 				getProductList(data).then(res => {
 					if (res) {
 						this.productList = this.productList.concat(res.products);
@@ -119,8 +141,12 @@
 				})
 			},
 			getUrlParams() {
-				let routerParams = this.$route.params
-				this.params = Object.assign({}, routerParams, this.params)
+				let routerParams = this.$route.params;
+				this.params.category = routerParams.category;
+				// this.params.brand = routerParams.brand;
+				// this.params.shop = routerParams.shop;
+				// debugger;
+				// this.params = Object.assign({}, this.params, routerParams);
 			}
 		}
 	}
@@ -195,6 +221,7 @@
 				position: absolute;
 				left: 0px;
 				width: 100%;
+				z-index: 10;
 				div {
 					color: #4E545D;
 					padding: 15px;
