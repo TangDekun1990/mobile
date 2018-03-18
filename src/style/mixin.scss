@@ -81,3 +81,15 @@
 	left: $leftdis;
 	right: $rightdis;
 }
+
+@mixin input {	
+	border: 0px;
+	color: #4E545D;          
+	font-size: 14px;
+	height: -webkit-fill-available;
+	border-bottom: 1px solid #E8EAED;
+	margin-left: 10px;
+	&:focus {
+	outline-style: none;
+	}
+}
