@@ -72,12 +72,17 @@
       <label class="item-title info-item-title">客服电话</label>
       <img class="indicator" src="../../assets/change-icon/enter@2x.png" />
     </div>
+    <tabbar></tabbar>
   </div>
 </template>
 
 <script>
+import Tabbar from '../../components/common/Tabbar'
 export default {
   name: 'profile',
+  components: {
+    Tabbar,
+  },
   methods: {
     showLogin() {
       this.$router.push('/signin')
