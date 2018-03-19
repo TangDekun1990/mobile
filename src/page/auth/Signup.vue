@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <header-view v-bind:title="title">
-      <header-item slot="leftItem" isBack="true" v-on:onclick="onBack">
+      <header-item slot="leftItem" isBack="true" v-on:onclick="goBack">
       </header-item>    
     </header-view>
     <div class="section-wrapper top-wrapper">
@@ -10,7 +10,7 @@
       </div>
       <div class="input-wrapper">        
         <input class='bottom-input' v-model="code" placeholder="请输入验证码">
-        <countdown-button ref="timer" class="countdown" v-on:onclick="onSendCode">
+        <countdown-button ref="timer" class="countdown" v-on:onclick="onVerify">
         </countdown-button>
       </div>
     </div>
@@ -38,6 +38,8 @@ import HeaderView from '../../components/common/HeaderView'
 import HeaderItem from '../../components/common/HeaderItem'
 import CountdownButton from '../../components/common/CountdownButton'
 import * as auth from '../../service/auth'
+import { Indicator, Toast } from 'mint-ui'
+import { mapMutations } from 'vuex'
 export default {
   props: {
   },
@@ -74,29 +76,46 @@ export default {
     HeaderItem,
     CountdownButton,    
   },  
-  methods: {    
-    onBack() {
+  methods: {  
+    ...mapMutations({
+      saveToken: 'signin'
+    }),  
+    goBack() {
       this.$router.go(-1) 
-    },
-    onSendCode() {
+    },    
+    onVerify() {
       let username = this.username
       if (username.length === 0) {
         alert('请输入手机号');
         return;
       }
-      auth.verifyMobile(username).then(
-        (response) => {
-          auth.sendCode(username).then(
-            (response) => {
-              this.$refs.timer.start()
-            }, (error) => {
-              this.$refs.timer.stop()
-            }
-          )
+      Indicator.open()
+      let mode = this.$route.params.mode;
+      // 注册时需要先验证手机号是否已存在
+      if (mode === 'signup') {
+        auth.verifyMobile(username).then(
+        (response) => {                    
+          this.onSendCode(username)
         }, 
         (error) => {
-
+          Indicator.close()
+          Toast(error.errorMsg)
         })
+      } else {
+        this.onSendCode(username)
+      }      
+    },
+    onSendCode(username) {
+      auth.sendCode(username).then(
+        (response) => {
+          Indicator.close()
+          this.$refs.timer.start()
+        }, (error) => {
+          Indicator.close()
+          Toast(error.errorMsg)
+          this.$refs.timer.stop()
+        }
+      )
     },
     check() {
       let username = this.username
@@ -104,61 +123,69 @@ export default {
       let password = this.password
       let confirmPassword = this.confirmPassword
       if (username.length === 0) {
-      // this.refs.toast.show('请输入手机号');
-      return;
+        Toast('请输入手机号');
+        return;
       }
       if (code.length === 0) {
-        // this.refs.toast.show('请输入验证码');
+        Toast('请输入验证码');
         return;
       }
       if (code.length !== 6) {
-        // this.refs.toast.show('请输入6位验证码');
+        Toast('请输入6位验证码');
         return;
       }
       if (password.length === 0) {
-        // this.refs.toast.show('请输入密码');
+        Toast('请输入密码');
         return;
       }
       if (password.length < 6 || password.length > 20) {
-        // this.refs.toast.show('请输入6-20个字符的密码');
+        Toast('请输入6-20个字符的密码');
         return;
       }
       if (confirmPassword.length === 0) {
-        // this.refs.toast.show('请输入确认密码');
+        Toast('请输入确认密码');
         return;
       }
       if (password.length !== confirmPassword.length) {
-        // this.refs.toast.show('确认密码与输入密码不一致');
+        Toast('确认密码与输入密码不一致');
         return;
       }
     },
     signup() {
       this.check()
+      Indicator.open()
       auth.signup(this.username, this.code, this.password).then(
         (response) => {
-
+          this.saveToken({ 'token' : response.token, 'user': response.user })
+          Indicator.close()
         }, (error) => {
-
+          Indicator.close()
+          Toast(error.errorMsg)
         }
       )
     },
     bind() {
       this.check()
+      Indicator.open()
       auth.bind(this.username, this.code, this.password).then(
         (response) => {
-
+          Indicator.close()
         }, (error) => {
-
+          Indicator.close()
+          Toast(error.errorMsg)
         }
       )
     },
     retrieve() {
       this.check()
+      Indicator.open()
       auth.retrieve(this.username, this.code, this.password).then(
         (response) => {
-
+          Indicator.close()
+          this.goBack()
         }, (error) => {
-
+          Indicator.close()
+          Toast(error.errorMsg)
         }
       )
     },
@@ -173,7 +200,7 @@ export default {
       }
     },
     onAgreement() {
-      alert('注册协议')
+      
     }
   }
 }

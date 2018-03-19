@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <header-view title="登录">
-      <header-item slot="leftItem" isBack="true" v-on:onclick="onBack"></header-item>
+      <header-item slot="leftItem" isBack="true" v-on:onclick="goBack"></header-item>
       <header-item slot="rightItem" title="快速注册" v-on:onclick="onSignup"></header-item>
     </header-view>
     <div class="top-wrapper">
@@ -49,16 +49,54 @@
 <script>
 import HeaderView from '../../components/common/HeaderView';
 import HeaderItem from '../../components/common/HeaderItem';
-
+import * as auth from '../../service/auth'
+import { Indicator, Toast } from 'mint-ui'
+import { mapMutations } from 'vuex'
 export default {
   name: 'Signin',
   components: {
     HeaderView,
     HeaderItem
   },
+  data() {
+    return {
+      username: '',      
+      password: '',
+    }
+  },
   methods: {
-    signin() {},
-    onBack() {
+    ...mapMutations({
+      saveToken: 'signin'
+    }),
+    signin() {
+      let username = this.username
+      let password = this.password
+      if (username.length === 0) {
+        Toast('请输入用户名/邮箱/手机号');
+        return;
+      } 
+      // TODO: 用户名校验     
+      if (password.length === 0) {
+        Toast('请输入密码');
+        return;
+      }
+      if (password.length < 6) {
+        Toast('至少输入6位密码');
+        return;
+      }
+      Indicator.open()
+      auth.signin(username, password).then(
+        (response) => {
+          Indicator.close()
+          this.saveToken({ 'token' : response.token, 'user': response.user })
+          this.goBack()
+        }, (error) => {
+          Indicator.close()
+          Toast(error.errorMsg)
+        }
+      )
+    },
+    goBack() {
       this.$router.go(-1);
     },
     onSignup() {
