@@ -51,8 +51,7 @@
                 this.currentItem = item;
             },
             goProduct(id) {
-                let params = {'category': id, 'brand': null, 'shop': null, 'keywords': null};
-                // this.$router.push({ path: `/product/${id}/''/''` });
+                let params = {'category': id};
                 this.$router.push({'name':'product', 'params':params});
             }
         }
@@ -79,6 +78,7 @@
                 .category-sidebar {
                     flex-basis: 140px;
                     background-color: #F0F2F5;
+                    overflow-y: scroll;
                     ul {
                         li {
                             display: block;

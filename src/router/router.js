@@ -52,7 +52,7 @@ export default [
 	},
 	{
 		name: 'product',
-		path: '/product/:category/:brand/:shop/:keywords',
+		path: '/product/:category?/:brand?/:shop?/:keywords?',
 		component: product
 	},
 	{

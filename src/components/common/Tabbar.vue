@@ -2,7 +2,7 @@
 	<div class="ui-tabbar-wrapper">
 		<div class="tabbar-wrapper">
 			<ul>
-				<li class="item" v-for='item in staticData' v-bind:key="item.key"  v-on:click='setCurrentActive(item)'>
+				<li class="item" v-for='item in staticData' v-bind:key="item.key"  v-on:click='setCurrentActive(item)' v-bind:class="{'currentavtive': currentItem.key == item.key}">
 					<img v-bind:src="item.bgurl" v-if='currentItem.key != item.key'>
 					<img v-bind:src="item.activeBgurl" v-if='currentItem.key == item.key'>
 					<a v-bind:href="item.link">{{item.name}}</a>
@@ -94,6 +94,11 @@
 					}
 					a {
 						@include sc($fontSize, $fontColor);
+					}
+				}
+				li.currentavtive {
+					a {
+						color: #FC2E39;
 					}
 				}
 			}
