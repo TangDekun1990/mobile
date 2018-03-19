@@ -93,3 +93,10 @@
 	outline-style: none;
 	}
 }
+
+@mixin linear-gradient($leftColor, $rightColor) {
+	background: -webkit-linear-gradient(left, $leftColor , $rightColor); /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(right, $leftColor, $rightColor); /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(right, $leftColor, $rightColor); /* Firefox 3.6 - 15 */
+    background: linear-gradient(to right, $leftColor , $rightColor); /* 标准的语法（必须放在最后） */
+}

@@ -17,6 +17,7 @@ const product = r => require.ensure([], () => r( require('../page/product/produc
 import Signin from '../page/auth/Signin'
 import Signup from '../page/auth/Signup'
 import Profile from '../page/profile/Profile'
+import Setting from '../page/profile/Setting'
 
 export default [
 	{
@@ -54,6 +55,11 @@ export default [
 				name: 'profile',
 				path: '/profile',
 				component: Profile
+			},
+			{
+				name: 'setting',
+				path: '/setting',
+				component: Setting
 			},
 		]
 	}

@@ -1,16 +1,18 @@
 <template>
   <div class="container">
     <div class="top-wrapper">
-      <div class="nav-item" id="left-nav-item">
+      <div class="nav-item" id="left-nav-item" @click="goSetting">
         <img class="nav-icon" src="../../assets/change-icon/e0_setup@2x.png" />
       </div>
       <div class="nav-item" id="right-nav-item">
         <img class="nav-icon" src="../../assets/change-icon/e0_message@2x.png" />
       </div>
-      <div class="avatar-wrapper" @click="showLogin">
-        <img class="avatar" src="../../assets/change-icon/img_avatar@2x.png" />
-        <label class="nickname">登录/注册</label>
+      <div class="top-info-wrapper">
+        <div class="avatar-wrapper" @click="showLogin">
+        <img class="avatar" src="../../assets/change-icon/img_avatar@2x.png" />        
       </div>
+      <label class="nickname" @click="showLogin">登录/注册</label>
+      </div>       
       <div class="info-wrapper">
         <div class="info-item">0积分</div>
         <div class="info-item">积分记录</div>
@@ -79,12 +81,16 @@ export default {
   methods: {
     showLogin() {
       this.$router.push('/signin')
+    },
+    goSetting() {
+      this.$router.push('setting')
     }
   },
 }
 </script>
 
 <style lang="scss" scoped>
+@import 'src/style/mixin.scss';
   .container {
     display: flex;
     flex-direction: column;
@@ -94,10 +100,18 @@ export default {
     .top-wrapper {
       display: flex;
       flex-direction: column;
-      justify-content: flex-start;
-      align-content: center;
+      justify-content: flex-start;      
       align-items: center;
       height: 225px;
+      @include linear-gradient( #EAD6CE, #E2E3DF);
+      .top-info-wrapper {
+        flex: 1;
+        width: 100%;
+        display: flex;
+        flex-direction: column; 
+        justify-content: flex-start;      
+        align-items: center;     
+      }
     }
     .nav-item {
       position: absolute;
@@ -129,8 +143,8 @@ export default {
       background-color: #fff;
       margin-top: 50px;   
       .avatar { 
-        flex: 1;
-        padding: 2px;
+        width: 72px;
+        height: 72px;
         border-radius: 36px;
       }
     } 
@@ -143,19 +157,23 @@ export default {
       margin-right: 20px;
     }
     .info-wrapper {
+      width: 100%;
       height: 40px;
       display: inline-flex;
       flex-direction: row;
       justify-content: flex-start;
       align-content: stretch;
       background-color: #fff;
+      background-color: #000000; 
+      opacity: 0.1;
     }
     .info-item {
       flex: 1;
       display: flex;
       flex-direction: row;
       justify-content: center;
-      align-content: center;
+      align-items: center;
+      color: #fff;   
     }
     .order-header {
       height: 44px;
