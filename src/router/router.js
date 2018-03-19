@@ -24,57 +24,58 @@ import Setting from '../page/profile/Setting'
 import ProfileInfo from '../page/profile/ProfileInfo'
 
 export default [
+{
+	path: '/',
+	component: App,
+	children: [
 	{
-		path: '/',
-		component: App,
-		children: [
-			{
-				path: '',
-				redirect: '/home'
-			},
-			{
-				path: '/home',
-				component: home
-			},
-			{
-				path: '/category',
-				component: category
-			},
-			{
-				name: 'signin',
-				path: '/signin',
-				component: Signin
-			},
-			{
-				name: 'signup',
-				path: '/signup',
-				component: Signup
-			},
-			{
-				name: 'product',
-				path: '/product/:category/:brand/:shop/:keywords',
-				component: product
-			},
-			{
-				name: 'search',
-				path: '/search',
-				component: search
-			},
-			{
-				name: 'profile',
-				path: '/profile',
-				component: Profile
-			},
-			{
-				name: 'setting',
-				path: '/setting',
-				component: Setting
-			},
-			{
-				name: 'profileInfo',
-				path: '/profileInfo',
-				component: ProfileInfo
-			}
-		]
+		path: '',
+		redirect: '/home'
+	},
+	{
+		path: '/home',
+		component: home
+	},
+	{
+		name: 'signin',
+		path: '/signin',
+		component: Signin
+	},
+	{
+		name: 'signup',
+		path: '/signup',
+		component: Signup
+	},
+	{
+		name: 'category',
+		path: '/category',
+		component: category
+	},
+	{
+		name: 'product',
+		path: '/product/:category?/:brand?/:shop?/:keywords?',
+		component: product
+	},
+	{
+		name: 'search',
+		path: '/search',
+		component: search
+	},
+	{
+		name: 'profile',
+		path: '/profile',
+		component: Profile
+	},
+	{
+		name: 'setting',
+		path: '/setting',
+		component: Setting
+	},
+	{
+		name: 'profileInfo',
+		path: '/profileInfo',
+		component: ProfileInfo
 	}
+	]
+}
 ]

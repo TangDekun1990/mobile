@@ -5,7 +5,7 @@
 			<div class="product-search">
 				<img src="../../assets/change-icon/back@2x.png" class="ui-back">
 				<input type="search" placeholder="请输入您要搜索的商品" v-model="keyword">
-				<img src="../../assets/change-icon/search@2x.png" class="ui-cart">
+				<img src="../../assets/change-icon/b2_cart@2x.png" class="ui-cart">
 			</div>
 		</form>
 		
@@ -13,26 +13,28 @@
 		<div class="product-header">
 			<ul class="header-list">
 				<li class="item" 
-					v-for='item in SORTKEY' 
+					v-for='(item, index) in SORTKEY' 
 					v-bind:key='item.id' 
 					v-on:click='setActiveSortkey(item)' 
 					v-bind:class="{'sortactive': item.id == currentSortKey.id, 'sortnormal' : item.id != currentSortKey.id}">
 					<a v-if='!item.isMore'>{{item.name}}</a>
 					<a v-if='item.isMore'>{{sortId.name}}</a>
+					<img src="../../assets/change-icon/triangle_click@2x.png" v-if='index == 0' v-on:click="isShowDroupMenu()">
 				</li>
 			</ul>
 
 			<div class="sort-model" v-if='currentSortKey.isMore && isShowMore '>
 				<div v-for='(item, index) in sortChild' v-bind:key='item.id' v-on:click='getSortChild(item)' v-bind:class="{'active': item.id == sortId.id}">
 					<a>{{item.name}}</a>
-					<img src="../../assets/change-icon/d1-yes@2x.png">
+					<img src="../../assets/change-icon/c1_choose@2x.png">
 				</div>
 			</div>
 		</div>
 
 		<!-- body -->
 		<div class="product-body">
-			<div class="flex-wrapper" v-infinite-scroll="getProductList" infinite-scroll-disabled="loading" infinite-scroll-distance="100">
+			<!-- list -->
+			<div class="flex-wrapper" v-infinite-scroll="getMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
 				<div class="list" v-for='item in productList' v-bind:key='item.id'>
 					<img class="product-img" v-bind:src="item.photos[0].thumb">
 					<span class="promos" v-if="item.activity && item.activity.display_time">促销</span>
@@ -53,7 +55,8 @@
 				</div>
 			</div>
 
-			<div class="loading-wrapper" v-if='loaded'>
+			<!-- 下拉刷新没有更多 -->
+			<div class="loading-wrapper" v-if='!loaded'>
 				<p v-if='loading'>没有更多了</p>
 				<mt-spinner type="fading-circle" color='#26a2ff' :size='60' v-if='!loading'></mt-spinner>
 			</div>
@@ -73,7 +76,7 @@
 <script>
 	import productItem from '../../components/common/product.component'
 	import { SORTKEY, SORTVALUE} from '../../config/const'
-	import { getProductList, getSearch } from '../../service/product'
+	import { getProductlist, getSearch } from '../../service/product'
 	export default {
 		data() {
 			return {
@@ -92,8 +95,9 @@
 					'per_page': 10
 				},
 				productList: [],
-				loading: false,
-				loaded: true,
+				loading: false,  //是否触发无限滚动， true 不触发， false： 触发
+				loaded: true, // 是否加载完毕
+				total: '',  //总共页数
 				keyword: ""
 			}
 		},
@@ -102,10 +106,24 @@
 		},
 		created(){
 			this.getUrlParams();
+			this.getMore();
+			this.getProductList();
 		},
 		methods: {
+	/*
+		isShowDroupMenu: 点击图片显示下拉菜单
+		setActiveSortkey： 菜单切换
+		getSortChild： 点击下拉菜单
+		getProductList： 获取商品列表
+		getUrlParams： 获取url参数
+		search： 搜索
+	*/
 			setActiveSortkey(item) {
 				this.currentSortKey = item
+				this.getProductList();
+			},
+			isShowDroupMenu(){
+				let item = this.currentSortKey;
 				if (item.isMore) {
 					this.isShowMore = !this.isShowMore;
 					this.sortChild = this.currentSortKey.child;
@@ -113,41 +131,50 @@
 					this.isShowMore = false;
 					this.sortChild = '';
 				}
-				this.getProductList();
 			},
 			getSortChild(item) {
 				this.sortId = item;
 				this.isShowMore = !this.isShowMore;
+				this.currentSortKey.selectid = item.id;
 				this.getProductList();
 			},
-			getProductList() {
-				this.loading = false;
-				this.loaded = true;
-				this.params.page = ++this.params.page;
+			getProductList(ispush) {
+				this.loaded = false;
 				let data = this.params;
-				// 下拉框展示
-				if (this.isShowMore) {
-					data.sort_key = this.sortId.key;
-					data.sort_value = this.sortId.value;
+
+				if(this.currentSortKey.selectid) {
+					data.sort_key = this.currentSortKey.child[this.currentSortKey.selectid-1].key;
+					data.sort_value = this.currentSortKey.child[this.currentSortKey.selectid-1].value;
 				} else {
 					data.sort_key = this.currentSortKey.key;
 					data.sort_value = this.currentSortKey.value;
 				}
-				getProductList(data).then(res => {
-					if (res) {
-						this.productList = this.productList.concat(res.products);
-						if (res.paged.more) {
-							this.loading = false;
-						} else {
-							this.loading = true;
-						}
-						this.loaded = false;
-					}
+				getProductlist(data).then(res => {
+					// alert("u111111");
 				})
+				// getProductlist(data).then(res => {
+				// 	if (res) {
+				// 		alert("ufyrgfr");
+				// 		if (ispush) {
+				// 			this.productList = this.productList.concat(res.products);
+				// 		} else {
+				// 			this.productList = res.products;
+				// 		}
+				// 		this.total = Math.ceil(res.paged.total / 10);
+				// 		this.loading = false;
+				// 	}
+				// })
+			},
+			getMore() {
+				this.loading = true;
+				this.params.page = ++this.params.page;
+				if (this.params.page <= this.total) {
+					this.loading = false;
+					this.getProductList(true);
+				}
 			},
 			getUrlParams() {
 				let routerParams = this.$route.params;
-				debugger;
 				this.params.category = routerParams.category;
 				if (routerParams.keywords) {
 					this.keyword = routerParams.keywords;
@@ -196,6 +223,10 @@
 				color: #A4AAB3;
 				font-family: 'PingFangSC';
 				font-size: 14px;
+				height: 32px;
+    			border: 0px;
+    			padding-top: 0px;
+    			padding-bottom: 0px;
 				&:focus {
 					outline-offset: 0px;
     				outline: none;
@@ -224,8 +255,13 @@
 	    			font-family: 'PingFangSC';
 	    			border-bottom: 2px solid transparent;
 	    			position: relative;
-	    			flex-basis: 90px;
+	    			flex-basis: 100px;
     				text-align: center;
+    				img {
+    					height: 4px;
+					    width: 8px;
+					    vertical-align: middle;
+    				}
 	    		}
 	    		li.sortactive {
 	    			border-bottom-color: #F23030;
@@ -261,7 +297,7 @@
     				align-items: center;
 					img {
 						float: right;
-						width: 13px;
+						/*width: 13px;*/
 						height: 9px;
 					}
 					&.active {
@@ -386,8 +422,7 @@
 			    justify-content: center;
 			    align-content: center;
 			    align-items: center;
-			    padding-top: 50%;
-    			padding-bottom: 50%;
+			    padding-top: 25%;
 				div{
 				    p {
 				    	text-align: center;
