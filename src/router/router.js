@@ -23,52 +23,53 @@ import Profile from '../page/profile/Profile'
 import Setting from '../page/profile/Setting'
 
 export default [
+{
+	path: '/',
+	component: App,
+	children: [
 	{
-		path: '/',
-		component: App,
-		children: [
-			{
-				path: '',
-				redirect: '/home'
-			},
-			{
-				path: '/home',
-				component: home
-			},
-			{
-				path: '/category',
-				component: category
-			},
-			{
-				name: 'signin',
-				path: '/signin',
-				component: Signin
-			},
-			{
-				name: 'signup',
-				path: '/signup',
-				component: Signup
-			},
-			{
-				name: 'product',
-				path: '/product/:category/:brand/:shop/:keywords',
-				component: product
-			},
-			{
-				name: 'search',
-				path: '/search',
-				component: search
-			},
-			{
-				name: 'profile',
-				path: '/profile',
-				component: Profile
-			},
-			{
-				name: 'setting',
-				path: '/setting',
-				component: Setting
-			}
-		]
+		path: '',
+		redirect: '/home'
+	},
+	{
+		path: '/home',
+		component: home
+	},
+	{
+		name: 'signin',
+		path: '/signin',
+		component: Signin
+	},
+	{
+		name: 'signup',
+		path: '/signup',
+		component: Signup
+	},
+	{
+		name: 'category',
+		path: '/category',
+		component: category
+	},
+	{
+		name: 'product',
+		path: '/product/:category/:brand/:shop/:keywords',
+		component: product
+	},
+	{
+		name: 'search',
+		path: '/search',
+		component: search
+	},
+	{
+		name: 'profile',
+		path: '/profile',
+		component: Profile
+	},
+	{
+		name: 'setting',
+		path: '/setting',
+		component: Setting
 	}
+	]
+}
 ]
