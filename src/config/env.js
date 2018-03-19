@@ -3,6 +3,7 @@ let photoBaseUrl = '';
 
 if (process.env.NODE_ENV === 'development') {
   apiBaseUrl = 'http://api.wenchao.ae';
+  // apiBaseUrl = 'http://api.wenchao.geek-zoo.cn:8080';
   // apiBaseUrl = 'http://api.wenchao.dev.geek-zoo.cn/';
   // apiBaseUrl = 'http://api.wenchao.pre.geek-zoo.cn/';
 } else if (process.env.NODE_ENV === 'production') {

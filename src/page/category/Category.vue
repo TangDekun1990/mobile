@@ -51,8 +51,9 @@
                 this.currentItem = item;
             },
             goProduct(id) {
-                let params = {'category': id, 'brand':" ", 'shop': " "};
-                this.$router.push({'name': 'product', 'params': params})
+                let params = {'category': id, 'brand': null, 'shop': null, 'keywords': null};
+                // this.$router.push({ path: `/product/${id}/''/''` });
+                this.$router.push({'name':'product', 'params':params});
             }
         }
     }

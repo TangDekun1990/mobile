@@ -9,6 +9,9 @@ const category = r => require.ensure([], () => r( require('../page/category/Cate
 /* 商品列表 */
 const product = r => require.ensure([], () => r( require('../page/product/product')), 'product');
 
+/* 搜索 */
+const search = r => require.ensure([], () => r(require( '../page/search/search')), 'search');
+
 // const home = function (r) {
 // 	return require.ensure([], function(){
 // 		return r(require('../page/hello/hello.vue'))
@@ -48,8 +51,13 @@ export default [
 			},
 			{
 				name: 'product',
-				path: '/product/:category/:brand/:shop',
+				path: '/product/:category/:brand/:shop/:keywords',
 				component: product
+			},
+			{
+				name: 'search',
+				path: '/search',
+				component: search
 			},
 			{
 				name: 'profile',
@@ -60,7 +68,7 @@ export default [
 				name: 'setting',
 				path: '/setting',
 				component: Setting
-			},
+			}
 		]
 	}
 ]

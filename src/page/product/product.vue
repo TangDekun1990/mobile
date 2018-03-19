@@ -1,10 +1,10 @@
 <template>
 	<div class="product-wrapper">
 		<!-- search cart@2x.png-->
-		<form action="search()">
+		<form  v-on:submit="search()">
 			<div class="product-search">
 				<img src="../../assets/change-icon/back@2x.png" class="ui-back">
-				<input type="search" placeholder="请输入您要搜索的商品">
+				<input type="search" placeholder="请输入您要搜索的商品" v-model="keyword">
 				<img src="../../assets/change-icon/search@2x.png" class="ui-cart">
 			</div>
 		</form>
@@ -52,9 +52,18 @@
 					</div>
 				</div>
 			</div>
+
 			<div class="loading-wrapper" v-if='loaded'>
 				<p v-if='loading'>没有更多了</p>
 				<mt-spinner type="fading-circle" color='#26a2ff' :size='60' v-if='!loading'></mt-spinner>
+			</div>
+
+			<!-- 商品列表为空 -->
+			<div class="wrapper-list-empty" v-if='productList.length <= 0 && !loaded'>
+				<div>
+					<img src="../../assets/change-icon/goods_empty@2x.png">
+					<p>暂无任何商品</p>
+				</div>
 			</div>
 		</div>
 
@@ -64,7 +73,7 @@
 <script>
 	import productItem from '../../components/common/product.component'
 	import { SORTKEY, SORTVALUE} from '../../config/const'
-	import { getProductList } from '../../service/product'
+	import { getProductList, getSearch } from '../../service/product'
 	export default {
 		data() {
 			return {
@@ -84,7 +93,8 @@
 				},
 				productList: [],
 				loading: false,
-				loaded: true
+				loaded: true,
+				keyword: ""
 			}
 		},
 		components: {
@@ -111,10 +121,6 @@
 				this.getProductList();
 			},
 			getProductList() {
-				// debugger;
-				// let routerParams = this.$route.params;
-				// this.params = Object.assign({}, this.params, routerParams);
-
 				this.loading = false;
 				this.loaded = true;
 				this.params.page = ++this.params.page;
@@ -127,7 +133,6 @@
 					data.sort_key = this.currentSortKey.key;
 					data.sort_value = this.currentSortKey.value;
 				}
-				console.log(data);
 				getProductList(data).then(res => {
 					if (res) {
 						this.productList = this.productList.concat(res.products);
@@ -142,14 +147,23 @@
 			},
 			getUrlParams() {
 				let routerParams = this.$route.params;
+				debugger;
 				this.params.category = routerParams.category;
-				// this.params.brand = routerParams.brand;
-				// this.params.shop = routerParams.shop;
-				// debugger;
-				// this.params = Object.assign({}, this.params, routerParams);
+				if (routerParams.keywords) {
+					this.keyword = routerParams.keywords;
+				}
 			},
 			search() {
-				
+				let keyword ={'keyword': this.keyword};
+				let params = Object.assign({}, this.params, keyword);
+				this.loaded = true;
+				getSearch(params).then(res => {
+					if (res) {
+						this.productList = res.products;
+						this.loaded = false;
+					}
+				})
+				return false;
 			}
 		}
 	}
@@ -182,6 +196,10 @@
 				color: #A4AAB3;
 				font-family: 'PingFangSC';
 				font-size: 14px;
+				&:focus {
+					outline-offset: 0px;
+    				outline: none;
+				}
 			}
 			img.ui-cart {
 				width: 22px;
@@ -206,6 +224,8 @@
 	    			font-family: 'PingFangSC';
 	    			border-bottom: 2px solid transparent;
 	    			position: relative;
+	    			flex-basis: 90px;
+    				text-align: center;
 	    		}
 	    		li.sortactive {
 	    			border-bottom-color: #F23030;
@@ -359,6 +379,19 @@
 				}
 				span {
 					display: inline-block;
+				}
+			}
+			.wrapper-list-empty {
+				display: flex;
+			    justify-content: center;
+			    align-content: center;
+			    align-items: center;
+			    padding-top: 50%;
+    			padding-bottom: 50%;
+				div{
+				    p {
+				    	text-align: center;
+				    }
 				}
 			}
 		}
