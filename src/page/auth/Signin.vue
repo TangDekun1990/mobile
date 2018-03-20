@@ -48,7 +48,7 @@
 
 <script>
 import HeaderItem from '../../components/common/HeaderItem';
-import * as auth from '../../service/auth'
+import * as authBase from '../../api/auth-base'
 import { Indicator, Toast, Header } from 'mint-ui'
 import { mapMutations } from 'vuex'
 export default {
@@ -83,7 +83,7 @@ export default {
         return;
       }
       Indicator.open()
-      auth.signin(username, password).then(
+      authBase.authSignin(username, password).then(
         (response) => {
           Indicator.close()
           this.saveToken({ 'token' : response.token, 'user': response.user })

@@ -36,9 +36,10 @@
 <script>
 import HeaderItem from '../../components/common/HeaderItem'
 import CountdownButton from '../../components/common/CountdownButton'
-import * as api from '../../service/auth'
 import { Indicator, Toast, Header } from 'mint-ui'
 import { mapMutations } from 'vuex'
+import * as authMobile from '../../api/auth-mobile'
+import { authMobileVerify } from '../../api/auth-mobile';
 export default {
   props: {
   },
@@ -91,7 +92,7 @@ export default {
       let mode = this.$route.params.mode;
       // 注册时需要先验证手机号是否已存在
       if (mode === 'signup') {
-        api.verifyMobile(username).then(
+        authMobile.authMobileVerify(username).then(
         (response) => {                    
           this.onSendCode(username)
         }, 
@@ -104,7 +105,7 @@ export default {
       }      
     },
     onSendCode(username) {
-      api.sendCode(username).then(
+      authMobile.authMobileSend(username).then(
         (response) => {
           Indicator.close()
           this.$refs.timer.start()
@@ -152,7 +153,7 @@ export default {
     signup() {
       this.check()
       Indicator.open()
-      api.signup(this.username, this.code, this.password).then(
+      authMobile.authMobileSignup(this.username, this.code, this.password).then(
         (response) => {
           this.saveToken({ 'token' : response.token, 'user': response.user })
           Indicator.close()
@@ -165,7 +166,7 @@ export default {
     bind() {
       this.check()
       Indicator.open()
-      api.bind(this.username, this.code, this.password).then(
+      authMobile.authMobileBinding(this.username, this.code, this.password).then(
         (response) => {
           Indicator.close()
         }, (error) => {
@@ -177,7 +178,7 @@ export default {
     retrieve() {
       this.check()
       Indicator.open()
-      api.retrieve(this.username, this.code, this.password).then(
+      authMobile.authMobileReset(this.username, this.code, this.password).then(
         (response) => {
           Indicator.close()
           this.goBack()
