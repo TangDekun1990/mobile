@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <mt-header class="header" title="立即注册">
+    <mt-header class="header" v-bind:title="title">
       <header-item slot="left" v-bind:isBack=true v-on:onclick="goBack">
       </header-item>    
     </mt-header>
@@ -36,7 +36,7 @@
 <script>
 import HeaderItem from '../../components/common/HeaderItem'
 import CountdownButton from '../../components/common/CountdownButton'
-import * as auth from '../../service/auth'
+import * as api from '../../service/auth'
 import { Indicator, Toast, Header } from 'mint-ui'
 import { mapMutations } from 'vuex'
 export default {
@@ -91,7 +91,7 @@ export default {
       let mode = this.$route.params.mode;
       // 注册时需要先验证手机号是否已存在
       if (mode === 'signup') {
-        auth.verifyMobile(username).then(
+        api.verifyMobile(username).then(
         (response) => {                    
           this.onSendCode(username)
         }, 
@@ -104,7 +104,7 @@ export default {
       }      
     },
     onSendCode(username) {
-      auth.sendCode(username).then(
+      api.sendCode(username).then(
         (response) => {
           Indicator.close()
           this.$refs.timer.start()
@@ -152,7 +152,7 @@ export default {
     signup() {
       this.check()
       Indicator.open()
-      auth.signup(this.username, this.code, this.password).then(
+      api.signup(this.username, this.code, this.password).then(
         (response) => {
           this.saveToken({ 'token' : response.token, 'user': response.user })
           Indicator.close()
@@ -165,7 +165,7 @@ export default {
     bind() {
       this.check()
       Indicator.open()
-      auth.bind(this.username, this.code, this.password).then(
+      api.bind(this.username, this.code, this.password).then(
         (response) => {
           Indicator.close()
         }, (error) => {
@@ -177,7 +177,7 @@ export default {
     retrieve() {
       this.check()
       Indicator.open()
-      auth.retrieve(this.username, this.code, this.password).then(
+      api.retrieve(this.username, this.code, this.password).then(
         (response) => {
           Indicator.close()
           this.goBack()

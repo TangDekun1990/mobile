@@ -73,7 +73,7 @@ export default {
         Toast('请输入用户名/邮箱/手机号');
         return;
       } 
-      // TODO: 用户名（为手机号或邮箱）校验     
+      // TODO: 用户名（为手机号或邮箱）校验
       if (password.length === 0) {
         Toast('请输入密码');
         return;
