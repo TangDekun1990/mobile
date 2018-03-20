@@ -1,7 +1,7 @@
 <template>
 	<div class="product-wrapper">
 		<!-- search cart@2x.png-->
-		<form  v-on:submit="search()">
+		<form  v-on:submit="search()" action="#">
 			<div class="product-search">
 				<img src="../../assets/change-icon/back@2x.png" class="ui-back">
 				<input type="search" placeholder="请输入您要搜索的商品" v-model="keyword">
@@ -75,7 +75,7 @@
 
 <script>
 	import productItem from '../../components/common/product.component'
-	import { SORTKEY, SORTVALUE} from '../../config/const'
+	import { SORTKEY } from '../../config/const'
 	import { getProductlist, getSearch } from '../../service/product'
 	export default {
 		data() {
@@ -150,20 +150,16 @@
 					data.sort_value = this.currentSortKey.value;
 				}
 				getProductlist(data).then(res => {
-					// alert("u111111");
+					if (res) {
+						if (ispush) {
+							this.productList = this.productList.concat(res.products);
+						} else {
+							this.productList = res.products;
+						}
+						this.total = Math.ceil(res.paged.total / 10);
+						this.loading = false;
+					}
 				})
-				// getProductlist(data).then(res => {
-				// 	if (res) {
-				// 		alert("ufyrgfr");
-				// 		if (ispush) {
-				// 			this.productList = this.productList.concat(res.products);
-				// 		} else {
-				// 			this.productList = res.products;
-				// 		}
-				// 		this.total = Math.ceil(res.paged.total / 10);
-				// 		this.loading = false;
-				// 	}
-				// })
 			},
 			getMore() {
 				this.loading = true;
@@ -184,13 +180,15 @@
 				let keyword ={'keyword': this.keyword};
 				let params = Object.assign({}, this.params, keyword);
 				this.loaded = true;
+				this.loading = true;
 				getSearch(params).then(res => {
 					if (res) {
 						this.productList = res.products;
 						this.loaded = false;
+						this.total = Math.ceil(res.paged.total / 10);
+						this.loading = false;
 					}
-				})
-				return false;
+				});
 			}
 		}
 	}
@@ -321,6 +319,7 @@
 						height: 110px;
 						flex-basis: 110px;
 						position: relative;
+						border: 1px solid transparent;
 					}
 					span.promos {
 						position: absolute;
