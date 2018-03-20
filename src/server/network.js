@@ -54,6 +54,7 @@ axios.interceptors.request.use(config => {
 
             let encry_post_body = '';
             let body = null;
+            console.log(post_body);
             if (post_body && post_body.length) {
                 encry_post_body = XXTEA.encryptToString(post_body, ENCRYPT_KEY);
                 body = toQueryString({ x: encry_post_body });
