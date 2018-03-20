@@ -1,19 +1,18 @@
 <template>
   <div class="container">
-    <header-view title="个人资料">
-      <header-item slot="leftItem" isBack="true" v-on:onclick="goBack">
+    <mt-header class="header" title="个人资料">
+      <header-item slot="left" v-bind:isBack=true v-on:onclick="goBack">
       </header-item>    
-    </header-view>
+    </mt-header>
   </div>
 </template>
 
 <script>
-import HeaderView from '../../components/common/HeaderView'
 import HeaderItem from '../../components/common/HeaderItem'
+import { Header } from 'mint-ui'
 import { mapState, mapMutations } from 'vuex'
 export default {
   components: {
-    HeaderView,
     HeaderItem
   },  
   computed: {
@@ -33,11 +32,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import 'src/style/mixin.scss';
   .container {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: stretch;
+  }
+  .header {
+    @include header;
   }
 </style>
 

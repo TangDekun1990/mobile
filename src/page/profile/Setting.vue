@@ -1,9 +1,9 @@
 <template>
   <div class="container">
-    <header-view title="设置">
-      <header-item slot="leftItem" isBack="true" v-on:onclick="goBack">
+    <mt-header class="header" title="设置">
+      <header-item slot="left" v-bind:isBack=true v-on:onclick="goBack">
       </header-item>    
-    </header-view>
+    </mt-header>
     <div class="submit" @click="signout" v-if="isOnline">
       <label class="text">退出登录</label>
     </div>
@@ -11,13 +11,11 @@
 </template>
 
 <script>
-import HeaderView from '../../components/common/HeaderView'
 import HeaderItem from '../../components/common/HeaderItem'
 import { mapState, mapMutations } from 'vuex'
-import { MessageBox } from 'mint-ui'
+import { Header, MessageBox } from 'mint-ui'
 export default {
   components: {
-    HeaderView,
     HeaderItem
   },  
   computed: {
@@ -43,11 +41,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import 'src/style/mixin.scss'; 
   .container {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: stretch;
+  }
+  .header {
+    @include header;
   }
   .submit {
     position: absolute;

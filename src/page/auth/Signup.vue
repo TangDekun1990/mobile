@@ -1,9 +1,9 @@
 <template>
   <div class="container">
-    <header-view v-bind:title="title">
-      <header-item slot="leftItem" isBack="true" v-on:onclick="goBack">
+    <mt-header class="header" title="立即注册">
+      <header-item slot="left" v-bind:isBack=true v-on:onclick="goBack">
       </header-item>    
-    </header-view>
+    </mt-header>
     <div class="section-wrapper top-wrapper">
       <div class="input-wrapper">        
         <input v-model="username" placeholder="请输入阿联酋10位手机号">
@@ -34,11 +34,10 @@
 </template>
 
 <script>
-import HeaderView from '../../components/common/HeaderView'
 import HeaderItem from '../../components/common/HeaderItem'
 import CountdownButton from '../../components/common/CountdownButton'
 import * as auth from '../../service/auth'
-import { Indicator, Toast } from 'mint-ui'
+import { Indicator, Toast, Header } from 'mint-ui'
 import { mapMutations } from 'vuex'
 export default {
   props: {
@@ -50,6 +49,10 @@ export default {
       password: '',
       confirmPassword: '',
     }
+  },
+  components: {
+    HeaderItem,
+    CountdownButton,    
   },
   computed: {
     title: function () {  
@@ -70,12 +73,7 @@ export default {
         return '确认'
       } 
     },
-  },
-  components: {
-    HeaderView,
-    HeaderItem,
-    CountdownButton,    
-  },  
+  },    
   methods: {  
     ...mapMutations({
       saveToken: 'signin'
@@ -86,7 +84,7 @@ export default {
     onVerify() {
       let username = this.username
       if (username.length === 0) {
-        alert('请输入手机号');
+        Toast('请输入手机号');
         return;
       }
       Indicator.open()
@@ -209,6 +207,9 @@ export default {
 <style scoped lang="scss">
 @import 'src/style/mixin.scss';
   .container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
     display: flex;
     flex: 1;
     flex-direction: column;
@@ -261,7 +262,7 @@ export default {
     }    
   }
   .header {
-    height: 44px;
+    @include header;
   }
   .top-wrapper { 
     margin-top: 10px;      

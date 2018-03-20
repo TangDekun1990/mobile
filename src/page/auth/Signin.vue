@@ -1,9 +1,9 @@
 <template>
   <div class="container">
-    <header-view title="登录">
-      <header-item slot="leftItem" isBack="true" v-on:onclick="goBack"></header-item>
-      <header-item slot="rightItem" title="快速注册" v-on:onclick="onSignup"></header-item>
-    </header-view>
+    <mt-header class="header" title="登录">
+      <header-item slot="left" v-bind:isBack=true v-on:onclick="goBack"></header-item>
+      <header-item slot="right" title="快速注册" v-on:onclick="onSignup"></header-item>
+    </mt-header>
     <div class="top-wrapper">
       <div class="input-wrapper">
         <img src="../../assets/change-icon/a0_user@2x.png"/>      
@@ -47,15 +47,13 @@
 </template>
 
 <script>
-import HeaderView from '../../components/common/HeaderView';
 import HeaderItem from '../../components/common/HeaderItem';
 import * as auth from '../../service/auth'
-import { Indicator, Toast } from 'mint-ui'
+import { Indicator, Toast, Header } from 'mint-ui'
 import { mapMutations } from 'vuex'
 export default {
   name: 'Signin',
   components: {
-    HeaderView,
     HeaderItem
   },
   data() {
@@ -75,7 +73,7 @@ export default {
         Toast('请输入用户名/邮箱/手机号');
         return;
       } 
-      // TODO: 用户名校验     
+      // TODO: 用户名（为手机号或邮箱）校验     
       if (password.length === 0) {
         Toast('请输入密码');
         return;
@@ -112,8 +110,10 @@ export default {
 <style scoped lang='scss'>
 @import 'src/style/mixin.scss';
   .container { 
+    position: absolute;
+    width: 100%;
+    height: 100%;
     display: flex;
-    flex: 1;
     flex-direction: column;
     justify-content: flex-start;
     align-items: stretch;
@@ -143,6 +143,9 @@ export default {
       }
     }
   }
+  .header {
+    @include header;
+  }
   .submit {
     border-radius: 4px;
     background-color: #f23030;
@@ -157,18 +160,6 @@ export default {
   .text {
     color: #ffffff;
     font-size: 18px;
-  }
-  .bottom-wrapper {
-    display: flex;
-    /* flex: 1; */
-    flex-direction: column;
-    justify-content: flex-end;
-    align-items: stretch;
-    position: absolute;
-    height: 300px;
-    bottom: 0px;
-    left: 0px;
-    right: 0px;
   }
   .retrieve-wrapper {
     height: 40px;
@@ -191,6 +182,13 @@ export default {
     font-size: 15px;
     text-align: center;
   }
+  .bottom-wrapper {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: stretch;
+  }
   .auth-wrapper {
     display: flex;
     flex-direction: column;
@@ -204,6 +202,7 @@ export default {
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
+    margin-bottom: 40px;
   }
   .auth-title {
     color: #8f8e94;
@@ -235,7 +234,10 @@ export default {
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
-  }
+    margin-left: 15px;
+    margin-right: 15px;
+    margin-bottom: 20px;
+  }  
 </style>
 
 

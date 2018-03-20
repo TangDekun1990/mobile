@@ -120,6 +120,9 @@ export default {
 <style lang="scss" scoped>
 @import 'src/style/mixin.scss';
   .container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
