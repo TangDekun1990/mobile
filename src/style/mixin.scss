@@ -100,3 +100,10 @@
     background: -moz-linear-gradient(right, $leftColor, $rightColor); /* Firefox 3.6 - 15 */
     background: linear-gradient(to right, $leftColor , $rightColor); /* 标准的语法（必须放在最后） */
 }
+
+@mixin header {
+	height: 44px;
+	color: #48505D;
+	font-size: 18px;
+	background-color: #fff;
+}

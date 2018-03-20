@@ -21,6 +21,7 @@ import Signin from '../page/auth/Signin'
 import Signup from '../page/auth/Signup'
 import Profile from '../page/profile/Profile'
 import Setting from '../page/profile/Setting'
+import ProfileInfo from '../page/profile/ProfileInfo'
 
 export default [
 {
@@ -69,6 +70,11 @@ export default [
 		name: 'setting',
 		path: '/setting',
 		component: Setting
+	},
+	{
+		name: 'profileInfo',
+		path: '/profileInfo',
+		component: ProfileInfo
 	}
 	]
 }

@@ -1,26 +1,23 @@
 <template>
   <div class="container">
-    <mt-header class="header" title="设置">
+    <mt-header class="header" title="个人资料">
       <header-item slot="left" v-bind:isBack=true v-on:onclick="goBack">
       </header-item>    
     </mt-header>
-    <div class="submit" @click="signout" v-if="isOnline">
-      <label class="text">退出登录</label>
-    </div>
   </div>
 </template>
 
 <script>
 import HeaderItem from '../../components/common/HeaderItem'
+import { Header } from 'mint-ui'
 import { mapState, mapMutations } from 'vuex'
-import { Header, MessageBox } from 'mint-ui'
 export default {
   components: {
     HeaderItem
   },  
   computed: {
     ...mapState({
-      isOnline: state => state.auth.isOnline
+      user: state => state.auth.user,
     }),
   },
   methods: {  
@@ -30,18 +27,12 @@ export default {
     goBack() {
       this.$router.go(-1) 
     },
-    signout() {
-      MessageBox.confirm('确认退出').then(action => {
-        this.clearToken() 
-        this.goBack() 
-      })
-    }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-@import 'src/style/mixin.scss'; 
+@import 'src/style/mixin.scss';
   .container {
     display: flex;
     flex-direction: column;
@@ -50,22 +41,6 @@ export default {
   }
   .header {
     @include header;
-  }
-  .submit {
-    position: absolute;
-    border-radius: 4px;
-    background-color: #F23030;
-    height: 44px;
-    left: 10px;
-    right: 10px;
-    bottom: 36px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  .text {
-    color: #ffffff;
-    font-size: 18px;
   }
 </style>
 

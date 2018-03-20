@@ -5,6 +5,7 @@ import {
   authMobileBinding,
   authMobileReset,
 } from "../api/auth-mobile";
+import { authSignin } from '../api/auth-base'
 
 export function sendCode(mobile) {
   return authMobileSend(mobile)  
@@ -24,4 +25,8 @@ export function bind(mobile, code, password) {
 
 export function retrieve(mobile, code, password) {
   return authMobileReset(mobile, code, password)
+}
+
+export function signin(username, password) {
+  return authSignin(username, password)
 }

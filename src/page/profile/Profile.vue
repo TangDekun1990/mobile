@@ -8,10 +8,10 @@
         <img class="nav-icon" src="../../assets/change-icon/e0_message@2x.png" />
       </div>
       <div class="top-info-wrapper">
-        <div class="avatar-wrapper" @click="showLogin">
+        <div class="avatar-wrapper" @click="goProfileInfo">
         <img class="avatar" src="../../assets/change-icon/img_avatar@2x.png" />        
       </div>
-      <label class="nickname" @click="showLogin">登录/注册</label>
+      <label class="nickname" @click="goProfileInfo">{{nickname}}</label>
       </div>       
       <div class="info-wrapper">
         <div class="info-item">0积分</div>
@@ -78,14 +78,37 @@
 
 <script>
 import Tabbar from '../../components/common/Tabbar'
+import { mapState } from 'vuex'
 export default {
   name: 'profile',
   components: {
     Tabbar,
   },
+  computed: {
+    ...mapState({
+      isOnline: state => state.auth.isOnline,
+      user: state => state.auth.user,
+    }),
+    nickname: function () {
+      let title = '登录/注册'
+      if (this.isOnline) {
+        if (this.user && typeof this.user != 'undefined' && JSON.stringify(this.user) != '{}' ) {
+          title = this.user.nickname
+        }        
+      }
+      return title
+    }
+  },
   methods: {
     showLogin() {
       this.$router.push('/signin')
+    },
+    goProfileInfo() {
+      if (this.isOnline) {
+        this.$router.push('/profileInfo')
+      } else {
+        this.showLogin()
+      }
     },
     goSetting() {
       this.$router.push('setting')
@@ -97,6 +120,9 @@ export default {
 <style lang="scss" scoped>
 @import 'src/style/mixin.scss';
   .container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
