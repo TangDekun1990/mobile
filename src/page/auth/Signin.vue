@@ -22,22 +22,22 @@
         <label id="retrieve-title">忘记密码？</label>
       </div>      
     </div>
-    <div class="bottom-wrapper">
+    <div class="bottom-wrapper" v-if="isShowAuth">
       <div class="auth-title-wrapper">
         <div class="auth-line"></div>
         <label class="auth-title">第三方登录</label>
         <div class="auth-line"></div>
       </div>
       <div class="auth-bottom-wrapper">
-        <div class="auth-item">
+        <div class="auth-item" v-if="isShowWechat" @click="onWechat">
           <img class="auth-item-icon" src="../../assets/change-icon/c7_commodity_list_2@2x.png"/>      
           <label class="auth-title auth-item-title">微信</label>
         </div>
-        <div class="auth-item">
+        <div class="auth-item" v-if="isShowWeibo" @click="onWeibo">
           <img class="auth-item-icon" src="../../assets/change-icon/c7_commodity_list_1@2x.png"/>      
           <label class="auth-title auth-item-title">微博</label>
         </div>
-        <div class="auth-item">
+        <div class="auth-item" v-if="isShowQQ" @click="onQQ">
           <img class="auth-item-icon" src="../../assets/change-icon/c7_commodity_list_3@2x.png"/>      
           <label class="auth-title auth-item-title">QQ</label>
         </div>
@@ -50,7 +50,7 @@
 import HeaderItem from '../../components/common/HeaderItem';
 import * as authBase from '../../api/auth-base'
 import { Indicator, Toast, Header } from 'mint-ui'
-import { mapMutations } from 'vuex'
+import { mapMutations, mapActions, mapState } from 'vuex'
 export default {
   name: 'Signin',
   components: {
@@ -62,11 +62,47 @@ export default {
       password: '',
     }
   },
+  computed: {
+    ...mapState({
+      config: state => state.config.config,
+      feature: state => state.config.feature,
+    }),
+    isShowWechat: function () {
+      if (this.feature['signin.qq']) {
+        return true
+      }
+      return false
+    },
+    isShowWeibo: function () {
+      if (this.feature['signin.weibo']) {
+        return true
+      }
+      return false
+    },
+    isShowQQ: function () {
+      if (this.feature['signin.qq']) {
+        return true
+      }
+      return false
+    },
+    isShowAuth: function () {
+      if (this.isShowWechat || this.isShowWeibo || this.isShowQQ) {
+        return true
+      }
+      return false
+    }
+  },
+  created: function () {
+    this.fetchConfig()
+  },
   methods: {
     ...mapMutations({
       saveToken: 'signin'
     }),
-    signin() {
+    ...mapActions({
+      fetchConfig: 'fetchConfig'
+    }),
+    signin() {      
       let username = this.username
       let password = this.password
       if (username.length === 0) {
@@ -102,7 +138,16 @@ export default {
     },
     onRetrieve() {
       this.$router.push({ name: 'signup', params: { mode: 'retrieve' } });
-    }
+    },
+    onWechat() {
+
+    },
+    onWeibo() {
+      
+    },
+    onQQ() {
+      
+    },
   }
 };
 </script>
