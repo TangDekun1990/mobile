@@ -81,6 +81,9 @@ export default {
     }),  
     goBack() {
       this.$router.go(-1) 
+    },
+    goProfile() {
+      this.$router.go(-2) 
     },    
     onVerify() {
       let username = this.username
@@ -157,6 +160,7 @@ export default {
         (response) => {
           this.saveToken({ 'token' : response.token, 'user': response.user })
           Indicator.close()
+          this.goProfile()
         }, (error) => {
           Indicator.close()
           Toast(error.errorMsg)
