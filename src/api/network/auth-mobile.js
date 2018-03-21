@@ -1,4 +1,4 @@
-import { fetchEndpoint } from '../server/network';
+import { fetchEndpoint } from '../../network/network';
 
 // 获得手机验证码
 export const authMobileSend =

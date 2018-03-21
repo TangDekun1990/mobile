@@ -1,4 +1,4 @@
-import { fetchEndpoint } from '../server/network';
+import { fetchEndpoint } from '../../network/network';
 
 // 注册字段
 export const userProfileFields =

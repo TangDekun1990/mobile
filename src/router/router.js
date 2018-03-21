@@ -12,43 +12,14 @@ const product = r => require.ensure([], () => r( require('../page/product/produc
 /* 搜索 */
 const search = r => require.ensure([], () => r(require( '../page/search/search')), 'search');
 
-// const home = function (r) {
-// 	return require.ensure([], function(){
-// 		return r(require('../page/hello/hello.vue'))
-// 	}, 'home')
-// }
-// import Signin from '../page/auth/Signin'
-// import Signup from '../page/auth/Signup'
-// import Profile from '../page/profile/Profile'
-// import Setting from '../page/profile/Setting'
-// import ProfileInfo from '../page/profile/ProfileInfo'
+import Signin from '../page/auth/Signin'
+import Signup from '../page/auth/Signup'
+import Profile from '../page/profile/Profile'
+import Setting from '../page/profile/Setting'
+import ProfileInfo from '../page/profile/ProfileInfo'
 // /*
 /*
-{
-		name: 'signin',
-		path: '/signin',
-		component: Signin
-	},
-	{
-		name: 'signup',
-		path: '/signup',
-		component: Signup
-	},
-	{
-		name: 'profile',
-		path: '/profile',
-		component: Profile
-	},
-	{
-		name: 'setting',
-		path: '/setting',
-		component: Setting
-	},
-	{
-		name: 'profileInfo',
-		path: '/profileInfo',
-		component: ProfileInfo
-	}
+	
  */
 
 export default [
@@ -78,6 +49,31 @@ export default [
 		name: 'search',
 		path: '/search',
 		component: search
+	},
+	{
+		name: 'signin',
+		path: '/signin',
+		component: Signin
+	},
+	{
+		name: 'signup',
+		path: '/signup',
+		component: Signup
+	},
+	{
+		name: 'profile',
+		path: '/profile',
+		component: Profile
+	},
+	{
+		name: 'setting',
+		path: '/setting',
+		component: Setting
+	},
+	{
+		name: 'profileInfo',
+		path: '/profileInfo',
+		component: ProfileInfo
 	}
 	]
 }

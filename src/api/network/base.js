@@ -1,2 +1,2 @@
-import { fetchEndpoint } from '../server/network';
+import { fetchEndpoint } from '../../network/network';
 

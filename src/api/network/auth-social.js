@@ -1,4 +1,4 @@
-import { fetchEndpoint } from '../server/network';
+import { fetchEndpoint } from '../../network/network';
 
 // 第三方授权
 export const authSocial =
