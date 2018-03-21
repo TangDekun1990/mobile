@@ -52,21 +52,25 @@
 			this.getUrlParams();
 			this.$on('change-list', (data) => {
 				let res = data;
+
 				this.params.page = 1;
 				this.total = 1;
 				this.isSearch = res.isSearch;
 				this.productList = [];
+
 				if (res.keyword) {
 					this.keyword = res.keyword;
 				} else {
 					this.keyword = '';
 				}
+
 				if (!data.isSearch) {
 					this.params = Object.assign({}, this.params, data.value);
 				}
+
+				this.loading = false;
 				this.getProductList();
 			});
-			// this.utils.save('keyword', []);
 		},
 		methods: {
 			getMore() {
