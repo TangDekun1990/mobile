@@ -1,4 +1,4 @@
- import axios from 'axios'
+import axios from 'axios'
 import XXTEA from '../assets/js/xxtea'
 import CryptoJS from 'crypto-js'
 
@@ -89,9 +89,9 @@ axios.interceptors.response.use(response => {
                 let errorMessage = response.data.message;
                 let errorCode = response.data.code;
                 if (response.data.error) {
-                    errorMessage = '网络错误, 错误代码:=' + errorCode + "错误信息:="+ errorMessage;
+                    return Promise.reject({ 'errorCode': errorCode, 'errorMsg': errorMessage });
                 }
-                console.log(errorMessage);
+                console.log('网络错误, 错误代码:=' + errorCode + "错误信息:=" + errorMessage);
             }
         } else {
             console.log("请求地址错误!");
