@@ -1,11 +1,19 @@
 $fontFamily: 'PingFangSC';
-$fontColor: #8F8E94;
+
+// font color
+$subFontColor: #4E545D;
+$mainFontColor: #8F8E94;
 $fontActive: #FC2E39;
+
+// font size
 $fontSize: 12px;
+$mainFontSize: 17px;
+$subFontSize: 14px;
 
 //  display
 $inlineLayout: 'inline-block';
 $block: 'block';
+$flex: 'flex';
 
 // background
 $mainbgColor: #FFFFFF;

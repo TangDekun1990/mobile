@@ -1,110 +1,75 @@
 <template>
 	<div class="search-wrapper">
-		<form action>
-			<input type="search" placeholder="请输入您要搜索的商品">
-			<span>取消</span>
-		</form>
+		<search-header ref='header' :value="keywords"></search-header>
 		<div class="search-body">
-
-			<div class="list current-search">
+			<div class="list current-search" v-if='currenKeywords.length > 0'>
 				<div class="list-header">
 					<span>最近搜索</span>
-					<img src="../../assets/change-icon/b1_delete@2x.png" v-on:click='deleteCurrent()'>
+					<img src="../../assets/image/change-icon/b1_delete@2x.png" v-on:click='deleteCurrent()'>
 				</div>
 				<ul>
-					<li class="item">yfgrygfry</li>
-					<li class="item">yfgrygfry</li>
+					<li class="item" v-for="item in currenKeywords" v-on:click='getKey(item)'>{{item}}</li>
 				</ul>
 			</div>
-			
 			<div class="list hot-wrapper">
 				<div class="list-header">
 					<span>热门搜索</span>
 				</div>
 				<ul>
-					<li class="item" v-for='(item, index) in hotKeywords' v-bind:key='index' v-on:click='getCurrentKey(item)'>{{ item.content}}</li>
+					<li class="item" v-for='(item, index) in hotKeywords' v-bind:key='index' v-on:click='getKey(item)'>{{ item.content}}</li>
 				</ul>
 			</div>
-
 		</div>
 	</div>
 </template>
 
 <script>
-	import { getData} from '../../service/search'
+	import searchHeader from './child/SearchHeader';
+	import { getKeywords } from '../../api/network/search'
 	export default {
-		data() {
-			return {
+		data(){
+			return{
 				hotKeywords: [],
 				currenKeywords: [],
 				keywords:''
 			}
 		},
+		components: {
+			searchHeader
+		},
 		created(){
-			this.getKeywords();
+			this.getHotKeywords();
+			this.getCurrentKey();
 		},
 		methods: {
-			getKeywords() {
-				getData().then(res => {
-					this.hotKeywords = res.keywords;
-				})
+			getHotKeywords() {
+				getKeywords().then(res => {
+					this.hotKeywords = Object.assign([], res.keywords, this.hotKeywords);
+				});
 			},
-			deleteCurrent() {
-				if (this.currenKeywords.length > 0) {
-					this.currenKeywords = [];
+			getKey(item) {
+				if (item.content) {
+					this.keywords = item.content;
+				} else {
+					this.keywords = item;
 				}
 			},
-			getCurrentKey(item) {
-				this.keywords = item.name;
-				this.goState(this.keywords);
+			deleteCurrent() {
+				this.utils.save('keyword', []);
+				this.currenKeywords = this.utils.fetch('keyword');
 			},
-			goState(key) {
-				// let params = {'keywords': this.keywords};
-                this.$router.push({
-                	'name': 'product', 
-                	'params':{
-                		'category': '',
-                		'brand': '',
-                		'shop': '',
-                		'keywords': key
-                	}
-                });
+			getCurrentKey() {
+				this.currenKeywords = this.utils.fetch('keyword');
 			}
 		}
 	}
-	
 </script>
 
 <style lang='scss' scoped>
 	.search-wrapper{
-		height: 100vh;
+		height: -webkit-fill-available;
 		width: auto;
 		background-color: #F0F2F5;
-		form {
-			display: flex;
-			justify-content: space-between;
-			align-content: center;
-			align-items: center;
-			background-color: #FFFFFF;
-			padding: 6px 15px;
-			input {
-				flex-basis: 200px;
-				background-color: #E9ECF0;
-				border-radius: 16px;
-				color: #A4AAB3;
-				font-size: 14px;
-				padding: 9px 15px;
-				border: 0px;
-				&:focus {
-					outline: none;
-					outline-offset: 0px;
-				}
-			}
-			span {
-				font-size: 15px;
-				color: #4E545D;
-			}
-		}
 		.search-body {
 			padding: 15px;
 			div.list {
@@ -118,7 +83,7 @@
 						color: #4E545D;
 						font-size: 14px;
 						font-family: 'PingFangSC';
-						background: url('../../assets/change-icon/b1_history@2x.png') no-repeat left center;
+						background: url('../../assets/image/change-icon/b1_history@2x.png') no-repeat left center;
 						background-size: 16px;
 		    			padding-left: 25px;
 		    			align-self: flex-end;
@@ -149,14 +114,11 @@
 			div.hot-wrapper {
 				.list-header{
 					span{
-						background: url('../../assets/change-icon/b1_hot@2x.png') no-repeat left center;
+						background: url('../../assets/image/change-icon/b1_hot@2x.png') no-repeat left center;
 						background-size: 16px;
 					}
 				}
 			}
 		}
-	}
-	::-webkit-search-cancel-button {
-		display: none;
 	}
 </style>

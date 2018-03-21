@@ -5,7 +5,7 @@
 				<li class="item" v-for='item in staticData' v-bind:key="item.key"  v-on:click='setCurrentActive(item)' v-bind:class="{'currentavtive': currentItem.key == item.key}">
 					<img v-bind:src="item.bgurl" v-if='currentItem.key != item.key'>
 					<img v-bind:src="item.activeBgurl" v-if='currentItem.key == item.key'>
-					<a v-bind:href="item.link">{{item.name}}</a>
+					<a>{{item.name}}</a>
 				</li>
 			</ul>
 		</div>
@@ -18,35 +18,35 @@
 			return {
 				staticData: [
 					{
-						'name': '首页', 
-						'link':'#/home', 
-						'key': 0, 
-						'bgurl': require('../../assets/tabbar-icon/tabbar_home_nor@2x.png'),
-						'activeBgurl': require('../../assets/tabbar-icon/tabbar_home_sel@2x.png'),
+						'name': '首页',
+						'link':'/home',
+						'key': 0,
+						'bgurl': require('../../assets/image/tabbar-icon/tabbar_home_nor@2x.png'),
+						'activeBgurl': require('../../assets/image/tabbar-icon/tabbar_home_sel@2x.png'),
 						'isActive': false
 					},
 					{
-						'name': '分类', 
-						'link': '#/category', 
-						'key': 1, 
-						'bgurl': require('../../assets/tabbar-icon/tabbar_sort_nor@2x.png'),
-						'activeBgurl': require('../../assets/tabbar-icon/tabbar_sort_sel@2x.png'),
+						'name': '分类',
+						'link': '/category',
+						'key': 1,
+						'bgurl': require('../../assets/image/tabbar-icon/tabbar_sort_nor@2x.png'),
+						'activeBgurl': require('../../assets/image/tabbar-icon/tabbar_sort_sel@2x.png'),
 						'isActive': false
 					},
 					{
-						'name': '购物车', 
-						'link': '#/cart', 
-						'key': 2, 
-						'bgurl': require('../../assets/tabbar-icon/tabbar_cart_nor@2x.png'),
-						'activeBgurl': require('../../assets/tabbar-icon/tabbar_cart_sel@2x.png'),
+						'name': '购物车',
+						'link': '/cart',
+						'key': 2,
+						'bgurl': require('../../assets/image/tabbar-icon/tabbar_cart_nor@2x.png'),
+						'activeBgurl': require('../../assets/image/tabbar-icon/tabbar_cart_sel@2x.png'),
 						'isActive': false
 					},
 					{
-						'name': '我的', 
-						'link': '#/profile', 
-						'key': 3, 
-						'bgurl': require('../../assets/tabbar-icon/tabbar_profile_nor@2x.png'),
-						'activeBgurl': require('../../assets/tabbar-icon/tabbar_profile_sel@2x.png'),
+						'name': '我的',
+						'link': '/profile',
+						'key': 3,
+						'bgurl': require('../../assets/image/tabbar-icon/tabbar_profile_nor@2x.png'),
+						'activeBgurl': require('../../assets/image/tabbar-icon/tabbar_profile_sel@2x.png'),
 						'isActive': false
 					}
 				],
@@ -58,23 +58,22 @@
 				this.$router.push(path)
 			},
 			setCurrentActive(item) {
-				this.currentItem = item
+				this.currentItem = item;
+				this.$router.push({ path: item.link});
 			}
 		}
 	}
 </script>
 
 <style scoped lang='scss'>
-	@import 'src/style/_variable.scss';
-	@import 'src/style/mixin.scss';
 	.ui-tabbar-wrapper {
 		width: 100%;
 		height: auto;
 		padding: 0px;
 		margin: 0px;
 		background-color: $mainbgColor;
-		@include pb();
 		border-top: 1px solid #F0F2F5;
+		@include pb();
 		.tabbar-wrapper {
 			ul {
 				display: flex;
@@ -93,7 +92,7 @@
 						display: $block;
 					}
 					a {
-						@include sc($fontSize, $fontColor);
+						@include sc($fontSize, $mainFontColor);
 					}
 				}
 				li.currentavtive {

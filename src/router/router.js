@@ -1,7 +1,7 @@
 import App from '../App'
 
 /*home */
-const home = r => require.ensure([], () => r( require('../page/home/home')), 'home');
+const home = r => require.ensure([], () => r( require('../page/home/Home')), 'home');
 
 /* 分类 */
 const category = r => require.ensure([], () => r( require('../page/category/Category')), 'category');
@@ -17,26 +17,14 @@ const search = r => require.ensure([], () => r(require( '../page/search/search')
 // 		return r(require('../page/hello/hello.vue'))
 // 	}, 'home')
 // }
-import Signin from '../page/auth/Signin'
-import Signup from '../page/auth/Signup'
-import Profile from '../page/profile/Profile'
-import Setting from '../page/profile/Setting'
-import ProfileInfo from '../page/profile/ProfileInfo'
-
-export default [
+// import Signin from '../page/auth/Signin'
+// import Signup from '../page/auth/Signup'
+// import Profile from '../page/profile/Profile'
+// import Setting from '../page/profile/Setting'
+// import ProfileInfo from '../page/profile/ProfileInfo'
+// /*
+/*
 {
-	path: '/',
-	component: App,
-	children: [
-	{
-		path: '',
-		redirect: '/home'
-	},
-	{
-		path: '/home',
-		component: home
-	},
-	{
 		name: 'signin',
 		path: '/signin',
 		component: Signin
@@ -45,21 +33,6 @@ export default [
 		name: 'signup',
 		path: '/signup',
 		component: Signup
-	},
-	{
-		name: 'category',
-		path: '/category',
-		component: category
-	},
-	{
-		name: 'product',
-		path: '/product/:category?/:brand?/:shop?/:keywords?',
-		component: product
-	},
-	{
-		name: 'search',
-		path: '/search',
-		component: search
 	},
 	{
 		name: 'profile',
@@ -75,6 +48,36 @@ export default [
 		name: 'profileInfo',
 		path: '/profileInfo',
 		component: ProfileInfo
+	}
+ */
+
+export default [
+{
+	path: '/',
+	component: App,
+	children: [
+	{
+		path: '',
+		redirect: '/home'
+	},
+	{
+		path: '/home',
+		component: home
+	},
+	{
+		name: 'category',
+		path: '/category',
+		component: category
+	},
+	{
+		name: 'product',
+		path: '/product/:category?/:brand?/:shop?/:keywords?',
+		component: product
+	},
+	{
+		name: 'search',
+		path: '/search',
+		component: search
 	}
 	]
 }

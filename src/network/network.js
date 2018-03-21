@@ -1,6 +1,6 @@
  import axios from 'axios'
-import XXTEA from './xxtea'
-import CryptoJS from 'crypto-js' 
+import XXTEA from '../assets/js/xxtea'
+import CryptoJS from 'crypto-js'
 
 import { apiBaseUrl, SIGN_KEY, ENCRYPT_KEY } from '../config/env'
 import ENUM from '../config/enum';
@@ -29,7 +29,7 @@ axios.interceptors.request.use(config => {
     let isAPIRequest = config.url.indexOf(apiBaseUrl) == 0 ? true : false;
     if (isAPIRequest) {
         var params = config.data || {};
-        if (params != undefined) { 
+        if (params != undefined) {
             for (let key in params) {
                 if (params[key] === null || params[key] === undefined) {
                     delete params[key];
@@ -50,7 +50,7 @@ axios.interceptors.request.use(config => {
             config.headers['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
             config.headers['X-ECAPI-Sign']  = xSign ;
             config.headers['X-ECAPI-UserAgent'] = 'UserAgent';
-            config.headers['X-ECAPI-UDID'] = 'udid'; 
+            config.headers['X-ECAPI-UDID'] = 'udid';
 
             let encry_post_body = '';
             let body = null;
@@ -108,7 +108,7 @@ export function fetchEndpoint(reqUrl, type = 'POST', data = {}){
     if (!reqUrl) {return}
     type = type.toUpperCase()
     reqUrl = apiBaseUrl + reqUrl
-    
+
     if (type == 'GET') {
         let dataStr = ''; //数据拼接字符串
         Object.keys(data).forEach(key => {
@@ -124,10 +124,10 @@ export function fetchEndpoint(reqUrl, type = 'POST', data = {}){
 
     return new Promise((resolve,reject) => {
         axios({
-            method: type, 
+            method: type,
             url: reqUrl,
             data: data
-        }).then(res => {    
+        }).then(res => {
             resolve(res)
         }, error => {
             reject(error);

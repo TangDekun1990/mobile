@@ -15,3 +15,13 @@ ul{
 a {
 	text-decoration: none;
 }
+
+h3 {
+	padding: 0px;
+	margin: 0px;
+	font-weight: normal;
+}
+
+::-webkit-search-cancel-button {
+	display: none;
+}
