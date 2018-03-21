@@ -1,10 +1,10 @@
 <!-- ProduceHeader.vue -->
 <template>
 	<div class="ui-product-header">
-		<form  v-on:submit="search()" action="#">
+		<form action="#" v-on:submit.prevent="search($event)">
 			<div class="search">
 				<img src="../../../assets/image/change-icon/back@2x.png" class="ui-back">
-				<input type="text" placeholder="请输入您要搜索的商品" v-model="keyword">
+				<input type="search" placeholder="请输入您要搜索的商品" v-model="keyword" autocomplete="off">
 				<img src="../../../assets/image/change-icon/b2_cart@2x.png" class="ui-cart">
 			</div>
 		</form>
@@ -28,12 +28,15 @@
 			}
 		},
 		methods: {
-			search() {
+			search(e) {
 				let data = {
 					'isSearch': this.isSearch,
 					'keyword': this.keyword
 				}
 				this.$parent.$emit('change-list', data);
+				if (e) {
+					this.utils.stopPrevent(e);
+				}
 			}
 		}
 	}

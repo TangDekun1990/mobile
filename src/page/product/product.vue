@@ -123,6 +123,7 @@
 			setLocal(key) {
 				let current = this.utils.fetch('keyword');
 				current.push(''+ key+'');
+				current = this.utils.arrayFilter(current);
 				this.utils.save('keyword', current);
 			}
 		}
@@ -133,6 +134,7 @@
 	.ui-product {
 		width: auto;
 		height: 100%;
+		background-color: #ffffff;
 		div.product-body{
 			.loading-wrapper {
 				text-align: center;
