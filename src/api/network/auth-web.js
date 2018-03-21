@@ -1,4 +1,4 @@
-import { fetchEndpoint } from '../server/network';
+import { fetchEndpoint } from '../../network/network';
 
 // 网页第三方授权    app无用
 export const authWeb =

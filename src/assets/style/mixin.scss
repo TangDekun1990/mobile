@@ -1,5 +1,5 @@
 // 背景图片地址和大小
-@mixin bis($url) { 
+@mixin bis($url) {
 	background-image: url($url);
 	background-repeat: no-repeat;
 	background-size: 100% 100%;
@@ -22,7 +22,7 @@
 }
 
 //定位水平垂直居中
-@mixin center {  
+@mixin center {
 	position: absolute;
 	top: 50%;
     left: 50%;
@@ -30,14 +30,14 @@
 }
 
 //定位垂直居中
-@mixin ct {  
+@mixin ct {
 	position: absolute;
 	top: 50%;
     transform: translateY(-50%);
 }
 
 //定位水平居中
-@mixin cl {  
+@mixin cl {
 	position: absolute;
 	left: 50%;
     transform: translateX(-50%);
@@ -53,18 +53,20 @@
 @mixin sc($size, $color){
 	font-size: $size;
 	color: $color;
+	font-weight: normal;
 }
 
 //flex 布局和 子元素 对其方式
 @mixin fj($type: space-between){
 	display: flex;
+	-webkit-display: flex;
 	justify-content: $type;
 }
 
 // 图片水平居中
 @mixin ilc{
-	margin-left: auto; 
-    margin-right:auto; 
+	margin-left: auto;
+    margin-right:auto;
     display:block;
 }
 
@@ -82,9 +84,9 @@
 	right: $rightdis;
 }
 
-@mixin input {	
+@mixin input {
 	border: 0px;
-	color: #4E545D;          
+	color: #4E545D;
 	font-size: 14px;
 	height: -webkit-fill-available;
 	border-bottom: 1px solid #E8EAED;

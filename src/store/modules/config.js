@@ -1,4 +1,4 @@
-import { configGet } from '../../api/config'
+import { configGet } from '../../api/network/config'
 import { ServerResponse } from 'http';
 
 // initial state
@@ -30,7 +30,7 @@ const actions = {
         if (response.config && response.feature && response.platform) {
           commit('saveConfig', response)
         }
-      }, (error) => {        
+      }, (error) => {
       }
     )
   }

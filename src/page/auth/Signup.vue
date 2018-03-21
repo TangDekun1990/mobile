@@ -38,8 +38,8 @@ import HeaderItem from '../../components/common/HeaderItem'
 import CountdownButton from '../../components/common/CountdownButton'
 import { Indicator, Toast, Header } from 'mint-ui'
 import { mapMutations } from 'vuex'
-import * as authMobile from '../../api/auth-mobile'
-import { authMobileVerify } from '../../api/auth-mobile';
+import * as authMobile from '../../api/network/auth-mobile'
+import { authMobileVerify } from '../../api/network/auth-mobile';
 export default {
   props: {
   },
@@ -206,7 +206,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import 'src/style/mixin.scss';
   .container {
     position: absolute;
     width: 100%;

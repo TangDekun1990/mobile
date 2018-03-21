@@ -1,7 +1,7 @@
 import App from '../App'
 
 /*home */
-const home = r => require.ensure([], () => r( require('../page/home/home')), 'home');
+const home = r => require.ensure([], () => r( require('../page/home/Home')), 'home');
 
 /* 分类 */
 const category = r => require.ensure([], () => r( require('../page/category/Category')), 'category');
@@ -12,16 +12,15 @@ const product = r => require.ensure([], () => r( require('../page/product/produc
 /* 搜索 */
 const search = r => require.ensure([], () => r(require( '../page/search/search')), 'search');
 
-// const home = function (r) {
-// 	return require.ensure([], function(){
-// 		return r(require('../page/hello/hello.vue'))
-// 	}, 'home')
-// }
 import Signin from '../page/auth/Signin'
 import Signup from '../page/auth/Signup'
 import Profile from '../page/profile/Profile'
 import Setting from '../page/profile/Setting'
 import ProfileInfo from '../page/profile/ProfileInfo'
+// /*
+/*
+	
+ */
 
 export default [
 {
@@ -37,16 +36,6 @@ export default [
 		component: home
 	},
 	{
-		name: 'signin',
-		path: '/signin',
-		component: Signin
-	},
-	{
-		name: 'signup',
-		path: '/signup',
-		component: Signup
-	},
-	{
 		name: 'category',
 		path: '/category',
 		component: category
@@ -60,6 +49,16 @@ export default [
 		name: 'search',
 		path: '/search',
 		component: search
+	},
+	{
+		name: 'signin',
+		path: '/signin',
+		component: Signin
+	},
+	{
+		name: 'signup',
+		path: '/signup',
+		component: Signup
 	},
 	{
 		name: 'profile',

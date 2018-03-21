@@ -2,14 +2,14 @@
   <div class="container">
     <div class="top-wrapper">
       <div class="nav-item" id="left-nav-item" @click="goSetting">
-        <img class="nav-icon" src="../../assets/change-icon/e0_setup@2x.png" />
+        <img class="nav-icon" src="../../assets/image/change-icon/e0_setup@2x.png" />
       </div>
       <div class="nav-item" id="right-nav-item">
-        <img class="nav-icon" src="../../assets/change-icon/e0_message@2x.png" />
+        <img class="nav-icon" src="../../assets/image/change-icon/e0_message@2x.png" />
       </div>
       <div class="top-info-wrapper">
         <div class="avatar-wrapper" @click="goProfileInfo">
-        <img class="avatar" src="../../assets/change-icon/img_avatar@2x.png" />        
+        <img class="avatar" src="../../assets/image/change-icon/img_avatar@2x.png" />        
       </div>
       <label class="nickname" @click="goProfileInfo">{{nickname}}</label>
       </div>       
@@ -20,57 +20,57 @@
     </div>
     <div class="order-header">
       <div class="order-header-item" id="order-item-left">
-        <img class="order-header-icon" src="../../assets/change-icon/e0_order@2x.png" />
+        <img class="order-header-icon" src="../../assets/image/change-icon/e0_order@2x.png" />
         <label class="item-title order-header-title">我的订单</label>
       </div>
       <div class="order-header-item" id="order-item-right">        
         <label class="order-subtitle">查看全部订单</label>
-        <img class="indicator" src="../../assets/change-icon/enter@2x.png" />
+        <img class="indicator" src="../../assets/image/change-icon/enter@2x.png" />
       </div>
       <div class="order-header-line"></div>
     </div>
     <div class="order-wrapper">
       <div class="order-item">
-        <img class="order-item-icon" src="../../assets/change-icon/e0_payment@2x.png" />
+        <img class="order-item-icon" src="../../assets/image/change-icon/e0_payment@2x.png" />
         <label class="item-title order-item-title">待付款</label>
       </div>
       <div class="order-item">
-        <img class="order-item-icon" src="../../assets/change-icon/e0_delivery@2x.png" />
+        <img class="order-item-icon" src="../../assets/image/change-icon/e0_delivery@2x.png" />
         <label class="item-title order-item-title">待发货</label>
       </div>
       <div class="order-item">
-        <img class="order-item-icon" src="../../assets/change-icon/e0_receiving@2x.png" />
+        <img class="order-item-icon" src="../../assets/image/change-icon/e0_receiving@2x.png" />
         <label class="item-title order-item-title">待收货</label>
       </div>
       <div class="order-item">
-        <img class="order-item-icon" src="../../assets/change-icon/e0_evaluate@2x.png" />
+        <img class="order-item-icon" src="../../assets/image/change-icon/e0_evaluate@2x.png" />
         <label class="item-title order-item-title">待评价</label>
       </div>
     </div>
     <div class="info-item-wrapper section-header">
-      <img class="info-item-icon" src="../../assets/change-icon/e0_favorite@2x.png" />
+      <img class="info-item-icon" src="../../assets/image/change-icon/e0_favorite@2x.png" />
       <label class="item-title info-item-title">我的收藏</label>
-      <img class="indicator" src="../../assets/change-icon/enter@2x.png" />
+      <img class="indicator" src="../../assets/image/change-icon/enter@2x.png" />
     </div>
     <div class="info-item-wrapper">
-      <img class="info-item-icon" src="../../assets/change-icon/e0_address@2x.png" />
+      <img class="info-item-icon" src="../../assets/image/change-icon/e0_address@2x.png" />
       <label class="item-title info-item-title">管理收货地址</label>
-      <img class="indicator" src="../../assets/change-icon/enter@2x.png" />
+      <img class="indicator" src="../../assets/image/change-icon/enter@2x.png" />
     </div>
     <div class="info-item-wrapper section-footer">
-      <img class="info-item-icon" src="../../assets/change-icon/e0_coupon@2x.png" />
+      <img class="info-item-icon" src="../../assets/image/change-icon/e0_coupon@2x.png" />
       <label class="item-title info-item-title">优惠券</label>
-      <img class="indicator" src="../../assets/change-icon/enter@2x.png" />
+      <img class="indicator" src="../../assets/image/change-icon/enter@2x.png" />
     </div>
     <div class="info-item-wrapper section-header">
-      <img class="info-item-icon" src="../../assets/change-icon/e0_clause@2x.png" />
+      <img class="info-item-icon" src="../../assets/image/change-icon/e0_clause@2x.png" />
       <label class="item-title info-item-title">使用帮助</label>
-      <img class="indicator" src="../../assets/change-icon/enter@2x.png" />
+      <img class="indicator" src="../../assets/image/change-icon/enter@2x.png" />
     </div>
     <div class="info-item-wrapper section-footer">
-      <img class="info-item-icon" src="../../assets/change-icon/e0_phone@2x.png" />
+      <img class="info-item-icon" src="../../assets/image/change-icon/e0_phone@2x.png" />
       <label class="item-title info-item-title">客服电话</label>
-      <img class="indicator" src="../../assets/change-icon/enter@2x.png" />
+      <img class="indicator" src="../../assets/image/change-icon/enter@2x.png" />
     </div>
     <tabbar></tabbar>
   </div>
@@ -118,7 +118,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import 'src/style/mixin.scss';
   .container {
     position: absolute;
     width: 100%;

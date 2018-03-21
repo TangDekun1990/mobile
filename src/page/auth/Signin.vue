@@ -6,11 +6,11 @@
     </mt-header>
     <div class="top-wrapper">
       <div class="input-wrapper">
-        <img src="../../assets/change-icon/a0_user@2x.png"/>      
+        <img src="../../assets/image/change-icon/a0_user@2x.png"/>      
         <input v-model="username" placeholder="用户名/邮箱/手机号">         
       </div>
       <div class="input-wrapper">
-        <img src="../../assets/change-icon/a0_key@2x.png"/>      
+        <img src="../../assets/image/change-icon/a0_key@2x.png"/>      
         <input type="password" class="bottom-input" v-model="password" placeholder="请输入密码">        
       </div>
     </div>    
@@ -30,15 +30,15 @@
       </div>
       <div class="auth-bottom-wrapper">
         <div class="auth-item" v-if="isShowWechat" @click="onWechat">
-          <img class="auth-item-icon" src="../../assets/change-icon/c7_commodity_list_2@2x.png"/>      
+          <img class="auth-item-icon" src="../../assets/image/change-icon/c7_commodity_list_2@2x.png"/>      
           <label class="auth-title auth-item-title">微信</label>
         </div>
         <div class="auth-item" v-if="isShowWeibo" @click="onWeibo">
-          <img class="auth-item-icon" src="../../assets/change-icon/c7_commodity_list_1@2x.png"/>      
+          <img class="auth-item-icon" src="../../assets/image/change-icon/c7_commodity_list_1@2x.png"/>      
           <label class="auth-title auth-item-title">微博</label>
         </div>
         <div class="auth-item" v-if="isShowQQ" @click="onQQ">
-          <img class="auth-item-icon" src="../../assets/change-icon/c7_commodity_list_3@2x.png"/>      
+          <img class="auth-item-icon" src="../../assets/image/change-icon/c7_commodity_list_3@2x.png"/>      
           <label class="auth-title auth-item-title">QQ</label>
         </div>
       </div>
@@ -48,7 +48,7 @@
 
 <script>
 import HeaderItem from '../../components/common/HeaderItem';
-import * as authBase from '../../api/auth-base'
+import * as authBase from '../../api/network/auth-base'
 import { Indicator, Toast, Header } from 'mint-ui'
 import { mapMutations, mapActions, mapState } from 'vuex'
 export default {
@@ -153,7 +153,6 @@ export default {
 </script>
 
 <style scoped lang='scss'>
-@import 'src/style/mixin.scss';
   .container { 
     position: absolute;
     width: 100%;

@@ -1,6 +1,6 @@
 <template>
   <div v-if="isBack" @click="onclick">
-    <img class="icon" src="../../assets/change-icon/back@2x.png" />
+    <img class="icon" src="../../assets/image/change-icon/back@2x.png" />
   </div>
   <div v-else>
     <div v-if="icon" @click="onclick">
