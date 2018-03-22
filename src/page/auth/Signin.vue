@@ -11,7 +11,7 @@
       </div>
       <div class="input-wrapper">
         <img src="../../assets/image/change-icon/a0_key@2x.png"/>      
-        <input type="password" class="bottom-input" v-model="password" placeholder="请输入密码">        
+        <input type="password" class="bottom-input" v-model="password" placeholder="请输入密码" maxlength="20">        
       </div>
     </div>    
     <div class="submit" @click="signin">
