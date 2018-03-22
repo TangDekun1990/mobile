@@ -58,10 +58,22 @@ exports.cssLoaders = function (options) {
 function generateSassResourceLoader() {
 	var loaders = [
 		{
-			loader: 'css-loader'
+			loader: 'css-loader',
+			options: {
+				sourceMap: options.sourceMap
+			}
 		},
 		{
-			loader: 'sass-loader'
+			loader: 'postcss-loader',
+			options: {
+				sourceMap: options.sourceMap
+			}
+		},
+		{
+			loader: 'sass-loader',
+			options: {
+				sourceMap: options.sourceMap
+			}
 		},
 		{
 			loader:'sass-resources-loader',
