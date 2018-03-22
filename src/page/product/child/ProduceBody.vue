@@ -32,93 +32,95 @@ export default{
 </script>
 
 <style lang='scss' scoped>
-div.list {
-	display: flex;
-	width: auto;
-	align-items: center;
-	justify-content: space-between;
-	margin: 11px 10px;
-	img.product-img{
-		width: 110px;
-		height: 110px;
-		flex-basis: 110px;
-		border: 1px solid transparent;
-	}
-	span.promos {
-		position: absolute;
-		background: url('../../../assets/image/change-icon/label@2x.png') no-repeat;
-		width: 36px;
-		height: 19px;
-		color: #FFFFFF;
-		font-size: 10px;
-		top: 0px;
-		background-size: cover;
-		font-weight: 100;
-		line-height: 19px;
-		text-align: left;
-		padding-left: 5px;
-	}
-	div.flex-right {
-		padding-left: 14px;
-		width: 100%;
-		h3.title {
-			color: #4E545D;
-			font-size: 16px;
-			font-weight: normal;
-			font-family: 'PingFangSC';
-			display: -webkit-box;
-			-webkit-box-orient: vertical;
-			-webkit-line-clamp: 2;
-			overflow: hidden;
-			margin-bottom: 8px;
+.ui-product-body {
+	.list {
+		display: flex;
+		width: auto;
+		align-items: center;
+		justify-content: space-between;
+		margin: 11px 10px;
+		img.product-img{
+			width: 110px;
+			height: 110px;
+			flex-basis: 110px;
+			border: 1px solid transparent;
 		}
-		span.sub-title {
-			color: #55595F;
-			font-family: 'PingFangSC';
-			font-weight: 'Light';
-			font-size: 12px;
-			display: block;
-			display: -webkit-box;
-			-webkit-box-orient: vertical;
-			-webkit-line-clamp: 1;
-			overflow: hidden;
-			margin-bottom: 8px;
+		span.promos {
+			position: absolute;
+			background: url('../../../assets/image/change-icon/label@2x.png') no-repeat;
+			width: 36px;
+			height: 19px;
+			color: #FFFFFF;
+			font-size: 10px;
+			top: 0px;
+			background-size: cover;
+			font-weight: 100;
+			line-height: 19px;
+			text-align: left;
+			padding-left: 5px;
 		}
-		div.price {
-			margin-bottom: 8px;
-			span {
+		.flex-right {
+			padding-left: 14px;
+			width: 100%;
+			h3.title {
+				color: #4E545D;
+				font-size: 16px;
+				font-weight: normal;
 				font-family: 'PingFangSC';
-				&:last-child {
-					color: #F23030;
-					font-size: 16px;
-				}
-				&:last-child {
-					color: #A4AAB3;
-					font-size: 12px;
-					text-decoration: line-through;
+				display: -webkit-box;
+				-webkit-box-orient: vertical;
+				-webkit-line-clamp: 2;
+				overflow: hidden;
+				margin-bottom: 8px;
+			}
+			.sub-title {
+				color: #55595F;
+				font-family: 'PingFangSC';
+				font-weight: 'Light';
+				font-size: 12px;
+				display: block;
+				display: -webkit-box;
+				-webkit-box-orient: vertical;
+				-webkit-line-clamp: 1;
+				overflow: hidden;
+				margin-bottom: 8px;
+			}
+			.price {
+				margin-bottom: 8px;
+				span {
+					font-family: 'PingFangSC';
+					&:last-child {
+						color: #F23030;
+						font-size: 16px;
+					}
+					&:last-child {
+						color: #A4AAB3;
+						font-size: 12px;
+						text-decoration: line-through;
+					}
 				}
 			}
-		}
-		div.sendway {
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
-			font-size: 12px;
-			font-family: 'PingFangSC';
-			font-weight: 'Regular';
-			span{
-				color: #7C7F88;
-				&:first-child {
-					font-size: 10px;
-					color: #F34444;
-					padding: 3px;
-					border: 1px solid #F34444;
-					border-radius: 2px;
+			.sendway {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				font-size: 12px;
+				font-family: 'PingFangSC';
+				font-weight: 'Regular';
+				span{
+					color: #7C7F88;
+					&:first-child {
+						font-size: 10px;
+						color: #F34444;
+						padding: 3px;
+						border: 1px solid #F34444;
+						border-radius: 2px;
+					}
 				}
-			}
-			img {
-				width: 22px;
-				height: 20px;
+				img {
+					width: 22px;
+					height: 20px;
+				}
 			}
 		}
 	}
