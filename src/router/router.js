@@ -1,80 +1,109 @@
 import App from '../App'
 
-/*home */
-const home = r => require.ensure([], () => r( require('../page/home/Home')), 'home');
-
-/* 分类 */
-const category = r => require.ensure([], () => r( require('../page/category/Category')), 'category');
-
-/* 商品列表 */
-const product = r => require.ensure([], () => r( require('../page/product/product')), 'product');
-
-/* 搜索 */
-const search = r => require.ensure([], () => r(require( '../page/search/search')), 'search');
+import Home from '../page/home/Home'
+import Category from '../page/category/Category'
+import Product from '../page/product/Product'
+import Search from '../page/search/Search'
 
 import Signin from '../page/auth/Signin'
 import Signup from '../page/auth/Signup'
-import Profile from '../page/profile/Profile'
-import Setting from '../page/profile/Setting'
-import ProfileInfo from '../page/profile/ProfileInfo'
-// /*
-/*
-	
- */
 
-export default [
-{
-	path: '/',
-	component: App,
-	children: [
+import Profile from '../page/profile/Profile'
+import ProfileInfo from '../page/profile/ProfileInfo'
+import Setting from '../page/profile/Setting'
+
+import AddressList from '../page/address/AddressList'
+import AddressManage from '../page/address/AddressManage'
+
+import CouponList from '../page/coupon/CouponList'
+import CouponUsable from '../page/coupon/CouponUsable'
+
+import Checkout from '../page/checkout/Checkout'
+import GoodsList from '../page/checkout/GoodsList'
+
+export default [	
 	{
-		path: '',
-		redirect: '/home'
-	},
-	{
-		path: '/home',
-		component: home
-	},
-	{
-		name: 'category',
-		path: '/category',
-		component: category
-	},
-	{
-		name: 'product',
-		path: '/product/:category?/:brand?/:shop?/:keywords?',
-		component: product
-	},
-	{
-		name: 'search',
-		path: '/search',
-		component: search
-	},
-	{
-		name: 'signin',
-		path: '/signin',
-		component: Signin
-	},
-	{
-		name: 'signup',
-		path: '/signup',
-		component: Signup
-	},
-	{
-		name: 'profile',
-		path: '/profile',
-		component: Profile
-	},
-	{
-		name: 'setting',
-		path: '/setting',
-		component: Setting
-	},
-	{
-		name: 'profileInfo',
-		path: '/profileInfo',
-		component: ProfileInfo
+		path: '/',
+		component: App,
+		children: [				
+			{
+				path: '',
+				redirect: '/home'
+			},
+			{
+				path: '/home',
+				component: Home
+			},
+			{
+				name: 'category',
+				path: '/category',
+				component: Category
+			},
+			{
+				name: 'product',
+				path: '/product/:category?/:brand?/:shop?/:keywords?',
+				component: Product
+			},
+			{
+				name: 'search',
+				path: '/search',
+				component: Search
+			},
+			{
+				name: 'signin',
+				path: '/signin',
+				component: Signin
+			},
+			{
+				name: 'signup',
+				path: '/signup',
+				component: Signup
+			},
+			{
+				name: 'profile',
+				path: '/profile',
+				component: Profile
+			},
+			{
+				name: 'setting',
+				path: '/setting',
+				component: Setting
+			},
+			{
+				name: 'profileInfo',
+				path: '/profileInfo',
+				component: ProfileInfo
+			},
+			{
+				name: 'addressList',
+				path: '/addressList',
+				component: AddressList
+			},
+			{
+				name: 'addressManage',
+				path: '/addressManage',
+				component: AddressManage
+			},
+			{
+				name: 'couponList',
+				path: '/couponList',
+				component: CouponList
+			},
+			{
+				name: 'couponUsable',
+				path: '/couponUsable',
+				component: CouponUsable
+			},
+			{
+				name: 'checkout',
+				path: '/checkout',
+				component: Checkout
+			},
+			{
+				name: 'goodsList',
+				path: '/goodsList',
+				component: GoodsList
+			},
+		]
 	}
-	]
-}
 ]

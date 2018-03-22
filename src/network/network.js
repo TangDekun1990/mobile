@@ -49,8 +49,8 @@ axios.interceptors.request.use(config => {
 
             config.headers['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
             config.headers['X-ECAPI-Sign']  = xSign ;
-            config.headers['X-ECAPI-UserAgent'] = 'UserAgent';
-            config.headers['X-ECAPI-UDID'] = 'udid';
+            config.headers['X-ECAPI-UserAgent'] = 'UserAgent'; // TODO:
+            config.headers['X-ECAPI-UDID'] = 'udid'; // TODO:
 
             let encry_post_body = '';
             let body = null;

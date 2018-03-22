@@ -9,17 +9,17 @@
         <input v-model="username" placeholder="请输入阿联酋10位手机号">
       </div>
       <div class="input-wrapper">        
-        <input class='bottom-input' v-model="code" placeholder="请输入验证码">
+        <input class='bottom-input' v-model="code" placeholder="请输入验证码" maxlength="6">
         <countdown-button ref="timer" class="countdown" v-on:onclick="onVerify">
         </countdown-button>
       </div>
     </div>
     <div class="section-wrapper bottom-wrapper">
       <div class="input-wrapper">        
-        <input type="password" id="username-input" v-model="password" placeholder="设置密码">
+        <input type="password" id="username-input" v-model="password" placeholder="设置密码" maxlength="20">
       </div>
       <div class="input-wrapper">        
-        <input type="password" class='bottom-input' v-model="confirmPassword" placeholder="确认密码">
+        <input type="password" class='bottom-input' v-model="confirmPassword" placeholder="确认密码" maxlength="20">
       </div>
     </div>    
     <label class="tips">6-20位数字/字母/符号</label>
@@ -34,8 +34,7 @@
 </template>
 
 <script>
-import HeaderItem from '../../components/common/HeaderItem'
-import CountdownButton from '../../components/common/CountdownButton'
+import { HeaderItem, CountdownButton } from '../../components/common'
 import { Indicator, Toast, Header } from 'mint-ui'
 import { mapMutations } from 'vuex'
 import * as authMobile from '../../api/network/auth-mobile'
@@ -50,10 +49,6 @@ export default {
       password: '',
       confirmPassword: '',
     }
-  },
-  components: {
-    HeaderItem,
-    CountdownButton,    
   },
   computed: {
     title: function () {  
@@ -126,35 +121,38 @@ export default {
       let confirmPassword = this.confirmPassword
       if (username.length === 0) {
         Toast('请输入手机号');
-        return;
+        return false;
       }
       if (code.length === 0) {
         Toast('请输入验证码');
-        return;
+        return false;
       }
       if (code.length !== 6) {
         Toast('请输入6位验证码');
-        return;
+        return false;
       }
       if (password.length === 0) {
         Toast('请输入密码');
-        return;
+        return false;
       }
       if (password.length < 6 || password.length > 20) {
         Toast('请输入6-20个字符的密码');
-        return;
+        return false;
       }
       if (confirmPassword.length === 0) {
         Toast('请输入确认密码');
-        return;
+        return false;
       }
       if (password.length !== confirmPassword.length) {
         Toast('确认密码与输入密码不一致');
-        return;
+        return false;
       }
+      return true;
     },
     signup() {
-      this.check()
+      if (!this.check()) {
+        return;
+      }
       Indicator.open()
       authMobile.authMobileSignup(this.username, this.code, this.password).then(
         (response) => {
@@ -168,7 +166,9 @@ export default {
       )
     },
     bind() {
-      this.check()
+      if (!this.check()) {
+        return;
+      }
       Indicator.open()
       authMobile.authMobileBinding(this.username, this.code, this.password).then(
         (response) => {
@@ -180,12 +180,17 @@ export default {
       )
     },
     retrieve() {
-      this.check()
+      if (!this.check()) {
+        return;
+      }
       Indicator.open()
       authMobile.authMobileReset(this.username, this.code, this.password).then(
         (response) => {
           Indicator.close()
-          this.goBack()
+          Toast('密码找回成功，请重新登录')
+          setTimeout(() => {
+            this.goBack()
+          }, 2000)          
         }, (error) => {
           Indicator.close()
           Toast(error.errorMsg)
@@ -297,7 +302,7 @@ export default {
     font-size: 18px;
   }
   .countdown {
-    width: 107px;
+    width: 112px;
     height: 30px;
     margin-left: 10px;
     margin-right: 10px;
