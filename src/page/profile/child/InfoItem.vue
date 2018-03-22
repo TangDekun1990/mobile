@@ -1,5 +1,5 @@
 <template>
-  <div class="info-item-wrapper">
+  <div class="info-item-wrapper" @click="onclick">
     <img class="info-item-icon" v-bind:src="icon" />
     <label class="item-title info-item-title">{{title}}</label>
     <img class="indicator" src="../../../assets/image/change-icon/enter@2x.png" />
@@ -16,6 +16,11 @@ export default {
       type: String,
     },
   },
+  methods: {
+    onclick() {
+      this.$emit('onclick')
+    }
+  }
 }
 </script>
 

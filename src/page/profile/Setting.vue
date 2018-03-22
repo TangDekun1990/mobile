@@ -11,12 +11,12 @@
 </template>
 
 <script>
-import HeaderItem from '../../components/common/HeaderItem'
+import { HeaderItem } from '../../components/common'
 import { mapState, mapMutations } from 'vuex'
 import { Header, MessageBox } from 'mint-ui'
 export default {
   components: {
-    HeaderItem
+    // HeaderItem
   },  
   computed: {
     ...mapState({

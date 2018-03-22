@@ -34,8 +34,7 @@
 </template>
 
 <script>
-import HeaderItem from '../../components/common/HeaderItem'
-import CountdownButton from '../../components/common/CountdownButton'
+import { HeaderItem, CountdownButton } from '../../components/common'
 import { Indicator, Toast, Header } from 'mint-ui'
 import { mapMutations } from 'vuex'
 import * as authMobile from '../../api/network/auth-mobile'
@@ -50,10 +49,6 @@ export default {
       password: '',
       confirmPassword: '',
     }
-  },
-  components: {
-    HeaderItem,
-    CountdownButton,    
   },
   computed: {
     title: function () {  

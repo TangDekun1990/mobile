@@ -52,16 +52,19 @@
       </order-item>
     </div>
     <info-item 
+      v-on:onclick="goFavourite"       
       class="info-item-wrapper section-header" 
       :icon="require('../../assets/image/change-icon/e0_favorite@2x.png')"
       title="我的收藏">
     </info-item>
-    <info-item 
+    <info-item
+      v-on:onclick="goAddress"       
       class="info-item-wrapper" 
       :icon="require('../../assets/image/change-icon/e0_address@2x.png')"
       title="管理收货地址">
     </info-item>
     <info-item 
+      v-on:onclick="goCoupon"
       class="info-item-wrapper section-footer" 
       :icon="require('../../assets/image/change-icon/e0_coupon@2x.png')" 
       title="优惠券">
@@ -120,7 +123,17 @@ export default {
     },
     goSetting() {
       this.$router.push('setting')
-    }
+    },
+    goFavourite() {
+      // TODO:
+      this.$router.push('checkout')
+    },
+    goAddress() {
+      this.$router.push('addressList')
+    },
+    goCoupon() {
+      this.$router.push('couponList')
+    },
   },
 }
 </script>

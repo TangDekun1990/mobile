@@ -47,15 +47,12 @@
 </template>
 
 <script>
-import HeaderItem from '../../components/common/HeaderItem';
+import { HeaderItem } from '../../components/common';
 import * as authBase from '../../api/network/auth-base'
 import { Indicator, Toast, Header } from 'mint-ui'
 import { mapMutations, mapActions, mapState } from 'vuex'
 export default {
   name: 'Signin',
-  components: {
-    HeaderItem
-  },
   data() {
     return {
       username: '',      

@@ -6,6 +6,7 @@
 
 <script>
 export default {
+  name: 'countdown-button',
   data() {
     return {
       timer: null,

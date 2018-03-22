@@ -1,32 +1,32 @@
 <template>
   <div class="container">
-    <mt-header class="header" title="个人资料">
+    <mt-header class="header" title="商品清单">
       <header-item slot="left" v-bind:isBack=true v-on:onclick="goBack">
+      </header-item> 
+      <header-item slot="right" :title="countDesc">
       </header-item>    
     </mt-header>
   </div>
 </template>
 
 <script>
-import { HeaderItem } from '../../components/common'
 import { Header } from 'mint-ui'
-import { mapState, mapMutations } from 'vuex'
+import { HeaderItem } from '../../components/common'
 export default {
-  components: {
-    // HeaderItem
-  },  
-  computed: {
-    ...mapState({
-      user: state => state.auth.user,
-    }),
+  data() {
+    return {
+      count: 0,
+    }
   },
-  methods: {  
-    ...mapMutations({
-      clearToken: 'signout'
-    }),  
+  computed: {
+    countDesc() {
+      return '共' + this.count + '件'
+    }
+  },
+  methods: {
     goBack() {
-      this.$router.go(-1) 
-    },
+      this.$router.go(-1)
+    },    
   }
 }
 </script>
@@ -42,5 +42,4 @@ export default {
     @include header;
   }
 </style>
-
 
