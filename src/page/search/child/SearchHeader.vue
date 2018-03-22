@@ -1,9 +1,9 @@
 <!-- SearchHeader.vue -->
 <template>
 	<div class="ui-search-header">
-		<form v-on:submit="search()" action="#">
+		<form v-on:submit.prevent="search($event)" action="#">
 			<input type="search" placeholder="请输入您要搜索的商品" v-model="keywords">
-			<span>取消{{this.value}}</span>
+			<span v-on:click='cancel()'>取消</span>
 		</form>
 	</div>
 </template>
@@ -25,9 +25,13 @@
 			}
 		},
 		methods: {
-			search() {
+			search(e) {
 				let params = {'keywords': this.keywords};
 				this.$router.push({'name': 'product', 'params': params});
+				this.utils.stopPrevent(e);
+			},
+			cancel() {
+				this.$router.push({'name': 'category'});
 			}
 		}
 	}
