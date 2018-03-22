@@ -5,8 +5,8 @@
 			<img class="product-img" v-bind:src="item.photos[0].thumb">
 			<span class="promos" v-if="item.activity && item.activity.display_time">促销</span>
 			<div class="flex-right">
-				<h3 class="title">{{ item.name }}</h3>
-				<span class="sub-title">{{ item.desc }}</span>
+				<h3 class="title" style="-webkit-box-orient:vertical">{{ item.name }}</h3>
+				<span class="sub-title" style="-webkit-box-orient:vertical">{{ item.desc }}</span>
 				<div class="price">
 					<span>{{ item.current_price }}</span>
 					<span>{{ item.price }}</span>
@@ -62,14 +62,23 @@ export default{
 		.flex-right {
 			padding-left: 14px;
 			width: 100%;
-			h3.title {
+			.title {
 				color: #4E545D;
 				font-size: 16px;
 				font-weight: normal;
 				font-family: 'PingFangSC';
-				display: -webkit-box;
-				-webkit-box-orient: vertical;
+
+				display:-moz-box;
+			    display:-webkit-box;
+			    display:box;
+
 				-webkit-line-clamp: 2;
+				-moz-line-clamp: 2;
+
+				-moz-box-orient:vertical;
+				-webkit-box-orient:vertical;
+				box-orient:vertical;
+
 				overflow: hidden;
 				margin-bottom: 8px;
 			}
@@ -77,9 +86,18 @@ export default{
 				color: #55595F;
 				font-family: 'PingFangSC';
 				font-size: 12px;
-				display: -webkit-box;
-				-webkit-box-orient: vertical;
+
+				display:-moz-box;
+			    display:-webkit-box;
+			    display:box;
+
 				-webkit-line-clamp: 1;
+				-moz-line-clamp: 1;
+
+				-moz-box-orient:vertical;
+				-webkit-box-orient:vertical;
+				box-orient:vertical;
+
 				overflow: hidden;
 				margin-bottom: 8px;
 			}
