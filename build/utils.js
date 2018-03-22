@@ -63,12 +63,12 @@ function generateSassResourceLoader() {
 				sourceMap: options.sourceMap
 			}
 		},
-		{
-			loader: 'postcss-loader',
-			options: {
-				sourceMap: options.sourceMap
-			}
-		},
+		// {
+		// 	loader: 'postcss-loader',
+		// 	options: {
+		// 		sourceMap: options.sourceMap
+		// 	}
+		// },
 		{
 			loader: 'sass-loader',
 			options: {
