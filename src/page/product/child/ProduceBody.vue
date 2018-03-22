@@ -76,9 +76,7 @@ export default{
 			.sub-title {
 				color: #55595F;
 				font-family: 'PingFangSC';
-				font-weight: 'Light';
 				font-size: 12px;
-				display: block;
 				display: -webkit-box;
 				-webkit-box-orient: vertical;
 				-webkit-line-clamp: 1;
