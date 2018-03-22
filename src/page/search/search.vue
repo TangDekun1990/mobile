@@ -67,7 +67,7 @@
 
 <style lang='scss' scoped>
 	.search-wrapper{
-		height: -webkit-fill-available;
+		height: auto;
 		width: auto;
 		background-color: #F0F2F5;
 		.search-body {
