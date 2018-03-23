@@ -27,7 +27,7 @@
         <label class="order-subtitle">查看全部订单</label>
         <img class="indicator" src="../../assets/image/change-icon/enter@2x.png" />
       </div>
-      <div class="order-header-line"></div>
+      <!-- <div class="order-header-line"></div> -->
     </div>
     <div class="order-wrapper">      
       <order-item 
@@ -70,6 +70,7 @@
       title="优惠券">
     </info-item>
     <info-item 
+      v-on:onclick="goGoodsList"
       class="info-item-wrapper section-header" 
       :icon="require('../../assets/image/change-icon/e0_clause@2x.png')" 
       title="使用帮助">
@@ -132,7 +133,10 @@ export default {
       this.$router.push('addressList')
     },
     goCoupon() {
-      this.$router.push('couponList')
+      this.$router.push('couponUsable')
+    },
+    goGoodsList() {
+      this.$router.push('goodsList')
     },
   },
 }

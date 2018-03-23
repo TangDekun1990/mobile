@@ -1,7 +1,7 @@
 <template>
-  <div class="info-item-wrapper" @click="onclick">
-    <img class="info-item-icon" v-bind:src="icon" />
-    <label class="item-title info-item-title">{{title}}</label>
+  <div class="container" @click="onclick">    
+    <label class="title">{{title}}</label>
+    <label class="subtitle">{{subtitle}}</label>
     <img class="indicator" src="../../../assets/image/change-icon/enter@2x.png" />
   </div>
 </template>
@@ -12,7 +12,7 @@ export default {
     title: {
       type: String,
     },
-    icon: {
+    subtitle: {
       type: String,
     },
   },
@@ -25,26 +25,25 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .info-item-wrapper {    
+  .container {    
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
-    background-color: #fff;
-    border-bottom: 1px solid #E8EAED; 
+    background-color: #fff; 
   }
-  .item-title {
-    font-size: 14px;
+  .title {
+    width: 100px;
+    font-size: 16px;
     color: #4E545D;
+    margin-left: 15px;
   }
-  .info-item-icon {
-    width: 22px;
-    height: 22px;
-    margin-left: 21px;
-  }
-  .info-item-title {
+  .subtitle {
     flex: 1;
-    margin-left: 19px;
+    margin-left: 20px;    
+    color: #7C7F88;
+    font-size: 13px;
+    text-align: right;
   }
   .indicator {
     width: 7px;

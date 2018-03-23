@@ -6,22 +6,28 @@
       <header-item slot="right" :title="countDesc">
       </header-item>    
     </mt-header>
+    <goods-item class="item" v-for="item in items" :key="item"></goods-item>
   </div>
 </template>
 
 <script>
 import { Header } from 'mint-ui'
 import { HeaderItem } from '../../components/common'
+import GoodsItem from './child/GoodsItem'
 export default {
   data() {
     return {
       count: 0,
+      items: ['1', '2', '3', '4', '5', '6', '7', '8']
     }
   },
   computed: {
     countDesc() {
       return '共' + this.count + '件'
     }
+  },
+  components: {
+    GoodsItem,
   },
   methods: {
     goBack() {
@@ -36,10 +42,14 @@ export default {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    align-items: stretch;
+    align-items: stretch;    
   }
   .header {
     @include header;
+  }
+  .item {
+    height: 110px;
+    background-color: #fff;
   }
 </style>
 
