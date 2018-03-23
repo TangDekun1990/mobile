@@ -1,20 +1,26 @@
 <template>
   <div class="container">
-    <mt-header class="header" title="我的优惠券">
+    <mt-header class="header" title="配送方式">
       <header-item slot="left" v-bind:isBack=true v-on:onclick="goBack">
-      </header-item>          
+      </header-item>    
     </mt-header>
+    <shipping-item>
+    </shipping-item>
   </div>
 </template>
 
 <script>
-import { Header } from 'mint-ui'
 import { HeaderItem } from '../../components/common'
+import { Header } from 'mint-ui'
+import ShippingItem from './child/ShippingItem'
 export default {
-  methods: {
+  components: {
+    ShippingItem,
+  },
+  methods: {      
     goBack() {
-      this.$router.go(-1)
-    },    
+      this.$router.go(-1) 
+    },
   }
 }
 </script>
@@ -28,7 +34,8 @@ export default {
     background-color: $mainbgColor;
   }
   .header {
-    @include header;
+    @include header;    
   }
 </style>
+
 

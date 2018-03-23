@@ -1,9 +1,9 @@
 <template>
-  <div class="container">    
+  <div class="container" @click="onclick">    
     <div class="photo-wrapper">    
       <img src="../../../assets/image/change-icon/default_image_02@2x.png" v-for="item in items" :key="item"/>
     </div>
-    <div class="right-wrapper" @click="onclick">
+    <div class="right-wrapper">
       <label class="subtitle">共0件</label>
       <img class="indicator" src="../../../assets/image/change-icon/enter@2x.png" />
     </div>    
@@ -37,7 +37,7 @@ export default {
     justify-content: flex-start;
     align-items: center;
     background-color: #fff;
-    border-bottom: 1px solid #E8EAED; 
+    border-bottom: 1px solid $lineColor; 
     .photo-wrapper {
       flex: 1;
       display: flex;

@@ -31,7 +31,7 @@ export default {
     justify-content: flex-start;
     align-items: center;
     background-color: #fff;
-    border-bottom: 1px solid #E8EAED; 
+    border-bottom: 1px solid $lineColor; 
   }
   .item-title {
     font-size: 14px;

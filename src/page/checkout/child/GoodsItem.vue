@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <img class="photo" v-bind:src="url">
+    <img class="photo" src="../../../assets/image/change-icon/default_image_02@2x.png">
     <div class="right-wrapper">
       <label class="title">【新品上市】女款春秋马卡龙色雪纺衬衫花色闪亮青春</label>
       <label class="subtitle">花色，M</label>
@@ -39,7 +39,7 @@ export default {
     flex-direction: row;
     justify-content: flex-start;
     align-items: stretch;
-    border-bottom: 1px solid #E8EAED;
+    border-top: 1px solid $lineColor;
   }
   .photo {
     width: 90px;
@@ -57,7 +57,8 @@ export default {
   .title {
     margin-top: 8px;
     color: #4E545D;
-    font-size: 14px;      
+    font-size: 14px;  
+    margin-right: 10px;    
   }
   .subtitle {
     margin-top: 6px;
@@ -72,6 +73,7 @@ export default {
     justify-content: space-between;
     align-items: center;
     margin-top: 10px;
+    margin-right: 10px;
   }
   .price {
     color: #4E545D;

@@ -224,7 +224,7 @@ export default {
     flex-direction: column;
     justify-content: flex-start;
     align-items: stretch;
-    background-color: #F0F2F5;
+    background-color: $mainbgColor;
     .section-wrapper {       
       display: flex;    
       flex-direction: column;

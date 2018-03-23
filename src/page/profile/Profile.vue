@@ -151,7 +151,7 @@ export default {
     flex-direction: column;
     justify-content: flex-start;
     align-items: stretch;
-    background-color: #f0f2f5;
+    background-color: $mainbgColor;
     .top-wrapper {
       display: flex;
       flex-direction: column;
@@ -237,7 +237,7 @@ export default {
       justify-content: space-around;
       align-content: stretch;
       background-color: #fff;
-      border-bottom: 1px solid #E8EAED;
+      border-bottom: 1px solid $lineColor;
     }
     .order-header-item {
       flex: 1;

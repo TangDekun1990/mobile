@@ -70,10 +70,10 @@ export default {
       this.$router.push('goodsList')
     },
     goShipping() {
-      // TODO:      
+      this.$router.push('shipping')
     },
     goInvoice() {
-      // TODO:      
+      this.$router.push('invoice')
     },
     goDuration() {
       // TODO:      

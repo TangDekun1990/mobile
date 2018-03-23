@@ -1,25 +1,39 @@
 import App from '../App'
 
+// home
 import Home from '../page/home/Home'
+
+// category
 import Category from '../page/category/Category'
+
+// product
 import Product from '../page/product/Product'
+
+// search
 import Search from '../page/search/Search'
 
+// auth
 import Signin from '../page/auth/Signin'
 import Signup from '../page/auth/Signup'
 
+// profile
 import Profile from '../page/profile/Profile'
 import ProfileInfo from '../page/profile/ProfileInfo'
 import Setting from '../page/profile/Setting'
 
+// address
 import AddressList from '../page/address/AddressList'
 import AddressManage from '../page/address/AddressManage'
 
+// coupon
 import CouponList from '../page/coupon/CouponList'
 import CouponUsable from '../page/coupon/CouponUsable'
 
+// checkout
 import Checkout from '../page/checkout/Checkout'
 import GoodsList from '../page/checkout/GoodsList'
+import Shipping from '../page/checkout/Shipping'
+import Invoice from '../page/checkout/Invoice'
 
 export default [	
 	{
@@ -104,6 +118,16 @@ export default [
 				path: '/goodsList',
 				component: GoodsList
 			},
+			{
+				name: 'shipping',
+				path: '/shipping',
+				component: Shipping
+			},
+			{
+				name: 'invoice',
+				path: '/invoice',
+				component: Invoice
+			},			
 		]
 	}
 ]
