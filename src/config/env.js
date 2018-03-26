@@ -9,6 +9,9 @@ if (process.env.NODE_ENV === 'development') {
 	// apiBaseUrl = 'http://api.wenchao.ae';
 }
 
+// 版本号
+const VERSION = '1.0.0';
+
 // 签名密钥
 const SIGN_KEY = 'q781cXa9Z8hp0Z7aJL8ssG5oiP1R9nA7';
 // 加密密钥
@@ -22,6 +25,7 @@ export {
 	photoBaseUrl,
 	SIGN_KEY,
 	ENCRYPT_KEY,
-	ROUTERMODE
+	ROUTERMODE,
+	VERSION,
 }
 

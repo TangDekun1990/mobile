@@ -89,12 +89,23 @@ import Tabbar from '../../components/common/Tabbar'
 import InfoItem from './child/InfoItem'
 import OrderItem from './child/OrderItem'
 import { mapState } from 'vuex'
+import { userProfileGet } from '../../api/network/user'
 export default {
   name: 'profile',
   components: {
     Tabbar,
     OrderItem,
     InfoItem,
+  },
+  created: function () {
+    if (this.isOnline) {
+      userProfileGet().then(
+        (response) => {
+
+        }, (error) => {
+          
+        })
+    }
   },
   computed: {
     ...mapState({
