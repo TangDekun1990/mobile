@@ -12,6 +12,13 @@ import Product from '../page/product/Product'
 // search
 import Search from '../page/search/Search'
 
+/* 商品详情 */
+const detail = r => require.ensure([], () => r(require( '../page/detail/Goods')), 'goods');
+
+/* 商品详情 */
+const demo = r => require.ensure([], () => r(require( '../page/product-detail/index')), 'demo');
+
+
 // auth
 import Signin from '../page/auth/Signin'
 import Signup from '../page/auth/Signup'
@@ -37,11 +44,16 @@ import GoodsList from '../page/checkout/GoodsList'
 import Shipping from '../page/checkout/Shipping'
 import Invoice from '../page/checkout/Invoice'
 
-export default [	
+// 商品详情
+import commodity from '../page/product-detail/child/commodity';
+import aspect from '../page/product-detail/child/aspect';
+import review from '../page/product-detail/child/Evaluation';
+
+export default [
 	{
 		path: '/',
 		component: App,
-		children: [				
+		children: [
 			{
 				path: '',
 				redirect: '/home'
@@ -139,7 +151,32 @@ export default [
 				name: 'invoice',
 				path: '/invoice',
 				component: Invoice
-			},			
+			},
+			{
+				name: 'detail',
+				path: '/detial/:id?',
+				component: detail
+			},
+			{
+				name: 'demo',
+				path: '/demo/:id?',
+				component: demo
+			},
+			{
+				name: 'commodity',
+				path: '/commodity',
+				component: commodity
+			},
+			{
+				name: 'aspect',
+				path: '/aspect',
+				component: aspect
+			},
+			{
+				name: 'review',
+				path: '/review',
+				component: review
+			}
 		]
 	}
 ]
