@@ -69,7 +69,7 @@
 	.search-wrapper{
 		height: auto;
 		width: auto;
-		background-color: #F0F2F5;
+		background-color: $mainbgColor;
 		.search-body {
 			padding: 15px;
 			div.list {

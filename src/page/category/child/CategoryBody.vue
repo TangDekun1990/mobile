@@ -68,7 +68,7 @@ export default {
 		top: 0px;
 		.category-sidebar {
 			flex-basis: 140px;
-			background-color: #F0F2F5;
+			background-color: $mainbgColor;
 			overflow-y: scroll;
 			ul {
 				border-right: 1px solid #E8EAED;
@@ -84,7 +84,7 @@ export default {
 					}
 				}
 				li.noActive {
-					background-color: #F0F2F5;
+					background-color: $mainbgColor;
 					border-left: 0px;
 					a {
 						color: #4E545D;

@@ -1,7 +1,7 @@
 <!-- ProduceBody.vue -->
 <template>
 	<div class="ui-product-body">
-		<div class="list">
+		<div class="list" v-on:click='goDetail()'>
 			<img class="product-img" v-bind:src="item.photos[0].thumb">
 			<span class="promos" v-if="item.activity && item.activity.display_time">促销</span>
 			<div class="flex-right">
@@ -27,7 +27,12 @@ export default{
 	data(){
 		return{}
 	},
-	props: ['item']
+	props: ['item', 'productId'],
+	methods: {
+		goDetail() {
+			this.$router.push({'name': 'detail', 'params': {'id': this.productId}});
+		}
+	}
 }
 </script>
 

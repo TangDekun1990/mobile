@@ -1,5 +1,16 @@
 <template>
-	<div>
+	<div class="app">
+		<!-- 这里是会被缓存的视图组件-->
+		<!-- <keep-alive>
+		    <router-view v-if="$route.meta.keepAlive">
+
+		    </router-view>
+		</keep-alive> -->
+
+ 		<!-- 这里是不被缓存的视图组件-->
+		<!-- <router-view v-if="!$route.meta.keepAlive">
+
+		</router-view> -->
 		<template v-if="$route.matched.length">
 			<router-view></router-view>
 		</template>
@@ -25,6 +36,9 @@ export default {
 </script>
 
 <style>
+	div.app {
+		height: 100%;
+	}
 #app {
 	font-family: 'Avenir', Helvetica, Arial, sans-serif;
 	-webkit-font-smoothing: antialiased;
