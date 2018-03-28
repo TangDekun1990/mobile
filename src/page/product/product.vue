@@ -7,7 +7,7 @@
 		<div class="product-body">
 
 			<div class="flex-wrapper" v-infinite-scroll="getMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
-				<product-body :item="item" v-for='(item, index) in productList' v-bind:key='item.id'></product-body>
+				<product-body :item="item" v-for='(item, index) in productList' v-bind:key='item.id' :productId="item.id"></product-body>
 			</div>
 
 			<div class="loading-wrapper">

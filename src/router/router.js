@@ -12,15 +12,17 @@ const product = r => require.ensure([], () => r( require('../page/product/produc
 /* 搜索 */
 const search = r => require.ensure([], () => r(require( '../page/search/search')), 'search');
 
+/* 商品详情 */
+const detail = r => require.ensure([], () => r(require( '../page/detail/Goods')), 'goods');
+
+/* 商品详情 */
+const demo = r => require.ensure([], () => r(require( '../page/product-detail/index')), 'demo');
+
 import Signin from '../page/auth/Signin'
 import Signup from '../page/auth/Signup'
 import Profile from '../page/profile/Profile'
 import Setting from '../page/profile/Setting'
 import ProfileInfo from '../page/profile/ProfileInfo'
-// /*
-/*
-	
- */
 
 export default [
 {
@@ -74,6 +76,16 @@ export default [
 		name: 'profileInfo',
 		path: '/profileInfo',
 		component: ProfileInfo
+	},
+	{
+		name: 'detail',
+		path: '/detial/:id?',
+		component: detail
+	},
+	{
+		name: 'demo',
+		path: '/demo/:id?',
+		component: demo
 	}
 	]
 }
