@@ -18,7 +18,7 @@ export default new Vuex.Store({
     auth,
     config,
     address,
-    region
+    region,
     detail
   },
   getters: getters,

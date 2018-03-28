@@ -3,7 +3,7 @@
 	<div class="ui-recommend-wrapper">
 		<div class="wrapper-swipe">
 			<mt-swipe :auto="0" >
-			  	<mt-swipe-item v-for="(item, index) in list">
+			  	<mt-swipe-item v-for="(item, index) in list" :key="item">
 			  		<div class="image-swipe-wrapper">
 						<div v-for="image in item[0]">
 							<img :src="image.photos[0].thumb">
