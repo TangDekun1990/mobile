@@ -2,11 +2,11 @@
   <div class="container" @click="onclick"> 
     <div class="left-wrapper">
       <div class="title-wrapper">        
-        <label class="title">孙朋朋</label>
-        <label class="title">18600235103</label>
+        <label class="title">{{item.name}}</label>
+        <label class="title">{{item.mobile}}</label>
         <label class="default" v-if="isDefault">默认</label>
       </div>
-      <label class="desc address-text">北京市朝阳区朝外大街乙6号朝外SOHO A座 807朝外SOHO A座 807</label>
+      <label class="desc address-text">{{detailAddress}}</label>
     </div>
     <img class="indicator" v-bind:src="iconUrl" />    
   </div>
@@ -15,9 +15,8 @@
 <script>
 export default {
   props: {
-    isDefault: {
-      type: Boolean,
-      default: true,
+    item: {
+      type: Object,  
     },
     isSelected: {
       type: Boolean,
@@ -31,7 +30,25 @@ export default {
       } else {
         return require("../../../assets/image/change-icon/choice@2x.png")
       }
-    }
+    },
+    isDefault() {
+      if (this.item) {
+        return this.item.is_default
+      }
+      return false
+    },
+    detailAddress() {
+      let address = ''
+      if (this.item) {
+        let regions = this.item.regions
+        for (let i = 0; i < regions.length; i++) {
+          const element = regions[i];
+          address += element.name
+        }
+      }
+      address += this.item.address 
+      return address
+    },    
   },
   methods: {
     onclick() {

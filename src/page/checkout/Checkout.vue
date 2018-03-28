@@ -6,7 +6,7 @@
       <header-item slot="right" title="联系客服" v-on:onclick="rightClick">
       </header-item>        
     </mt-header>
-    <checkout-address class="address" v-on:onclick="goAddress">
+    <checkout-address class="address" v-on:onclick="goAddress" v-bind:item="getSelectedAddress">
     </checkout-address>
     <checkout-goods class="goods section-header" v-on:onclick="goGoodsList">
     </checkout-goods>
@@ -47,6 +47,9 @@ import CheckoutGoods from './child/CheckoutGoods'
 import CheckoutItem from './child/CheckoutItem'
 import CheckoutComment from './child/CheckoutComment'
 import CheckoutDesc from './child/CheckoutDesc'
+import { mapState, mapMutations } from 'vuex'
+import * as consignee from '../../api/network/consignee'
+import { Toast } from 'mint-ui'
 export default {
   components: {
     CheckoutAddress,
@@ -55,7 +58,43 @@ export default {
     CheckoutComment,
     CheckoutDesc,
   },
+  computed: {
+    ...mapState({
+      defaultAddress: state => state.address.defaultItem,
+      selectedAddress: state => state.address.selectedItem,
+      addressItems: state => state.address.items,
+    }),
+    getSelectedAddress: function() {
+      let item = this.selectedAddress
+      if (item === null) {
+        // 没有默认地址时，第一个地址为当前选中的地址       
+        if (this.defaultAddress === null) {
+          let items = this.addressItems
+          if (items && items.length) {
+            this.selectAddressItem(items[0])
+          }          
+        } else {
+          this.selectAddressItem(this.defaultAddress)
+        }
+      }      
+      return this.selectedAddress    
+    }
+  },
+  created: function() {    
+    consignee.consigneeList().then(
+      (response) => {       
+        let items = response.consignees        
+        // 保存地址列表
+        this.saveAddressList(items)
+      }, (error) => {
+        Toast(error.errorMsg)
+      })
+  },
   methods: {
+    ...mapMutations({
+      saveAddressList: 'saveItems',
+      selectAddressItem: 'selectItem'
+    }),
     goBack() {
       this.$router.go(-1)
     },

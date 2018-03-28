@@ -38,6 +38,7 @@ import { HeaderItem, CountdownButton } from '../../components/common'
 import { Indicator, Toast, Header } from 'mint-ui'
 import { mapMutations } from 'vuex'
 import * as authMobile from '../../api/network/auth-mobile'
+import * as site from '../../api/network/site'
 import { authMobileVerify } from '../../api/network/auth-mobile';
 export default {
   props: {
@@ -48,6 +49,7 @@ export default {
       code: '',
       password: '',
       confirmPassword: '',
+      aggrementUrl: '',
     }
   },
   computed: {
@@ -69,6 +71,19 @@ export default {
         return '确认'
       } 
     },
+  },
+  created: function () {
+    let mode = this.$route.params.mode;   
+      if (mode === 'signup') {
+        site.siteGet().then(
+          (response) => { 
+            if (response && response.site_info) {
+              this.aggrementUrl = response.site_info.terms_url  
+            }
+        }, 
+        (error) => {
+        })        
+      }
   },    
   methods: {  
     ...mapMutations({
@@ -208,7 +223,7 @@ export default {
       }
     },
     onAgreement() {
-      
+      this.$router.push({ name: 'agreement', params: {'url': this.aggrementUrl}})
     }
   }
 }
