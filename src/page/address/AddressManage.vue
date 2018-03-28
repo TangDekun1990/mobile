@@ -1,0 +1,33 @@
+<template>
+  <div class="container">
+    <mt-header class="header" title="管理收货地址">
+      <header-item slot="left" v-bind:isBack=true v-on:onclick="goBack">
+      </header-item>          
+    </mt-header>
+  </div>
+</template>
+
+<script>
+import { Header } from 'mint-ui'
+import { HeaderItem } from '../../components/common'
+export default {
+  methods: {
+    goBack() {
+      this.$router.go(-1)
+    },    
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+  .container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+  }
+  .header {
+    @include header;
+  }
+</style>
+

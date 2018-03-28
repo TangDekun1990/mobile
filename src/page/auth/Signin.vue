@@ -11,7 +11,7 @@
       </div>
       <div class="input-wrapper">
         <img src="../../assets/image/change-icon/a0_key@2x.png"/>      
-        <input type="password" class="bottom-input" v-model="password" placeholder="请输入密码">        
+        <input type="password" class="bottom-input" v-model="password" placeholder="请输入密码" maxlength="20">        
       </div>
     </div>    
     <div class="submit" @click="signin">
@@ -25,7 +25,7 @@
     <div class="bottom-wrapper" v-if="isShowAuth">
       <div class="auth-title-wrapper">
         <div class="auth-line"></div>
-        <label class="auth-title">第三方登录</label>
+          <label class="auth-title">第三方登录</label>
         <div class="auth-line"></div>
       </div>
       <div class="auth-bottom-wrapper">
@@ -47,15 +47,12 @@
 </template>
 
 <script>
-import HeaderItem from '../../components/common/HeaderItem';
+import { HeaderItem } from '../../components/common';
 import * as authBase from '../../api/network/auth-base'
 import { Indicator, Toast, Header } from 'mint-ui'
 import { mapMutations, mapActions, mapState } from 'vuex'
 export default {
   name: 'Signin',
-  components: {
-    HeaderItem
-  },
   data() {
     return {
       username: '',      
@@ -161,7 +158,7 @@ export default {
     flex-direction: column;
     justify-content: flex-start;
     align-items: stretch;
-    background-color: #f0f2f5;
+    background-color: $mainbgColor;
     .top-wrapper {
       margin-top: 10px;
       .input-wrapper {

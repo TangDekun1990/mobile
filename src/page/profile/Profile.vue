@@ -27,62 +27,85 @@
         <label class="order-subtitle">查看全部订单</label>
         <img class="indicator" src="../../assets/image/change-icon/enter@2x.png" />
       </div>
-      <div class="order-header-line"></div>
+      <!-- <div class="order-header-line"></div> -->
     </div>
-    <div class="order-wrapper">
-      <div class="order-item">
-        <img class="order-item-icon" src="../../assets/image/change-icon/e0_payment@2x.png" />
-        <label class="item-title order-item-title">待付款</label>
-      </div>
-      <div class="order-item">
-        <img class="order-item-icon" src="../../assets/image/change-icon/e0_delivery@2x.png" />
-        <label class="item-title order-item-title">待发货</label>
-      </div>
-      <div class="order-item">
-        <img class="order-item-icon" src="../../assets/image/change-icon/e0_receiving@2x.png" />
-        <label class="item-title order-item-title">待收货</label>
-      </div>
-      <div class="order-item">
-        <img class="order-item-icon" src="../../assets/image/change-icon/e0_evaluate@2x.png" />
-        <label class="item-title order-item-title">待评价</label>
-      </div>
+    <div class="order-wrapper">      
+      <order-item 
+        class="order-item" 
+        :icon="require('../../assets/image/change-icon/e0_payment@2x.png')"
+        title="待付款">
+      </order-item>
+      <order-item 
+        class="order-item" 
+        :icon="require('../../assets/image/change-icon/e0_delivery@2x.png')"
+        title="待发货">
+      </order-item>
+      <order-item 
+        class="order-item" 
+        :icon="require('../../assets/image/change-icon/e0_receiving@2x.png')"
+        title="待收货">
+      </order-item>
+      <order-item 
+        class="order-item" 
+        :icon="require('../../assets/image/change-icon/e0_evaluate@2x.png')"
+        title="待评价">
+      </order-item>
     </div>
-    <div class="info-item-wrapper section-header">
-      <img class="info-item-icon" src="../../assets/image/change-icon/e0_favorite@2x.png" />
-      <label class="item-title info-item-title">我的收藏</label>
-      <img class="indicator" src="../../assets/image/change-icon/enter@2x.png" />
-    </div>
-    <div class="info-item-wrapper">
-      <img class="info-item-icon" src="../../assets/image/change-icon/e0_address@2x.png" />
-      <label class="item-title info-item-title">管理收货地址</label>
-      <img class="indicator" src="../../assets/image/change-icon/enter@2x.png" />
-    </div>
-    <div class="info-item-wrapper section-footer">
-      <img class="info-item-icon" src="../../assets/image/change-icon/e0_coupon@2x.png" />
-      <label class="item-title info-item-title">优惠券</label>
-      <img class="indicator" src="../../assets/image/change-icon/enter@2x.png" />
-    </div>
-    <div class="info-item-wrapper section-header">
-      <img class="info-item-icon" src="../../assets/image/change-icon/e0_clause@2x.png" />
-      <label class="item-title info-item-title">使用帮助</label>
-      <img class="indicator" src="../../assets/image/change-icon/enter@2x.png" />
-    </div>
-    <div class="info-item-wrapper section-footer">
-      <img class="info-item-icon" src="../../assets/image/change-icon/e0_phone@2x.png" />
-      <label class="item-title info-item-title">客服电话</label>
-      <img class="indicator" src="../../assets/image/change-icon/enter@2x.png" />
-    </div>
+    <info-item 
+      v-on:onclick="goFavourite"       
+      class="info-item-wrapper section-header" 
+      :icon="require('../../assets/image/change-icon/e0_favorite@2x.png')"
+      title="我的收藏">
+    </info-item>
+    <info-item
+      v-on:onclick="goAddress"       
+      class="info-item-wrapper" 
+      :icon="require('../../assets/image/change-icon/e0_address@2x.png')"
+      title="管理收货地址">
+    </info-item>
+    <info-item 
+      v-on:onclick="goCoupon"
+      class="info-item-wrapper section-footer" 
+      :icon="require('../../assets/image/change-icon/e0_coupon@2x.png')" 
+      title="优惠券">
+    </info-item>
+    <info-item 
+      v-on:onclick="goGoodsList"
+      class="info-item-wrapper section-header" 
+      :icon="require('../../assets/image/change-icon/e0_clause@2x.png')" 
+      title="使用帮助">
+    </info-item>
+    <info-item 
+      class="info-item-wrapper section-footer" 
+      :icon="require('../../assets/image/change-icon/e0_phone@2x.png')" 
+      title="客服电话">
+    </info-item>
     <tabbar></tabbar>
   </div>
 </template>
 
 <script>
 import Tabbar from '../../components/common/Tabbar'
+import InfoItem from './child/InfoItem'
+import OrderItem from './child/OrderItem'
 import { mapState } from 'vuex'
+import { userProfileGet } from '../../api/network/user'
 export default {
   name: 'profile',
   components: {
     Tabbar,
+    OrderItem,
+    InfoItem,
+  },
+  created: function () {
+    if (this.isOnline) {
+      userProfileGet().then(
+        (response) => {
+
+        }, (error) => {
+          
+        })
+    }
   },
   computed: {
     ...mapState({
@@ -112,7 +135,20 @@ export default {
     },
     goSetting() {
       this.$router.push('setting')
-    }
+    },
+    goFavourite() {
+      // TODO:
+      this.$router.push('checkout')
+    },
+    goAddress() {
+      this.$router.push('addressList')
+    },
+    goCoupon() {
+      this.$router.push('couponUsable')
+    },
+    goGoodsList() {
+      this.$router.push('goodsList')
+    },
   },
 }
 </script>
@@ -126,7 +162,7 @@ export default {
     flex-direction: column;
     justify-content: flex-start;
     align-items: stretch;
-    background-color: #f0f2f5;
+    background-color: $mainbgColor;
     .top-wrapper {
       display: flex;
       flex-direction: column;
@@ -212,7 +248,7 @@ export default {
       justify-content: space-around;
       align-content: stretch;
       background-color: #fff;
-      border-bottom: 1px solid #E8EAED;
+      border-bottom: 1px solid $lineColor;
     }
     .order-header-item {
       flex: 1;
@@ -258,36 +294,9 @@ export default {
     }
     .order-item {
       flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      align-items: center;
-    }
-    .order-item-icon {
-      width: 28px;
-      height: 28px;
-      margin-top: 19px;
-    }
-    .order-item-title {
-      margin-top: 8px;
-    }
+    }    
     .info-item-wrapper {
-      height: 44px;
-      display: flex;
-      flex-direction: row;
-      justify-content: flex-start;
-      align-items: center;
-      background-color: #fff;
-      border-bottom: 1px solid #E8EAED; 
-    }
-    .info-item-icon {
-      width: 22px;
-      height: 22px;
-      margin-left: 21px;
-    }
-    .info-item-title {
-      flex: 1;
-      margin-left: 19px;
+      height: 44px;       
     }
     .section-header {
       margin-top: 15px;

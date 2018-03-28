@@ -23,6 +23,7 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex';
 	export default {
 		data() {
 			return {
@@ -35,6 +36,9 @@
 			this.buildSwipeIndicators();
 		},
 		methods: {
+			...mapMutations({
+				change: 'changeStatus'
+			}),
 			buildSwipeIndicators() {
 				let photos = this.data;
 				for (let i = 0, len = photos.length-1; i <= len; i++) {
@@ -48,6 +52,7 @@
 			},
 			closeModel() {
 				this.$parent.$emit('close-preview-picture');
+				this.change(true);
 			},
 			showHeader() {
 				this.isShowHeader = true;

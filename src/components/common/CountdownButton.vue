@@ -6,6 +6,7 @@
 
 <script>
 export default {
+  name: 'countdown-button',
   data() {
     return {
       timer: null,
@@ -41,9 +42,8 @@ export default {
 
 <style lang="scss" scoped>
   .item {
-    display: flex;      
-    border-radius: 20px;
-    font-size: 14px;
+    display: flex;       
+    border-radius: 20px;    
     border: none; 
     vertical-align: middle;
     text-align: center;    
@@ -62,7 +62,8 @@ export default {
   .title {
     flex: 1;
     border-radius: 20px;
-    font-size: 14px;
+    font-size: 13px;
+    text-align: center;
   }
 </style>
 

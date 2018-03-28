@@ -1,6 +1,6 @@
 <!-- Like.vue -->
 <template>
-	<div class="ui-like-wrapper">
+	<div class="ui-like-wrapper" v-if='detaillike.length > 0'>
 		<div class="like-header">
 			<span>点赞</span>
 			<span v-if="detaillike">{{ detaillike.length }}</span>

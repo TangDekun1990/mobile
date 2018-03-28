@@ -1,6 +1,6 @@
 <!-- Details.vue -->
 <template>
-	<div>
+	<div class="set-ui-iframe">
 		<div class="ui-iframe" :class="{'hastop': unqie == 'detail'}" v-if="url">
 			<iframe  v-bind:src="url" class="agreemnt-iframe" allowfullscreen='true' id="iframe" name="iframe"></iframe>
 		</div>
@@ -28,6 +28,9 @@
 </script>
 
 <style lang="scss">
+	.set-ui-iframe {
+		height: 100%;
+	}
 	.ui-iframe{
 	    height: 100%;
 	    width: 100%;

@@ -2,7 +2,7 @@ import { fetchEndpoint } from '../../network/network'
 
 export const addShopCart = (params) => fetchEndpoint('/v2/ecapi.cart.add', 'POST', params);
 
-export const getCartTotal = () => fetchEndpoint('/v2/ecapi.cart.quantity', 'post');
+export const getCartTotal = (params) => fetchEndpoint('/v2/ecapi.cart.quantity', 'post', params);
 
 export const getCartGroup = (params) => fetchEndpoint('/v2/ecapi.cart.get', 'POST', params);
 

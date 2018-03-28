@@ -23,8 +23,10 @@
 	</div>
 </template>
 
+
 <script>
 	import { mapState } from 'vuex';
+	import { mapMutations } from 'vuex';
 	import { addShopCart } from '../../../api/network/cart';
 	export default {
 		data(){
@@ -41,8 +43,12 @@
 		    })
 		},
 		methods: {
+			...mapMutations({
+				saveCartState: 'saveCartState'
+			}),
 			emitEvent() {
-				this.$parent.$emit('close-add-shopping');
+				this.saveCartState(false);
+				// this.$parent.$emit('close-add-shopping');
 			},
 			addNumber() {
 				this.number++;
@@ -53,6 +59,7 @@
 				}
 			},
 			addShoppingCart() {
+				this.saveCartState(false);
 				if (!this.isOnline) {
 					this.$router.push({'name': 'signin'});
 				} else {
@@ -60,10 +67,11 @@
 				}
 			},
 			addShopCart() {
+				this.$parent.$emit('start-addcart-animation');
 				let params = {'product': this.productId, 'property': '', 'amount': this.number};
 				addShopCart(params).then(res => {
 					if (res) {
-
+						this.$parent.$emit('end-addcart-animation');
 					}
 				})
 			}

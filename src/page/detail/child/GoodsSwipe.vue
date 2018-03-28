@@ -14,6 +14,7 @@
 
 <script>
 	import PreviewPicture from './PreviewPicture';
+	import { mapMutations } from 'vuex';
 	export default{
 		data(){
 			return {
@@ -35,7 +36,11 @@
 			previewPicture(index) {
 				this.index = index;
 				this.isShowMode = true;
-			}
+				this.change(false);
+			},
+			...mapMutations({
+				change: 'changeStatus'
+			})
 		}
 	}
 </script>

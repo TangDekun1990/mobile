@@ -53,7 +53,6 @@
 				}
 			},
 			addShoppingCart() {
-				debugger;
 				if (!this.isOnline) {
 					this.$router.push({'name': 'signin'});
 				} else {
@@ -66,6 +65,7 @@
 				addShopCart(params).then(res => {
 					if (res) {
 						this.$parent.$emit('end-addcart-animation');
+						this.emitEvent();
 					}
 				})
 			},

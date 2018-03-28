@@ -16,15 +16,13 @@
 			</p>
 		</div>
 
-		<div class="info-promotions">
+		<div class="info-promotions" v-if='productinfo.activity'>
 			<img src="../../../assets/image/change-icon/b2_tag@2x.png">
-			<span>限购10件 已售100件</span>
+			<span>限购{{productinfo.limit_count }} 件 已售{{productinfo.sold_count }}件</span>
 		</div>
 
 		<div class="info-tips ui-flex">
-			<p>
-				服务：由温超物流发货，并提供售后服务。9：30前完成下单，预计次日送达服务：由温超物流发货，并提供售后服务。9：30前完成下单，预计次日送达
-			</p>
+			<p>服务：由温超物流发货，并提供售后服务。{{orderTime }}前完成下单，预计{{arrivalsTitle}}({{arrivalsTime}}){{arrivalsRange}}送达</p>
 		</div>
 
 	</div>
@@ -34,13 +32,52 @@
 	export default {
 		data(){
 			return {
-
+				orderTime: '',
+				arrivalsTime: '',
+				arrivalsTitle: '',
+				arrivalsRange: ''
 			}
 		},
 		props: ['productinfo'],
-		created(){},
+		created(){
+			this.getCurrentDate();
+		},
 		methods: {
-
+			getCurrentDate() {
+				let date = new Date();
+				let month = date.getMonth() + 1,
+        			data = date.getDate(),
+					hour = date.getHours() < 10 ? "0" + date.getHours() : date.getHours(),
+		            minute = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes(),
+		            second = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
+		           // console.log(hour);
+		           // console.log(minute);
+		        this.getTimeRange(hour, minute, month, data);
+			},
+			getTimeRange(hour, minute, month, data) {
+				// debugger;
+				if ( (hour > 0 && hour <= 9) &&  (minute >= 0 && minute <= 30)){
+					this.orderTime = '9:30';
+					this.arrivalsTitle = '当天';
+					this.arrivalsTime = month + '月' + data + '日';
+					this.arrivalsRange = '10:00-14:30';
+				} else if( (hour > 9 && hour <= 14) && (minute > 30 && minute <= 30)) {
+					this.orderTime = '14:30';
+					this.arrivalsTitle = '当天';
+					this.arrivalsTime = month + '月' + data + '日';
+					this.arrivalsRange = '15:00-20:00';
+				} else if ( (hour > 14 && hour <= 18) && (minute > 30 && minute <= 30) ) {
+					this.orderTime = '18:30';
+					this.arrivalsTitle = '当天';
+					this.arrivalsTime = month + '月' + data + '日';
+					this.arrivalsRange = '19:00-23:00';
+				} else if( (hour >18 && hour <= 24) || (minute > 30 && minute <= 0) ) {
+					this.orderTime = '09:30';
+					this.arrivalsTitle = '次日';
+					this.arrivalsTime = month + '月' + (data+1) + '日';
+					this.arrivalsRange = '10:00-14:30';
+				}
+			}
 		}
 	}
 </script>

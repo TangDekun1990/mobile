@@ -4,24 +4,34 @@
 		<div class="footer-flex">
 			<div class="left">
 				<img src="../../assets/image/change-icon/b0_cart@2x.png">
+				<span class="icon">{{ quantity }}</span>
 				<div class="price">
 					<span>AED {{ productinfo.current_price }}</span>
 					<span>AED {{ productinfo.price }}</span>
 				</div>
 			</div>
-			<div class="right" v-on:click="addShopping()">加入购物车</div>
+			<div class="right" v-on:click="addShopping()" v-bind:class="{'disabled-cart': quantity <= 0, 'active-cart': quantity > 0}">加入购物车</div>
 		</div>
 
 		<shopping v-if='isShow' :info="productinfo"></shopping>
+
+		<!-- 加入购物车显示动画 -->
+		<div class="ui-cart-animation" v-if='isAnimation'>
+			<mt-spinner type="snake" color='rgb(239,51,56)'></mt-spinner>
+		</div>
+
 	</div>
 </template>
 
 <script>
 	import shopping from './child/Shopping';
+	import { getCartTotal } from '../../api/network/cart';
 	export default {
 		data() {
 			return {
-				isShow: false
+				isShow: false,
+				isAnimation: false,
+				quantity: 0
 			}
 		},
 		components: {
@@ -29,13 +39,28 @@
 		},
 		props: ['productinfo'],
 		created(){
+			this.getShoppingTotal();
 			this.$on('close-add-shopping', (data) => {
 				this.isShow = false;
+			});
+			this.$on('start-addcart-animation', () => {
+				this.isAnimation = true;
+			});
+			this.$on('end-addcart-animation', () => {
+				this.isAnimation = false;
+				this.getShoppingTotal();
 			});
 		},
 		methods: {
 			addShopping() {
 				this.isShow = true;
+			},
+			getShoppingTotal() {
+				getCartTotal().then(res => {
+					if (res) {
+						this.quantity = res.quantity;
+					}
+				})
 			}
 		}
 	}
@@ -67,6 +92,20 @@
 				height: 30px;
 				padding: 0px 10px;
 			}
+			span.icon {
+				position: absolute;
+			    left: 28px;
+			    top: 11px;
+			    font-size: 10px;
+			    font-family: 'HelveticaNeue';
+			    line-height: 14px;
+			    width: 18px;
+			    height: 14px;
+			    background: rgba(239,51,56,1);
+			    border-radius: 20px;
+			    text-align: center;
+			    color: #fff;
+			}
 			div.price {
 				padding-left: 15px;
 				border-left: 1px solid #E8EAED;
@@ -92,13 +131,23 @@
 		div.right {
 			width:120px;
 			height:50px;
-			background:rgba(239,51,56,1);
 			font-size:16px;
 			font-family:'PingFangSC-Regular';
 			color:rgba(255,255,255,1);
 			text-align: center;
 			line-height: 50px;
 			cursor: pointer;
+			&.disabled-cart {
+				background:rgba(199,199,205,1);
+			}
+			&.active-cart {
+				background:rgba(239,51,56,1);
+			}
 		}
+	}
+	.ui-cart-animation {
+		position: fixed;
+	    top: 50%;
+	    left: 50%;
 	}
 </style>

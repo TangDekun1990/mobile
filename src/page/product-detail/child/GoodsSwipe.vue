@@ -1,7 +1,7 @@
 <!-- GoodsSwipe.vue -->
 <template>
-	<div class="swipe">
-		<mt-swipe :auto="0">
+	<div class="swipe ui-common-swiper">
+		<mt-swipe :auto="0" class='ui-common-swiper'>
 		  	<mt-swipe-item v-for="(item,index) in photos.photos" v-bind:key="index">
 		  		<img v-bind:src="item.thumb" v-on:click='previewPicture(index)'>
 		  	</mt-swipe-item>
@@ -14,6 +14,7 @@
 
 <script>
 	import PreviewPicture from './PreviewPicture';
+	import { mapMutations } from 'vuex';
 	export default{
 		data(){
 			return {
@@ -35,34 +36,36 @@
 			previewPicture(index) {
 				this.index = index;
 				this.isShowMode = true;
-			}
+				this.change(false);
+			},
+			...mapMutations({
+				change: 'changeStatus'
+			})
 		}
 	}
 </script>
 
 <style lang='scss'>
-	/*.swipe {*/
-		.mint-swipe {
-			width: 100%;
-			height: 300px;
-			background-color: #ffffff;
-			.mint-swipe-items-wrap {
-				.mint-swipe-item {
-					img {
-						height: 100%;
-						width: 100%;
-					}
-				}
-			}
-			.mint-swipe-indicators {
-				div.mint-swipe-indicator{
-					background: #EFEFF4;
-					opacity: 1;
-					&.is-active {
-						background: #EF3338;
-					}
+	.ui-common-swiper{
+		width: 100%;
+		height: 300px;
+		background-color: #ffffff;
+		.mint-swipe-items-wrap {
+			.mint-swipe-item {
+				img {
+					height: 100%;
+					width: 100%;
 				}
 			}
 		}
-	/*}*/
+		.mint-swipe-indicators {
+			div.mint-swipe-indicator{
+				background: #EFEFF4;
+				opacity: 1;
+				&.is-active {
+					background: #EF3338;
+				}
+			}
+		}
+	}
 </style>

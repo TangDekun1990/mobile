@@ -9,6 +9,7 @@
 
 <script>
 import { header } from './static';
+import { mapMutations } from 'vuex';
 export default {
 	data(){
 		return {
@@ -17,8 +18,12 @@ export default {
 		}
 	},
 	methods: {
+		...mapMutations({
+			saveSwiperIndex: 'saveSwiperIndex'
+		}),
 		changeEvent(index) {
 			this.currentIndex = index;
+			this.saveSwiperIndex(index);
 			this.$parent.$emit('nav-changed', this.currentIndex);
 		},
 		goBack() {

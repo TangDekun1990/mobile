@@ -7,7 +7,7 @@
 		</div>
 
 		<div class="picture-body">
-			<mt-swipe :auto="0" :show-indicators="false" @change="handleChange" :default-index="currentIndex">
+			<mt-swipe :auto="0" :show-indicators="false" @change="handleChange" :default-index="currentIndex" class='ui-common-swiper'>
 			  	<mt-swipe-item v-for="(item,index) in data" v-bind:key="index">
 			  		<img v-bind:src="item.thumb" v-on:click='showHeader()'>
 			  	</mt-swipe-item>
@@ -23,6 +23,7 @@
 </template>
 
 <script>
+	import { mapMutations } from 'vuex';
 	export default {
 		data() {
 			return {
@@ -35,6 +36,9 @@
 			this.buildSwipeIndicators();
 		},
 		methods: {
+			...mapMutations({
+				change: 'changeStatus'
+			}),
 			buildSwipeIndicators() {
 				let photos = this.data;
 				for (let i = 0, len = photos.length-1; i <= len; i++) {
@@ -48,6 +52,7 @@
 			},
 			closeModel() {
 				this.$parent.$emit('close-preview-picture');
+				this.change(true);
 			},
 			showHeader() {
 				this.isShowHeader = true;
@@ -102,7 +107,6 @@
 			justify-content: center;
 			align-content: center;
 			align-items: center;
-			/*margin-top: -44px;*/
 		}
 		.picture-footer {
 			position: absolute;

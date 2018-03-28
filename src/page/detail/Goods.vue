@@ -2,7 +2,7 @@
 <template>
 	<div class="ui-goods-wrapper">
 		<!-- header -->
-		<detail-header></detail-header>
+		<detail-header v-if='isHideHeader'></detail-header>
 		<!-- 商品 -->
 		<div class="goods" v-if="currentIndex == 0">
 			<goods-swipe v-bind:photos='productDetail'></goods-swipe>
@@ -25,14 +25,14 @@
 		</div>
 
 		<!-- footer -->
-		<div class="footer-wrapper">
-			<detail-footer :productinfo="productDetail"></detail-footer>
+		<div class="footer-wrapper" v-if='isHideCart'>
+			<detail-footer :productinfo="productDetail" :showcart="showcart"></detail-footer>
 		</div>
 
 		<!-- 加入购物车显示动画 -->
-		<div class="ui-cart-animation">
+		<!-- <div class="ui-cart-animation">
 			<mt-spinner type="snake" color='rgb(239,51,56)'></mt-spinner>
-		</div>
+		</div> -->
 
 	</div>
 </template>
@@ -52,13 +52,16 @@ import detailFooter from './child/footer';
 import shopping from './child/Shopping';
 
 import { getProductDetail } from '../../api/network/product';
+import { mapState } from 'vuex';
+import { mapMutations } from 'vuex';
 export default {
 	data(){
 		return {
 			productId: this.$route.params.id ? this.$route.params.id : '',
 			productDetail: {},
 			currentIndex: 0,
-			detail: 'detail'
+			detail: 'detail',
+			showcart: false
 		}
 	},
 	components: {
@@ -75,9 +78,17 @@ export default {
 		detailFooter,
 		shopping
 	},
+	computed: mapState({
+			isHideCart: state => state.detail.isHideCart,
+			isHideHeader: state => state.detail.isHideHeader
+	}),
 	created(){
 		this.$on('nav-changed', (data) => {
 			this.currentIndex = data;
+		})
+		this.$on('show-cart', (data) => {
+			console.log(data);
+			this.showcart = data.isshow;
 		})
 		this.getDetail();
 	},

@@ -8,13 +8,10 @@
 </template>
 
 <script>
-import HeaderItem from '../../components/common/HeaderItem'
+import { HeaderItem } from '../../components/common'
 import { Header } from 'mint-ui'
 import { mapState, mapMutations } from 'vuex'
-export default {
-  components: {
-    HeaderItem
-  },  
+export default { 
   computed: {
     ...mapState({
       user: state => state.auth.user,

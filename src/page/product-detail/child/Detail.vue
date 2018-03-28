@@ -1,8 +1,9 @@
 <!-- Details.vue -->
 <template>
-	<div>
+	<div class="show-iframe">
 		<div class="ui-iframe" :class="{'hastop': unqie == 'detail'}" v-if="url">
-			<iframe  v-bind:src="url" class="agreemnt-iframe" allowfullscreen='true' id="iframe" name="iframe"></iframe>
+			<div v-html='url'></div>
+			<!-- <iframe  v-bind:src="url" class="agreemnt-iframe" allowfullscreen='true' id="iframe" name="iframe"></iframe> -->
 		</div>
 
 		<div class="list-empty" v-if="!url">
@@ -23,14 +24,21 @@
 		created(){
 		},
 		methods: {
+			getHtml() {
+			}
 		}
 	}
 </script>
 
 <style lang="scss">
+	.show-iframe {
+		height: 100%;
+	}
 	.ui-iframe{
 	    height: 100%;
 	    width: 100%;
+	    -webkit-overflow-scrolling: touch;
+    	overflow-y: scroll;
 	    &.hastop {
 	 		padding-top: 44px;
 	    }
