@@ -71,7 +71,7 @@
 		height: auto;
 		padding: 0px;
 		margin: 0px;
-		background-color: $mainbgColor;
+		background-color: #ffffff;
 		border-top: 1px solid #F0F2F5;
 		@include pb();
 		.tabbar-wrapper {

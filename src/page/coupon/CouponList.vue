@@ -25,6 +25,7 @@ export default {
     flex-direction: column;
     justify-content: flex-start;
     align-items: stretch;
+    background-color: $mainbgColor;
   }
   .header {
     @include header;

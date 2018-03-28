@@ -1,31 +1,59 @@
 import App from '../App'
 
+// home
 import Home from '../page/home/Home'
+
+// category
 import Category from '../page/category/Category'
+
+// product
 import Product from '../page/product/Product'
+
+// search
 import Search from '../page/search/Search'
 
+/* 商品详情 */
+const detail = r => require.ensure([], () => r(require( '../page/detail/Goods')), 'goods');
+
+/* 商品详情 */
+const demo = r => require.ensure([], () => r(require( '../page/product-detail/index')), 'demo');
+
+
+// auth
 import Signin from '../page/auth/Signin'
 import Signup from '../page/auth/Signup'
+import Agreement from '../page/auth/Agreement'
 
+// profile
 import Profile from '../page/profile/Profile'
 import ProfileInfo from '../page/profile/ProfileInfo'
 import Setting from '../page/profile/Setting'
 
+// address
 import AddressList from '../page/address/AddressList'
 import AddressManage from '../page/address/AddressManage'
+import AddressEdit from '../page/address/AddressEdit'
 
+// coupon
 import CouponList from '../page/coupon/CouponList'
 import CouponUsable from '../page/coupon/CouponUsable'
 
+// checkout
 import Checkout from '../page/checkout/Checkout'
 import GoodsList from '../page/checkout/GoodsList'
+import Shipping from '../page/checkout/Shipping'
+import Invoice from '../page/checkout/Invoice'
 
-export default [	
+// 商品详情
+import commodity from '../page/product-detail/child/commodity';
+import aspect from '../page/product-detail/child/aspect';
+import review from '../page/product-detail/child/Evaluation';
+
+export default [
 	{
 		path: '/',
 		component: App,
-		children: [				
+		children: [
 			{
 				path: '',
 				redirect: '/home'
@@ -60,6 +88,11 @@ export default [
 				component: Signup
 			},
 			{
+				name: 'agreement',
+				path: '/agreement',
+				component: Agreement
+			},
+			{
 				name: 'profile',
 				path: '/profile',
 				component: Profile
@@ -85,6 +118,11 @@ export default [
 				component: AddressManage
 			},
 			{
+				name: 'addressEdit',
+				path: '/addressEdit',
+				component: AddressEdit
+			},
+			{
 				name: 'couponList',
 				path: '/couponList',
 				component: CouponList
@@ -104,6 +142,41 @@ export default [
 				path: '/goodsList',
 				component: GoodsList
 			},
+			{
+				name: 'shipping',
+				path: '/shipping',
+				component: Shipping
+			},
+			{
+				name: 'invoice',
+				path: '/invoice',
+				component: Invoice
+			},
+			{
+				name: 'detail',
+				path: '/detial/:id?',
+				component: detail
+			},
+			{
+				name: 'demo',
+				path: '/demo/:id?',
+				component: demo
+			},
+			{
+				name: 'commodity',
+				path: '/commodity',
+				component: commodity
+			},
+			{
+				name: 'aspect',
+				path: '/aspect',
+				component: aspect
+			},
+			{
+				name: 'review',
+				path: '/review',
+				component: review
+			}
 		]
 	}
 ]

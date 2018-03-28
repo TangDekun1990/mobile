@@ -25,7 +25,7 @@
     <div class="bottom-wrapper" v-if="isShowAuth">
       <div class="auth-title-wrapper">
         <div class="auth-line"></div>
-        <label class="auth-title">第三方登录</label>
+          <label class="auth-title">第三方登录</label>
         <div class="auth-line"></div>
       </div>
       <div class="auth-bottom-wrapper">
@@ -158,7 +158,7 @@ export default {
     flex-direction: column;
     justify-content: flex-start;
     align-items: stretch;
-    background-color: #f0f2f5;
+    background-color: $mainbgColor;
     .top-wrapper {
       margin-top: 10px;
       .input-wrapper {

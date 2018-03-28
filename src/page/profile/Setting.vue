@@ -15,9 +15,6 @@ import { HeaderItem } from '../../components/common'
 import { mapState, mapMutations } from 'vuex'
 import { Header, MessageBox } from 'mint-ui'
 export default {
-  components: {
-    // HeaderItem
-  },  
   computed: {
     ...mapState({
       isOnline: state => state.auth.isOnline
@@ -46,6 +43,7 @@ export default {
     flex-direction: column;
     justify-content: flex-start;
     align-items: stretch;
+    background-color: $mainbgColor;
   }
   .header {
     @include header;

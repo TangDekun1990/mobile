@@ -27,7 +27,7 @@
         <label class="order-subtitle">查看全部订单</label>
         <img class="indicator" src="../../assets/image/change-icon/enter@2x.png" />
       </div>
-      <div class="order-header-line"></div>
+      <!-- <div class="order-header-line"></div> -->
     </div>
     <div class="order-wrapper">      
       <order-item 
@@ -70,6 +70,7 @@
       title="优惠券">
     </info-item>
     <info-item 
+      v-on:onclick="goGoodsList"
       class="info-item-wrapper section-header" 
       :icon="require('../../assets/image/change-icon/e0_clause@2x.png')" 
       title="使用帮助">
@@ -88,12 +89,23 @@ import Tabbar from '../../components/common/Tabbar'
 import InfoItem from './child/InfoItem'
 import OrderItem from './child/OrderItem'
 import { mapState } from 'vuex'
+import { userProfileGet } from '../../api/network/user'
 export default {
   name: 'profile',
   components: {
     Tabbar,
     OrderItem,
     InfoItem,
+  },
+  created: function () {
+    if (this.isOnline) {
+      userProfileGet().then(
+        (response) => {
+
+        }, (error) => {
+          
+        })
+    }
   },
   computed: {
     ...mapState({
@@ -129,10 +141,13 @@ export default {
       this.$router.push('checkout')
     },
     goAddress() {
-      this.$router.push('addressList')
+      this.$router.push('addressManage')
     },
     goCoupon() {
-      this.$router.push('couponList')
+      this.$router.push('couponUsable')
+    },
+    goGoodsList() {
+      this.$router.push('goodsList')
     },
   },
 }
@@ -147,7 +162,7 @@ export default {
     flex-direction: column;
     justify-content: flex-start;
     align-items: stretch;
-    background-color: #f0f2f5;
+    background-color: $mainbgColor;
     .top-wrapper {
       display: flex;
       flex-direction: column;
@@ -233,7 +248,7 @@ export default {
       justify-content: space-around;
       align-content: stretch;
       background-color: #fff;
-      border-bottom: 1px solid #E8EAED;
+      border-bottom: 1px solid $lineColor;
     }
     .order-header-item {
       flex: 1;

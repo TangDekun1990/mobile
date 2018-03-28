@@ -31,7 +31,7 @@ export default {
     justify-content: flex-start;
     align-items: center;
     background-color: #fff;
-    border-bottom: 1px solid #E8EAED; 
+    border-bottom: 1px solid $lineColor; 
   }
   .item-title {
     font-size: 14px;
@@ -48,7 +48,7 @@ export default {
   }
   .indicator {
     width: 7px;
-    height: 12  px;
+    height: 12px;
     margin-left: 10px;
     margin-right: 10px;      
   }

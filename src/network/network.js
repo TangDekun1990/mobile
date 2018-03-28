@@ -2,8 +2,8 @@ import axios from 'axios'
 import XXTEA from '../assets/js/xxtea'
 import CryptoJS from 'crypto-js'
 
-import { apiBaseUrl, SIGN_KEY, ENCRYPT_KEY } from '../config/env'
-import ENUM from '../config/enum';
+import { apiBaseUrl, SIGN_KEY, ENCRYPT_KEY, VERSION } from '../config/env'
+import store from '../store/index'
 
 function toQueryString(obj) {
     return obj ? Object.keys(obj).sort().map(function (key) {
@@ -45,12 +45,17 @@ axios.interceptors.request.use(config => {
             let sign = CryptoJS.HmacSHA256(timestamp + post_body, SIGN_KEY);
 
             // xSign格式: sign,timestamp
-            let xSign = sign + ',' + timestamp;
-
+            let xSign = sign + ',' + timestamp;      
+            let token = null;      
+            if (store.getters.isOnline && store.getters.token) {
+                token = store.getters.token;
+            } 
+            config.headers['X-ECAPI-Authorization'] = store.state.auth.token;
             config.headers['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
-            config.headers['X-ECAPI-Sign']  = xSign ;
+            config.headers['X-ECAPI-Sign'] = xSign;
             config.headers['X-ECAPI-UserAgent'] = 'UserAgent'; // TODO:
             config.headers['X-ECAPI-UDID'] = 'udid'; // TODO:
+            config.headers['X-ECAPI-Ver'] = VERSION;
 
             let encry_post_body = '';
             let body = null;
@@ -74,7 +79,7 @@ axios.interceptors.response.use(response => {
     if (response) {
         let isAPIRequest = response.config.url.indexOf(apiBaseUrl) == 0 ? true : false;
         if (isAPIRequest) {
-            if (response.data && response.data.data){
+            if (response.data && response.data.data) {
                 var raw = XXTEA.decryptToString(response.data.data, ENCRYPT_KEY);
                 var json = JSON.parse(raw);
                 if (json) {
@@ -104,8 +109,8 @@ axios.interceptors.response.use(response => {
 })
 
 // 发起请求
-export function fetchEndpoint(reqUrl, type = 'POST', data = {}){
-    if (!reqUrl) {return}
+export function fetchEndpoint(reqUrl, type = 'POST', data = {}) {
+    if (!reqUrl) { return }
     type = type.toUpperCase()
     reqUrl = apiBaseUrl + reqUrl
 
@@ -122,7 +127,7 @@ export function fetchEndpoint(reqUrl, type = 'POST', data = {}){
 
     }
 
-    return new Promise((resolve,reject) => {
+    return new Promise((resolve, reject) => {
         axios({
             method: type,
             url: reqUrl,
