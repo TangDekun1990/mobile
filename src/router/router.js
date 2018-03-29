@@ -22,6 +22,7 @@ const demo = r => require.ensure([], () => r(require( '../page/product-detail/in
 // auth
 import Signin from '../page/auth/Signin'
 import Signup from '../page/auth/Signup'
+import Agreement from '../page/auth/Agreement'
 
 // profile
 import Profile from '../page/profile/Profile'
@@ -31,6 +32,7 @@ import Setting from '../page/profile/Setting'
 // address
 import AddressList from '../page/address/AddressList'
 import AddressManage from '../page/address/AddressManage'
+import AddressEdit from '../page/address/AddressEdit'
 
 // coupon
 import CouponList from '../page/coupon/CouponList'
@@ -86,6 +88,11 @@ export default [
 				component: Signup
 			},
 			{
+				name: 'agreement',
+				path: '/agreement',
+				component: Agreement
+			},
+			{
 				name: 'profile',
 				path: '/profile',
 				component: Profile
@@ -109,6 +116,11 @@ export default [
 				name: 'addressManage',
 				path: '/addressManage',
 				component: AddressManage
+			},
+			{
+				name: 'addressEdit',
+				path: '/addressEdit',
+				component: AddressEdit
 			},
 			{
 				name: 'couponList',

@@ -141,7 +141,7 @@ export default {
       this.$router.push('checkout')
     },
     goAddress() {
-      this.$router.push('addressList')
+      this.$router.push('addressManage')
     },
     goCoupon() {
       this.$router.push('couponUsable')

@@ -2,7 +2,9 @@
 <template>
 	<div class="set-ui-iframe">
 		<div class="ui-iframe" :class="{'hastop': unqie == 'detail'}" v-if="url">
-			<iframe  v-bind:src="url" class="agreemnt-iframe" allowfullscreen='true' id="iframe" name="iframe"></iframe>
+			<!-- <iframe  v-bind:src="url" class="agreemnt-iframe" allowfullscreen='true' id="iframe" name="iframe"></iframe> -->
+			<webview :url.asyc="url">
+    	</webview>
 		</div>
 
 		<div class="list-empty" v-if="!url">
@@ -14,6 +16,7 @@
 </template>
 
 <script>
+	import { Webview } from '../../../components/common'
 	export default {
 		data(){
 			return {

@@ -1,7 +1,7 @@
 ##README
 ###技术栈
 
-`vue2 + vuex  + vue-router + webpack + es6 + sass + flex`
+`vue2 + vuex  + vue-router + webpack + es6  + axios + sass + flex`
 
 
 ###目录结构 
