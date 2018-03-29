@@ -4,7 +4,8 @@ const state = {
 	isHideHeader: true,
 	detailInfo: {},
 	swiperIndex: 0,
-	isShowcartInfo: false
+	isShowcartInfo: false,
+	currentPathIndex: 1
 }
 
 // mutations
@@ -22,6 +23,9 @@ const mutations = {
 	saveCartState(state, value) {
 		console.log(value);
 		state.isShowcartInfo = value;
+	},
+	SET_CURRENT_PATH_INDEX(state, index) {
+		state.currentPathIndex = index;
 	}
 }
 

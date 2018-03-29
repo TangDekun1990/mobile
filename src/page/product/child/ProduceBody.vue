@@ -30,7 +30,7 @@ export default{
 	props: ['item', 'productId'],
 	methods: {
 		goDetail() {
-			this.$router.push({'name': 'detail', 'params': {'id': this.productId}});
+			this.$router.push({'name': 'demo', 'params': {'id': this.productId}});
 		}
 	}
 }

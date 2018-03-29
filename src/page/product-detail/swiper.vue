@@ -2,7 +2,6 @@
 <template>
 	<div class="ui-detail-swiper">
 		<mt-swipe :auto="0" :show-indicators="false">
-			{{swiperIndex}}
 		 	<mt-swipe-item v-for="(item, index) in list" :key="index" :default-index='swiperIndex'>
 		 		<keep-alive>
 					<component :is="item.component">{{ item.component }}</component>
