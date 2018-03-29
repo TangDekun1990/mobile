@@ -8,6 +8,7 @@ import App from './App.vue'
 import routes from './router/router'
 import { ROUTERMODE }from './config/env'
 import utils from './util/util';
+import VueResource from 'vue-resource'
 
 import './assets/style/reset.scss'
 
@@ -32,6 +33,7 @@ const router = new VueRouter({
 
 Vue.use(VueRouter)
 Vue.use(Mint)
+Vue.use(VueResource)
 Vue.prototype.utils = utils;
 
 new Vue({
