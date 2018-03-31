@@ -108,7 +108,6 @@
 
 <style lang="scss" scoped>
 	.ui-evaluation {
-		padding-top: 44px;
 		.ui-evaluation-header {
 			background: #ffffff;
 			.flex-header {
@@ -129,7 +128,6 @@
 					border: 1px solid #4E545D;
 					padding: 2px 9px;
 					text-align: center;
-					line-height: 24px;
 					&.active {
 						color: #FFFFFF;
 						background: #EF3338;

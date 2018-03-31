@@ -1,6 +1,6 @@
 <!-- Goodsreview.vue -->
 <template>
-	<div class="ui-goods-review">
+	<div class="ui-goods-review" v-if='reviewList.length > 0'>
 		<div class="goods-review-header">
 			<p>评价</p>
 		</div>

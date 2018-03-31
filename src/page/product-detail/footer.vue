@@ -5,13 +5,14 @@
 		<div class="footer-flex">
 			<div class="left">
 				<img src="../../assets/image/change-icon/b0_cart@2x.png">
-				<span class="icon">{{ quantity }}</span>
+				<span class="icon" v-if='quantity > 0'>{{ quantity }}</span>
 				<div class="price">
 					<span>AED {{ productinfo.current_price }}</span>
 					<span>AED {{ productinfo.price }}</span>
 				</div>
 			</div>
-			<div class="right" v-on:click="addShopping(true)" v-bind:class="{'disabled-cart': quantity <= 0, 'active-cart': quantity > 0}">加入购物车</div>
+			<!-- v-bind:class="{'disabled-cart': quantity <= 0, 'active-cart': quantity > 0}" -->
+			<div class="right" v-on:click="addShopping(true)" v-bind:class="{'disabled-cart': productinfo.good_stock <= 0, 'active-cart': productinfo.good_stock > 0}">加入购物车</div>
 		</div>
 
 		<shopping v-if='isShowcartInfo' :info="productinfo"></shopping>
@@ -102,11 +103,12 @@
 			img {
 				width: 30px;
 				height: 30px;
-				padding: 0px 10px;
+				/*padding: 0px 10px;*/
+				flex-shrink: 0;
 			}
 			span.icon {
 				position: absolute;
-			    left: 28px;
+			    left: 20px;
 			    top: 11px;
 			    font-size: 10px;
 			    font-family: 'HelveticaNeue';

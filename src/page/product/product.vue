@@ -145,7 +145,7 @@
 <style lang='scss' scoped>
 	.ui-product {
 		width: auto;
-		height: 100%;
+		/*height: 100%;*/
 		background-color: #ffffff;
 		div.product-body{
 			.loading-wrapper {

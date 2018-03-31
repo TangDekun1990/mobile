@@ -82,6 +82,12 @@
 		right: 0px;
 		overflow: auto;
 	}
+	.swiper-container {
+		height: 100%;
+		.swiper-slide {
+			overflow: auto;
+		}
+	}
 	.height-wrapper {
 		top: 0px;
 		bottom: 0px;
