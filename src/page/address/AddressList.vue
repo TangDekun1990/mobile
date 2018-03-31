@@ -37,15 +37,15 @@ export default {
     consignee.consigneeList().then(
       (response) => {
         let items = response.consignees                
-        this.saveItems(items)
+        this.saveAddressItems(items)
       }, (error) => {
         Toast(error.errorMsg)
       })
   },
   methods: {
     ...mapMutations([
-      'selectItem',
-      'saveItems'
+      'selectAddressItem',
+      'saveAddressItems'
     ]),
     isSelectedItem(item) {
       if (item && this.selectedItem) {
@@ -62,7 +62,7 @@ export default {
       this.$router.push('/addressManage')
     },
     onclick(item) {
-      this.selectItem(item)
+      this.selectAddressItem(item)
       this.goBack()
     }
   }

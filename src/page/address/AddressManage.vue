@@ -40,17 +40,16 @@ export default {
     consignee.consigneeList().then(
       (response) => {
         let items = response.consignees                
-        this.saveItems(items)
+        this.saveAddressItems(items)
       }, (error) => {
         Toast(error.errorMsg)
       })
   },
   methods: {
     ...mapMutations([
-      'selectItem',
-      'saveItems',
-      'setDefault',
-      'removeItem',
+      'saveAddressItems',
+      'setDefaultAddress',
+      'removeAddressItem',
     ]),
     isDefaultItem(item) {
       if (item && this.defaultItem) {
@@ -72,7 +71,7 @@ export default {
       consignee.consigneeSetdefault(item.id).then(
         (response) => {
           Indicator.close()
-          this.setDefault(item)
+          this.setDefaultAddress(item)
         }, (error) => {
           Indicator.close()
           Toast(error.errorMsg)
@@ -86,7 +85,7 @@ export default {
         Indicator.open()
         consignee.consigneeDelete(item.id).then(
         (response) => {
-          this.removeItem(item.id)
+          this.removeAddressItem(item.id)
           Indicator.close()
         }, (error) => {
           Indicator.close()

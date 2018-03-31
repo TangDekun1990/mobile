@@ -133,9 +133,6 @@ export default {
   },
   watch: {
     selectedAddress: function () {
-      console.log('====================================');
-      console.log('selectedAddress is', this.selectedAddress);
-      console.log('====================================');
       // TODO:  
     this.fetchShippingList({
       'shop': '1',
@@ -149,7 +146,7 @@ export default {
       (response) => {       
         let items = response.consignees        
         // 保存地址列表
-        this.saveAddressList(items)
+        this.saveAddressItems(items)
       }, (error) => {
         Toast(error.errorMsg)
       }) 
@@ -157,8 +154,8 @@ export default {
   },
   methods: {
     ...mapMutations({
-      saveAddressList: 'saveItems',
-      selectAddressItem: 'selectItem',      
+      saveAddressItems: 'saveAddressItems',
+      selectAddressItem: 'selectAddressItem',      
     }),
     ...mapActions({
       fetchShippingList: 'fetchShippingList',
