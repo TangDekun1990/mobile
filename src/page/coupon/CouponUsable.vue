@@ -5,10 +5,10 @@
       </header-item>          
     </mt-header>
     <div class="tips-wrapper">
-      <label class="tips">可使用优惠券{{count}}张</label>
+      <label class="tips">可使用优惠券{{total}}张</label>
     </div>    
     <div class="list">
-      <coupon-item class="item" v-for="item in items" :key="item"></coupon-item>
+      <coupon-item class="item" v-for="item in items" :key="item.id" :item="item" v-on:onclick="onclick(item)"></coupon-item>
     </div>    
     <div class="submit" @click="unselect">
       <label class="text">不使用优惠券</label>
@@ -20,22 +20,35 @@
 import { Header } from 'mint-ui'
 import { HeaderItem } from '../../components/common'
 import CouponItem from './child/CouponItem'
+import { mapState, mapMutations, mapActions } from 'vuex'
 export default {
-  data() {
-    return {
-      count: 0,
-      items: ['1', '2', '3', '4', '5', '6', '7', '8']
-    }
-  },
   components: {
     CouponItem,
   },
+  computed: {
+    ...mapState({
+      total: state => state.coupon.total,
+      items: state => state.coupon.items
+    }),
+  },
   methods: {
+    ...mapMutations({
+      selectCouponItem: 'selectCouponItem',
+      unselectCouponItem: 'unselectCouponItem',
+    }),
+    ...mapActions({
+      fetchCouponUsable: 'fetchCouponUsable'
+    }),
     goBack() {
       this.$router.go(-1)
-    },    
+    }, 
+    onclick(item) {
+      this.selectCouponItem(item)
+      this.goBack()
+    },   
     unselect() {
-
+      this.unselectCouponItem()
+      this.goBack()
     }
   }
 }
@@ -77,6 +90,7 @@ export default {
   }
   .submit {           
     height: 44px;
+    margin-top: 10px;
     margin-bottom: 0px;    
     background-color: #fff;    
     display: flex;

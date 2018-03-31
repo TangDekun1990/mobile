@@ -1,4 +1,4 @@
-export default{
+export default {
 	fetch(key){
 		return JSON.parse(window.localStorage.getItem(key)||'[]')
 	},

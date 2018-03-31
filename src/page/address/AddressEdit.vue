@@ -98,8 +98,8 @@ export default {
   },
   methods: {
     ...mapMutations([
-      'addItem',
-      'modifyItem'
+      'addAddressItem',
+      'modifyAddressItem'
     ]),    
     goBack() {
       this.$router.go(-1)
@@ -139,7 +139,7 @@ export default {
           (response) => {
             Indicator.close()
             let item = response.consignee                
-            this.addItem(item)
+            this.addAddressItem(item)
             this.goBack()
           }, (error) => {
             Indicator.close()
@@ -155,7 +155,7 @@ export default {
           (response) => {
             Indicator.close()
             let item = response.consignee                
-            this.modifyItem(item)
+            this.modifyAddressItem(item)
             this.goBack()
           }, (error) => {
             Indicator.close()
