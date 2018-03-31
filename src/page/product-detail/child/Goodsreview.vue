@@ -37,6 +37,11 @@
 				getReviewList(params).then(res => {
 					if (res) {
 						this.reviewList = res.reviews.slice(0, 2);
+						// if(res.reviews.length > 2) {
+						// 	this.reviewList = res.reviews.slice(0, 2);
+						// } else if(res.reviews.length > 2) {
+						// 	this.reviewList = res.reviews;
+						// }
 					}
 				})
 			}

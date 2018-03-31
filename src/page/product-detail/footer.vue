@@ -1,6 +1,7 @@
 <!-- footer.vue -->
 <template>
 	<div class="ui-detail-footer">
+
 		<div class="footer-flex">
 			<div class="left">
 				<img src="../../assets/image/change-icon/b0_cart@2x.png">
@@ -10,10 +11,10 @@
 					<span>AED {{ productinfo.price }}</span>
 				</div>
 			</div>
-			<div class="right" v-on:click="addShopping()" v-bind:class="{'disabled-cart': quantity <= 0, 'active-cart': quantity > 0}">加入购物车</div>
+			<div class="right" v-on:click="addShopping(true)" v-bind:class="{'disabled-cart': quantity <= 0, 'active-cart': quantity > 0}">加入购物车</div>
 		</div>
 
-		<shopping v-if='isShow' :info="productinfo"></shopping>
+		<shopping v-if='isShowcartInfo' :info="productinfo"></shopping>
 
 		<!-- 加入购物车显示动画 -->
 		<div class="ui-cart-animation" v-if='isAnimation'>
@@ -24,37 +25,47 @@
 </template>
 
 <script>
+	import { mapState, mapMutations } from 'vuex';
 	import shopping from './child/Shopping';
 	import { getCartTotal } from '../../api/network/cart';
+
 	export default {
 		data() {
 			return {
-				isShow: false,
-				isAnimation: false,
-				quantity: 0
+				isAnimation: false,  //加入购物车成功之后是否显示动画
+				quantity: 0  //购物车总数
 			}
 		},
 		components: {
 			shopping
 		},
+		computed: mapState({
+			////是否显示购物车浮层
+			isShowcartInfo: state => state.detail.isShowcartInfo
+		}),
 		props: ['productinfo'],
 		created(){
 			this.getShoppingTotal();
-			this.$on('close-add-shopping', (data) => {
-				this.isShow = false;
-			});
 			this.$on('start-addcart-animation', () => {
 				this.isAnimation = true;
 			});
 			this.$on('end-addcart-animation', () => {
 				this.isAnimation = false;
+				this.saveCartState(false);
+				this.hideCommodity(false);
 				this.getShoppingTotal();
 			});
 		},
 		methods: {
-			addShopping() {
-				this.isShow = true;
+			...mapMutations({
+				saveCartState: 'saveCartState',
+				hideCommodity: 'setIsHideCommodity'
+			}),
+			// 加入购物车
+			addShopping(value) {
+				this.saveCartState(value);
 			},
+			// 获取购物车总数
 			getShoppingTotal() {
 				getCartTotal().then(res => {
 					if (res) {
@@ -71,10 +82,11 @@
 		background:rgba(255,255,255,1);
 		box-shadow: 0px 0.5px 0px 0px rgba(232,234,237,1);
 		width: auto;
-		position: fixed;
+		position: absolute;
 		bottom: 0px;
 		left: 0px;
 		right: 0px;
+		z-index: 1;
 		.footer-flex {
 			display: flex;
 			justify-content: space-between;

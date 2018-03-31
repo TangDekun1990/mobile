@@ -47,7 +47,7 @@
 			background-color: #FFFFFF;
 			padding: 6px 15px;
 			input {
-				flex-basis: 200px;
+				flex-basis: 80%;
 				background-color: #E9ECF0;
 				border-radius: 16px;
 				color: #A4AAB3;

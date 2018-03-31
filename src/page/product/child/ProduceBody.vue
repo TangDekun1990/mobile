@@ -2,19 +2,29 @@
 <template>
 	<div class="ui-product-body">
 		<div class="list" v-on:click='goDetail()'>
-			<img class="product-img" v-bind:src="item.photos[0].thumb">
+
+			<div class="ui-image-wrapper">
+				<img src="../../../assets/image/change-icon/default_image_02@2x.png" class="product-img" v-if='item.photos <= 0'>
+				<img class="product-img" v-bind:src="item.photos[0].thumb" v-if='item.photos.length > 0' data-src='../../../assets/image/change-icon/default_image_02@2x.png' v-lazy="item.photos[0].thumb">
+			</div>
+
 			<span class="promos" v-if="item.activity && item.activity.display_time">促销</span>
+
 			<div class="flex-right">
+
 				<h3 class="title" style="-webkit-box-orient:vertical">{{ item.name }}</h3>
+
 				<span class="sub-title" style="-webkit-box-orient:vertical">{{ item.desc }}</span>
+
 				<div class="price">
-					<span>{{ item.current_price }}</span>
-					<span>{{ item.price }}</span>
+					<span>AED{{ item.current_price }}</span>
+					<span>AED{{ item.price }}</span>
 				</div>
+
 				<div class="sendway">
-					<span v-if="item.self_employed">自营</span>
+					<span v-if="item.self_employed" class="self-support">自营</span>
 					<span>评论：{{ item.comment_count }}</span>
-					<span>收藏：</span>
+					<span>收藏：{{item.is_liked}}</span>
 					<img src="../../../assets/image/change-icon/cart@2x.png">
 				</div>
 			</div>
@@ -25,12 +35,13 @@
 <script>
 export default{
 	data(){
-		return{}
+		return{
+		}
 	},
 	props: ['item', 'productId'],
 	methods: {
 		goDetail() {
-			this.$router.push({'name': 'demo', 'params': {'id': this.productId}});
+			this.$router.push({'name': 'detail', 'params': {'id': this.productId}});
 		}
 	}
 }
@@ -38,18 +49,55 @@ export default{
 
 <style lang='scss'>
 .ui-product-body {
+	border-bottom: 1px solid rgba(232,234,237,1);
 	.list {
 		display: flex;
 		width: auto;
 		align-items: center;
 		justify-content: space-between;
 		margin: 11px 10px;
-		img.product-img{
+		position: relative;
+		div.ui-image-wrapper {
 			width: 110px;
 			height: 110px;
+			display: flex;
+		    justify-content: center;
+		    align-content: center;
+		    align-items: center;
 			flex-basis: 110px;
-			border: 1px solid transparent;
+			flex-shrink: 0;
+
+			background-position:center center!important;
+		    background: url("../../../assets/image/change-icon/default_image_02@2x.png");
+		    background-size:100px 100px;
+		    background-repeat:no-repeat;
+		    -webkit-background-size: cover;
+		    -moz-background-size: cover;
+		    -o-background-size: cover;
+		    background-size: cover;
+
+			img.product-img{
+				width: 110px;
+				height: 110px;
+				flex-basis: 110px;
+				flex-shrink: 0;
+			}
+			img.product-img[lazy=loading] {
+				width: 30px;
+				height: 30px;
+			}
+			img.product-im[lazy=error] {
+				width: 30px;
+				height: 30px;
+			}
+			img.product-img[lazy=loaded] {
+				width: 110px;
+				height: 110px;
+				flex-basis: 110px;
+				flex-shrink: 0;
+			}
 		}
+
 		span.promos {
 			position: absolute;
 			background: url('../../../assets/image/change-icon/label@2x.png') no-repeat;
@@ -130,7 +178,7 @@ export default{
 				font-weight: 'Regular';
 				span{
 					color: #7C7F88;
-					&:first-child {
+					&.self-support {
 						font-size: 10px;
 						color: #F34444;
 						padding: 3px;

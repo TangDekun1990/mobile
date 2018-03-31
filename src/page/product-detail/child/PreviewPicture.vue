@@ -7,9 +7,9 @@
 		</div>
 
 		<div class="picture-body">
-			<mt-swipe :auto="0" :show-indicators="false" @change="handleChange" :default-index="currentIndex" class='ui-common-swiper'>
+			<mt-swipe :auto="0" :show-indicators="false" @change="handleChange" :default-index="currentIndex" class='ui-common-swiper' :prevent=false :stop-propagation=true>
 			  	<mt-swipe-item v-for="(item,index) in data" v-bind:key="index">
-			  		<img v-bind:src="item.thumb" v-on:click='showHeader()'>
+			  		<img v-bind:src="item.thumb" v-on:click='showHeader($event)'>
 			  	</mt-swipe-item>
 			</mt-swipe>
 		</div>
@@ -23,7 +23,7 @@
 </template>
 
 <script>
-	import { mapMutations } from 'vuex';
+	import { mapState, mapMutations } from 'vuex';
 	export default {
 		data() {
 			return {
@@ -37,7 +37,8 @@
 		},
 		methods: {
 			...mapMutations({
-				change: 'changeStatus'
+				change: 'changeStatus',
+				hideCommodity: 'setIsHideCommodity'
 			}),
 			buildSwipeIndicators() {
 				let photos = this.data;
@@ -52,13 +53,13 @@
 			},
 			closeModel() {
 				this.$parent.$emit('close-preview-picture');
-				this.change(true);
+				this.change(false);
+				this.hideCommodity(false);
 			},
-			showHeader() {
-				this.isShowHeader = true;
-			},
-			hideHeader(){
-				this.isShowHeader = false;
+			showHeader(ev) {
+				ev.preventDefault();
+				ev.stopPropagation();
+				this.isShowHeader = !this.isShowHeader;
 			}
 		}
 	}

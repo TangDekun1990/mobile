@@ -2,9 +2,9 @@
 	<div class="ui-product">
 		<product-header v-bind:item="params" :list="productList" ref='header' :value="keyword"></product-header>
 
-		<product-filter :keyword="keyword"></product-filter>
+		<product-filter :keyword="keyword" ref='filter'></product-filter>
 
-		<div class="product-body">
+		<div class="product-body" v-bind:class="{'hide-product-list': isShowProductModel, 'show-product-list': !isShowProductModel}">
 
 			<div class="flex-wrapper" v-infinite-scroll="getMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
 				<product-body :item="item" v-for='(item, index) in productList' v-bind:key='item.id' :productId="item.id"></product-body>
@@ -21,12 +21,15 @@
 					<p>暂无任何商品</p>
 				</div>
 			</div>
+
+			<div class="show-product-model" v-if='isShowProductModel' @click="closeProductModel()"></div>
 		</div>
 
 	</div>
 </template>
 
 <script>
+	import { mapState, mapMutations } from 'vuex';
 	import productHeader from './child/ProduceHeader';
 	import productBody from './child/ProduceBody';
 	import productFilter from './child/ProductFilter';
@@ -48,6 +51,9 @@
 				keyword: null
 			}
 		},
+		computed: mapState({
+			isShowProductModel: state => state.product.isShowProductModel
+		}),
 		created(){
 			this.getUrlParams();
 			this.$on('change-list', (data) => {
@@ -73,10 +79,16 @@
 			});
 		},
 		methods: {
+			...mapMutations({
+				changeIsShowProductModel: 'changeIsShowProductModel'
+			}),
+			closeProductModel() {
+				this.changeIsShowProductModel(false);
+				this.$refs.filter.closeFiler();
+			},
 			getMore() {
 				this.loading = true;
 				this.params.page = ++this.params.page;
-				// console.log(this.params.page);
 				if (this.params.page <= this.total) {
 					this.loading = false;
 					this.getProductList(true);
@@ -164,6 +176,24 @@
 				}
 			}
 		}
+	}
+	.hide-product-list{
+		overflow: hidden;
+		height: 80vh;
+	}
+	.show-product-list {
+		height: 100%;
+		overflow: auto;
+	}
+	.show-product-model {
+		background: rgba(0, 0, 0, 0.5);
+		overflow: hidden;
+		height: 100%;
+		position: fixed;
+		top: 100px;
+		bottom: 0px;
+		left: 0px;
+		right: 0px;
 	}
 </style>
 

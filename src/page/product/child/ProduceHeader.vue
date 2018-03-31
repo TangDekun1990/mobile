@@ -3,7 +3,7 @@
 	<div class="ui-product-header">
 		<form action="#" v-on:submit.prevent="search($event)">
 			<div class="search">
-				<img src="../../../assets/image/change-icon/back@2x.png" class="ui-back">
+				<img src="../../../assets/image/change-icon/back@2x.png" class="ui-back" @click="goBack()">
 				<input type="search" placeholder="请输入您要搜索的商品" v-model="keyword" autocomplete="off">
 				<img src="../../../assets/image/change-icon/b2_cart@2x.png" class="ui-cart">
 			</div>
@@ -13,11 +13,11 @@
 
 <script>
 	import { getSearch } from '../../../api/network/product';
+	import { mapState, mapMutations } from 'vuex';
 	export default {
 		props:['item', 'value'],
 		data() {
 			return {
-				isSearch: true,
 				keyword: this.value ? this.value : '',
 				isAuto: false
 			}
@@ -27,16 +27,35 @@
 				this.search();
 			}
 		},
+		computed: mapState({
+			isSearch: state => state.product.isSearch
+		}),
+		watch: {
+			keyword: function(value) {
+				if (value.length > 0) {
+					this.changeSearch(true);
+				} else {
+					this.changeSearch(false);
+				}
+			}
+		},
 		methods: {
+			...mapMutations({
+				changeSearch: 'changeSearch'
+			}),
 			search(e) {
+				// this.changeSearch(true);
 				let data = {
 					'isSearch': this.isSearch,
 					'keyword': this.keyword
-				}
+				};
 				this.$parent.$emit('change-list', data);
 				if (e) {
 					this.utils.stopPrevent(e);
 				}
+			},
+			goBack() {
+				this.$router.go(-1);
 			}
 		}
 	}

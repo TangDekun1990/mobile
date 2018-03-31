@@ -1,29 +1,37 @@
-<!-- 商品详情 -->
+<!-- 商品详情  -->
 <template>
-	<div class="ui-detail-swiper">
-		<mt-swipe :auto="0" :show-indicators="false">
-		 	<mt-swipe-item v-for="(item, index) in list" :key="index" :default-index='swiperIndex'>
-		 		<keep-alive>
+	<div class="ui-detail-swiper" v-bind:class="{'height-wrapper': isHideCart}">
+		<swiper ref="mySwiper" :options="swiperOption">
+            <swiper-slide v-for="(item, index) in list" :key="index">
+            	<keep-alive>
 					<component :is="item.component">{{ item.component }}</component>
 				</keep-alive>
-		 	</mt-swipe-item>
-		</mt-swipe>
+            </swiper-slide>
+        </swiper>
 	</div>
 </template>
 
 <script>
-	import commodity from './child/commodity';
-	import aspect from './child/aspect';
-	import review from './child/Evaluation';
-	import { mapState } from 'vuex';
+	import commodity from './child/commodity'
+	import aspect from './child/aspect'
+	import review from './child/Evaluation'
+
+	import { swiper, swiperSlide } from 'vue-awesome-swiper'
+	import { mapState, mapMutations } from 'vuex'
+
 	export default {
 		data() {
 			return {
 				list: [
-					{'path': '/commodity', component: commodity},
-					{'path': '/aspect', component: aspect},
-					{'path': '/review', component: review}
-				]
+					{component: commodity},
+					{component: aspect},
+					{component: review}
+				],
+				swiperOption: {
+	                width: window.innerWidth,
+	                direction:  'horizontal'
+	            },
+	            currentSwiperIndex: 0
 			}
 		},
 		components: {
@@ -31,28 +39,51 @@
 			aspect,
 			review
 		},
-		computed: mapState({
-			swiperIndex: state => state.detail.swiperIndex
-		}),
-		mounted() {},
+		computed: {
+	      	...mapState({
+				isHideCart: state => state.detail.isHideCart,
+				isHideHeader: state => state.detail.isHideHeader
+			}),
+			swiper() {
+	        	return this.$refs.mySwiper.swiper
+	      	}
+		},
+		props: ['index'],
+		watch: {
+			index: function(value) {
+				this.$refs.mySwiper.swiper.slideTo(value, 1000, false);
+			}
+		},
+		mounted() {
+			this.currentSwiperIndex = this.swiper.activeIndex;
+			this.$refs.mySwiper.swiper.on('slideChangeTransitionEnd', () => {
+	            this.setIndex(this.$refs.mySwiper.swiper.activeIndex);
+	        });
+		},
 		created(){},
 		methods: {
+			...mapMutations({
+				'setSwiperIndex': 'setCurrentSwiperIndex'
+			}),
+			setIndex(activeIndex) {
+	            this.setSwiperIndex(activeIndex);
+	        }
 		}
 	}
 </script>
 
 <style lang='scss' scoped>
-	.mint-swipe-items-wrap {
+	.ui-detail-swiper {
+		position: absolute;
+		width: auto;
+		top: 44px;
+		bottom: 50px;
+		left: 0px;
+		right: 0px;
 		overflow: auto;
 	}
-	.ui-detail-swiper {
-		height: 100%;
-		.mint-swipe {
-			height: 100%;
-			overflow: auto;
-			.mint-swipe-item {
-				overflow: auto;
-			}
-		}
+	.height-wrapper {
+		top: 0px;
+		bottom: 0px;
 	}
 </style>

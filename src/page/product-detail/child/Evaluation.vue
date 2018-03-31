@@ -14,7 +14,7 @@
 			<div class="list" v-for="(item, index) in reviewList" v-if="reviewList.length > 0">
 				<div>
 					<span>
-						{{ item.author.username}}
+						<!-- {{ item.author.username}} -->
 						<span v-bind:class="{'good-review': item.grade == 3, 'medium-review': item.grade == 2, 'bad-review': item.grade == 1}">{{ getGrade(item.grade) }}</span>
 					</span>
 

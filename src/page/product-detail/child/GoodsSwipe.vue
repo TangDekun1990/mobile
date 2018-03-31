@@ -1,9 +1,15 @@
 <!-- GoodsSwipe.vue -->
 <template>
 	<div class="swipe ui-common-swiper">
-		<mt-swipe :auto="0" class='ui-common-swiper'>
-		  	<mt-swipe-item v-for="(item,index) in photos.photos" v-bind:key="index">
+		<!-- 轮播图 -->
+		<mt-swipe :auto="0" class='ui-common-swiper' :prevent=false :stop-propagation='isStopPropagation' @change="handleChange" v-if='!isShowMode'>
+
+		  	<mt-swipe-item v-for="(item,index) in photos.photos" v-bind:key="index" v-if='photos.photos && photos.photos.length > 0'>
 		  		<img v-bind:src="item.thumb" v-on:click='previewPicture(index)'>
+		  	</mt-swipe-item>
+
+		  	<mt-swipe-item v-if='!photos.photos || photos.photos.length <= 0'>
+		  		<img src="../../../assets/image/change-icon/default_image_02@2x.png" class="product-img">
 		  	</mt-swipe-item>
 		</mt-swipe>
 
@@ -14,13 +20,14 @@
 
 <script>
 	import PreviewPicture from './PreviewPicture';
-	import { mapMutations } from 'vuex';
+	import { mapState, mapMutations } from 'vuex';
 	export default{
 		data(){
 			return {
 				isShowMode: false,
 				index: 0,
-				title: '商品详情'
+				title: '商品详情',
+				isStopPropagation: true
 			}
 		},
 		props: ['photos'],
@@ -30,17 +37,27 @@
 		created() {
 			this.$on('close-preview-picture', () => {
 				this.isShowMode = false;
+				this.hideCommodity(false);
 			});
 		},
 		methods: {
+			...mapMutations({
+				change: 'changeStatus',
+				hideCommodity: 'setIsHideCommodity'
+			}),
 			previewPicture(index) {
 				this.index = index;
 				this.isShowMode = true;
-				this.change(false);
+				this.change(true);
+				this.hideCommodity(true);
 			},
-			...mapMutations({
-				change: 'changeStatus'
-			})
+			handleChange(index) {
+				if (index == this.photos.length-1) {
+					this.isStopPropagation = false;
+				} else {
+					this.isStopPropagation = true;
+				}
+			}
 		}
 	}
 </script>
