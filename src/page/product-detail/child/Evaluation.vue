@@ -14,7 +14,7 @@
 			<div class="list" v-for="(item, index) in reviewList" v-if="reviewList.length > 0">
 				<div>
 					<span>
-						{{ item.author.username}}
+						<!-- {{ item.author.username}} -->
 						<span v-bind:class="{'good-review': item.grade == 3, 'medium-review': item.grade == 2, 'bad-review': item.grade == 1}">{{ getGrade(item.grade) }}</span>
 					</span>
 
@@ -108,7 +108,6 @@
 
 <style lang="scss" scoped>
 	.ui-evaluation {
-		padding-top: 44px;
 		.ui-evaluation-header {
 			background: #ffffff;
 			.flex-header {
@@ -129,7 +128,6 @@
 					border: 1px solid #4E545D;
 					padding: 2px 9px;
 					text-align: center;
-					line-height: 24px;
 					&.active {
 						color: #FFFFFF;
 						background: #EF3338;

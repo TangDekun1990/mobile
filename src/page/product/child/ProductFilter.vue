@@ -5,7 +5,7 @@
 			<li class="item"
 				v-for='(item, index) in SORTKEY'
 				v-bind:key='item.id'
-				v-on:click='setActiveSortkey(item)'
+				v-on:click='setActiveSortkey(item, index)'
 				v-bind:class="{'sortactive': item.id == currentSortKey.id, 'sortnormal' : item.id != currentSortKey.id}">
 				<a v-if='!item.isMore'>{{item.name}}</a>
 				<a v-if='item.isMore' v-on:click="isShowDroupMenu()">{{sort.name}}</a>
@@ -13,10 +13,11 @@
 			</li>
 		</ul>
 
-		<div class="sort-model" v-if='currentSortKey.isMore && isShowMore '>
+		<div class="sort-model" v-if='currentSortKey.isMore && isShowMore' >
 			<div v-for='(item, index) in childSort' v-bind:key='item.id' v-on:click='getSortChild(item)' v-bind:class="{'active': item.id == sort.id}">
 				<a>{{item.name}}</a>
-				<img src="../../../assets/image/change-icon/c1_choose@2x.png">
+				<img src="../../../assets/image/change-icon/c1_choose@2x.png" v-if='item.id != sort.id'>
+				<img src="../../../assets/image/change-icon/d1-yes@2x.png" v-if='item.id == sort.id'>
 			</div>
 		</div>
 	</div>
@@ -24,6 +25,7 @@
 
 <script>
 import { SORTKEY } from '../static'
+import { mapState, mapMutations } from 'vuex';
 export default {
 	data(){
 		return {
@@ -40,24 +42,37 @@ export default {
 		this.childSort = this.currentSortKey.child;
 		this.sort = this.childSort[0];
 	},
+	computed: mapState({
+		isSearch: state => state.product.isSearch
+	}),
 	methods: {
+		...mapMutations({
+			isShowProductModel: 'changeIsShowProductModel'
+		}),
+		closeFiler() {
+			this.isShowMore = false;
+		},
 		isShowDroupMenu(){
 			let item = this.currentSortKey;
 			if (item.isMore) {
-				this.isShowMore = !this.isShowMore;
+				this.isShowMore = true;
 			} else {
 				this.isShowMore = false;
 			}
+			this.isShowProductModel(this.isShowMore);
 		},
-		setActiveSortkey(item) {
+		setActiveSortkey(item, index) {
 			this.currentSortKey = item;
-			this.getValue();
+			// if (index != 0) {
+				this.getValue();
+			// }
 		},
 		getValue(){
 			let data = this.getSortValue();
-			this.$parent.$emit('change-list', {'value': data, 'isSearch': false});
+			this.$parent.$emit('change-list', {'value': data, 'isSearch': this.isSearch});
 		},
 		getSortChild(item){
+			this.isShowProductModel(false);
 			this.sort = item;
 			this.isShowMore = !this.isShowMore;
 			this.getValue();

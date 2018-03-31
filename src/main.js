@@ -1,9 +1,13 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Mint from 'mint-ui';
-import 'mint-ui/lib/style.css';
-import store from './store/index'
+import Mint from 'mint-ui'
+import VueAwesomeSwiper from 'vue-awesome-swiper'
+import VueResource from 'vue-resource'
 
+import 'swiper/dist/css/swiper.css'
+import 'mint-ui/lib/style.css';
+
+import store from './store/index'
 import App from './App.vue'
 import routes from './router/router'
 import { ROUTERMODE }from './config/env'
@@ -32,6 +36,9 @@ const router = new VueRouter({
 
 Vue.use(VueRouter)
 Vue.use(Mint)
+Vue.use(VueResource)
+Vue.use(VueAwesomeSwiper)
+
 Vue.prototype.utils = utils;
 
 new Vue({

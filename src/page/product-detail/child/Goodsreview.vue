@@ -1,6 +1,6 @@
 <!-- Goodsreview.vue -->
 <template>
-	<div class="ui-goods-review">
+	<div class="ui-goods-review" v-if='reviewList.length > 0'>
 		<div class="goods-review-header">
 			<p>评价</p>
 		</div>
@@ -37,6 +37,11 @@
 				getReviewList(params).then(res => {
 					if (res) {
 						this.reviewList = res.reviews.slice(0, 2);
+						// if(res.reviews.length > 2) {
+						// 	this.reviewList = res.reviews.slice(0, 2);
+						// } else if(res.reviews.length > 2) {
+						// 	this.reviewList = res.reviews;
+						// }
 					}
 				})
 			}
