@@ -53,8 +53,15 @@ export default {
     }
   },
   computed: {
+    getMode: function () {
+      let mode = this.$route.params.mode
+      if (mode === undefined) {
+        mode = 'signup'
+      }
+      return mode
+    },
     title: function () {  
-      let mode = this.$route.params.mode;   
+      let mode = this.getMode;   
       if (mode === 'signup') {
         return '快速注册'
       } else if (mode === 'bind') {
@@ -64,7 +71,7 @@ export default {
       }
     },
     confirmTitle: function () {
-      let mode = this.$route.params.mode;
+      let mode = this.getMode;
       if (mode === 'signup') {
         return '注册'
       } else {
@@ -73,7 +80,7 @@ export default {
     },
   },
   created: function () {
-    let mode = this.$route.params.mode;   
+    let mode = this.getMode;   
       if (mode === 'signup') {
         site.siteGet().then(
           (response) => { 
@@ -102,7 +109,7 @@ export default {
         return;
       }
       Indicator.open()
-      let mode = this.$route.params.mode;
+      let mode = this.getMode;
       // 注册时需要先验证手机号是否已存在
       if (mode === 'signup') {
         authMobile.authMobileVerify(username).then(
@@ -213,7 +220,7 @@ export default {
       )
     },
     onSubmit() {
-      let mode = this.$route.params.mode;
+      let mode = this.getMode;
       if (mode === 'signup') {
         this.signup()
       } else if (mode === 'bind') {

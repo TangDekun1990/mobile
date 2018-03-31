@@ -10,13 +10,13 @@
     </checkout-address>
     <checkout-goods class="goods section-header" v-on:onclick="goGoodsList">
     </checkout-goods>
-    <checkout-item class="item" title="配送方式" subtitle="温超物流" v-on:onclick="goShipping">
+    <checkout-item class="item" title="配送方式" :subtitle="getShippingName" v-on:onclick="goShipping">
     </checkout-item>
     <checkout-item class="item section-header" title="送货时间" subtitle="3月31日[周五] 09:00-19:00" v-on:onclick="goDuration">
     </checkout-item>
-    <checkout-item class="item section-header" title="发票类型" subtitle="纸质发票" v-on:onclick="goInvoice">
+    <checkout-item class="item section-header" title="发票类型" :subtitle="getInoviceTitle" v-on:onclick="goInvoice">
     </checkout-item>
-    <checkout-item class="item section-header" title="优惠券" subtitle="-AED 15.00" v-on:onclick="goCouponList">
+    <checkout-item class="item section-header" title="优惠券" :subtitle="getCouponName" :tips="getCouponTips" v-on:onclick="goCouponList">
     </checkout-item>  
     <checkout-comment class="comment section-header">
     </checkout-comment>
@@ -47,7 +47,7 @@ import CheckoutGoods from './child/CheckoutGoods'
 import CheckoutItem from './child/CheckoutItem'
 import CheckoutComment from './child/CheckoutComment'
 import CheckoutDesc from './child/CheckoutDesc'
-import { mapState, mapMutations } from 'vuex'
+import { mapState, mapMutations, mapActions } from 'vuex'
 import * as consignee from '../../api/network/consignee'
 import { Toast } from 'mint-ui'
 export default {
@@ -63,6 +63,10 @@ export default {
       defaultAddress: state => state.address.defaultItem,
       selectedAddress: state => state.address.selectedItem,
       addressItems: state => state.address.items,
+      selectedShipping: state => state.shipping.selectedItem,
+      couponTotal: state => state.coupon.total,
+      selectedCoupon: state => state.coupon.selectedItem,
+      invoice: state => state.invoice,
     }),
     getSelectedAddress: function() {
       let item = this.selectedAddress
@@ -78,6 +82,66 @@ export default {
         }
       }      
       return this.selectedAddress    
+    },
+    getShippingName: function () {
+      let name = ''
+      let item = this.selectedShipping
+      if (item && item.name) {
+        name = item.name
+      }
+      return name
+    },
+    getCouponName: function () {
+      let name = ''
+      let coupon = this.selectedCoupon
+      if (coupon && coupon.name) {
+        name = coupon.name 
+      } else {
+        name = '未使用'
+      }
+      return name
+    },
+    getCouponTips: function () {
+      let tips = ''
+      let coupon = this.selectedCoupon
+      if (coupon) {        
+        tips = '已选1张'
+      } else {
+        let total = this.couponTotal
+        tips = total + '张可用'        
+      }  
+      return tips   
+    },  
+    getInoviceTitle: function () {
+      let title = ''
+      if (this.invoice.isSave) {
+        if (!this.getInoviceToggle) {
+          if (this.invoice.type && this.invoice.type.name) {
+            title = this.invoice.type.name
+          }
+        } else {
+          title = '不要发票'
+        }
+      } else {
+        title = '请选择发票类型'
+      }       
+      return title
+    },
+    getInoviceToggle: function () {
+      return this.invoice.toggle
+    },  
+  },
+  watch: {
+    selectedAddress: function () {
+      console.log('====================================');
+      console.log('selectedAddress is', this.selectedAddress);
+      console.log('====================================');
+      // TODO:  
+    this.fetchShippingList({
+      'shop': '1',
+      'products': null,
+      'address': this.getSelectedAddress.id
+    }) 
     }
   },
   created: function() {    
@@ -88,12 +152,17 @@ export default {
         this.saveAddressList(items)
       }, (error) => {
         Toast(error.errorMsg)
-      })
+      }) 
+    this.fetchCouponUsable({ page: 1, per_page: 10, shop: 1, total_price:1000 })        
   },
   methods: {
     ...mapMutations({
       saveAddressList: 'saveItems',
-      selectAddressItem: 'selectItem'
+      selectAddressItem: 'selectItem',      
+    }),
+    ...mapActions({
+      fetchShippingList: 'fetchShippingList',
+      fetchCouponUsable: 'fetchCouponUsable',      
     }),
     goBack() {
       this.$router.go(-1)
@@ -112,7 +181,8 @@ export default {
       this.$router.push('shipping')
     },
     goInvoice() {
-      this.$router.push('invoice')
+      let title = this.invoice ? this.invoice.title : ''
+      this.$router.push({ name: 'invoice', params: { title: title} })
     },
     goDuration() {
       // TODO:      
