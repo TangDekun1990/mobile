@@ -13,6 +13,7 @@ import detail from './modules/detail'
 import shipping from './modules/shipping'
 import coupon from './modules/coupon'
 import invoice from './modules/invoice'
+import product from './modules/product'
 
 Vue.use(Vuex)
 
@@ -26,6 +27,7 @@ export default new Vuex.Store({
     shipping,
     coupon,
     invoice,
+    product
   },
   getters: getters,
   plugins: [

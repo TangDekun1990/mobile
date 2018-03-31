@@ -1,12 +1,12 @@
 <!-- 商品详情 -->
 <template>
 	<div class="product-detail-wrapper">
-		<!-- header -->
-		<v-detail-nav v-if='isHideHeader'></v-detail-nav>
+		<!-- header  -->
+		<v-detail-nav v-if='!isHideHeader'></v-detail-nav>
 		<!-- body -->
-		<v-detail-swiper></v-detail-swiper>
+		<v-detail-swiper :index="swiperIndex"></v-detail-swiper>
 		<!-- footer -->
-		<v-detail-footer :productinfo="productDetail" v-if='isHideCart'></v-detail-footer>
+		<v-detail-footer :productinfo="productDetail" v-if='!isHideCart'></v-detail-footer>
 	</div>
 </template>
 
@@ -17,24 +17,29 @@
 	import detailSwiper from './swiper';
 	// footer
 	import detailFooter from './footer';
-
+	// 获取详情
 	import { getProductDetail } from '../../api/network/product';
-	import { mapState } from 'vuex';
-	import { mapMutations } from 'vuex';
+	import { mapState, mapMutations } from 'vuex';
 	export default {
 		data(){
 			return {
 				productId: this.$route.params.id ? this.$route.params.id : '',
 				productDetail: {},
-				hideFooter: false
+				hideFooter: false,
+				swiperIndex: 0
 			}
 		},
+
 		components: {
 			'v-detail-nav': detailHeader,
 			'v-detail-swiper': detailSwiper,
 			'v-detail-footer': detailFooter
 		},
 		created(){
+			// 监听导航栏是否点击
+			this.$on('nav-changed', (index) => {
+				this.swiperIndex = index;
+			});
 			this.getDetail();
 		},
 		computed: mapState({
@@ -60,5 +65,7 @@
 <style lang='scss' scoped>
 	.product-detail-wrapper {
 		height: 100%;
+		width: auto;
+		position: relative;
 	}
 </style>

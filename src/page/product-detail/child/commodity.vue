@@ -1,5 +1,6 @@
 <template>
-	<div class="commodity-wrapper">
+	<!-- 商品 -->
+	<div class="commodity-wrapper" v-bind:class="{'hide-commodity': isHideCommodity, 'sroller-commodity': !isHideCommodity}">
 		<v-goods-swipe v-bind:photos='productDetail'></v-goods-swipe>
 		<v-goods-info :productinfo="productDetail"></v-goods-info>
 		<v-goods-buy></v-goods-buy>
@@ -19,6 +20,7 @@
 	import goodsReview from './Goodsreview';
 	import recommend from './recommend';
 
+	import { mapState, mapMutations } from 'vuex';
 	//  todo
 	import { getProductDetail } from '../../../api/network/product';
 	export default {
@@ -40,6 +42,9 @@
 			'v-goods-review': goodsReview,
 			'v-goods-recommend': recommend
 		},
+		computed: mapState({
+			isHideCommodity: state => state.detail.isHideCommodity
+		}),
 		methods: {
 			getDetail() {
 				getProductDetail(this.productId).then(res => {
@@ -53,5 +58,12 @@
 </script>
 
 <style lang='scss' scoped>
-
+	.hide-commodity{
+		overflow: hidden;
+		height: -webkit-fill-available;
+	}
+	.sroller-commodity{
+		height: 100%;
+		overflow: auto;
+	}
 </style>

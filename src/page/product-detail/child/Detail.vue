@@ -1,10 +1,11 @@
 <!-- Details.vue -->
 <template>
 	<div class="show-iframe">
-		<div class="ui-iframe" :class="{'hastop': unqie == 'detail'}" v-if="url">
+		<!-- <div class="ui-iframe" :class="{'hastop': unqie == 'detail'}" v-if="url">
 			<div v-html='url'></div>
-			<!-- <iframe  v-bind:src="url" class="agreemnt-iframe" allowfullscreen='true' id="iframe" name="iframe"></iframe> -->
-		</div>
+			<iframe  v-bind:src="url" class="agreemnt-iframe" allowfullscreen='true' id="iframe" name="iframe"></iframe>
+		</div> -->
+		<webview :url.asyc="getUrl"></webview>
 
 		<div class="list-empty" v-if="!url">
 			<img src="../../../assets/image/change-icon/goods_details_empty@2x.png">
@@ -15,17 +16,21 @@
 </template>
 
 <script>
+import { Webview } from '../../../components/common'
 	export default {
 		data(){
 			return {
 			}
 		},
+		computed: {
+		    getUrl: function () {
+		      	return this.url
+		    }
+		},
 		props:['url', 'unqie'],
 		created(){
 		},
 		methods: {
-			getHtml() {
-			}
 		}
 	}
 </script>

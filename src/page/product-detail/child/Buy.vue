@@ -1,18 +1,39 @@
 <!-- Buy.vue -->
 <template>
 	<div class="ui-buy-wrapper">
-		<div class="buy-wrapper">
-			<p>请选择购买数量分类</p>
+		<div class="buy-wrapper" @click="changeCartState()">
+			<p v-if='number <= 0'>请选择购买数量分类</p>
+			<p v-if='number > 0'>已选数量{{number}}</p>
 			<img src="../../../assets/image/change-icon/enter@2x.png">
 		</div>
 	</div>
 </template>
 
 <script>
-
+	import { mapState, mapMutations } from 'vuex';
+	export default {
+		data(){
+			return{}
+		},
+		computed: {
+			...mapState({
+		      	number: state => state.detail.number
+		    })
+		},
+		methods: {
+			...mapMutations({
+				saveCartState: 'saveCartState',
+				setIsHideCommodity: 'setIsHideCommodity'
+			}),
+			changeCartState() {
+				this.saveCartState(true);
+				this.setIsHideCommodity(true);
+			}
+		}
+	}
 </script>
 
-<style lang="scss">
+<style lang="scss" >
 	.ui-buy-wrapper {
 		padding: 15px;
 		background-color: #ffffff;

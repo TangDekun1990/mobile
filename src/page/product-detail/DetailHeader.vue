@@ -1,15 +1,15 @@
 <!-- DetailHeader.vue -->
 <template>
 	<div class="ui-detail-header">
-		<img src="../../assets/image/change-icon/back@2x.png">
+		<img src="../../assets/image/change-icon/back@2x.png" v-on:click='goBack()'>
 		<div v-for="(item, index) in data" v-bind:class="{'active': index == currentIndex}" v-on:click='changeEvent(index)'>{{ item.name}}</div>
-		<img src="../../assets/image/change-icon/b0_share@2x.png">
+		<!-- <img src="../../assets/image/change-icon/b0_share@2x.png"> -->
 	</div>
 </template>
 
 <script>
 import { header } from './static';
-import { mapMutations } from 'vuex';
+import { mapState, mapMutations } from 'vuex'
 export default {
 	data(){
 		return {
@@ -17,13 +17,20 @@ export default {
 			currentIndex: 0
 		}
 	},
+	computed: mapState({
+		currentSwiperIndex: state => state.detail.currentSwiperIndex
+	}),
+	created(){
+		this.currentIndex = this.currentSwiperIndex;
+	},
+	watch: {
+		currentSwiperIndex: function(index) {
+			this.currentIndex = index;
+		}
+	},
 	methods: {
-		...mapMutations({
-			saveSwiperIndex: 'saveSwiperIndex'
-		}),
 		changeEvent(index) {
 			this.currentIndex = index;
-			this.saveSwiperIndex(index);
 			this.$parent.$emit('nav-changed', this.currentIndex);
 		},
 		goBack() {
@@ -36,6 +43,7 @@ export default {
 
 <style lang='scss'>
 	.ui-detail-header {
+		padding: 0px 20px;
 		height:44px;
 		background:rgba(255,255,255,1);
 		box-shadow: 0px -0.5px 0px 0px rgba(232,234,237,1);
@@ -48,20 +56,23 @@ export default {
 		justify-content: space-between;
 		align-content: center;
 		align-items: center;
-		position: fixed;
-	    flex-basis: 100%;
-	    width: 100%;
-	    z-index: 10;
+	    flex-basis: auto;
+	    width: auto;
+	    z-index: 1;
+	    position: absolute;
+	    top: 0px;
+	    left: 0px;
+	    right: 0px;
 		img {
 			width: 24px;
 			height: 24px;
 			cursor: pointer;
-			&:first-child {
+			/*&:first-child {
 				padding-left: 10px;
-			}
-			&:last-child {
+			}*/
+			/*&:last-child {
 				padding-right: 10px;
-			}
+			}*/
 		}
 		div {
     		line-height: 42px;

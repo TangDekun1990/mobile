@@ -112,7 +112,8 @@
 					width: 24px;
 					height: 24px;
 					vertical-align: middle;
-					padding-left: 15px;
+					margin-left: 15px;
+					flex-shrink: 0;
 				}
 			}
 		}
