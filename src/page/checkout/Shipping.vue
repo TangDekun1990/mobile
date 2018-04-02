@@ -4,7 +4,7 @@
       <header-item slot="left" v-bind:isBack=true v-on:onclick="goBack">
       </header-item>    
     </mt-header>
-    <shipping-item>
+    <shipping-item v-for="(item, index) in items" :key="index" :item="item">
     </shipping-item>
   </div>
 </template>
@@ -13,9 +13,15 @@
 import { HeaderItem } from '../../components/common'
 import { Header } from 'mint-ui'
 import ShippingItem from './child/ShippingItem'
+import { mapState } from 'vuex'
 export default {
   components: {
     ShippingItem,
+  },
+  computed: {
+    ...mapState({
+      items: state => state.shipping.items
+    })
   },
   methods: {      
     goBack() {

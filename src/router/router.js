@@ -12,9 +12,13 @@ import Product from '../page/product/Product'
 // search
 import Search from '../page/search/Search'
 
+/* 商品详情 */
+// const detail = r => require.ensure([], () => r(require( '../page/detail/Goods')), 'goods');
+
 // auth
 import Signin from '../page/auth/Signin'
 import Signup from '../page/auth/Signup'
+import Agreement from '../page/auth/Agreement'
 
 // profile
 import Profile from '../page/profile/Profile'
@@ -24,6 +28,7 @@ import Setting from '../page/profile/Setting'
 // address
 import AddressList from '../page/address/AddressList'
 import AddressManage from '../page/address/AddressManage'
+import AddressEdit from '../page/address/AddressEdit'
 
 // coupon
 import CouponList from '../page/coupon/CouponList'
@@ -51,10 +56,15 @@ import Receipt from '../page/recepit/Recepit'
 import Evaluate from '../page/evaluate/Evaluate'
 
 export default [	
+// 商品详情
+import Detail from '../page/product-detail/index'
+
+export default [
+
 	{
 		path: '/',
 		component: App,
-		children: [				
+		children: [
 			{
 				path: '',
 				redirect: '/home'
@@ -89,6 +99,11 @@ export default [
 				component: Signup
 			},
 			{
+				name: 'agreement',
+				path: '/agreement',
+				component: Agreement
+			},
+			{
 				name: 'profile',
 				path: '/profile',
 				component: Profile
@@ -112,6 +127,11 @@ export default [
 				name: 'addressManage',
 				path: '/addressManage',
 				component: AddressManage
+			},
+			{
+				name: 'addressEdit',
+				path: '/addressEdit',
+				component: AddressEdit
 			},
 			{
 				name: 'couponList',
@@ -167,6 +187,9 @@ export default [
 				name: 'evaluate',
 				path: '/evaluate',
 				component: Evaluate
+				name: 'detail',
+				path: '/detial/:id?',
+				component: Detail
 			}
 		]
 	}

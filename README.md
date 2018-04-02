@@ -1,7 +1,7 @@
 ##README
 ###技术栈
 
-`vue2 + vuex  + vue-router + webpack + es6 + sass + flex`
+`vue2 + vuex  + vue-router + webpack + es6  + axios + sass + flex`
 
 
 ###目录结构 
@@ -130,4 +130,12 @@
 ###其它
 * 打包自动更新的问题（微信端打开还是旧的版本） 
 * 首页卡片组加载速度
-	* 目标：首页加载秒开
+	* 目标：首页加载秒开 
+
+###公共组件库
+* npm打包
+* transform
+
+###扩展
+* TypeScript支持
+* TypeScript模板

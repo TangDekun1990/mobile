@@ -1,7 +1,7 @@
 <template>
   <div class="container" @click="onclick"> 
     <img class="icon" v-bind:src="iconUrl" />    
-    <label class="title">{{title}}</label>    
+    <label class="title">{{item.name}}</label>    
   </div>
 </template>
 
@@ -9,8 +9,8 @@
 export default {
   name: 'InfoRadioItem',
   props: {
-    title: {
-      type: String,
+    item: {
+      type: Object,
     },
     isSelected: {
       type: Boolean,
@@ -24,7 +24,7 @@ export default {
       } else {
         return require("../../assets/image/change-icon/choice@2x.png")
       }
-    }
+    },
   },
   methods: {
     onclick() {

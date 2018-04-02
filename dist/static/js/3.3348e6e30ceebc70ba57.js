@@ -1,2 +1,0 @@
-webpackJsonp([3],{RBGi:function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var a={data:function(){return{}},components:{tabBar:n("GlpD").a},mounted:function(){}},r={render:function(){var t=this.$createElement,e=this._self._c||t;return e("div",{attrs:{id:"demo"}},[e("tab-bar")],1)},staticRenderFns:[]};var o=n("VU/8")(a,r,!1,function(t){n("oXaQ")},"data-v-3610948c",null);e.default=o.exports},oXaQ:function(t,e){}});
-//# sourceMappingURL=3.3348e6e30ceebc70ba57.js.map

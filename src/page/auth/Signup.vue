@@ -38,6 +38,7 @@ import { HeaderItem, CountdownButton } from '../../components/common'
 import { Indicator, Toast, Header } from 'mint-ui'
 import { mapMutations } from 'vuex'
 import * as authMobile from '../../api/network/auth-mobile'
+import * as site from '../../api/network/site'
 import { authMobileVerify } from '../../api/network/auth-mobile';
 export default {
   props: {
@@ -48,11 +49,19 @@ export default {
       code: '',
       password: '',
       confirmPassword: '',
+      aggrementUrl: '',
     }
   },
   computed: {
+    getMode: function () {
+      let mode = this.$route.params.mode
+      if (mode === undefined) {
+        mode = 'signup'
+      }
+      return mode
+    },
     title: function () {  
-      let mode = this.$route.params.mode;   
+      let mode = this.getMode;   
       if (mode === 'signup') {
         return '快速注册'
       } else if (mode === 'bind') {
@@ -62,13 +71,26 @@ export default {
       }
     },
     confirmTitle: function () {
-      let mode = this.$route.params.mode;
+      let mode = this.getMode;
       if (mode === 'signup') {
         return '注册'
       } else {
         return '确认'
       } 
     },
+  },
+  created: function () {
+    let mode = this.getMode;   
+      if (mode === 'signup') {
+        site.siteGet().then(
+          (response) => { 
+            if (response && response.site_info) {
+              this.aggrementUrl = response.site_info.terms_url  
+            }
+        }, 
+        (error) => {
+        })        
+      }
   },    
   methods: {  
     ...mapMutations({
@@ -87,7 +109,7 @@ export default {
         return;
       }
       Indicator.open()
-      let mode = this.$route.params.mode;
+      let mode = this.getMode;
       // 注册时需要先验证手机号是否已存在
       if (mode === 'signup') {
         authMobile.authMobileVerify(username).then(
@@ -198,7 +220,7 @@ export default {
       )
     },
     onSubmit() {
-      let mode = this.$route.params.mode;
+      let mode = this.getMode;
       if (mode === 'signup') {
         this.signup()
       } else if (mode === 'bind') {
@@ -208,7 +230,7 @@ export default {
       }
     },
     onAgreement() {
-      
+      this.$router.push({ name: 'agreement', params: {'url': this.aggrementUrl}})
     }
   }
 }

@@ -1,12 +1,12 @@
 <template>
-  <div class="container">
+  <div class="container" @click="onclick">
     <img class="top-img" src="../../../assets/image/change-icon/ticket_bg@2x.png">
-    <label class="title">国庆优惠-满400立减50</label>
-    <label class="subtitle">满400元可使用</label>
+    <label class="title">{{getName}}</label>
+    <label class="subtitle">{{getCondition}}</label>
     <div class="desc-wrapper">
-      <label>A类优惠券</label>
-      <label>2016.5.2 ~ 2016.6.2</label>
-      <label>A12345678</label>      
+      <label v-for="(item, index) in getTypeItems" :key="index">{{item}}</label>
+      <label>{{getDuration}}</label>
+      <label>A</label>      
     </div> 
     <img class="indicator" src="../../../assets/image/change-icon/d1_ticket_sel@2x.png">
   </div>  
@@ -19,6 +19,42 @@ export default {
       type: Object
     }
   },
+  computed: {
+    getName: function () {
+      let name = ''
+      if (this.item) {
+        name = this.item.name
+      }
+      return name
+    },
+    getCondition: function () {
+      let name = ''
+      if (this.item) {
+        name = this.item.condition
+      }
+      return name
+    },
+    getTypeItems: function () {
+      let items = []
+      if (this.item && this.item.infos) {
+        items = this.item.infos
+      }
+      return items
+    },
+    getDuration: function () {
+      let duration = ''
+      let item = this.item
+      if (item && item.start_at && item.end_at) {
+        duration = item.start_at + ' ~ ' + item.end_at
+      }
+      return duration
+    },
+  },
+  methods: {
+    onclick() {
+      this.$emit('onclick')
+    }
+  }
 }
 </script>
 

@@ -1,5 +1,4 @@
 import { configGet } from '../../api/network/config'
-import { ServerResponse } from 'http';
 
 // initial state
 const state = {

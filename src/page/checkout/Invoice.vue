@@ -4,26 +4,38 @@
       <header-item slot="left" v-bind:isBack=true v-on:onclick="goBack">
       </header-item>    
     </mt-header>
-    <div class="top-wrapper">
-      <label class="title">发票类型</label>
-      <div class="type-wrapper">
-        <div class="type-item" v-for="item in typeItems" :key="item">
-          <label class="typye-title">{{item}}</label>
-        </div>
-      </div>
+    <flow-radio-list 
+      ref='type' 
+      title="发票类型" 
+      :items="typeItems" 
+      :selectedIndex="getTypeIndex"
+      v-on:onIndexChanged="onTypeIndexChanged">
+    </flow-radio-list>
+    <div class="tips-wrapper">
       <label class="tips">怕纸质发票丢失？试试电子发票吧！</label>
     </div>    
     <div class="center-wrapper section-header">    
       <label class="title">发票抬头</label>
       <div class="input-wrapper">
-        <textarea placeholder="个人">        
+        <textarea placeholder="个人" v-model="value">        
         </textarea>
       </div>       
     </div>
-    <info-radio-list class="section-header" title="发票明细" v-bind:items="infoItems">
+    <info-radio-list 
+      ref='content' 
+      class="section-header" 
+      title="发票明细" 
+      v-bind:items="contentItems" 
+      :selectedIndex="getContentIndex"
+      v-on:onIndexChanged="onContentIndexChanged">
     </info-radio-list>
-    <info-radio-item class="item section-header" title="不要发票" isSelected="true">
-    </info-radio-item>
+    <info-toggle-item 
+      ref="toggle" 
+      class="item section-header" 
+      :item="toggleItem" 
+      :isSelected="toggle" 
+      v-on:onclick="cancel">
+    </info-toggle-item>
     <div class="submit" @click="submit">
       <label class="text">确认</label>
     </div>
@@ -31,22 +43,89 @@
 </template>
 
 <script>
-import { HeaderItem, InfoRadioList, InfoRadioItem } from '../../components/common'
-import { Header } from 'mint-ui'
+import { HeaderItem, InfoRadioList, InfoToggleItem, FlowRadioList } from '../../components/common'
+import { Header, Toast } from 'mint-ui'
+import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
+
 export default {
   data() {
     return {
-      typeItems: ['个人发票', '公司发票', '其他'],
-      infoItems: ['商品清单 ', '电器', '办公用品', '其他'],
+      value: this.$route.params.title,
+      toggleItem: {
+        id: '0',
+        name: '不要发票',
+      },
     }
   },
-  methods: {      
+  created: function () {
+    this.fetchTypeItems()
+    this.fetchContentItems()
+  },
+  computed: {
+    ...mapGetters({
+      getTypeIndex: 'getTypeIndex',
+      getContentIndex: 'getContentIndex',
+    }),
+    ...mapState({
+      typeItems: state => state.invoice.typeItems,
+      contentItems: state => state.invoice.contentItems,
+      title: state => state.invoice.title,
+      toggle: state => state.invoice.toggle,
+    }),
+  },
+  methods: { 
+    ...mapMutations([
+      'saveInvoiceInfo',
+      'setInvoiceToggle'
+    ]),     
+    ...mapActions({
+      fetchTypeItems: 'fetchInvoiceTypeItems',
+      fetchContentItems: 'fetchInvoiceContentItems'
+    }),
     goBack() {
       this.$router.go(-1) 
     },
-    submit() {
+    selectType(index) {
 
-    }
+    },
+    onTypeIndexChanged() {      
+      if (this.toggle) {         
+        this.setInvoiceToggle(false)
+        this.$refs.toggle.value = false
+      }
+    },
+    onContentIndexChanged() {      
+      if (this.toggle) { 
+        this.setInvoiceToggle(false)
+        this.$refs.toggle.value = false
+      }
+    },
+    cancel() {
+      if (this.toggle) { 
+        this.setInvoiceToggle(false)
+      } else {
+        this.$refs.type.currentIndex = -1
+        this.$refs.content.currentIndex = -1
+        this.setInvoiceToggle(true)
+        this.saveInvoiceInfo({ type: null, title: '', content: null })
+      }      
+    },
+    submit() {
+      if (!this.toggle) {
+        this.setInvoiceToggle(false)
+        let typeIndex = this.$refs.type.currentIndex
+        let typeItem = this.typeItems[typeIndex]
+        let title = this.value
+        let contentIndex = this.$refs.content.currentIndex
+        let contentItem = this.contentItems[contentIndex]      
+        if (typeIndex < 0 || contentIndex < 0 || title.length <= 0) {
+          Toast('请填写完整发票信息')
+          return;
+        }
+        this.saveInvoiceInfo({ type: typeItem, title: title, content: contentItem })
+      }      
+      this.goBack()
+    },
   }
 }
 </script>
@@ -61,55 +140,30 @@ export default {
   }
   .header {
     @include header;
+    border-bottom: 1px solid $lineColor;
   }
   .section-header {
     margin-top: 10px;
   }
-  .top-wrapper {
+  .tips-wrapper {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: stretch;
     background-color: #fff;
-    border: 1px solid $lineColor;
-  }
-  .title {
-    color: #4E545D;
-    font-size: 16px;
-    margin-top: 15px;
-    margin-left: 15px;
-  }
-  .type-wrapper {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: stretch;
-  }
-  .type-item {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    border: 1px solid #404245;
-    border-radius: 1px;
-    height: 35px; 
-    padding-left: 15px;  
-    padding-right: 15px;
-    margin-left: 15px;
-    margin-top: 15px;
-  }
-  .type-title {
-    color: #4E545D;
-    font-size: 14px; 
-    padding-left: 17px;
-    padding-right: 17px;   
-  }
+  }  
   .tips {
     color: #7C7F88;
     font-size: 14px;
     margin-top: 16px;
     margin-left: 15px;
     margin-bottom: 16px;
+  }
+  .title {
+    color: #4E545D;
+    font-size: 16px;
+    margin-top: 15px;
+    margin-left: 15px;
   }
   .center-wrapper {    
     display: flex;

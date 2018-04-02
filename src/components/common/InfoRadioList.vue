@@ -3,9 +3,10 @@
     <label class="title">{{title}}</label>  
     <info-radio-item v-for="(item, index) in items" 
       class="item"
-      :key="index" 
-      v-bind:isSelected="index == selectedIndex" 
-      :title="item">
+      :key="index"
+      :item="item"
+      :isSelected="isSelected(index)" 
+      v-on:onclick="onclick(index)">
     </info-radio-item>  
   </div>
 </template>
@@ -25,7 +26,35 @@ export default {
       type: Number,
       default: -1,
     },
+  },
+  data() {
+    return {
+      currentIndex: this.selectedIndex
+    }
   }, 
+  computed: {
+    getTitle: function (item) {
+      let title = ''
+      if (item && item.title) {
+        title = item.title
+      }
+      return title
+    },
+  },
+  methods: {
+    onclick(index) {
+      if (this.currentIndex !== index) {
+        this.currentIndex = index
+        this.$emit('onIndexChanged')
+      }      
+    },
+    isSelected(index) {
+      if (this.currentIndex === index) {
+        return true
+      }
+      return false
+    }
+  },
 }
 </script>
 
