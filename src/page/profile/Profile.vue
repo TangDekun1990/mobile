@@ -153,8 +153,7 @@ export default {
       // TODO:
       this.$router.push("checkout");
     },
-    goAddress() {
-      this.$router.push("addressList");
+    goAddress() {      
       this.$router.push('addressManage')
     },
     goCoupon() {

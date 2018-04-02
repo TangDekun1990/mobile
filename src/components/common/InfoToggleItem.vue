@@ -49,6 +49,7 @@ export default {
     background-color: #fff;    
   }
   .title { 
+    flex: 1;
     font-size: 14px;
     color: #7C7F88;
   }
