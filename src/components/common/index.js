@@ -17,5 +17,5 @@ module.export = {
   HeaderItem,
   CountdownButton,
   InfoRadioItem,
-  InfoRadioList,  
+  InfoRadioList
 }

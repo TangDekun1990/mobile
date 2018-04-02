@@ -35,6 +35,21 @@ import GoodsList from '../page/checkout/GoodsList'
 import Shipping from '../page/checkout/Shipping'
 import Invoice from '../page/checkout/Invoice'
 
+// order
+import Order from '../page/order/Order'
+
+// payment
+import Payment from '../page/payment/Payment'
+
+// ship
+import Ship from '../page/ship/Ship'
+
+// recepit
+import Receipt from '../page/recepit/Recepit'
+
+// evaluate
+import Evaluate from '../page/evaluate/Evaluate'
+
 export default [	
 	{
 		path: '/',
@@ -127,7 +142,32 @@ export default [
 				name: 'invoice',
 				path: '/invoice',
 				component: Invoice
-			},			
+			},
+			{
+				name: 'order',
+				path: '/order',
+				component: Order
+			},
+			{
+				name: 'payment',
+				path: '/payment',
+				component: Payment
+			},
+			{
+				name: 'ship',
+				path: '/ship',
+				component: Ship
+			},
+			{
+				name: 'recepit',
+				path: '/recepit',
+				component: Receipt
+			},
+			{
+				name: 'evaluate',
+				path: '/evaluate',
+				component: Evaluate
+			}
 		]
 	}
 ]

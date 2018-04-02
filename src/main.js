@@ -1,13 +1,13 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Mint from 'mint-ui';
-import 'mint-ui/lib/style.css';
+import Mint from 'mint-ui'
+import 'mint-ui/lib/style.css'
 import store from './store/index'
 
 import App from './App.vue'
 import routes from './router/router'
-import { ROUTERMODE }from './config/env'
-import utils from './util/util';
+import { ROUTERMODE } from './config/env'
+import utils from './util/util'
 
 import './assets/style/reset.scss'
 
