@@ -11,7 +11,7 @@
 
 <style lang='scss' scoped>
 	.cart-header-wrapper {
-		display: absolute;
+		display: relative;
 		height: 44px;
 		line-height: 44px;
 		top: 0px;
