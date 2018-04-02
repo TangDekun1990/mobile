@@ -6,12 +6,12 @@ export const getCartTotal = (params) => fetchEndpoint('/v2/ecapi.cart.quantity',
 
 export const getCartGroup = (params) => fetchEndpoint('/v2/ecapi.cart.get', 'POST', params);
 
-// export const getSearch = (params) => fetchEndpoint('/v2/ecapi.search.product.list', 'POST', params);
+export const deleteCart = (params) => fetchEndpoint('/v2/ecapi.cart.delete', 'POST', params);
 
-// export const getProductDetail = (product) => fetchEndpoint('/v2/ecapi.product.get', 'post', {'product': product});
+export const updateCartQuantity = (params) => fetchEndpoint('/v2/ecapi.cart.update', 'post', params);
 
-// export const getReviewList = (params) => fetchEndpoint('/v2/ecapi.review.product.list', 'post', params);
+export const clearCart = (params) => fetchEndpoint('/v2/ecapi.cart.clear', 'post', params);
 
-// export const getReviewsubtotal = (product) => fetchEndpoint('/v2/ecapi.review.product.subtotal', 'post', {'product': product});
+export const getCartPromos = (params) => fetchEndpoint('/v2/ecapi.cart.promos', 'post', params);
 
-// export const getRecommendProduct = (params) => fetchEndpoint('/v2/ecapi.recommend.product.list', 'post', params);
+export const checkoutCart = (params) => fetchEndpoint('/v2/ecapi.cart.checkout', 'post', params);
