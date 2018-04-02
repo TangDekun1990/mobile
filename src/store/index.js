@@ -11,6 +11,7 @@ import address from './modules/address'
 import region from './modules/region'
 import detail from './modules/detail'
 import product from './modules/product'
+import cart from './modules/cart'
 
 Vue.use(Vuex)
 
@@ -21,7 +22,8 @@ export default new Vuex.Store({
     address,
     region,
     detail,
-    product
+    product,
+    cart
   },
   getters: getters,
   plugins: [

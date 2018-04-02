@@ -12,9 +12,6 @@ import Product from '../page/product/Product'
 // search
 import Search from '../page/search/Search'
 
-/* 商品详情 */
-// const detail = r => require.ensure([], () => r(require( '../page/detail/Goods')), 'goods');
-
 // auth
 import Signin from '../page/auth/Signin'
 import Signup from '../page/auth/Signup'
@@ -42,6 +39,9 @@ import Invoice from '../page/checkout/Invoice'
 
 // 商品详情
 import Detail from '../page/product-detail/index'
+
+// 购物车
+import Cart from '../page/cart/index'
 
 export default [
 	{
@@ -150,6 +150,11 @@ export default [
 				name: 'detail',
 				path: '/detial/:id?',
 				component: Detail
+			},
+			{
+				name: 'cart',
+				path: '/cart',
+				component: Cart
 			}
 		]
 	}
