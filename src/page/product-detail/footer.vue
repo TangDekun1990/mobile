@@ -4,7 +4,7 @@
 
 		<div class="footer-flex">
 			<div class="left">
-				<img src="../../assets/image/change-icon/b0_cart@2x.png">
+				<img src="../../assets/image/change-icon/b0_cart@2x.png" v-on:click='goCart()'>
 				<span class="icon" v-if='quantity > 0'>{{ quantity }}</span>
 				<div class="price">
 					<span>AED {{ productinfo.current_price }}</span>
@@ -73,6 +73,10 @@
 						this.quantity = res.quantity;
 					}
 				})
+			},
+			// 购物车
+			goCart() {
+				this.$router.push({'name':'cart'});
 			}
 		}
 	}

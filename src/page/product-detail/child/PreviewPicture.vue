@@ -118,7 +118,7 @@
 				display: -webkit-flex;
 				display: -moz-flex;
 				width: 100%;
-				border: 1px solid;
+				/*border: 1px solid;*/
 				justify-content: center;
 				align-content: center;
 				align-items: center;

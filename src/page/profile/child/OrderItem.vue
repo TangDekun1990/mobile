@@ -1,6 +1,6 @@
 <template>
-  <div class="order-item">
-    <img class="order-item-icon" v-bind:src="icon" />
+  <div @click="onclick">
+    <img class="order-item-icon" v-bind:src="icon"/>
     <label class="item-title order-item-title">{{title}}</label>
   </div>
 </template>
@@ -14,7 +14,17 @@ export default {
     title: {
       type: String,
     },
+    testAttr: {
+      type: String,
+    }
   },
+  methods: {
+    onclick() {
+      this.$emit('onclick')
+      console.log(this.testAttr);
+      this.$router.push(this.testAttr);
+    }
+  }
 }
 </script>
 
