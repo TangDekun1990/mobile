@@ -152,7 +152,10 @@ export default {
     background-color: $mainbgColor;
   }
   .toolbar-item {    
-    font-size: 16px;    
+    font-size: 16px;
+    border: none;
+    border-radius: 0px;   
+    background-color: $mainbgColor; 
   }
   .cancel-item {
     margin-left: 10px;

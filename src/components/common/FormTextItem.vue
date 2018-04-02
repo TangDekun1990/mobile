@@ -44,10 +44,9 @@ export default {
     padding-left: 20px; 
   }
   .title {
-    width: 70px;
+    width: 90px;
     font-size: 14px;
     color: #4E545D;
-    margin-right: 20px;
   }
   .value {
     flex: 1;

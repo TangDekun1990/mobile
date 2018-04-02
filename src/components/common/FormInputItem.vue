@@ -1,7 +1,12 @@
 <template>
   <div class="container">    
     <label class="title">{{title}}</label>    
-    <input class="value" v-bind:placeholder="placeholder" v-bind:value="value" v-on:input="value = $event.target.value">
+    <input 
+      class="value" 
+      :maxlength="maxlength"
+      v-bind:placeholder="placeholder" 
+      v-bind:value="value" 
+      v-on:input="value = $event.target.value">
   </div>
 </template>
 
@@ -18,6 +23,9 @@ export default {
     placeholder: {
       type: String,
     },
+    maxlength: {
+      type: String,
+    },
   },
   data() {
     return {
@@ -29,9 +37,6 @@ export default {
       this.$emit('onclick')
     },
     onchange(value) {
-      console.log('====================================');
-      console.log(value);      
-      console.log('====================================');
       this.value = value
     },
   }
@@ -49,20 +54,15 @@ export default {
     padding-left: 20px; 
   }
   .title {
-    width: 70px;
+    width: 90px;
     font-size: 14px;
     color: #4E545D;
-    margin-right: 20px;
   }
   .value {
-    flex: 1;
-    font-size: 14px;
-    color: #4E545D;
+    @include formInput;
+    flex: 1;    
     margin-left: 10px;
     margin-right: 15px;
-    &:focus {
-      outline-style: none;
-    }
   }
   .indicator {    
     width: 7px;
