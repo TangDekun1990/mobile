@@ -1,5 +1,5 @@
 <template>
-  <div class="container">    
+  <div class="content-wrapper">    
     <label class="title">{{title}}</label>    
     <input 
       class="value" 
@@ -44,7 +44,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .container {    
+  .content-wrapper {    
     display: flex;
     flex-direction: row;
     justify-content: flex-start;

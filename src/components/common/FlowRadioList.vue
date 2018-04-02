@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="content-wrapper">
     <label class="title">{{title}}</label>
     <div class="type-wrapper">
       <flow-radio-item v-for="(item, index) in items" 
@@ -52,7 +52,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .container {
+  .content-wrapper {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
