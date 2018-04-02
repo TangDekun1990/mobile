@@ -1,5 +1,5 @@
 <template>
-  <div class="container" @click="onclick">    
+  <div class="content-wrapper" @click="onclick">    
     <label class="title">{{title}}</label>
     <label class="value">{{value}}</label> 
     <img class="indicator" src="../../assets/image/change-icon/enter@2x.png" />   
@@ -34,7 +34,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .container {    
+  .content-wrapper {    
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
