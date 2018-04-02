@@ -10,6 +10,9 @@ import config from './modules/config'
 import address from './modules/address'
 import region from './modules/region'
 import detail from './modules/detail'
+import shipping from './modules/shipping'
+import coupon from './modules/coupon'
+import invoice from './modules/invoice'
 import product from './modules/product'
 import cart from './modules/cart'
 
@@ -23,7 +26,10 @@ export default new Vuex.Store({
     region,
     detail,
     product,
-    cart
+    cart,
+    shipping,
+    coupon,
+    invoice
   },
   getters: getters,
   plugins: [

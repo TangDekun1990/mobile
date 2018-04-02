@@ -2,40 +2,36 @@
   <div class="container" @click="onclick">
     <div class="left-wrapper">
       <img class="icon" v-bind:src="iconUrl" />
-      <label class="name">温超物流</label>
+      <label class="name">{{item.name}}</label>
     </div>
     <div class="right-wrapper">
       <div class="title-wrapper">
         <label class="title">配送费：</label>
-        <label class="price">￥20</label>
+        <label class="price">￥{{item.price}}</label>
       </div>
-      <label class="subtitle">
-
-      尊敬的顾客您好：
-
-      14:30前完成下单，预计当天15:00-19:00送达。
-
-      18:30前完成下单，预计当天19:00-23:00送达。
-
-      18:31至早上09:30下单，预计次日10:00-14:30送达。
-
-      温馨提示:如指定时间,请预留2小时时间如 11:00-13:00送达(我们会尽量安排)
-
-      如需帮助拨打客服热线：04-5518068（08:00-22:00）
-      </label>
+      <label class="subtitle">{{item.desc}}</label>
     </div>            
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default { 
   props: {
-    isSelected: {
-      type: Boolean,
-      default: false,
+    item: {
+      type: Object,
     },
   },
-  computed: {
+  computed: {    
+    ...mapState({
+      selectedItem: state => state.shipping.selectedItem
+    }),
+    isSelected: function () {
+      if (this.item && this.selectedItem && this.item.id === this.selectedItem.id) {
+        return true
+      }
+      return false
+    },
     iconUrl() {
       if (this.isSelected) {
         return require("../../../assets/image/change-icon/multiple_choice@2x.png")

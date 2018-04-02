@@ -7,7 +7,7 @@
 
 <script>
 export default {
-  name: 'InfoRadioItem',
+  name: 'InfoToggleItem',
   props: {
     item: {
       type: Object,
@@ -17,10 +17,15 @@ export default {
       default: false,
     },
   },
+  data() {
+    return {
+      value: this.isSelected
+    }
+  },
   computed: {
     iconUrl() {
-      if (this.isSelected) {
-        return require("../../assets/image/change-icon/multiple_choice@2x.png")
+      if (this.value) {
+        return require("../../assets/image/change-icon/multi_sel@2x.png")
       } else {
         return require("../../assets/image/change-icon/choice@2x.png")
       }
@@ -29,6 +34,7 @@ export default {
   methods: {
     onclick() {
       this.$emit('onclick')
+      this.value = !this.value
     }
   }
 }

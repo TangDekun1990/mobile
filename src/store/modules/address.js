@@ -1,4 +1,6 @@
 import * as api from '../../api/network/consignee'
+import { getItemById, getIndexById } from '../util/paginate'
+
 // initial state
 const state = {
   defaultItem: null, // 默认收货地址
@@ -9,18 +11,6 @@ const state = {
 // getters
 const getters = {
   // TODO:
-}
-
-// 依据id获取item
-const getItemById = (items, id) => {
-  let item = null
-  for (let i = 0; i < items.length; i++) {
-    const element = items[i];
-    if (id === element.id) {
-      item = element
-    }
-  }
-  return item
 }
 
 // 遍历获取默认item
@@ -36,21 +26,9 @@ const getDefaultItem = (items) => {
   return item
 }
 
-// 依据item id获取索引
-const getIndexById = (items, id) => {
-  let index = -1
-  for (let i = 0; i < items.length; i++) {
-    const element = items[i];
-    if (id === element.id) {
-      index = i
-    }
-  }
-  return index
-}
-
 // mutations
 const mutations = {
-  setDefault(state, item) {
+  setDefaultAddress(state, item) {
     const { defaultItem } = state
     if (defaultItem) {
       if (defaultItem.id !== item.id) {
@@ -62,7 +40,7 @@ const mutations = {
       } 
     }     
   },
-  selectItem(state, item) {
+  selectAddressItem(state, item) {
     const { selectedItem } = state
     if (selectedItem) {
       if (selectedItem.id !== item.id) {
@@ -74,32 +52,32 @@ const mutations = {
       }
     }    
   },
-  traverseItems(state) {
+  traverseAddressItems(state) {
     const { items } = state
     let defaultItem = getDefaultItem(items)  
     if (defaultItem) {
-      this.commit('setDefault', defaultItem) 
+      this.commit('setDefaultAddress', defaultItem) 
     }     
   },
-  addItem(state, item) {  
+  addAddressItem(state, item) {  
     state.items.push(item)
-    this.commit('traverseItems')
+    this.commit('traverseAddressItems')
   },
-  removeItem(state, id) {
+  removeAddressItem(state, id) {
     const { items } = state
     let index = getIndexById(items, id)
     state.items.splice(index, 1)
-    this.commit('traverseItems')
+    this.commit('traverseAddressItems')
   },
-  modifyItem(state, item) {
+  modifyAddressItem(state, item) {
     const { items } = state
     let index = getIndexById(items, item.id)
     state.items.splice(index, 1, item)
-    this.commit('traverseItems')
+    this.commit('traverseAddressItems')
   },
-  saveItems(state, items) {
+  saveAddressItems(state, items) {
     state.items = items    
-    this.commit('traverseItems')
+    this.commit('traverseAddressItems')
   },  
 }
 
@@ -109,43 +87,43 @@ const mutations = {
 //   return api.consigneeList().then(
 //       (response) => {
 //         const { consignees } = response
-//         commit('saveItems', consignees)
+//         commit('saveAddressItems', consignees)
 //       }, (error) => {
 //         // TODO:
 //       })
 //   },
-//   addItem({ commit, state }, {name, mobile, tel, zip_code, region, address}) {
+//   addAddressItem({ commit, state }, {name, mobile, tel, zip_code, region, address}) {
 //     return api.consigneeAdd(name, mobile, tel, zip_code, region, address).then(
 //       (response) => {
 //         const { consignee } = response
-//         commit('addItem', consignee)
+//         commit('addAddressItem', consignee)
 //       }, (error) => {
 //         // TODO:
 //       })
 //   },
-//   modifyItem({ commit, state }, id, name, mobile, tel, zip_code, region, address) {
+//   modifyAddressItem({ commit, state }, id, name, mobile, tel, zip_code, region, address) {
 //     return api.consigneeUpdate(id, name, mobile, tel, zip_code, region, address).then(
 //       (response) => {
 //         const { consignee } = response
-//         commit('modifyItem', consignee)
+//         commit('modifyAddressItem', consignee)
 //       }, (error) => {
 //         // TODO:
 //       })
 //   },
-//   removeItem({ commit, state }, id) {
+//   removeAddressItem({ commit, state }, id) {
 //     return api.consigneeDelete(id).then(
 //       (response) => {
-//         commit('removeItem', id)
+//         commit('removeAddressItem', id)
 //       }, (error) => {
 //         // TODO:
 //       })
 //   },
-//   setDefaultItem({ commit, state }, id) {
-//     return api.consigneeSetdefault(id).then(
+//   setDefaultAddressItem({ commit, state }, id) {
+//     return api.consigneeSetdefaultAddress(id).then(
 //       (response) => {
 //         const { items } = state
 //         let item = getItemById(items, id)
-//         commit('setDefault', item)
+//         commit('setDefaultAddress', item)
 //       }, (error) => {
 //         // TODO:
 //       })

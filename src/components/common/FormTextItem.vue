@@ -1,6 +1,6 @@
 <template>
-  <div class="container">    
-    <label class="title">{{title}}</label>    
+  <div class="container" @click="onclick">    
+    <label class="title">{{title}}</label>
     <label class="value">{{value}}</label> 
     <img class="indicator" src="../../assets/image/change-icon/enter@2x.png" />   
   </div>
@@ -13,13 +13,16 @@ export default {
     title: {
       type: String,
     },
-    placeholder: {
+    default: {
       type: String,
     },
+    placeholder: {
+      type: String,
+    },    
   },
   data() {
     return {
-      value: ''
+      value: this.default
     }
   },
   methods: {

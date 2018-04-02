@@ -22,8 +22,9 @@
       ref='region'
       class="item" 
       title="所在地区" 
-      value="18600235103" 
-      placeholder="市，区，街">
+      :default="getRegion"
+      placeholder="市，区，街" 
+      v-on:onclick="onRegion">
     </form-text-item>
     <form-input-item 
       ref='address'
@@ -35,6 +36,8 @@
     <div class="submit" @click="submit">
       <label class="text">保存</label>
     </div>
+    <region-picker ref="picker" :items="regions" v-on:onConfirm="onPickerConfirm">
+    </region-picker>
   </div>
 </template>
 
@@ -42,10 +45,25 @@
 import { Header } from 'mint-ui'
 import { HeaderItem, FormInputItem, FormTextItem } from '../../components/common'
 import { Toast, Indicator } from 'mint-ui'
-import { mapMutations } from 'vuex'
+import { mapState, mapMutations, mapActions } from 'vuex'
 import * as consignee from '../../api/network/consignee'
+import RegionPicker from './RegionPicker'
 export default {
+  components: {
+    RegionPicker,
+  },
+  data () {
+    return {
+      templeRegion: null,
+    }
+  },
+  created: function () {
+    this.fetchRegions()
+  },
   computed: {
+    ...mapState({
+      regions: state => state.region.items
+    }),
     isAddMode() {
       let mode = this.$route.params.mode;        
       // add: 添加地址，edit: 编辑地址
@@ -78,9 +96,8 @@ export default {
     },
     getRegion() {      
       if (!this.isAddMode && this.getItem) {
-        // TODO:
-        return '区域'
-        // return this.getItem.region
+        let regions = this.getItem.regions
+        return this.getRegionStr(regions)
       } else {
         return null
       }
@@ -98,16 +115,47 @@ export default {
   },
   methods: {
     ...mapMutations([
-      'addItem',
-      'modifyItem'
+      'addAddressItem',
+      'modifyAddressItem'
     ]),    
+    ...mapActions({
+      fetchRegions: 'fetchRegions'
+    }),
     goBack() {
       this.$router.go(-1)
-    },  
+    }, 
+    onRegion() {
+      this.$refs.picker.currentValue = true
+    }, 
+    onPickerConfirm(values) {      
+      this.$refs.region.value = this.getRegionStr(values)
+      this.templeRegion = values[1]
+    },
+    getRegionStr(values) {
+      let title = ''
+      for (let i = 0; i < values.length; i++) {
+        const element = values[i];
+        if (i !== 0) {
+          title = title + ' ' + element.name  
+        } else {
+          title = title + element.name  
+        }        
+      }
+      return title
+    },
     submit() {
       let name = this.$refs.name.value
       let mobile = this.$refs.mobile.value
-      let region = this.$refs.region.value
+      let region = null
+      if (this.isAddMode) {
+        region = this.templeRegion
+      } else {
+        if (this.templeRegion) {
+          region = this.templeRegion
+        } else {
+          region = this.getItem.regions[1]
+        }        
+      }
       let address = this.$refs.address.value
       if (name.length === 0) {
         Toast('请填写收件人姓名');
@@ -121,25 +169,22 @@ export default {
         Toast('请填写手机号码');
         return;
       }
-      // TODO:
-      // if (region.length === 0) {
-      //   Toast('请选择所在地区');
-      //   return;
-      // }
+      if (region === null || region === undefined) {
+        Toast('请选择所在地区');
+        return;
+      }
       if (address.length === 0) {
         Toast('请填写详细地址');
         return;
       }
 
-      if (this.isAddMode) {
-        // TODO: regionId
-        region = '3291'
+      if (this.isAddMode) {        
         Indicator.open()
-        consignee.consigneeAdd(name, mobile, null, null, region, address).then(
+        consignee.consigneeAdd(name, mobile, null, null, region.id, address).then(
           (response) => {
             Indicator.close()
             let item = response.consignee                
-            this.addItem(item)
+            this.addAddressItem(item)
             this.goBack()
           }, (error) => {
             Indicator.close()
@@ -147,15 +192,13 @@ export default {
           })
       } else {        
         let item = this.getItem
-        let consigneeId = item?item.id:null
-        // TODO:
-        region = '3291'
+        let consigneeId = item?item.id:null        
         Indicator.open()
-        consignee.consigneeUpdate(consigneeId, name, mobile, null, null, region, address).then(
+        consignee.consigneeUpdate(consigneeId, name, mobile, null, null, region.id, address).then(
           (response) => {
             Indicator.close()
             let item = response.consignee                
-            this.modifyItem(item)
+            this.modifyAddressItem(item)
             this.goBack()
           }, (error) => {
             Indicator.close()

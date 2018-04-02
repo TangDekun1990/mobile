@@ -7,10 +7,10 @@ const state = {
 
 // mutations
 const mutations = {
-  saveItems(state, items) {
+  saveRegionItems(state, items) {
     state.items = items
   },
-  clearItems(state) {
+  clearRegionItems(state) {
     state.item = []
   },
 }
@@ -21,7 +21,7 @@ const actions = {
     regionList().then(
       (response) => {
         if (response.regions) {
-          commit('saveItems', regions)
+          commit('saveRegionItems', response.regions)
         }
       }, (error) => {
       }

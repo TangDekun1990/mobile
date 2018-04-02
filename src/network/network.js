@@ -59,7 +59,8 @@ axios.interceptors.request.use(config => {
 
             let encry_post_body = '';
             let body = null;
-            console.log(post_body);
+            console.log('url is', config.url)
+            console.log('params', params);
             if (post_body && post_body.length) {
                 encry_post_body = XXTEA.encryptToString(post_body, ENCRYPT_KEY);
                 body = toQueryString({ x: encry_post_body });
@@ -88,15 +89,15 @@ axios.interceptors.response.use(response => {
                         response.data[key] = json[key];
                     }
                 }
-                console.log(response.data);
+                console.log('response is',response.data);
                 return response.data;
             } else if (response.data && response) {
                 let errorMessage = response.data.message;
                 let errorCode = response.data.code;
                 if (response.data.error) {
+                    console.log('网络错误, 错误代码:=' + errorCode + "错误信息:=" + errorMessage);
                     return Promise.reject({ 'errorCode': errorCode, 'errorMsg': errorMessage });
-                }
-                console.log('网络错误, 错误代码:=' + errorCode + "错误信息:=" + errorMessage);
+                } 
             }
         } else {
             console.log("请求地址错误!");
