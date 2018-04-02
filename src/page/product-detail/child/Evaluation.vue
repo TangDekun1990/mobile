@@ -43,8 +43,9 @@
 				grade: 0,
 				subTotal: {},
 				reviewList: [],
-				page: 1,
-				loading: false
+				page: 0,
+				loading: false,
+				total: 1
 			}
 		},
 		created() {
@@ -60,9 +61,13 @@
 			},
 			loadMore() {
 				this.loading = true;
-				this.getReviewList();
+				this.page = ++this.page;
+				if (this.page <= this.total) {
+					this.loading = false;
+					this.getReviewList(true);
+				}
 			},
-			getReviewList() {
+			getReviewList(ispush) {
 				let params = {
 					"product": this.id,
                 	"grade": this.grade,
@@ -71,20 +76,26 @@
 				};
 				getReviewList(params).then(res => {
 					if (res) {
-						this.reviewList = res.reviews;
-						if (!res.paged.more) {
-							this.loading = true;
+						if (ispush) {
+							this.reviewList = this.reviewList.concat(res.reviews);
+							// this.productList = this.productList.concat(res.products);
 						} else {
-							this.loading = false;
-							this.page = this.page++;
+							this.reviewList = res.reviews;
 						}
+						// this.reviewList = res.reviews;
+						if (res.paged.more) {
+							this.loading = false;
+						} else {
+							this.loading = true;
+						}
+						this.total = res.paged.total;
 					}
 				})
 			},
 			changeTab(value, grade) {
 				this.currentTag = value;
 				this.grade = grade;
-				this.getReviewList();
+				this.getReviewList(false);
 			},
 			getGrade(grade) {
 				if (grade == 1) {
