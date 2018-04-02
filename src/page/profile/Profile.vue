@@ -18,7 +18,7 @@
         <div class="info-item">积分记录</div>
       </div>
     </div>
-    <div class="order-header">
+    <div class="order-header" @click="goOrder()">
       <div class="order-header-item" id="order-item-left">
         <img class="order-header-icon" src="../../assets/image/change-icon/e0_order@2x.png" />
         <label class="item-title order-header-title">我的订单</label>
@@ -29,27 +29,36 @@
       </div>
       <!-- <div class="order-header-line"></div> -->
     </div>
-    <div class="order-wrapper">      
+    <div class="order-wrapper" > 
       <order-item 
+        @click="goPayment"
         class="order-item" 
+        testAttr = 'payment'
         :icon="require('../../assets/image/change-icon/e0_payment@2x.png')"
         title="待付款">
-      </order-item>
+      </order-item> 
       <order-item 
+        @click="goShip"
         class="order-item" 
+        testAttr = 'ship'
         :icon="require('../../assets/image/change-icon/e0_delivery@2x.png')"
         title="待发货">
       </order-item>
       <order-item 
+        @click="goReceipt"
         class="order-item" 
+        testAttr = 'receipt'
         :icon="require('../../assets/image/change-icon/e0_receiving@2x.png')"
         title="待收货">
       </order-item>
-      <order-item 
+        <order-item
+        @click="goEvaluate"
         class="order-item" 
+        testAttr = 'evaluate'
         :icon="require('../../assets/image/change-icon/e0_evaluate@2x.png')"
         title="待评价">
       </order-item>
+
     </div>
     <info-item 
       v-on:onclick="goFavourite"       
@@ -85,226 +94,247 @@
 </template>
 
 <script>
-import Tabbar from '../../components/common/Tabbar'
-import InfoItem from './child/InfoItem'
-import OrderItem from './child/OrderItem'
-import { mapState } from 'vuex'
-import { userProfileGet } from '../../api/network/user'
+import Tabbar from "../../components/common/Tabbar";
+import InfoItem from "./child/InfoItem";
+import OrderItem from "./child/OrderItem";
+import { mapState } from "vuex";
+import { userProfileGet } from "../../api/network/user";
 export default {
-  name: 'profile',
+  data() {
+    return {
+      nextRouteShowId:1,
+    };
+  },
+  name: "profile",
   components: {
     Tabbar,
     OrderItem,
-    InfoItem,
+    InfoItem
   },
-  created: function () {
+  created: function() {
     if (this.isOnline) {
-      userProfileGet().then(
-        (response) => {
-
-        }, (error) => {
-          
-        })
+      userProfileGet().then(response => {}, error => {});
     }
   },
   computed: {
     ...mapState({
       isOnline: state => state.auth.isOnline,
-      user: state => state.auth.user,
+      user: state => state.auth.user
     }),
-    nickname: function () {
-      let title = '登录/注册'
+    nickname: function() {
+      let title = "登录/注册";
       if (this.isOnline) {
-        if (this.user && typeof this.user != 'undefined' && JSON.stringify(this.user) != '{}' ) {
-          title = this.user.nickname
-        }        
+        if (
+          this.user &&
+          typeof this.user != "undefined" &&
+          JSON.stringify(this.user) != "{}"
+        ) {
+          title = this.user.nickname;
+        }
       }
-      return title
+      return title;
     }
   },
   methods: {
     showLogin() {
-      this.$router.push('/signin')
+      this.$router.push("/signin");
     },
     goProfileInfo() {
       if (this.isOnline) {
-        this.$router.push('/profileInfo')
+        this.$router.push("/profileInfo");
       } else {
-        this.showLogin()
+        this.showLogin();
       }
     },
     goSetting() {
-      this.$router.push('setting')
+      this.$router.push("setting");
     },
     goFavourite() {
       // TODO:
-      this.$router.push('checkout')
+      this.$router.push("checkout");
     },
     goAddress() {
+      this.$router.push("addressList");
       this.$router.push('addressManage')
     },
     goCoupon() {
-      this.$router.push('couponUsable')
+      this.$router.push("couponUsable");
     },
     goGoodsList() {
-      this.$router.push('goodsList')
+      this.$router.push("goodsList");
     },
+    goOrder() {
+      console.log(this.nextRouteShowId);
+      this.$router.push("order");
+    },
+    goPayment() {
+      this.$router.push("payment");
+    },
+    goShip() {
+      this.$router.push("ship");
+    },
+    goReceipt() {
+      this.$router.push("receipt");
+    },
+    goEvaluate() {
+      this.$router.push("evaluate");
+    }
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>
-  .container {
-    position: absolute;
-    width: 100%;
-    height: 100%;
+.container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  background-color: $mainbgColor;
+  .top-wrapper {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    align-items: stretch;
-    background-color: $mainbgColor;
-    .top-wrapper {
+    align-items: center;
+    height: 225px;
+    @include linear-gradient( #EAD6CE, #E2E3DF);
+    .top-info-wrapper {
+      flex: 1;
+      width: 100%;
       display: flex;
       flex-direction: column;
-      justify-content: flex-start;      
-      align-items: center;
-      height: 225px;
-      @include linear-gradient( #EAD6CE, #E2E3DF);
-      .top-info-wrapper {
-        flex: 1;
-        width: 100%;
-        display: flex;
-        flex-direction: column; 
-        justify-content: flex-start;      
-        align-items: center;     
-      }
-    }
-    .nav-item {
-      position: absolute;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 44px;
-      height: 44px;      
-      top: 21px;
-    }
-    #left-nav-item {
-      left: 2px;
-    }
-    #right-nav-item {
-      right: 2px;
-    }
-    .nav-icon {
-      width: 24px;
-      height: 24px;      
-    }
-    .avatar-wrapper {
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
-      align-items: center;
-      width: 76px;
-      height: 76px;
-      border-radius: 38px;
-      background-color: #fff;
-      margin-top: 50px;   
-      .avatar { 
-        width: 72px;
-        height: 72px;
-        border-radius: 36px;
-      }
-    } 
-    .nickname {
-      margin-top: 20px;
-      font-size: 16px;
-      color: #646464;
-      text-align: center;
-      margin-left: 20px;
-      margin-right: 20px;
-    }
-    .info-wrapper {
-      width: 100%;
-      height: 40px;
-      display: inline-flex;
-      flex-direction: row;
       justify-content: flex-start;
-      align-content: stretch;
-      background-color: #fff;
-      background-color: #000000; 
-      opacity: 0.1;
-    }
-    .info-item {
-      flex: 1;
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
       align-items: center;
-      color: #fff;   
-    }
-    .order-header {
-      height: 44px;
-      display: flex;
-      flex-direction: row;
-      justify-content: space-around;
-      align-content: stretch;
-      background-color: #fff;
-      border-bottom: 1px solid $lineColor;
-    }
-    .order-header-item {
-      flex: 1;
-      display: flex;
-      flex-direction: row;
-      align-items: center;    
-    }
-    #order-item-left {
-      justify-content: flex-start;
-      margin-left: 10px;
-    }
-    #order-item-right {
-      justify-content: flex-end;
-    }
-    .item-title {
-      font-size: 14px;
-      color: #4E545D;
-    }
-    .order-header-icon {
-      width: 18px;
-      height: 18px;
-    }
-    .order-header-title {
-      margin-left: 8px;
-    }
-    .indicator {
-      width: 7px;
-      height: 12  px;
-      margin-left: 10px;
-      margin-right: 10px;      
-    }
-    .order-subtitle {
-      font-size: 12px;
-      color: #7C7F88;
-    }    
-    .order-wrapper {
-      height: 88px;
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: stretch;
-      background-color: #fff;
-    }
-    .order-item {
-      flex: 1;
-    }    
-    .info-item-wrapper {
-      height: 44px;       
-    }
-    .section-header {
-      margin-top: 15px;
-    }
-    .section-footer {
-      border-bottom-width: 0px;
     }
   }
+  .nav-item {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 44px;
+    height: 44px;
+    top: 21px;
+  }
+  #left-nav-item {
+    left: 2px;
+  }
+  #right-nav-item {
+    right: 2px;
+  }
+  .nav-icon {
+    width: 24px;
+    height: 24px;
+  }
+  .avatar-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 76px;
+    height: 76px;
+    border-radius: 38px;
+    background-color: #fff;
+    margin-top: 50px;
+    .avatar {
+      width: 72px;
+      height: 72px;
+      border-radius: 36px;
+    }
+  }
+  .nickname {
+    margin-top: 20px;
+    font-size: 16px;
+    color: #646464;
+    text-align: center;
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+  .info-wrapper {
+    width: 100%;
+    height: 40px;
+    display: inline-flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-content: stretch;
+    background-color: #fff;
+    background-color: #000000;
+    opacity: 0.1;
+  }
+  .info-item {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+  }
+  .order-header {
+    height: 44px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-content: stretch;
+    background-color: #fff;
+    border-bottom: 1px solid $lineColor;
+  }
+  .order-header-item {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  #order-item-left {
+    justify-content: flex-start;
+    margin-left: 10px;
+  }
+  #order-item-right {
+    justify-content: flex-end;
+  }
+  .item-title {
+    font-size: 14px;
+    color: #4e545d;
+  }
+  .order-header-icon {
+    width: 18px;
+    height: 18px;
+  }
+  .order-header-title {
+    margin-left: 8px;
+  }
+  .indicator {
+    width: 7px;
+    height: 12 px;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+  .order-subtitle {
+    font-size: 12px;
+    color: #7c7f88;
+  }
+  .order-wrapper {
+    height: 88px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: stretch;
+    background-color: #fff;
+  }
+  .order-item {
+    flex: 1;
+  }
+  .info-item-wrapper {
+    height: 44px;
+  }
+  .section-header {
+    margin-top: 15px;
+  }
+  .section-footer {
+    border-bottom-width: 0px;
+  }
+}
 </style>
 
 
