@@ -21,7 +21,7 @@ const actions = {
     regionList().then(
       (response) => {
         if (response.regions) {
-          commit('saveRegionItems', regions)
+          commit('saveRegionItems', response.regions)
         }
       }, (error) => {
       }
