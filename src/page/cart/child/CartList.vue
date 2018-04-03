@@ -1,17 +1,22 @@
 <template>
 	<div class="cart-list-wrapper">
-		<div class="list">
+		<p class="none-selected-all">{{ isSelectedAll }}</p>
+		<div class="list" v-for="(item, index) in cartList">
 			<div class="list-checkbox">
-				<input type="checkbox" id='checkbox1'>
-				<label for="checkbox1"></label>
+				<input type="checkbox" class='checkbox' :id='index' v-model="item.checked" @change="changeCart()" v-if='!isShowHeader'>
+				<input type="checkbox" class='checkbox' :id='index' v-model="item.checked" v-if='isShowHeader'>
+				<label :for="index"></label>
 			</div>
-			<img src="../../../assets/image/change-icon/c7_commodity_list_3@2x.png">
+
+			<img :src="item.product.photos[0].thumb" v-if='item.product.photos.length > 0'>
+			<img src="../../../assets/image/change-icon/default_image_02@2x.png" v-if='item.product.photos.length <= 0'>
+
 			<div class="list-info">
-				<h3>山东有机大蒜 500g 袋装 单颗约50g山东有机大蒜 500g 袋装 单颗约50g山东有机大蒜 500g 袋装 单颗约50g山东有机大蒜 500g 袋装 单颗约50g</h3>
+				<h3> {{ item.product.name}}</h3>
 				<div class="info-price">
-					<p>AED 12467.53</p>
+					<p>AED {{ item.product.current_price }}</p>
 					<div class="ui-number">
-						<div class="reduce ui-common">-</div><input type="number" min="1" class="number" value="1" v-model="number"><div class="add ui-common">+</div>
+						<div class="reduce ui-common" @click="reduceNumber(item.id, item.amount, index)">-</div><input type="number" min="1" class="number" value="1" v-model="item.amount" readonly="true"><div class="add ui-common" @click="addNumber(item.id, item.amount, item.product.good_stock, index)">+</div>
 					</div>
 				</div>
 			</div>
@@ -20,33 +25,205 @@
 </template>
 
 <script>
-	import { getCartTotal, getCartGroup, deleteCart, updateCartQuantity, clearCart, getCartPromos, checkoutCart} from '../../../api/network/cart'
+	import { mapState, mapMutations } from 'vuex';
+	import { Indicator } from 'mint-ui';
+	import { Toast } from 'mint-ui';
+
+	import { orderPrice } from '../../../api/network/order';
+	import { getCartGroup, updateCartQuantity, getCartPromos} from '../../../api/network/cart'
 	export default {
 		data() {
 			return {
-				number: 1,
-				cartList: []
+				cartList: [],
+				updateGoods: {},
+				indicator: {
+					spinnerType: 'fading-circle'
+				},
+				orderprice: [], // 总价
+				promos: [],  //购物车促销信息
+				total_amount: 0 //购物车数量
+			}
+		},
+		created(){
+			this.getCartList(true);
+		},
+		computed:{
+			...mapState({
+				isSelectedAll: state => state.cart.isSelectedAll,
+				saveCartList: state => state.cart.saveCartList,
+				isShowHeader: state => state.cart.isShowHeader
+			})
+		},
+		watch: {
+			isSelectedAll: function(value) {
+				this.selectCartList(value);
 			}
 		},
 		methods: {
-			getCartList(){
+			...mapMutations({
+				getAmount: 'calculationAmount',
+				getPrice: 'calculationPrice',
+				saveCartData: 'saveCartData'
+			}),
+
+			// 获取购物车列表
+			/*
+			isUpdate: 数量加减之后关闭loading
+			value: 是否需要改变checkbox的值
+			isMerg: 是否需要合并两个数组
+			 */
+			getCartList(value){
+				this.cartList = [];
 				getCartGroup().then(res => {
-					if (res) {
-						this.cartList = res.goods_groups[0].goods;
+					if (res && res.goods_groups.length > 0) {
+						this.cartList = Object.assign([], res.goods_groups[0].goods, this.cartList);
+						this.selectCartList(value);
+						this.renderCart();
+						this.saveCartData(this.cartList);
 					}
 				})
 			},
+
+			//加减之后更新列表
+			updateList(index ) {
+				getCartGroup().then(res => {
+					if (res && res.goods_groups.length > 0) {
+						Indicator.close();
+						let data = res.goods_groups[0].goods;
+						this.cartList[index].amount = data[index].amount;
+						this.renderCart();
+						this.saveCartData(this.cartList);
+					}
+				})
+			},
+
+			//
+			getMergData(data) {
+
+				for (let i = 0, len = data.length; i <= len -1; i++) {
+
+					for (let j = 0; j <= this.cartList.length-1; j++) {
+
+						if (data[j].id == this.cartList[i].id) {
+
+							// this.cartList[i].checked = [j].checked;
+							this.cartList[j].amount = data[i].amount;
+						}
+					}
+				}
+			},
+
+			// 数量减少
+			reduceNumber(id, amount, index) {
+				if (amount > 1) {
+					Indicator.open(this.indicator);
+					amount--;
+					this.updateCartQuantity(id, amount, index);
+				} else {
+					Toast({
+						duration:1000,
+						message: '受不了了， 宝贝不能再少了'
+					});
+				}
+			},
+
+			// 数量增加
+			addNumber(id, amount, stock, index) {
+				if (amount <= stock) {
+					Indicator.open(this.indicator);
+					amount++;
+					this.updateCartQuantity(id, amount, index);
+				} else {
+					Toast({
+						duration:1000,
+						message: '该商品总库存不足'
+					});
+				}
+			},
+
+			//  商品数量加减更新数量
+			updateCartQuantity(id, amount, index) {
+				let params = {'good': id, 'amount': amount};
+				updateCartQuantity(params).then( res => {
+					if (res) {
+						this.updateList(index);
+					}
+				});
+			},
+
+			// 商品是否全选
+			selectCartList(isselected) {
+				for (let i = 0, len = this.cartList.length; i <= len-1; i++) {
+					this.cartList[i].checked = isselected;
+				}
+				this.saveCartData(this.cartList);
+			},
+
+			// 获取商品价格
+			getOrderPrice(){
+				let params = {
+					'shop': null,
+					'order_product':'',
+					'consignee':null,
+					'shipping':null,
+					'coupon': null,
+					'cashgift':null,
+					'score': null
+				};
+				if (this.orderprice.length > 0 ) {
+					params.order_product = JSON.stringify(this.orderprice);
+				} else {
+					this.getAmount(0);
+					this.getPrice(0);
+					return;
+				}
+				orderPrice(params).then(res => {
+					if (res) {
+						let price = res.order_price.total_price;
+						this.getAmount(this.total_amount);
+						this.getPrice(price);
+					}
+				})
+			},
+
+			// 点击是否选中重新计算商品价格和数量
+			renderCart() {
+				let data = this.cartList;
+				this.total_amount = 0;
+				this.promos = [];
+				this.orderprice = [];
+				for (let i = 0, len = data.length; i <= len-1; i++) {
+					if (data[i].checked) {
+						this.orderprice.push({'goods_id': data[i].product.id, 'property': [], 'num': data[i].amount});
+						this.promos.push(data[i].id);
+						this.total_amount += data[i].amount;
+					}
+				}
+				this.getOrderPrice();
+			},
+
+			// 点击复选框改变价格和数量
+			changeCart() {
+				this.renderCart();
+				this.saveCartData(this.cartList);
+			}
 		}
 	}
 </script>
 
 <style lang='scss' scoped>
 	.cart-list-wrapper {
-		display: relative;
-		height: 100%;
+		overflow: auto;
+		position: absolute;
+	    width: 100%;
+	    bottom: 44px;
+	    top: 44px;
+		p.none-selected-all {
+			display: none;
+		}
 		.list {
 			display: flex;
-			justify-content: space-around;
+			/*justify-content: space-around;*/
 			align-content: center;
 			align-items: center;
 			background-color: #fff;
@@ -71,27 +248,34 @@
 				input {
 					position: relative;
 					width: 20px;
-					height: 20px;
+					/*height: 20px;*/
 					margin: 0px;
 					z-index: -999;
+					background-color: #fff;
 					&:checked + label {
 						background: url('../../../assets/image/change-icon/multi_sel@2x.png') no-repeat;
 						background-size: cover;
 						width: 20px;
 						height: 20px;
 					}
+					&:focus {
+						outline-offset: 0px;
+					}
 				}
 			}
 			img {
-				width: 70px;
-				height: 70px;
+				width: 90px;
+				height: 90px;
 				flex-shrink: 0;
-				flex-basis: 70px;
+				flex-basis: 90px;
 				border: 1px solid #E8EAED;
 				border-radius: 3px;
 			}
 			div.list-info {
 				margin-left: 5px;
+				height: 90px;
+				width: 100%;
+				position: relative;
 				h3{
 					font-size:14px;
 					font-family:'PingFangSC-Regular';
@@ -110,6 +294,8 @@
 					align-content: center;
 					align-items: center;
 					margin-top: 18px;
+					position: absolute;
+    				bottom: 0px;
 					p {
 						font-size:17px;
 						font-family:'PingFangSC-Regular';
