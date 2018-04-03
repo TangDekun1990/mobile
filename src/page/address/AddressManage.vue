@@ -4,6 +4,10 @@
       <header-item slot="left" v-bind:isBack=true v-on:onclick="goBack">
       </header-item>          
     </mt-header>
+    <div class="empty-wrapper" v-if="isEmpty">
+      <img src="../../assets/image/change-icon/address_empty@2x.png">
+      <label>您还没有添加收货地址</label>
+    </div>
     <manage-item 
       v-for="item in items" 
       :key="item.id" 
@@ -35,6 +39,15 @@ export default {
       defaultItem: state => state.address.defaultItem,
       items: state => state.address.items,
     }),
+    isEmpty() {
+      console.log('====================================');
+      console.log('isEmpty');
+      console.log('====================================');
+      if (this.items && this.items.length === 0) {
+        return true
+      }
+      return false
+    },
   },
   created: function () {
     consignee.consigneeList().then(
@@ -44,13 +57,13 @@ export default {
       }, (error) => {
         Toast(error.errorMsg)
       })
-  },
+  },  
   methods: {
     ...mapMutations([
       'saveAddressItems',
       'setDefaultAddress',
       'removeAddressItem',
-    ]),
+    ]),    
     isDefaultItem(item) {
       if (item && this.defaultItem) {
         if (item.id === this.defaultItem.id) {
@@ -110,13 +123,13 @@ export default {
   .header {
     @include header;
   }
-  .submit {
+  .submit {    
     border-radius: 4px;
     background-color: #f23030;
     height: 44px;
     margin-left: 10px;
     margin-right: 10px;
-    margin-top: 40px;
+    margin-top: 40px;    
     display: flex;
     justify-content: center;
     align-items: center;
@@ -124,6 +137,24 @@ export default {
   .text {
     color: #ffffff;
     font-size: 16px;
+  }
+  .empty-wrapper {
+    margin-top: 40px;
+    height: 260px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  .photo {
+    width: 112px;
+    height: 112px;
+  }
+  .title {
+    font-size: 16px;
+    color: #8F8E94;
+    text-align: center;
+    margin-top: 30px;
   }
 </style>
 
