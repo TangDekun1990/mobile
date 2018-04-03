@@ -21,6 +21,9 @@
 			this.$on('redener-cart-list', (value) => {
 				this.$refs.list.getCartList(value);
 			})
+			this.$on('redener-cart-price', () => {
+				this.$refs.list.renderCart();
+			})
 		},
 		components: {
 			'v-cart-header': cartHeader,

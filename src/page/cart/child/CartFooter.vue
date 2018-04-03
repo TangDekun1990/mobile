@@ -3,7 +3,7 @@
 	<div class="ui-cart-footer">
 		<div class="list-checkbox">
 
-			<input type="checkbox" class='checkbox' id='checkbox-all' v-model="isSelected">
+			<input type="checkbox" class='checkbox' id='checkbox-all' v-model="isSelected" @change="selectedAll(isSelected)">
 			<label for="checkbox-all"></label>
 			<i v-if='isShowHeader'>全选</i>
 			<i v-if='!isShowHeader' class="total-price">合计<span>AED {{ total_price }} </span></i>
@@ -34,9 +34,9 @@
 			saveCartList: state => state.cart.saveCartList
 		}),
 		watch: {
-			isSelected: function(value) {
-				this.selectedAll(value)
-			},
+			// isSelected: function(value) {
+			// 	this.selectedAll(value)
+			// },
 			isSelectedAll: function (value) {
 				this.isSelected = value;
 			}
@@ -47,6 +47,7 @@
 				saveCartData: 'saveCartData'
 			}),
 			selectedAll(value) {
+				this.$parent.$emit('redener-cart-price');
 				this.changedAll(value);
 			},
 

@@ -97,6 +97,18 @@
 	}
 }
 
+@mixin formInput {
+	border: 0px;
+	color: #4E545D;
+	font-size: 14px;
+	height: -webkit-fill-available;
+	padding-left: 0px;
+	padding-right: 0px;
+	&:focus {
+	outline-style: none;
+	}	
+}
+
 @mixin linear-gradient($leftColor, $rightColor) {
 	background: -webkit-linear-gradient(left, $leftColor , $rightColor); /* Safari 5.1 - 6.0 */
     background: -o-linear-gradient(right, $leftColor, $rightColor); /* Opera 11.1 - 12.0 */

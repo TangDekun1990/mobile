@@ -36,6 +36,8 @@
       </div>     
       <button class="submit">提交订单</button>
     </div>
+    <delivery-time ref="timePicker">
+    </delivery-time>
   </div>
 </template>
 
@@ -47,6 +49,7 @@ import CheckoutGoods from './child/CheckoutGoods'
 import CheckoutItem from './child/CheckoutItem'
 import CheckoutComment from './child/CheckoutComment'
 import CheckoutDesc from './child/CheckoutDesc'
+import DeliveryTime from './DeliveryTime'
 import { mapState, mapMutations, mapActions } from 'vuex'
 import * as consignee from '../../api/network/consignee'
 import { Toast } from 'mint-ui'
@@ -57,6 +60,7 @@ export default {
     CheckoutItem,
     CheckoutComment,
     CheckoutDesc,
+    DeliveryTime,
   },
   computed: {
     ...mapState({
@@ -150,7 +154,8 @@ export default {
       }, (error) => {
         Toast(error.errorMsg)
       }) 
-    this.fetchCouponUsable({ page: 1, per_page: 10, shop: 1, total_price:1000 })        
+    this.fetchCouponUsable({ page: 1, per_page: 10, shop: 1, total_price:1000 })  
+    this.fetchDeliveryList()      
   },
   methods: {
     ...mapMutations({
@@ -159,7 +164,8 @@ export default {
     }),
     ...mapActions({
       fetchShippingList: 'fetchShippingList',
-      fetchCouponUsable: 'fetchCouponUsable',      
+      fetchCouponUsable: 'fetchCouponUsable', 
+      fetchDeliveryList: 'fetchDeliveryList',     
     }),
     goBack() {
       this.$router.go(-1)
@@ -167,9 +173,12 @@ export default {
     rightClick() {
       // TODO:
     },
-    goAddress() {
-      // TODO:
-      this.$router.push('addressList')
+    goAddress() {      
+      if (this.addressItems && this.addressItems.length) {
+        this.$router.push('addressList')
+      } else {
+        this.$router.push({ name: 'addressEdit', params: { mode: 'add', item: null } })
+      }       
     },    
     goGoodsList() {      
       this.$router.push('goodsList')
@@ -182,7 +191,7 @@ export default {
       this.$router.push({ name: 'invoice', params: { title: title} })
     },
     goDuration() {
-      // TODO:      
+      this.$refs.timePicker.open()
     },
     goCouponList() {      
       this.$router.push('couponUsable')
