@@ -1,4 +1,6 @@
-import { fetchEndpoint } from '../../network/network';
+import { fetchEndpoint } from '../../network/network'
+// 订单价格计算
+// export const orderPrice = (params) => fetchEndpoint('/v2/ecapi.order.price', 'POST', params);
 
 // 订单详情
 export const orderGet =
@@ -52,7 +54,7 @@ fetchEndpoint(
   '/v2/ecapi.order.cancel',
   'POST',
   {
-    "order": order, 
+    "order": order,
     "reason": reason,  // 取消理由
   }
 )
@@ -117,4 +119,3 @@ fetchEndpoint(
   {
   }
 )
-
