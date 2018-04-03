@@ -3,18 +3,28 @@
     <div v-show="currentValue" class="content-wrapper">
       <div class="title-wrapper">
         <label class="title">送货时间</label>
-        <img class="close" src="../../assets/image/change-icon/close@2x.png" @click="onClose">
+        <div class="close-wrapper" @click="onClose">
+          <img class="close" src="../../assets/image/change-icon/close@2x.png">
+        </div>        
       </div>
       <div class="list-wrapper">
         <div class="list leftList">
-          <div class="item-wrapper" v-for="(item, index) in items" :key=index>
-            <label class="date" v-bind:class="{ dateSelected: isSelectedDate, dateNormal: !isSelectedDate }">{{item.date}}</label>            
+          <div 
+            class="item-wrapper" 
+            v-bind:class="{ itemSelected: isSelectedDate(item), itemNormal: !isSelectedDate(item) }" 
+            v-for="(item, index) in items" 
+            :key=index @click="onClickDate(item)">
+            <label 
+              class="date" 
+              v-bind:class="{ dateSelected: isSelectedDate(item), dateNormal: !isSelectedDate(item) }">
+              {{item.date}}
+            </label>            
           </div>
         </div>
         <div class="list rightList">
-          <div class="item-wrapper" v-for="(item, index) in timeItems" :key=index>
-            <label class="date" v-bind:class="{ timeSelected: isSelectedTime, timeNormal: !isSelectedTime }">{{item}}</label>  
-            <img v-if="isSelectedTime" class="close" src="../../assets/image/change-icon/close@2x.png">          
+          <div class="item-wrapper" v-for="(item, index) in timeItems" :key=index @click="onClickTime(item)">
+            <label class="time" v-bind:class="{ timeSelected: isSelectedTime(item), timeNormal: !isSelectedTime(item) }">{{item}}</label>  
+            <img v-if="isSelectedTime(item)" class="indicator" src="../../assets/image/change-icon/d1-yes@2x.png">          
           </div>
         </div>
       </div>
@@ -40,8 +50,14 @@ export default {
     ...mapGetters({
       timeItems: 'getTimeItems'
     }),
+  },  
+  methods: {
+    ...mapMutations({
+      selectDeliveryDate: 'selectDeliveryDate',
+      selectDeliveryTime: 'selectDeliveryTime',
+    }),
     isSelectedDate(item) {
-      if (item && this.selectedDate && item === this.selectedDate) {
+      if (item && this.selectedDate && item.date === this.selectedDate) {
         return true
       }
       return false
@@ -51,9 +67,15 @@ export default {
         return true
       }
       return false
-    }
-  },  
-  methods: {
+    },
+    onClickDate(item) {
+      this.selectDeliveryDate(item.date)
+      this.$emit('onClickDate', item.date)      
+    },
+    onClickTime(item) {
+      this.selectDeliveryTime(item)
+      this.$emit('onClickTime', item)
+    },
     onClose() {
       this.close()
     },
@@ -72,6 +94,7 @@ export default {
     position: fixed;
     background-color: #fff;
     width: 100%;
+    height: 350px;
     text-align: center;
     bottom: 0;
     left: 50%;
@@ -86,23 +109,33 @@ export default {
     align-items: stretch;
   }
   .title-wrapper {
+    height: 48px;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
+    border-bottom: 1px solid $lineColor;
   }
   .title {
     color: #898B8E;
     font-size: 16px;
     text-align: center;
   }
-  .close {
+  .close-wrapper {
     width: 48px;
     height: 48px;
-    position: relative;
+    position: absolute;
     top: 0px;
     right: 0px;
     bottom: 0px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+  .close {
+    width: 14px;
+    height: 14px;
   }
   .list-wrapper {
     display: flex;
@@ -118,6 +151,7 @@ export default {
   }
   .leftList {
     width: 126px;
+    // border-right: 1px solid $lineColor;
   }
   .rightList {
     flex: 1;
@@ -127,17 +161,27 @@ export default {
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
+    height: 42px;
+  }
+  .itemSelected {
+    background-color: #ffffff;
+  }
+  .itemNormal {
+    background-color: #F8F8F8;
   }
   .date {
     font-size: 14px;
+    margin-left: 10px;
   }
   .dateNormal {
-    color: #404245;
-    background-color: #E3E3E3;
+    color: #404245;    
   }
   .dateSelected {
-    color: #F23030;
-    background-color: #ffffff;
+    color: #F23030; 
+  }
+  .time {
+    font-size: 14px;
+    margin-left: 15px;
   }
   .timeNormal {
     color: #404245;
@@ -150,6 +194,7 @@ export default {
   .indicator {
     width: 11px;
     height: 8px;
+    margin-left: 8px;
   }
 </style>
 

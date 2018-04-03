@@ -11,6 +11,7 @@ const state = {
 const getters = {
   getTimeItems: state => {
     let selectedDate = state.selectedDate
+    let items = state.items
     for (let i = 0; i < items.length; i++) {
       const element = items[i];
       if (selectedDate && selectedDate === element.date) {
@@ -56,7 +57,10 @@ const actions = {
             if (defaultItem) {
               const { date, time } = defaultItem
               commit('selectDeliveryDate', date)
-              commit('selectDeliveryTime', time)
+              if (time && time.length) {
+                let item = time[0]
+                commit('selectDeliveryTime', item)
+              }                            
             }
           }                    
         }
@@ -67,6 +71,7 @@ const actions = {
 
 export default {
   state,
+  getters,
   mutations,
   actions
 }
