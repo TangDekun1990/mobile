@@ -1,6 +1,6 @@
 <!-- CartFooter.vue -->
 <template>
-	<div class="ui-cart-footer">
+	<div class="ui-cart-footer" v-bind:class="{'has-bottom': type}">
 		<div class="list-checkbox">
 
 			<input type="checkbox" class='checkbox' id='checkbox-all' v-model="isSelected" @change="selectedAll(isSelected)">
@@ -33,6 +33,7 @@
 			total_price: state => state.cart.total_price,
 			saveCartList: state => state.cart.saveCartList
 		}),
+		props: ['type'],
 		watch: {
 			// isSelected: function(value) {
 			// 	this.selectedAll(value)
@@ -47,7 +48,7 @@
 				saveCartData: 'saveCartData'
 			}),
 			selectedAll(value) {
-				this.$parent.$emit('redener-cart-price');
+				this.$parent.$emit('redener-cart-price', value);
 				this.changedAll(value);
 			},
 
@@ -168,5 +169,8 @@
 			cursor: pointer;
 			font-weight: normal;
 		}
+	}
+	.has-bottom {
+		bottom: 50px;
 	}
 </style>

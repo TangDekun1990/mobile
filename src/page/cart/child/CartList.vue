@@ -1,5 +1,5 @@
 <template>
-	<div class="cart-list-wrapper">
+	<div class="cart-list-wrapper" v-bind:class="{'has-bottom': type}">
 		<p class="none-selected-all">{{ isSelectedAll }}</p>
 		<div class="list" v-for="(item, index) in cartList">
 			<div class="list-checkbox">
@@ -47,6 +47,7 @@
 		created(){
 			this.getCartList(true);
 		},
+		props: ['type'],
 		computed:{
 			...mapState({
 				isSelectedAll: state => state.cart.isSelectedAll,
@@ -116,6 +117,7 @@
 			// 数量减少
 			reduceNumber(id, amount, index) {
 				if (amount > 1) {
+					this.$parent.$emit('redener-promos');
 					Indicator.open(this.indicator);
 					amount--;
 					this.updateCartQuantity(id, amount, index);
@@ -130,6 +132,7 @@
 			// 数量增加
 			addNumber(id, amount, stock, index) {
 				if (amount <= stock) {
+					this.$parent.$emit('redener-promos');
 					Indicator.open(this.indicator);
 					amount++;
 					this.updateCartQuantity(id, amount, index);
@@ -193,7 +196,6 @@
 				this.promos = [];
 				this.orderprice = [];
 				for (let i = 0, len = data.length; i <= len-1; i++) {
-					console.log(data[i].checked);
 					if (data[i].checked) {
 						this.orderprice.push({'goods_id': data[i].product.id, 'property': [], 'num': data[i].amount});
 						this.promos.push(data[i].id);
@@ -207,6 +209,7 @@
 			changeCart() {
 				this.renderCart();
 				this.saveCartData(this.cartList);
+				this.$parent.$emit('redener-promos');
 			}
 		}
 	}
@@ -219,6 +222,8 @@
 	    width: 100%;
 	    bottom: 44px;
 	    top: 44px;
+	    /*min-height: 70%;
+	    max-height: 80%;*/
 		p.none-selected-all {
 			display: none;
 		}
@@ -348,5 +353,8 @@
 				}
 			}
 		}
+	}
+	.has-bottom {
+		bottom: 94px;
 	}
 </style>
