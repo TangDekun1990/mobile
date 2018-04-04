@@ -12,7 +12,7 @@
     </checkout-goods>
     <checkout-item class="item" title="配送方式" :subtitle="getShippingName" v-on:onclick="goShipping">
     </checkout-item>
-    <checkout-item class="item section-header" title="送货时间" subtitle="3月31日[周五] 09:00-19:00" v-on:onclick="goDuration">
+    <checkout-item class="item section-header" title="送货时间" :subtitle="getSelectedDateStr" v-on:onclick="goDuration">
     </checkout-item>
     <checkout-item class="item section-header" title="发票类型" :subtitle="getInoviceTitle" v-on:onclick="goInvoice">
     </checkout-item>
@@ -36,7 +36,10 @@
       </div>     
       <button class="submit">提交订单</button>
     </div>
-    <delivery-time ref="timePicker">
+    <delivery-time 
+      ref="timePicker"  
+      v-on:onClickDate="onClickDate"
+      v-on:onClickTime="onClickTime">
     </delivery-time>
   </div>
 </template>
@@ -71,6 +74,8 @@ export default {
       couponTotal: state => state.coupon.total,
       selectedCoupon: state => state.coupon.selectedItem,
       invoice: state => state.invoice,
+      selectedDate: state => state.delivery.selectedDate,
+      selectedTime: state => state.delivery.selectedTime,
     }),
     getSelectedAddress: function() {
       let item = this.selectedAddress
@@ -133,7 +138,25 @@ export default {
     },
     getInoviceToggle: function () {
       return this.invoice.toggle
-    },  
+    }, 
+    getSelectedDateStr: function () {
+      let str = ''
+      let date = this.selectedDate
+      let time = this.selectedTime
+      if (date && time) {
+        str = date + ' ' +time
+      } 
+      return str
+    },
+    getSelectedDateValue: function () {
+      let str = ''
+      let date = this.selectedDate
+      let time = this.selectedTime
+      if (date && time) {
+        str = date + '/' +time
+      } 
+      return str
+    } 
   },
   watch: {
     selectedAddress: function () {
@@ -191,7 +214,13 @@ export default {
       this.$router.push({ name: 'invoice', params: { title: title} })
     },
     goDuration() {
-      this.$refs.timePicker.open()
+      this.$refs.timePicker.open()      
+    },
+    onClickDate(date) {
+
+    },
+    onClickTime(time) {
+      
     },
     goCouponList() {      
       this.$router.push('couponUsable')
