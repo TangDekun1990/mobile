@@ -193,7 +193,6 @@
 				this.promos = [];
 				this.orderprice = [];
 				for (let i = 0, len = data.length; i <= len-1; i++) {
-					console.log(data[i].checked);
 					if (data[i].checked) {
 						this.orderprice.push({'goods_id': data[i].product.id, 'property': [], 'num': data[i].amount});
 						this.promos.push(data[i].id);

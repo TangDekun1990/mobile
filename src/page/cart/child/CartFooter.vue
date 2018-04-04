@@ -47,7 +47,7 @@
 				saveCartData: 'saveCartData'
 			}),
 			selectedAll(value) {
-				this.$parent.$emit('redener-cart-price');
+				this.$parent.$emit('redener-cart-price', value);
 				this.changedAll(value);
 			},
 

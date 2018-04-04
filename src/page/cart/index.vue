@@ -21,7 +21,8 @@
 			this.$on('redener-cart-list', (value) => {
 				this.$refs.list.getCartList(value);
 			})
-			this.$on('redener-cart-price', () => {
+			this.$on('redener-cart-price', (value) => {
+				this.$refs.list.selectCartList(value)
 				this.$refs.list.renderCart();
 			})
 		},
