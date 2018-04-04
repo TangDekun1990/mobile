@@ -13,15 +13,7 @@ import { HeaderItem } from '../../../components/common'
 import { Header } from 'mint-ui'
 import { mapState, mapMutations } from 'vuex'
 export default { 
-  computed: {
-    ...mapState({
-      user: state => state.auth.user,
-    }),
-  },
   methods: {  
-    ...mapMutations({
-      clearToken: 'signout'
-    }),  
     goBack() {
       this.$router.go(-1) 
     },

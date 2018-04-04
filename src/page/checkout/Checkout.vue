@@ -6,6 +6,7 @@
       <header-item slot="right" title="联系客服" v-on:onclick="rightClick">
       </header-item>        
     </mt-header>
+
     <checkout-address class="address" v-on:onclick="goAddress" v-bind:item="selectedAddress">
     </checkout-address>
     <checkout-goods class="goods section-header" v-on:onclick="goGoodsList" :items="cartGoods">

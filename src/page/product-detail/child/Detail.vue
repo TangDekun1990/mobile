@@ -52,7 +52,7 @@ import { Webview } from '../../../components/common'
 	    	width: 100%;
 	    	border: 0px;
 	    }
-	},
+	}
 	.list-empty {
 		position: absolute;
 	    top: 50%;
