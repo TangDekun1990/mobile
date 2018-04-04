@@ -85,21 +85,6 @@ export default {
       selectedTime: state => state.delivery.selectedTime,
       cartGoods: state => state.cart.saveCartList,
     }),
-    // selectedAddress: function() {
-    //   let item = this.selectedAddress
-    //   if (item === null) {
-    //     // 没有默认地址时，第一个地址为当前选中的地址       
-    //     if (this.defaultAddress === null) {
-    //       let items = this.addressItems
-    //       if (items && items.length) {
-    //         this.selectAddressItem(items[0])
-    //       }          
-    //     } else {
-    //       this.selectAddressItem(this.defaultAddress)
-    //     }
-    //   }      
-    //   return this.selectedAddress    
-    // },
     // 获取订单商品数组(计算价格/获取货运公司列表)
     getOrderProducts: function () {
       let cartGoods = this.cartGoods
