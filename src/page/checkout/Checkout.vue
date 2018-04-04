@@ -1,51 +1,49 @@
 <template>
-	<div class="container">
-		<mt-header class="header" title="确认订单">
-			<header-item slot="left" v-bind:isBack=true v-on:onclick="leftClick">
-			</header-item>
-			<header-item slot="right" title="联系客服" v-on:onclick="rightClick">
-			</header-item>
-		</mt-header>
 
-		<checkout-address class="address" v-on: onclick="goAddress" v-bind:item="getSelectedAddress">
+  <div class="container">
+    <mt-header class="header" title="确认订单">
+      <header-item slot="left" v-bind:isBack=true v-on:onclick="leftClick">
+      </header-item>
+      <header-item slot="right" title="联系客服" v-on:onclick="rightClick">
+      </header-item>
+    </mt-header>
 
-		<!-- <checkout-address class="address" v-on:onclick="goAddress" v-bind:item="selectedAddress"> -->
-
-		</checkout-address>
-		<checkout-goods class="goods section-header" v-on:onclick="goGoodsList" :items="cartGoods">
-		</checkout-goods>
-		<checkout-item class="item" title="配送方式" :subtitle="getShippingName" v-on:onclick="goShipping">
-		</checkout-item>
-		<checkout-item class="item section-header" title="送货时间" :subtitle="getSelectedDateStr" v-on:onclick="goDuration">
-		</checkout-item>
-		<checkout-item class="item section-header" title="发票类型" :subtitle="getInoviceTitle" v-on:onclick="goInvoice">
-		</checkout-item>
-		<checkout-item class="item section-header" title="优惠券" :subtitle="getCouponName" :tips="getCouponTips" v-on:onclick="goCouponList">
-		</checkout-item>
-		<checkout-comment ref="comment" class="comment section-header">
-		</checkout-comment>
-		<div class="desc section-header section-footer">
-			<checkout-desc class="desc-item" title="商品金额" :subtitle="getOrderProductPrice">
-			</checkout-desc>
-			<checkout-desc class="desc-item" title="税额" :subtitle="getOrderTaxPrice">
-			</checkout-desc>
-			<checkout-desc class="desc-item" title="运费" :subtitle="getOrderShippingPrice">
-			</checkout-desc>
-			<checkout-desc class="desc-item" title="优惠券" :subtitle="getOrderDiscountPrice">
-			</checkout-desc>
-		</div>
-		<div class="bottom-wrapper">
-			<div class="amount-wrapper">
-				<label class="amount">实付款: {{getOrderTotalPrice}}</label>
-			</div>
-			<button class="submit" @click="checkout">提交订单</button>
-		</div>
-		<delivery-time
-			ref="timePicker"
-			v-on:onClickDate="onClickDate"
-			v-on:onClickTime="onClickTime">
-		</delivery-time>
-	</div>
+    <checkout-address class="address" v-on:onclick="goAddress" v-bind:item="selectedAddress">
+    </checkout-address>
+    <checkout-goods class="goods section-header" v-on:onclick="goGoodsList" :items="cartGoods">
+    </checkout-goods>
+    <checkout-item class="item" title="配送方式" :subtitle="getShippingName" v-on:onclick="goShipping">
+    </checkout-item>
+    <checkout-item class="item section-header" title="送货时间" :subtitle="getSelectedDateStr" v-on:onclick="goDuration">
+    </checkout-item>
+    <checkout-item class="item section-header" title="发票类型" :subtitle="getInoviceTitle" v-on:onclick="goInvoice">
+    </checkout-item>
+    <checkout-item class="item section-header" title="优惠券" :subtitle="getCouponName" :tips="getCouponTips" v-on:onclick="goCouponList">
+    </checkout-item>
+    <checkout-comment ref="comment" class="comment section-header">
+    </checkout-comment>
+    <div class="desc section-header section-footer">
+      <checkout-desc class="desc-item" title="商品金额" :subtitle="getOrderProductPrice">
+      </checkout-desc>
+      <checkout-desc class="desc-item" title="税额" :subtitle="getOrderTaxPrice">
+      </checkout-desc>
+      <checkout-desc class="desc-item" title="运费" :subtitle="getOrderShippingPrice">
+      </checkout-desc>
+      <checkout-desc class="desc-item" title="优惠券" :subtitle="getOrderDiscountPrice">
+      </checkout-desc>
+    </div>
+    <div class="bottom-wrapper">
+      <div class="amount-wrapper">
+        <label class="amount">实付款: {{getOrderTotalPrice}}</label>
+      </div>
+      <button class="submit" @click="checkout">提交订单</button>
+    </div>
+    <delivery-time
+      ref="timePicker"
+      v-on:onClickDate="onClickDate"
+      v-on:onClickTime="onClickTime">
+    </delivery-time>
+  </div>
 </template>
 
 <script>
