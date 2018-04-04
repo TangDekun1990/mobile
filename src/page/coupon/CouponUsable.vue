@@ -8,7 +8,14 @@
       <label class="tips">可使用优惠券{{total}}张</label>
     </div>    
     <div class="list">
-      <coupon-item class="item" v-for="item in items" :key="item.id" :item="item" v-on:onclick="onclick(item)"></coupon-item>
+      <coupon-item 
+        class="item" 
+        v-for="item in items" 
+        :key="item.id" 
+        :item="item" 
+        :isSelected="isSelected(item)"
+        v-on:onclick="onclick(item)">
+      </coupon-item>
     </div>    
     <div class="submit" @click="unselect">
       <label class="text">不使用优惠券</label>
@@ -28,8 +35,9 @@ export default {
   computed: {
     ...mapState({
       total: state => state.coupon.total,
-      items: state => state.coupon.items
-    }),
+      items: state => state.coupon.items,
+      selectedItem: state => state.coupon.selectedItem
+    }),    
   },
   methods: {
     ...mapMutations({
@@ -42,6 +50,13 @@ export default {
     goBack() {
       this.$router.go(-1)
     }, 
+    isSelected(item) {
+      let selectedItem = this.selectedItem
+      if (selectedItem && item && selectedItem.id === item.id) {
+        return true
+      }
+      return false
+    },
     onclick(item) {
       this.selectCouponItem(item)
       this.goBack()

@@ -27,16 +27,12 @@
       <order-price class="price-item" title="+税额" subtitle="AED 10.46"></order-price>
       <order-price class="price-item" title="+运费" subtitle="AED 18.46"></order-price> 
       <order-price class="price-item" title="-商家红包" subtitle="AED 18.46"></order-price> 
-      <label class="amount"><span>实付款:</span>  AED 518.47</label>    
+      <label class="amount">实付款: <span>AED 518.47</span> </label>    
     </div>
      <div class="btn">
-        <mt-button type="default" class="button">取消订单</mt-button>
-        <mt-button type="default"  class="button buttonbottom">去支付</mt-button> 
+        <button>取消订单</button>
+        <button class="buttonbottom"> 去支付 </button>
      </div>
-    <div>
-      
-        
-    </div>
   </div>
 </template>
 <script>
@@ -102,6 +98,7 @@
   .detail {
     display: flex;
     flex-direction: column;
+    align-items:center;
     font-size: 14px;
     color:#7C7F88;
     height: 195px;
@@ -145,30 +142,35 @@
     background-color: #fff;
   }
   .amount {
-    flex: 1;    
-    font-size: 16px;
+    display: flex;
+    flex: 1;  
+    align-items:center;  
+    justify-content:flex-end;
+    font-size: 14px;
     color: #4E545D;
     text-align: right;
     padding-right: 15px;
     border-top: 1px solid $lineColor; 
-    padding: 12px 15px 12px 0px;
   }
   .amount span {
-    font-size: 14px;
-    color:#4E545D;
+    font-size: 16px;
+    color:#F33C3C;
   }
   .btn {
     height: 54px;
-    line-height: 54px;
+    display: flex;
+    justify-content:flex-end;
+    margin-top: 26px;
+    background-color: #fff;
+    align-items:center;
   }
-  .button {
+  button {
     width: 82px;
     height: 36px;
     font-size:14px;
-    border-radius: 2px;
     margin-right: 7px;
-    margin-top: 26px;
-    left: 185px;
+    background-color: #fff;
+    border:1px solid #ccc;
   }
   .buttonbottom {
     color:#F23030;

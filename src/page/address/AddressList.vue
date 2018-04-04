@@ -59,7 +59,7 @@ export default {
       this.$router.go(-1)
     },
     goManage() {
-      this.$router.push('/addressManage')
+      this.$router.push('addressManage')
     },
     onclick(item) {
       this.selectAddressItem(item)

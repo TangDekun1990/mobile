@@ -6,7 +6,7 @@
       <header-item slot="right" :title="countDesc">
       </header-item>    
     </mt-header>
-    <goods-item class="item" v-for="item in items" :key="item"></goods-item>
+    <goods-item class="item" v-for="(item, index) in cartGoods" :key="index" :item="item"></goods-item>
   </div>
 </template>
 
@@ -14,16 +14,15 @@
 import { Header } from 'mint-ui'
 import { HeaderItem } from '../../components/common'
 import GoodsItem from './child/GoodsItem'
+import { mapState } from 'vuex'
 export default {
-  data() {
-    return {
-      count: 0,
-      items: ['1', '2', '3', '4', '5', '6', '7', '8']
-    }
-  },
   computed: {
-    countDesc() {
-      return '共' + this.count + '件'
+    ...mapState({
+      cartGoods: state => state.cart.saveCartList,
+    }),
+    countDesc: function () {
+      let count = (this.cartGoods && this.cartGoods.length) ? this.cartGoods.length : 0
+      return '共' + count + '件'
     }
   },
   components: {

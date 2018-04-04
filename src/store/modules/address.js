@@ -52,12 +52,22 @@ const mutations = {
       }
     }    
   },
+  unselectAddressItem(state) {
+    state.selectedItem = null
+  },
   traverseAddressItems(state) {
     const { items } = state
-    let defaultItem = getDefaultItem(items)  
-    if (defaultItem) {
-      this.commit('setDefaultAddress', defaultItem) 
-    }     
+    if (items && items.length) {
+      let defaultItem = getDefaultItem(items)
+      if (defaultItem) {
+        this.commit('setDefaultAddress', defaultItem)        
+      } 
+
+      if (state.selectedItem === null || state.selectedItem === undefined) {
+        let item = defaultItem ? defaultItem : items[0]
+        this.commit('selectAddressItem', item)
+      }
+    }        
   },
   addAddressItem(state, item) {  
     state.items.push(item)
@@ -67,6 +77,12 @@ const mutations = {
     const { items } = state
     let index = getIndexById(items, id)
     state.items.splice(index, 1)
+
+    // 当前选中的地址和要删除的地址相同时，当前选中的地址置为空
+    let selectedItem = state.selectedItem
+    if (selectedItem && selectedItem.id && selectedItem.id === id) {
+      this.commit('unselectAddressItem')
+    }
     this.commit('traverseAddressItems')
   },
   modifyAddressItem(state, item) {

@@ -14,6 +14,8 @@ import shipping from './modules/shipping'
 import coupon from './modules/coupon'
 import invoice from './modules/invoice'
 import product from './modules/product'
+import cart from './modules/cart'
+import delivery from './modules/delivery'
 
 Vue.use(Vuex)
 
@@ -24,10 +26,12 @@ export default new Vuex.Store({
     address,
     region,
     detail,
+    product,
+    cart,
     shipping,
     coupon,
     invoice,
-    product
+    delivery
   },
   getters: getters,
   plugins: [

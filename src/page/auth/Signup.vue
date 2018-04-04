@@ -169,6 +169,10 @@ export default {
         Toast('确认密码与输入密码不一致');
         return false;
       }
+      if (password !== confirmPassword) {
+        Toast('确认密码与输入密码不一致');
+        return false;
+      }
       return true;
     },
     signup() {

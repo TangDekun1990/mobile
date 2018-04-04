@@ -1,25 +1,23 @@
 <template>
-  <!-- <transition name="modal">
-    <div class="mask" @click="onclickMask" v-show="currentValue"> -->
-      <transition name="fade">
-        <div class="container" v-show="currentValue">
-          <mt-picker
-            ref="picker" 
-            class="picker" 
-            :slots="slots" 
-            valueKey="name" 
-            showToolbar 
-            :itemHeight="44"
-            @change="onValuesChange">
-          <div class="toolbar">
-            <button class="toolbar-item cancel-item" @click="cancel">取消</button>
-            <button class="toolbar-item confirm-item" @click="confirm">确定</button>
-          </div>
-        </mt-picker>
-        </div>    
-      </transition>
-    <!-- </div>    
-  </transition>   -->
+  <transition name="fade">
+    <div class="mask" v-show="currentValue" @click="onclickMask">
+      <div class="container" v-show="currentValue">
+      <mt-picker
+        ref="picker" 
+        class="picker" 
+        :slots="slots" 
+        valueKey="name" 
+        showToolbar 
+        :itemHeight="44"
+        @change="onValuesChange">
+      <div class="toolbar">
+        <button class="toolbar-item cancel-item" @click="cancel">取消</button>
+        <button class="toolbar-item confirm-item" @click="confirm">确定</button>
+      </div>
+    </mt-picker>
+    </div>
+    </div>            
+  </transition>
 </template>
 
 <script>
@@ -82,17 +80,12 @@ export default {
 <style lang="scss" scoped>
   .mask {
     position: fixed;
+    top: 0;
+    left: 0;
     bottom: 0;
     right: 0;
-    left: 0;
-    top: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    pointer-events: none;
-    transition: opacity .2s ease-in;
-    background-color: #000;
-    opacity: 0.6;
+    z-index: 50001;
+    background: rgba(0,0,0,.5);
   }
   .container {
     position: fixed;
@@ -152,7 +145,10 @@ export default {
     background-color: $mainbgColor;
   }
   .toolbar-item {    
-    font-size: 16px;    
+    font-size: 16px;
+    border: none;
+    border-radius: 0px;   
+    background-color: $mainbgColor; 
   }
   .cancel-item {
     margin-left: 10px;

@@ -8,6 +8,7 @@
       ref='name'
       class="item" 
       title="收件人姓名" 
+      maxlength="15"
       :default="getName" 
       placeholder="请如实填写收货人姓名">
     </form-input-item>
@@ -15,6 +16,7 @@
       ref='mobile'
       class="item" 
       title="手机号码" 
+      maxlength="11"
       :default="getMobile" 
       placeholder="请如实填写手机号码">
     </form-input-item>
@@ -29,7 +31,7 @@
     <form-input-item 
       ref='address'
       class="item" 
-      title="详细信息" 
+      title="详细地址" 
       :default="getAddress" 
       placeholder="请用英文填写街道大楼及房间号">
     </form-input-item>
@@ -157,6 +159,10 @@ export default {
         }        
       }
       let address = this.$refs.address.value
+      if (name === null || name === undefined) {
+        Toast('请填写收件人姓名');
+        return;
+      }
       if (name.length === 0) {
         Toast('请填写收件人姓名');
         return;
@@ -165,12 +171,20 @@ export default {
         Toast('2-15个字符限制');
         return;
       }
+      if (mobile === null || mobile === undefined) {
+        Toast('请填写手机号码');
+        return;
+      }
       if (mobile.length === 0) {
         Toast('请填写手机号码');
         return;
       }
       if (region === null || region === undefined) {
         Toast('请选择所在地区');
+        return;
+      }
+      if (address === null || address === undefined) {
+        Toast('请填写详细地址');
         return;
       }
       if (address.length === 0) {

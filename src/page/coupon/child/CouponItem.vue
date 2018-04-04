@@ -5,10 +5,8 @@
     <label class="subtitle">{{getCondition}}</label>
     <div class="desc-wrapper">
       <label v-for="(item, index) in getTypeItems" :key="index">{{item}}</label>
-      <label>{{getDuration}}</label>
-      <label>A</label>      
     </div> 
-    <img class="indicator" src="../../../assets/image/change-icon/d1_ticket_sel@2x.png">
+    <img class="indicator" v-if="isSelected" src="../../../assets/image/change-icon/d1_ticket_sel@2x.png">
   </div>  
 </template>
 
@@ -17,6 +15,9 @@ export default {
   props: {
     item: {
       type: Object
+    },
+    isSelected: {
+      type: Boolean
     }
   },
   computed: {
