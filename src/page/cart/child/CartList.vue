@@ -116,6 +116,7 @@
 			// 数量减少
 			reduceNumber(id, amount, index) {
 				if (amount > 1) {
+					this.$parent.$emit('redener-promos');
 					Indicator.open(this.indicator);
 					amount--;
 					this.updateCartQuantity(id, amount, index);
@@ -130,6 +131,7 @@
 			// 数量增加
 			addNumber(id, amount, stock, index) {
 				if (amount <= stock) {
+					this.$parent.$emit('redener-promos');
 					Indicator.open(this.indicator);
 					amount++;
 					this.updateCartQuantity(id, amount, index);
@@ -206,6 +208,7 @@
 			changeCart() {
 				this.renderCart();
 				this.saveCartData(this.cartList);
+				this.$parent.$emit('redener-promos');
 			}
 		}
 	}
@@ -218,6 +221,7 @@
 	    width: 100%;
 	    bottom: 44px;
 	    top: 44px;
+	    /*max-height: 80%;*/
 		p.none-selected-all {
 			display: none;
 		}
