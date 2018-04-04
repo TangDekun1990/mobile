@@ -4,13 +4,16 @@
 		<v-cart-header></v-cart-header>
 
 		<!-- list -->
-		<v-cart-list ref='list'  v-bind:style="{bottom: bottom+ 'px'}"></v-cart-list>
+		<v-cart-list ref='list' :type="type"></v-cart-list>
 
 		<!-- 促销 -->
-		<v-cart-promos ref='promos'></v-cart-promos>
+		<v-cart-promos ref='promos' :type="type"></v-cart-promos>
 
 		<!-- footer -->
-		<v-cart-footer></v-cart-footer>
+		<v-cart-footer :type="type"></v-cart-footer>
+
+		<!--  -->
+		<v-cart-tabBar v-if='type'></v-cart-tabBar>
 	</div>
 </template>
 
@@ -19,11 +22,13 @@
 	import cartList from './child/CartList'
 	import cartFooter from './child/CartFooter'
 	import cartPromos from './child/Promos'
+	import tabBar from '../../components/common/Tabbar';
 
 	export default {
 		data(){
 			return {
-				bottom: 44
+				bottom: 44,
+				type: this.$route.params.type ? this.$route.params.type : 0
 			}
 		},
 		created(){
@@ -38,19 +43,16 @@
 				this.$refs.promos.getPromos();
 			});
 		},
+
 		mounted(){
-			// console.log(this.$refs.promos.$el.style.height);
-			// this.$nextTick(() => {
-			// 	let cur = document.querySelectorAll("div[class='ui-cart-promos']");
-		 //    	let curHeight = cur.offsetHeight;
-			// 	console.log(curHeight);
-			// });
+			console.log(this.$refs.promos.getHeight());
 		},
 		components: {
 			'v-cart-header': cartHeader,
 			'v-cart-list': cartList,
 			'v-cart-footer': cartFooter,
-			'v-cart-promos': cartPromos
+			'v-cart-promos': cartPromos,
+			'v-cart-tabBar': tabBar
 		}
 
 	}

@@ -1,5 +1,5 @@
 <template>
-	<div class="cart-list-wrapper">
+	<div class="cart-list-wrapper" v-bind:class="{'has-bottom': type}">
 		<p class="none-selected-all">{{ isSelectedAll }}</p>
 		<div class="list" v-for="(item, index) in cartList">
 			<div class="list-checkbox">
@@ -47,6 +47,7 @@
 		created(){
 			this.getCartList(true);
 		},
+		props: ['type'],
 		computed:{
 			...mapState({
 				isSelectedAll: state => state.cart.isSelectedAll,
@@ -221,7 +222,8 @@
 	    width: 100%;
 	    bottom: 44px;
 	    top: 44px;
-	    /*max-height: 80%;*/
+	    /*min-height: 70%;
+	    max-height: 80%;*/
 		p.none-selected-all {
 			display: none;
 		}
@@ -351,5 +353,8 @@
 				}
 			}
 		}
+	}
+	.has-bottom {
+		bottom: 94px;
 	}
 </style>

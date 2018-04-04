@@ -194,7 +194,7 @@ export default [
 			},
 			{
 				name: 'cart',
-				path: '/cart',
+				path: '/cart/:type?',
 				component: Cart
 			}
 		]

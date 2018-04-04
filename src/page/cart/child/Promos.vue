@@ -1,18 +1,15 @@
 <!-- Promos.vue 购物车促销 -->
 <template>
 	<div>
-		<div class="ui-cart-promos" @click="changeStatus()">
+		<div class="ui-cart-promos" @click="changeStatus()" v-bind:class="{'has-bottom': type}">
 			<div class="promos-list" v-for="item in promos_list" v-if='item.value.length > 0'>
-				<div class="title">{{ item.name}}</div>
+				<!-- <div class="title">{{ item.name}}</div> -->
 				<div class="item">
-					<div v-for="list in item.value">
+					<div v-for="(list, index) in item.value">
+						<span class="title" v-show="index == 0">{{ item.name}}</span>
 						<span class="name">{{ list.name }}</span>
 						<span class="promo">{{list.promo}}</span>
 					</div>
-					<!-- <div v-for="list in item.value">
-						<span class="name">{{ list.name }}</span>
-						<span class="promo">{{list.promo}}</span>
-					</div> -->
 				</div>
 				<img src="../../../assets/image/change-icon/enter@2x.png">
 			</div>
@@ -20,13 +17,10 @@
 
 		<mt-popup v-model="popupvisible" position="bottom">
 			<div class="promos-list" v-for="item in promos_list" v-if='item.value.length > 0'>
-				<div class="title">{{ item.name}}</div>
+				<!-- <div class="title">{{ item.name}}</div> -->
 				<div class="item">
-					<div v-for="list in item.value">
-						<span class="name">{{ list.name }}</span>
-						<span class="promo">{{list.promo}}</span>
-					</div>
-					<div v-for="list in item.value">
+					<div v-for="(list, index) in item.value">
+						<span class="title" v-show="index == 0">{{ item.name}}</span>
 						<span class="name">{{ list.name }}</span>
 						<span class="promo">{{list.promo}}</span>
 					</div>
@@ -53,9 +47,11 @@
 						"name": '未满足的优惠',
 						"value": []
 					}
-				}
+				},
+				height: 0
 			}
 		},
+		props: ['type'],
 		computed:{
 			...mapState({
 				saveCartList: state => state.cart.saveCartList
@@ -66,16 +62,7 @@
 				this.getPromos();
 			}
 		},
-		created(){
-		},
 		mounted(){
-			this.$nextTick(function () {
-				// debugger;
-				// let cur = document.querySelectorAll("div[class='ui-cart-promos']");
-			})
-			// let cur = document.querySelectorAll("div[class='ui-cart-promos']");
-			// let element = this.$el;
-			// console.log(cur.clientHeight);
 		},
 		methods: {
 			// 获取选中的商品id
@@ -115,6 +102,20 @@
 				})
 			},
 
+			//todo
+			getHeight() {
+				let height = 0;
+				this.$nextTick(function () {
+					if (this.promos_list.un_promos.value.length > 0) {
+						height = height + 23 * this.promos_list.un_promos.value.length;
+					}
+					if (this.promos_list.promos.value.length > 0) {
+						height = height + 23 * this.promos_list.promos.value.length;
+					}
+				});
+				return height;
+			},
+
 			getPromos() {
 				this.getCartgoodId();
 				this.getCartPromos();
@@ -138,16 +139,14 @@
 	    img {
 	    	width: 6px;
 		    height: 10px;
-		    align-self: center;
-		    position: absolute;
-    		right: 10px;
 	    }
 	}
 	.promos-list {
     	display: flex;
     	flex-basis: auto;
-    	align-items: flex-start;
-    	align-content: flex-start;
+    	justify-content: space-between;
+    	align-items: center;
+    	align-content: center;
     	padding: 14px 10px;
 		div.title {
 			font-size:12px;
@@ -155,9 +154,21 @@
 			color:rgba(78,84,93,1);
 			line-height:17px;
 		}
+
 		div.item {
-			div:first-child {
+			/*display: flex;
+	    	flex-basis: auto;
+	    	align-items: flex-start;
+	    	align-content: flex-start;*/
+
+			/*div:first-child {
 				margin-bottom: 10px;
+			}*/
+			span.title {
+				font-size:12px;
+				font-family:PingFangSC-Regular;
+				color:rgba(78,84,93,1);
+				line-height:17px;
 			}
 			span.name {
 				border: 1px solid #FC2E39;
@@ -181,5 +192,8 @@
     	width: 100%;
 	    height: 50%;
 	    border: 0px;
+    }
+    .has-bottom {
+    	bottom: 94px;
     }
 </style>
