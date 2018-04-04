@@ -42,25 +42,9 @@ import Invoice from '../page/checkout/Invoice'
 
 // order
 import Order from '../page/order/Order'
-
-// payment
-import Payment from '../page/payment/Payment'
-
-// ship
-import Ship from '../page/ship/Ship'
-
-// recepit
-import Receipt from '../page/recepit/Recepit'
-
-// evaluate
-import Evaluate from '../page/evaluate/Evaluate'
-
-export default [	
-// 商品详情
-import Detail from '../page/product-detail/index'
+import OrderDetail from '../page/order/OrderDetail'
 
 export default [
-
 	{
 		path: '/',
 		component: App,
@@ -165,31 +149,13 @@ export default [
 			},
 			{
 				name: 'order',
-				path: '/order',
+				path: '/order/:order?',
 				component: Order
 			},
 			{
-				name: 'payment',
-				path: '/payment',
-				component: Payment
-			},
-			{
-				name: 'ship',
-				path: '/ship',
-				component: Ship
-			},
-			{
-				name: 'recepit',
-				path: '/recepit',
-				component: Receipt
-			},
-			{
-				name: 'evaluate',
-				path: '/evaluate',
-				component: Evaluate
-				name: 'detail',
-				path: '/detial/:id?',
-				component: Detail
+				name: 'orderDetail',
+				path: '/orderDetail',
+				component: OrderDetail
 			}
 		]
 	}

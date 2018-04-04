@@ -1,22 +1,36 @@
-<!-- OrderNav.vue -->
-<template>  
+<template>
   <div class="page-navbar">   
     <mt-navbar class="page-part" v-model="selected">  
-      <mt-tab-item id="1" >全部</mt-tab-item>
+      <mt-tab-item id="1">全部</mt-tab-item>
       <mt-tab-item id="2">待付款</mt-tab-item>
       <mt-tab-item id="3">待发货</mt-tab-item>
       <mt-tab-item id="4">待收货</mt-tab-item>
       <mt-tab-item id="5">待评价</mt-tab-item>
     </mt-navbar>  
-    <label class="payment" v-model="selected">等待付款</label>
+    <label class="payment" >等待付款</label>  
     <mt-tab-container v-model="selected">  
       <mt-tab-container-item id="1">
-        <div v-for='(item, index) in items' v-if="items.length > 0"  @click="goOrderDetail()">
-            <img class="img" :src="list.product.photos[0].thumb" v-for="(list, index) in item.goods" >
-        </div>
+        <img src="../../../assets/image/change-icon/default_image_02@2x.png">
+        <img src="../../../assets/image/change-icon/default_image_02@2x.png">
+        <img src="../../../assets/image/change-icon/default_image_02@2x.png">
+        <img src="../../../assets/image/change-icon/default_image_02@2x.png">
+        <img src="../../../assets/image/change-icon/default_image_02@2x.png">
+      </mt-tab-container-item>
+      <mt-tab-container-item id="2">
+          <img src="../../../assets/image/change-icon/default_image_02@2x.png">
+          <img src="../../../assets/image/change-icon/default_image_02@2x.png">
+      </mt-tab-container-item>
+      <mt-tab-container-item id="3">
+        <img src="../../../assets/image/change-icon/default_image_02@2x.png">
+      </mt-tab-container-item>
+      <mt-tab-container-item id="4">
+        <img src="../../../assets/image/change-icon/default_image_02@2x.png">
+        <img src="../../../assets/image/change-icon/default_image_02@2x.png">
+      </mt-tab-container-item>
+      <mt-tab-container-item id="5">
+        <img src="../../../assets/image/change-icon/default_image_02@2x.png">
       </mt-tab-container-item>
     </mt-tab-container> 
-
     <mt-navbar class="navinfo" v-model="selected"><p>(共计3件商品) 合计 : AED 518</p></mt-navbar>
     <mt-button type="default" class="button">取消订单</mt-button>
     <mt-button type="default"  class="button buttonbottom">去支付</mt-button> 
@@ -24,41 +38,17 @@
 </template>
 
 <script>
-import { orderList } from '../../../api/network/order-nav';
   export default {
     name:'page-navbar',
     data() {
       return {
-        selected: 1,
-        items: [],
-        currentItem: {}
+        selected: '2'  
       }
     },
     created() {
-      this.selected = this.$route.query.order;
-      // this.getOrderList( this.selected);
+      let id = this.$route.query.id;
+      console.log(id);
     },
-    watch:{
-      selected: function(value){
-        this.getOrderList( value);
-      }
-    },
-    methods: {
-      getOrderList(id) {
-        orderList(1, 10, id).then(res =>{
-          let data = res.orders;
-          // debugger;
-          this.items = Object.assign([],data,this.items);
-          this.currentItem = this.items[0]
-        })
-      },
-      setIsActiveByClick(item) {
-			this.currentItem = item;
-		  },
-      goOrderDetail(){
-       this.$router.push('/OrderDetail')
-      }
-    }
   }
 </script>
 
@@ -86,7 +76,7 @@ import { orderList } from '../../../api/network/order-nav';
   .mint-cell-text {
     margin-right: 285px;
   } 
-   img {
+  .mint-tab-container-item img {
     width: 60px;
     height: 60px;
     margin: 17px 5px 10px;
@@ -118,6 +108,3 @@ import { orderList } from '../../../api/network/order-nav';
   }
  
 </style>
-
-
-

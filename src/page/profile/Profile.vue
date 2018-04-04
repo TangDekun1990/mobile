@@ -18,7 +18,7 @@
         <div class="info-item">积分记录</div>
       </div>
     </div>
-    <div class="order-header" @click="goOrder()">
+    <div class="order-header" @click="goOrder(10)">
       <div class="order-header-item" id="order-item-left">
         <img class="order-header-icon" src="../../assets/image/change-icon/e0_order@2x.png" />
         <label class="item-title order-header-title">我的订单</label>
@@ -31,30 +31,30 @@
     </div>
     <div class="order-wrapper" > 
       <order-item 
-        @click="goPayment"
         class="order-item" 
-        testAttr = 'payment'
+        testAttr = 'order'
+        id='0'
         :icon="require('../../assets/image/change-icon/e0_payment@2x.png')"
         title="待付款">
       </order-item> 
       <order-item 
-        @click="goShip"
         class="order-item" 
-        testAttr = 'ship'
+        testAttr = 'order'
+        id='1'
         :icon="require('../../assets/image/change-icon/e0_delivery@2x.png')"
         title="待发货">
       </order-item>
       <order-item 
-        @click="goReceipt"
         class="order-item" 
-        testAttr = 'receipt'
+        testAttr = 'order'
+        id='2'
         :icon="require('../../assets/image/change-icon/e0_receiving@2x.png')"
         title="待收货">
       </order-item>
-        <order-item
-        @click="goEvaluate"
+      <order-item
         class="order-item" 
-        testAttr = 'evaluate'
+        testAttr = 'order'
+        id='3'
         :icon="require('../../assets/image/change-icon/e0_evaluate@2x.png')"
         title="待评价">
       </order-item>
@@ -100,12 +100,12 @@ import OrderItem from "./child/OrderItem";
 import { mapState } from "vuex";
 import { userProfileGet } from "../../api/network/user";
 export default {
-  data() {
+  name: "profile",
+   data() {
     return {
-      nextRouteShowId:1,
+      orderAll:1,
     };
   },
-  name: "profile",
   components: {
     Tabbar,
     OrderItem,
@@ -163,22 +163,10 @@ export default {
     goGoodsList() {
       this.$router.push("goodsList");
     },
-    goOrder() {
-      console.log(this.nextRouteShowId);
-      this.$router.push("order");
+    goOrder(id) {
+      let params = {'order': id};
+      this.$router.push({'name':'order', 'params':params});
     },
-    goPayment() {
-      this.$router.push("payment");
-    },
-    goShip() {
-      this.$router.push("ship");
-    },
-    goReceipt() {
-      this.$router.push("receipt");
-    },
-    goEvaluate() {
-      this.$router.push("evaluate");
-    }
   },
 };
 </script>
