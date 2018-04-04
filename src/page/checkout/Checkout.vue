@@ -6,11 +6,8 @@
       <header-item slot="right" title="联系客服" v-on:onclick="rightClick">
       </header-item>        
     </mt-header>
-<<<<<<< HEAD
-    <checkout-address class="address" v-on: onclick="goAddress" v-bind:item="getSelectedAddress">
-=======
+
     <checkout-address class="address" v-on:onclick="goAddress" v-bind:item="selectedAddress">
->>>>>>> 1f248fda256a4f201c35c58cdf7560aee319a060
     </checkout-address>
     <checkout-goods class="goods section-header" v-on:onclick="goGoodsList" :items="cartGoods">
     </checkout-goods>
