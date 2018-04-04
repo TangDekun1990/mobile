@@ -9,7 +9,7 @@
 			<i v-if='!isShowHeader' class="total-price">合计<span>AED {{ total_price }} </span></i>
 		</div>
 		<span class="cart-footer-btn" v-if='isShowHeader' @click="deleteSelected()">删除</span>
-		<span class="cart-footer-btn" v-if='!isShowHeader'>结算({{total_amount }})</span>
+		<span class="cart-footer-btn" v-if='!isShowHeader' @click="checkout">结算({{total_amount }})</span>
 	</div>
 </template>
 
@@ -88,8 +88,10 @@
 					}
 				}
 				this.saveCartData(data);
+			},
+			checkout() {
+				this.$router.push('checkout')
 			}
-
 		}
 	}
 </script>

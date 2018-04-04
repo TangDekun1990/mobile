@@ -2,7 +2,7 @@
   <div class="container">    
     <label class="title">买家留言：</label>
     <div class="bottom-wrapper">
-      <textarea placeholder="选填：对本次交易的说明（建议填写已和卖家协商一致的内容）">        
+      <textarea placeholder="选填：对本次交易的说明（建议填写已和卖家协商一致的内容）" v-model="value">        
       </textarea>
     </div>       
   </div>
@@ -10,6 +10,11 @@
 
 <script>
 export default {
+  data () {
+    return {
+      value: null
+    }
+  }
 }
 </script>
 

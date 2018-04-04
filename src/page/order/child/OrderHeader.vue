@@ -4,7 +4,7 @@
     <mt-header class="header" title="我的订单">
       <header-item slot="left" v-bind:isBack=true v-on:onclick="goBack">
       </header-item>    
-    </mt-header>
+    </mt-header> 
   </div>
 </template>
 
@@ -13,15 +13,7 @@ import { HeaderItem } from '../../../components/common'
 import { Header } from 'mint-ui'
 import { mapState, mapMutations } from 'vuex'
 export default { 
-  computed: {
-    ...mapState({
-      user: state => state.auth.user,
-    }),
-  },
   methods: {  
-    ...mapMutations({
-      clearToken: 'signout'
-    }),  
     goBack() {
       this.$router.go(-1) 
     },

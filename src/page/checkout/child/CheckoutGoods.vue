@@ -1,10 +1,10 @@
 <template>
   <div class="container" @click="onclick">    
     <div class="photo-wrapper">    
-      <img src="../../../assets/image/change-icon/default_image_02@2x.png" v-for="item in items" :key="item"/>
+      <img :src="getPhotoUrl(item)" v-for="(item, index) in getData" :key="index"/>
     </div>
     <div class="right-wrapper">
-      <label class="subtitle">共0件</label>
+      <label class="subtitle">共{{getTotal}}件</label>
       <img class="indicator" src="../../../assets/image/change-icon/enter@2x.png" />
     </div>    
   </div>
@@ -13,16 +13,47 @@
 <script>
 export default {
   props: {
-    subtitle: {
-      type: String,
+    items: {
+      type: Array,
     },
   },
-  data() {
-    return {
-      items: ['1', '2', '3', '4'] 
+  computed: { 
+    getData: function () {
+      let data = new Array()
+      let items = this.items.slice(0)
+      // 默认最多展示4个
+      if (items && items.length >= 4) {
+        data = items.splice(0, 4)
+      } else {
+        data = items
+      }
+      return data
+    },
+    getTotal: function () {
+      if (this.items && this.items.length) {
+        return this.items.length
+      }
+      return 0
     }
   },
   methods: {
+    getPhotoUrl (item) {
+      let url = null
+      if (item && item.product) {
+        let photos = item.product.photos
+        if (photos && photos.length) {
+          let photo = photos[0]
+          if (photo && photo.large) {
+            url = photo.large
+          } else if (photo.thumb) {
+            url = photo.thumb
+          } else {
+            url = require('../../../assets/image/change-icon/default_image_02@2x.png')
+          }
+        }
+      }
+      return url
+    },
     onclick() {
       this.$emit('onclick')
     }
