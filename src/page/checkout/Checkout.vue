@@ -1,14 +1,14 @@
 <template>
   <div class="container">
     <mt-header class="header" title="确认订单">
-      <header-item slot="left" v-bind:isBack=true v-on:onclick="goBack">
+      <header-item slot="left" v-bind:isBack=true v-on:onclick="leftClick">
       </header-item> 
       <header-item slot="right" title="联系客服" v-on:onclick="rightClick">
       </header-item>        
     </mt-header>
-    <checkout-address class="address" v-on:onclick="goAddress" v-bind:item="getSelectedAddress">
+    <checkout-address class="address" v-on:onclick="goAddress" v-bind:item="selectedAddress">
     </checkout-address>
-    <checkout-goods class="goods section-header" v-on:onclick="goGoodsList">
+    <checkout-goods class="goods section-header" v-on:onclick="goGoodsList" :items="cartGoods">
     </checkout-goods>
     <checkout-item class="item" title="配送方式" :subtitle="getShippingName" v-on:onclick="goShipping">
     </checkout-item>
@@ -18,23 +18,23 @@
     </checkout-item>
     <checkout-item class="item section-header" title="优惠券" :subtitle="getCouponName" :tips="getCouponTips" v-on:onclick="goCouponList">
     </checkout-item>  
-    <checkout-comment class="comment section-header">
+    <checkout-comment ref="comment" class="comment section-header">
     </checkout-comment>
     <div class="desc section-header section-footer">
-      <checkout-desc class="desc-item" title="商品金额" subtitle="AED 518.46">
+      <checkout-desc class="desc-item" title="商品金额" :subtitle="getOrderProductPrice">
       </checkout-desc>
-      <checkout-desc class="desc-item" title="税额" subtitle="AED 25.46">
+      <checkout-desc class="desc-item" title="税额" :subtitle="getOrderTaxPrice">
       </checkout-desc>
-      <checkout-desc class="desc-item" title="运费" subtitle="AED 10.46">
+      <checkout-desc class="desc-item" title="运费" :subtitle="getOrderShippingPrice">
       </checkout-desc>
-      <checkout-desc class="desc-item" title="优惠券" subtitle="-AED 18.46">
+      <checkout-desc class="desc-item" title="优惠券" :subtitle="getOrderDiscountPrice">
       </checkout-desc>
     </div>
     <div class="bottom-wrapper">
       <div class="amount-wrapper">
-        <label class="amount">实付款: AED 518.47</label>
+        <label class="amount">实付款: {{getOrderTotalPrice}}</label>
       </div>     
-      <button class="submit">提交订单</button>
+      <button class="submit" @click="checkout">提交订单</button>
     </div>
     <delivery-time 
       ref="timePicker"  
@@ -55,7 +55,9 @@ import CheckoutDesc from './child/CheckoutDesc'
 import DeliveryTime from './DeliveryTime'
 import { mapState, mapMutations, mapActions } from 'vuex'
 import * as consignee from '../../api/network/consignee'
-import { Toast } from 'mint-ui'
+import * as order from '../../api/network/order'
+import * as cart from '../../api/network/cart'
+import { Toast, Indicator, MessageBox } from 'mint-ui'
 export default {
   components: {
     CheckoutAddress,
@@ -64,6 +66,11 @@ export default {
     CheckoutComment,
     CheckoutDesc,
     DeliveryTime,
+  },
+  data () {
+    return {
+      order_price: null
+    }
   },
   computed: {
     ...mapState({
@@ -76,21 +83,48 @@ export default {
       invoice: state => state.invoice,
       selectedDate: state => state.delivery.selectedDate,
       selectedTime: state => state.delivery.selectedTime,
+      cartGoods: state => state.cart.saveCartList,
     }),
-    getSelectedAddress: function() {
-      let item = this.selectedAddress
-      if (item === null) {
-        // 没有默认地址时，第一个地址为当前选中的地址       
-        if (this.defaultAddress === null) {
-          let items = this.addressItems
-          if (items && items.length) {
-            this.selectAddressItem(items[0])
-          }          
-        } else {
-          this.selectAddressItem(this.defaultAddress)
-        }
-      }      
-      return this.selectedAddress    
+    // selectedAddress: function() {
+    //   let item = this.selectedAddress
+    //   if (item === null) {
+    //     // 没有默认地址时，第一个地址为当前选中的地址       
+    //     if (this.defaultAddress === null) {
+    //       let items = this.addressItems
+    //       if (items && items.length) {
+    //         this.selectAddressItem(items[0])
+    //       }          
+    //     } else {
+    //       this.selectAddressItem(this.defaultAddress)
+    //     }
+    //   }      
+    //   return this.selectedAddress    
+    // },
+    // 获取订单商品数组(计算价格/获取货运公司列表)
+    getOrderProducts: function () {
+      let cartGoods = this.cartGoods
+      let orderProducts = []
+      if (cartGoods && cartGoods.length) {
+        orderProducts = cartGoods.map(function (cardGood) {
+          return {
+            goods_id: cardGood.product ? cardGood.product.id : '',
+            property: cardGood.attrs,
+            num: cardGood.amount,  
+          }
+        })
+      }
+      return orderProducts
+    },
+    // 获取购物车货品id数组
+    getCartGoodsIds: function () {
+      let cartGoods = this.cartGoods
+      let goodsIds = []
+      if (cartGoods && cartGoods.length) {
+        goodsIds = cartGoods.map(function (cardGood) {
+          return cardGood.id
+        })
+      }
+      return goodsIds
     },
     getShippingName: function () {
       let name = ''
@@ -156,28 +190,33 @@ export default {
         str = date + '/' +time
       } 
       return str
-    } 
+    },
+    getOrderTotalPrice: function () {
+      return 'AED ' + this.getPriceByKey('total_price')
+    },
+    getOrderProductPrice: function () {
+      return 'AED ' + this.getPriceByKey('product_price')
+    },
+    getOrderTaxPrice: function () {
+      return 'AED ' + this.getPriceByKey('tax_price')
+    },
+    getOrderShippingPrice: function () {
+      return 'AED ' + this.getPriceByKey('shipping_price')
+    },
+    getOrderDiscountPrice: function () {
+      return '-AED ' + this.getPriceByKey('discount_price')
+    }, 
   },
   watch: {
     selectedAddress: function () {
-      // TODO:  
-    this.fetchShippingList({
-      'shop': '1',
-      'products': null,
-      'address': this.getSelectedAddress.id
-    }) 
+      // TODO:         
     }
   },
   created: function() {    
-    consignee.consigneeList().then(
-      (response) => {       
-        let items = response.consignees        
-        // 保存地址列表
-        this.saveAddressItems(items)
-      }, (error) => {
-        Toast(error.errorMsg)
-      }) 
-    this.fetchCouponUsable({ page: 1, per_page: 10, shop: 1, total_price:1000 })  
+    this.fetchAddressList()    
+    this.getOrderPrice()
+    
+    // 配送时间列表
     this.fetchDeliveryList()      
   },
   methods: {
@@ -190,8 +229,21 @@ export default {
       fetchCouponUsable: 'fetchCouponUsable', 
       fetchDeliveryList: 'fetchDeliveryList',     
     }),
+    getPriceByKey (key) {
+      let total = ''
+      let order_price = this.order_price
+      if (order_price && order_price[key]) {
+        total = order_price[key]
+      }
+      return total
+    },
     goBack() {
       this.$router.go(-1)
+    },
+    leftClick() {
+      MessageBox.confirm('好货不等人 请三思而行').then(action => {
+        this.goBack()
+      })
     },
     rightClick() {
       // TODO:
@@ -224,9 +276,101 @@ export default {
     },
     goCouponList() {      
       this.$router.push('couponUsable')
-    },  
-    chectout() {
+    }, 
+    // 收货地址列表 
+    fetchAddressList() {
+      consignee.consigneeList().then(
+      (response) => {       
+        let items = response.consignees        
+        // 保存地址列表
+        this.saveAddressItems(items)
+        this.loadShippingList()
+      }, (error) => {
+        Toast(error.errorMsg)
+      })
+    }, 
+    // 配送方式列表
+    loadShippingList() {
+      let shop = null
+      let products = this.getOrderProducts ? JSON.stringify(this.getOrderProducts) : null
+      let address = this.selectedAddress ? this.selectedAddress.id : null
+      this.fetchShippingList({
+        shop : null,
+        products: products,
+        address: address
+      })
+    },
+    // 可使用的优惠券列表
+    fetchCouponList() {
+      let shop = null
+      let total_price = this.order_price ? this.order_price.total_price : null
+      this.fetchCouponUsable({ page: 1, per_page: 10, shop: shop, total_price: total_price })  
+    },
+    // 计算订单价格
+    getOrderPrice() {
+      let shop = null
+      let order_product = this.getOrderProducts ? JSON.stringify(this.getOrderProducts) : null 
+      let consignee = this.selectedAddress ? this.selectedAddress.id : null
+      let shipping = this.selectedShipping ? this.selectedShipping.id : null
+      let coupon = this.selectedCoupon ? this.selectedCoupon.id : null
+      // TODO:
+      let cashgift = null
+      let score = null
+      order.orderPrice(shop, order_product, consignee, shipping, coupon, cashgift, score).then(
+        (response) => {
+          if (response && response.order_price) {
+            this.order_price = response.order_price            
+            this.fetchCouponList()
+          }
+        }, (error) => {
+
+        })
+    },
+    checkout() {
       // TODO: 确认订单
+      let shop = null      
+      let consignee = this.selectedAddress ? this.selectedAddress.id : null
+      let shipping = this.selectedShipping ? this.selectedShipping.id : null
+      let invoiceType = (this.invoice && this.invoice.type)? this.invoice.type.name : null
+      let invoiceContent = (this.invoice && this.invoice.content)? this.invoice.content.name : null
+      let invoiceTitle = this.invoice ? this.invoice.title : null
+      let coupon = this.selectedCoupon ? this.selectedCoupon.id : null
+      // TODO:
+      let cashgift = null
+      let comment = this.$refs.comment.value      
+      let score = null
+      let deliveryTime = this.getSelectedDateValue
+      let cartGoods = this.getCartGoodsIds ? JSON.stringify(this.getCartGoodsIds) : null
+
+      if (consignee === null || consignee === undefined) {
+        Toast('请填写收货地址')
+        return;
+      }
+      if (shipping === null || shipping === undefined) {
+        Toast('请选择配送方式')
+        return;
+      }
+      Indicator.open()
+      cart.checkoutCart({
+        shop: shop,
+        consignee: consignee,
+        shipping: shipping,
+        invoice_type: invoiceType,
+        invoice_content: invoiceContent,
+        invoice_title: invoiceTitle,
+        coupon: coupon,
+        cashgift: cashgift,
+        comment: comment,
+        score: score,
+        delivery_time: deliveryTime,
+        cart_good_id: cartGoods
+      }).then(
+        (response) => {
+          Indicator.close()
+        }, (error) => {
+          Indicator.close()
+          Toast(error.errorMsg)
+        })
     }    
   }
 }

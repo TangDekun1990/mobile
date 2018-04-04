@@ -37,12 +37,10 @@ export default {
   computed: {
     ...mapState({
       defaultItem: state => state.address.defaultItem,
+      selectedItem: state => state.address.selectedItem,
       items: state => state.address.items,
     }),
     isEmpty() {
-      console.log('====================================');
-      console.log('isEmpty');
-      console.log('====================================');
       if (this.items && this.items.length === 0) {
         return true
       }
@@ -98,7 +96,7 @@ export default {
         Indicator.open()
         consignee.consigneeDelete(item.id).then(
         (response) => {
-          this.removeAddressItem(item.id)
+          this.removeAddressItem(item.id)           
           Indicator.close()
         }, (error) => {
           Indicator.close()

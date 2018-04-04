@@ -1,12 +1,12 @@
 <template>
   <div class="container">
-    <img class="photo" src="../../../assets/image/change-icon/default_image_02@2x.png">
+    <img class="photo" :src="getPhotoUrl">
     <div class="right-wrapper">
-      <label class="title">【新品上市】女款春秋马卡龙色雪纺衬衫花色闪亮青春</label>
-      <label class="subtitle">花色，M</label>
+      <label class="title">{{getTitle}}</label>
+      <label class="subtitle">{{item.property}}</label>
       <div class="desc-wrapper">
-        <label class="price">￥550</label>
-        <label class="count">x12</label>
+        <label class="price">AED {{item.price}}</label>
+        <label class="count">x{{item.amount}}</label>
       </div>
     </div>
   </div>  
@@ -20,15 +20,40 @@ export default {
     }
   },
   computed: {
-    url() {
-      let imgUrl = null;
-      // if (this.item.large && this.item.large.length) {
-      //   imgUrl = this.item.large
-      // } else if (this.item.thumb && this.item.thumb.length) {
-      //   imgUrl = this.item.thumb
-      // }
-      return imgUrl
-    }
+    getPhotoUrl: function () {
+      let url = null
+      let item = this.item
+      if (item && item.product) {
+        let photos = item.product.photos
+        if (photos && photos.length) {
+          let photo = photos[0]
+          if (photo && photo.large) {
+            url = photo.large
+          } else if (photo.thumb) {
+            url = photo.thumb
+          } else {
+            url = require('../../../assets/image/change-icon/default_image_02@2x.png')
+          }
+        }
+      }
+      return url
+    },
+    getTitle: function () {
+      return this.getItemByKey('name')
+    },
+    getDesc: function () {
+      return this.getItemByKey('desc')
+    },
+  },
+  methods: {
+    getItemByKey: function (key) {
+      let desc = ''
+      let item = this.item
+      if (item && item.product) {
+        desc = item.product[key]
+      }
+      return desc
+    },
   }
 }
 </script>
@@ -49,6 +74,7 @@ export default {
     margin-right: 10px;
   }
   .right-wrapper {
+    flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -76,7 +102,7 @@ export default {
     margin-right: 10px;
   }
   .price {
-    color: #4E545D;
+    color: #E7010E;
     font-size: 17px;
     margin-left: 0px;
   }
