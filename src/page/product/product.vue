@@ -101,6 +101,7 @@
 					this.keyword = routerParams.keywords;
 				}
 			},
+
 			getProductList(ispush) {
 				let data = this.params;
 				if (this.isSearch || this.$route.params.keywords) {
