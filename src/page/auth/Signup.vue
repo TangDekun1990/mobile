@@ -23,9 +23,7 @@
       </div>
     </div>    
     <label class="tips">6-20位数字/字母/符号</label>
-    <div class="submit" @click="onSubmit">
-      <label class="text">{{confirmTitle}}</label>
-    </div> 
+    <gk-button type="primary" class="button" v-on:click="onSubmit">{{confirmTitle}}</gk-button>
     <div class="link-wrapper">
       <span class="left-text">点击注册表示同意</span>
       <span class="right-text" @click="onAgreement">《温超商城用户协议》</span>
@@ -34,7 +32,7 @@
 </template>
 
 <script>
-import { HeaderItem, CountdownButton } from '../../components/common'
+import { HeaderItem, CountdownButton, Button } from '../../components/common'
 import { Indicator, Toast, Header } from 'mint-ui'
 import { mapMutations } from 'vuex'
 import * as authMobile from '../../api/network/auth-mobile'
@@ -312,21 +310,10 @@ export default {
     margin-top: 10px;
     text-align: left;
   }
-  .submit {
-    border-radius: 4px;
-    background-color: #F23030;
-    height: 44px;
-    margin-left: 10px;
-    margin-right: 10px;
-    margin-top: 18px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  .text {
-    color: #ffffff;
-    font-size: 18px;
-  }
+  .button {
+    @include button;
+    margin-top: 30px; 
+  }  
   .countdown {
     width: 112px;
     height: 30px;

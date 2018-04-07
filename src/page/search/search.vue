@@ -8,7 +8,7 @@
 					<img src="../../assets/image/change-icon/b1_delete@2x.png" v-on:click='deleteCurrent()'>
 				</div>
 				<ul>
-					<li class="item" v-for="item in currenKeywords" v-on:click='getKey(item)'>{{item}}</li>
+					<li class="item" v-for="(item, index) in currenKeywords" v-on:click='getKey(item)' :key="index">{{item}}</li>
 				</ul>
 			</div>
 			<div class="list hot-wrapper">
@@ -16,7 +16,7 @@
 					<span>热门搜索</span>
 				</div>
 				<ul>
-					<li class="item" v-for='(item, index) in hotKeywords' v-bind:key='index' v-on:click='getKey(item)'>{{ item.content}}</li>
+					<li class="item" v-for='(item, index) in hotKeywords' :key='index' v-on:click='getKey(item)'>{{ item.content}}</li>
 				</ul>
 			</div>
 		</div>

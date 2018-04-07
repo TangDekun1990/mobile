@@ -73,12 +73,12 @@ export default {
       flex: 1;
       display: flex;
       flex-direction: row;
-      justify-content: space-between;
+      justify-content: flex-start;
       align-items: stretch;
       img {
         margin-left: 10px;         
         width: 60px;
-        height: 60px;     
+        height: 60px;
       }
     }
     .right-wrapper {

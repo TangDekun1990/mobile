@@ -11,6 +11,7 @@ import FlowRadioList from './FlowRadioList'
 import FormInputItem from './FormInputItem'
 import FormTextItem from './FormTextItem'
 import Webview from './Webview'
+import Button from './Button'
 
 Vue.component(HeaderView.name, HeaderView)
 Vue.component(HeaderItem.name, HeaderItem)
@@ -23,11 +24,13 @@ Vue.component(FlowRadioList.name, FlowRadioList)
 Vue.component(FormInputItem.name, FormInputItem)
 Vue.component(FormTextItem.name, FormTextItem)
 Vue.component(Webview.name, Webview)
+Vue.component(Button.name, Button)
 
 module.export = {  
   HeaderView,
   HeaderItem,
   CountdownButton,
   InfoRadioItem,
-  InfoRadioList
+  InfoRadioList,
+  Button,
 }

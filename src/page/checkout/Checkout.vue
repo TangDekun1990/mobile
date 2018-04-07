@@ -353,6 +353,8 @@ export default {
       }).then(
         (response) => {
           Indicator.close()
+          
+          this.$router.push('/payment')
         }, (error) => {
           Indicator.close()
           Toast(error.errorMsg)
