@@ -8,23 +8,19 @@
       <mt-tab-item id="4">待收货</mt-tab-item>
       <mt-tab-item id="5">待评价</mt-tab-item>
     </mt-navbar>  
-    
     <mt-tab-container v-model="selected">  
       <mt-tab-container-item id="1">
         <div v-for='(item, index) in items' v-if="items.length > 0"  @click="goOrderDetail()">
-          <label class="payment" v-model="selected">等待付款</label>
-            <img class="img" :src="list.product.photos[0].thumb" v-for="(list, index) in item.goods" >
-            <label v-model="selected">(共计3件商品) 合计 : AED <span>518</span></label>
-            <div class="btn">
-        <button>取消订单</button>
-        <button class="buttonbottom">去支付</button>
-     </div>
+          <label class="payment" v-model="selected">等待付款</label> 
+            <img class="img" :src="list.product.photos[0].thumb" v-for="(list, index) in item.goods" > <br/>
+          <label class="price" v-model="selected">(共计3件商品) 合计 :  AED <span>518</span></label>
+          <div class="btn">
+            <button>取消订单</button>
+            <button class="buttonbottom">去支付</button>
+          </div>
         </div>
       </mt-tab-container-item>
     </mt-tab-container> 
-    <div class="navinfo">
-      
-    </div>
     
   </div>  
 </template>
@@ -37,16 +33,15 @@ import { orderList } from '../../../api/network/order-nav';
       return {
         selected: 1,
         items: [],
-        currentItem: {}
       }
     },
     created() {
-      this.selected = this.$route.query.order;
+      this.selected = this.$route.query.order;  
       // this.getOrderList( this.selected);
     },
     watch:{
       selected: function(value){
-        this.getOrderList( value);
+        this.getOrderList(value);
       }
     },
     methods: {
@@ -55,7 +50,6 @@ import { orderList } from '../../../api/network/order-nav';
           let data = res.orders;
           // debugger;
           this.items = Object.assign([],data,this.items);
-          this.currentItem = this.items[0]
         })
       },
       setIsActiveByClick(item) {
@@ -97,7 +91,7 @@ import { orderList } from '../../../api/network/order-nav';
     background-color: #fff;
     padding: 0 15px;
   }
-  .navinfo {
+  .price {
     @include header;
     display: flex;
     justify-content:flex-end;
@@ -107,8 +101,9 @@ import { orderList } from '../../../api/network/order-nav';
     padding: 11px 15px;
     box-sizing: border-box;
   }
-  .navinfo span {
+  .price span {
     font-size: 19px;
+    padding-left:5px;
   }
   .btn {
     height: 54px;

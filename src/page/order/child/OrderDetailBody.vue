@@ -5,9 +5,11 @@
       <span>等待付款</span>
     </div>
     <div class="address">
-      <img src="../../../assets/image/change-icon/e5_address@2x.png" alt="">
-      <span>小布丁</span>
-      <span>13543210808</span> 
+      <div>
+        <img src="../../../assets/image/change-icon/e5_address@2x.png" alt="">
+        <span>小布丁</span>
+        <span>13543210808</span> 
+      </div>
       <p>北京市朝阳区朝外大街乙6号 朝外SOHO A座 807<br/> 朝外SOHO A座 807</p>
     </div>
     <div class="contact">
@@ -18,9 +20,19 @@
     </div>
     <order-item></order-item>
     <div class="detail">
-      <label class="number">订单编号：62346675723 &nbsp;&nbsp; <input type="submit" value=" 复制 "> <br> 下单时间：2018-04-03 14:45:30</label> 
-      <label class="pay">支付方式：货到付款</label> 
-      <label class="givetime"> 配送方式：温超物流 <br/>  配送时间：2018-04-05 08:00 - 16:00</label>
+      <div class="number">
+        <label>订单编号：62346675723 &nbsp;
+          <input type="submit" value=" 复制 "> 
+        </label> 
+        <p>下单时间：2018-04-03 14:45:30</p>
+      </div>
+     <div class="pay">
+        <p>支付方式：货到付款</p>
+     </div>
+      <div class="givetime">
+        <p> 配送方式：温超物流</p>
+        <p> 配送时间：2018-04-05 08:00 - 16:00</p>
+      </div>
     </div>
     <div class="price">
       <order-price class="price-item" title="商品总额" subtitle="AED 25.46"></order-price>
@@ -53,7 +65,7 @@
     justify-content:flex-start;
     align-items:center;
   }
-  img {
+  .image img {
     height: 18px;
     padding: 0px 12px;
   }
@@ -65,13 +77,16 @@
     height: 100px;
     background-color: #fff;
   }
+  .address div {
+    padding: 15px 10px 10px;
+    
+  }
   .address img {
     height: 16px;
   }
   .address span {
     color:#4E545D;
     font-size:16px;
-    padding: 15px 10px 10px;
   }
   .address p {
     padding: 10px 36px 14px 15px;
@@ -86,6 +101,7 @@
     background-color: #fff;
     margin-top: 8px;
     border-bottom: 1px solid $lineColor;
+    padding: 0 13px;
   }
   .contact span {
     font-size: 12px;
@@ -98,23 +114,27 @@
   .detail {
     display: flex;
     flex-direction: column;
-    align-items:center;
     font-size: 14px;
     color:#7C7F88;
     height: 195px;
     background-color: #fff;
     margin: 8px 0;
-    padding:12px 14px;
     box-sizing: border-box;
   }
-  .detail .number, .pay {
-    border-bottom: 1px solid $lineColor;    
+  .detail .number, .detail .pay {
+     border-bottom: 1px solid $lineColor;
   }
-  .detail .pay {
-    padding-top:25px;
+  .detail .number {
+    padding: 14px 12px 12px;
   }
-  .detail .givetime {
-    padding-top:30px;
+  .detail .number p , .detail .givetime :last-child {
+    padding-top: 6px;
+  }
+  .detail .pay p {
+    padding:13px 15px 12px ;
+  }
+  .detail .givetime  {
+    padding: 18px 15px 14px;
   }
   .detail input {
     background-color: #fff;
