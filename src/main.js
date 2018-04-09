@@ -7,6 +7,7 @@ import store from './store/index'
 
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import VueResource from 'vue-resource'
+var VueTouch = require('vue-touch')
 
 import 'swiper/dist/css/swiper.css'
 import App from './App.vue'
@@ -39,6 +40,7 @@ Vue.use(VueRouter)
 Vue.use(Mint)
 Vue.use(VueResource)
 Vue.use(VueAwesomeSwiper)
+Vue.use(VueTouch, {name: 'v-touch'})
 
 Vue.prototype.utils = utils;
 

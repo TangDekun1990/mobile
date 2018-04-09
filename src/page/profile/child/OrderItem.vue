@@ -23,8 +23,7 @@ export default {
   },
   methods: {
     onclick() {
-      // this.$emit('onclick')
-      let params = {'order': parseInt(this.id)};
+      let params = {'order': this.id};
       this.$router.push({'name': this.testAttr, 'params':params});
     }
   }
