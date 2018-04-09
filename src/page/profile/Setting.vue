@@ -4,14 +4,12 @@
       <header-item slot="left" v-bind:isBack=true v-on:onclick="goBack">
       </header-item>    
     </mt-header>
-    <div class="submit" @click="signout" v-if="isOnline">
-      <label class="text">退出登录</label>
-    </div>
+    <gk-button class="button" type="primary" v-on:click="signout" v-if="isOnline">退出登录</gk-button>
   </div>
 </template>
 
 <script>
-import { HeaderItem } from '../../components/common'
+import { HeaderItem, Button } from '../../components/common'
 import { mapState, mapMutations } from 'vuex'
 import { Header, MessageBox } from 'mint-ui'
 export default {
@@ -43,22 +41,19 @@ export default {
     flex-direction: column;
     justify-content: flex-start;
     align-items: stretch;
-    background-color: $mainbgColor;
+    background-color: #fff;
   }
   .header {
     @include header;
   }
-  .submit {
-    position: absolute;
-    border-radius: 4px;
-    background-color: #F23030;
-    height: 44px;
-    left: 10px;
-    right: 10px;
-    bottom: 36px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  .button {
+    @include button;    
+    position: absolute; 
+    width: 90%;    
+    left: 5%;
+    right: 5%;
+    bottom: 36px; 
+    margin: 0px;
   }
   .text {
     color: #ffffff;

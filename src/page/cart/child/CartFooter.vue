@@ -90,7 +90,7 @@
 				this.saveCartData(data);
 			},
 			checkout() {
-				this.$router.push('checkout')
+				this.$router.push('/checkout')
 			}
 		}
 	}

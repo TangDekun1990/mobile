@@ -80,7 +80,8 @@ function generateSassResourceLoader() {
 			options:{
 				resources: [
 					path.resolve(__dirname, "../src/assets/style/_variable.scss"),
-					path.resolve(__dirname, "../src/assets/style/mixin.scss")
+					path.resolve(__dirname, "../src/assets/style/mixin.scss"),
+					path.resolve(__dirname, "../src/components/style/var.scss"),
 				]
 			}
 		}

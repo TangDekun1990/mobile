@@ -35,18 +35,15 @@
       :default="getAddress" 
       placeholder="请用英文填写街道大楼及房间号">
     </form-input-item>
-    <div class="submit" @click="submit">
-      <label class="text">保存</label>
-    </div>
+    <gk-button class="button" type="primary" v-on:click="submit">保存</gk-button>
     <region-picker ref="picker" :items="regions" v-on:onConfirm="onPickerConfirm">
     </region-picker>
   </div>
 </template>
 
 <script>
-import { Header } from 'mint-ui'
-import { HeaderItem, FormInputItem, FormTextItem } from '../../components/common'
-import { Toast, Indicator } from 'mint-ui'
+import { HeaderItem, FormInputItem, FormTextItem, Button } from '../../components/common'
+import { Header, Toast, Indicator } from 'mint-ui'
 import { mapState, mapMutations, mapActions } from 'vuex'
 import * as consignee from '../../api/network/consignee'
 import RegionPicker from './RegionPicker'
@@ -60,6 +57,9 @@ export default {
     }
   },
   created: function () {
+    console.log('====================================');
+    console.log('Address Edit created:');
+    console.log('====================================');
     this.fetchRegions()
   },
   computed: {
@@ -238,20 +238,9 @@ export default {
   .item {
     height: 50px;
   }
-  .submit {
-    border-radius: 4px;
-    background-color: #f23030;
-    height: 44px;
-    margin-left: 10px;
-    margin-right: 10px;
+  .button {
+    @include button;
     margin-top: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  .text {
-    color: #ffffff;
-    font-size: 16px;
   }
 </style>
 

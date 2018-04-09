@@ -37,6 +37,10 @@ import GoodsList from '../page/checkout/GoodsList'
 import Shipping from '../page/checkout/Shipping'
 import Invoice from '../page/checkout/Invoice'
 
+// payment
+import Payment from '../page/payment/Payment'
+import PaySucceed from '../page/payment/PaySucceed'
+
 // order
 import Order from '../page/order/Order'
 import OrderDetail from '../page/order/OrderDetail'
@@ -113,12 +117,18 @@ export default [
 			{
 				name: 'addressManage',
 				path: '/addressManage',
-				component: AddressManage
+				component: AddressManage,
+				meta: {
+					keepAlive: true,
+				},
 			},
 			{
 				name: 'addressEdit',
-				path: '/addressEdit',
-				component: AddressEdit
+				path: '/addressManage/addressEdit',
+				component: AddressEdit,
+				meta: {
+					keepAlive: true,
+				},
 			},
 			{
 				name: 'couponList',
@@ -134,6 +144,16 @@ export default [
 				name: 'checkout',
 				path: '/checkout',
 				component: Checkout
+			},
+			{
+				name: 'payment',
+				path: '/payment',
+				component: Payment
+			},
+			{
+				name: 'paySucceed',
+				path: '/paySucceed',
+				component: PaySucceed
 			},
 			{
 				name: 'goodsList',
