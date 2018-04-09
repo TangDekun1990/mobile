@@ -37,20 +37,13 @@ import GoodsList from '../page/checkout/GoodsList'
 import Shipping from '../page/checkout/Shipping'
 import Invoice from '../page/checkout/Invoice'
 
-// order
-import Order from '../page/order/Order'
-
 // payment
 import Payment from '../page/payment/Payment'
+import PaySucceed from '../page/payment/PaySucceed'
 
-// ship
-import Ship from '../page/ship/Ship'
-
-// recepit
-import Receipt from '../page/recepit/Recepit'
-
-// evaluate
-import Evaluate from '../page/evaluate/Evaluate'
+// order
+import Order from '../page/order/Order'
+import OrderDetail from '../page/order/OrderDetail'
 
 // 商品详情
 import Detail from '../page/product-detail/index'
@@ -59,7 +52,6 @@ import Detail from '../page/product-detail/index'
 import Cart from '../page/cart/index'
 
 export default [
-
 	{
 		path: '/',
 		component: App,
@@ -125,12 +117,18 @@ export default [
 			{
 				name: 'addressManage',
 				path: '/addressManage',
-				component: AddressManage
+				component: AddressManage,
+				meta: {
+					keepAlive: true,
+				},
 			},
 			{
 				name: 'addressEdit',
-				path: '/addressEdit',
-				component: AddressEdit
+				path: '/addressManage/addressEdit',
+				component: AddressEdit,
+				meta: {
+					keepAlive: true,
+				},
 			},
 			{
 				name: 'couponList',
@@ -146,6 +144,16 @@ export default [
 				name: 'checkout',
 				path: '/checkout',
 				component: Checkout
+			},
+			{
+				name: 'payment',
+				path: '/payment',
+				component: Payment
+			},
+			{
+				name: 'paySucceed',
+				path: '/paySucceed',
+				component: PaySucceed
 			},
 			{
 				name: 'goodsList',
@@ -164,28 +172,13 @@ export default [
 			},
 			{
 				name: 'order',
-				path: '/order',
+				path: '/order/:order?',
 				component: Order
 			},
 			{
-				name: 'payment',
-				path: '/payment',
-				component: Payment
-			},
-			{
-				name: 'ship',
-				path: '/ship',
-				component: Ship
-			},
-			{
-				name: 'recepit',
-				path: '/recepit',
-				component: Receipt
-			},
-			{
-				name: 'evaluate',
-				path: '/evaluate',
-				component: Evaluate
+				name: 'orderDetail',
+				path: '/orderDetail',
+				component: OrderDetail
 			},
 			{
 				name: 'detail',
@@ -194,7 +187,7 @@ export default [
 			},
 			{
 				name: 'cart',
-				path: '/cart',
+				path: '/cart/:type?',
 				component: Cart
 			}
 		]

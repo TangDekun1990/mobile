@@ -101,9 +101,10 @@
 					this.keyword = routerParams.keywords;
 				}
 			},
+
 			getProductList(ispush) {
 				let data = this.params;
-				if (this.isSearch) {
+				if (this.isSearch || this.$route.params.keywords) {
 					data = Object.assign({}, data, {'keyword': this.keyword});
 					getSearch(data).then(res => {
 						this.getList(ispush, res);

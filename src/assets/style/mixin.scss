@@ -7,11 +7,11 @@
 
 //  圆角边框
 @mixin borderRadius($radius) {
-    -webkit-border-radius: $radius;
-    -moz-border-radius: $radius;
-    -ms-border-radius: $radius;
-    -o-border-radius: $radius;
-    border-radius: $radius;
+	-webkit-border-radius: $radius;
+	-moz-border-radius: $radius;
+	-ms-border-radius: $radius;
+	-o-border-radius: $radius;
+	border-radius: $radius;
 }
 
 //定位全屏
@@ -25,22 +25,22 @@
 @mixin center {
 	position: absolute;
 	top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+	left: 50%;
+	transform: translate(-50%, -50%);
 }
 
 //定位垂直居中
 @mixin ct {
 	position: absolute;
 	top: 50%;
-    transform: translateY(-50%);
+  transform: translateY(-50%);
 }
 
 //定位水平居中
 @mixin cl {
 	position: absolute;
 	left: 50%;
-    transform: translateX(-50%);
+  transform: translateX(-50%);
 }
 
 //宽高
@@ -66,8 +66,8 @@
 // 图片水平居中
 @mixin ilc{
 	margin-left: auto;
-    margin-right:auto;
-    display:block;
+	margin-right:auto;
+	display:block;
 }
 
 // 绝对定位在底部
@@ -109,11 +109,18 @@
 	}	
 }
 
+@mixin button {
+	border-radius: 4px;  
+	height: 44px;
+	margin-left: 10px;
+	margin-right: 10px;
+} 
+
 @mixin linear-gradient($leftColor, $rightColor) {
 	background: -webkit-linear-gradient(left, $leftColor , $rightColor); /* Safari 5.1 - 6.0 */
-    background: -o-linear-gradient(right, $leftColor, $rightColor); /* Opera 11.1 - 12.0 */
-    background: -moz-linear-gradient(right, $leftColor, $rightColor); /* Firefox 3.6 - 15 */
-    background: linear-gradient(to right, $leftColor , $rightColor); /* 标准的语法（必须放在最后） */
+	background: -o-linear-gradient(right, $leftColor, $rightColor); /* Opera 11.1 - 12.0 */
+	background: -moz-linear-gradient(right, $leftColor, $rightColor); /* Firefox 3.6 - 15 */
+	background: linear-gradient(to right, $leftColor , $rightColor); /* 标准的语法（必须放在最后） */
 }
 
 @mixin header {

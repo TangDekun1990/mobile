@@ -1,5 +1,5 @@
 <template>
-  <div class="container" @click="onclick"> 
+  <div class="toggle-wrapper" @click="onclick"> 
     <img class="icon" v-bind:src="iconUrl" />    
     <label class="title">{{item.name}}</label>    
   </div>
@@ -41,7 +41,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .container {    
+  .toggle-wrapper {    
     display: flex;
     flex-direction: row;
     justify-content: flex-start;

@@ -36,14 +36,12 @@
       :isSelected="toggle" 
       v-on:onclick="cancel">
     </info-toggle-item>
-    <div class="submit" @click="submit">
-      <label class="text">确认</label>
-    </div>
+    <gk-button class="button" type="primary" v-on:click="submit">确认</gk-button>
   </div>
 </template>
 
 <script>
-import { HeaderItem, InfoRadioList, InfoToggleItem, FlowRadioList } from '../../components/common'
+import { HeaderItem, InfoRadioList, InfoToggleItem, FlowRadioList, Button } from '../../components/common'
 import { Header, Toast } from 'mint-ui'
 import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 
@@ -194,16 +192,9 @@ export default {
   .item {
     height: 50px;
   }
-  .submit {
-    border-radius: 4px;
-    background-color: #f23030;
-    height: 44px;
-    margin-left: 10px;
-    margin-right: 10px;
+  .button {
+    @include button;
     margin-top: 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
   }
   .text {
     color: #ffffff;

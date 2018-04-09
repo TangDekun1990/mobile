@@ -14,9 +14,7 @@
         <input type="password" class="bottom-input" v-model="password" placeholder="请输入密码" maxlength="20">        
       </div>
     </div>    
-    <div class="submit" @click="signin">
-      <label class="text">登录</label>
-    </div>
+    <gk-button type="primary" class="button" v-on:click="signin">登录</gk-button>
     <div class="retrieve-wrapper">
       <div class="retrieve-item" @click="onRetrieve">
         <label id="retrieve-title">忘记密码？</label>
@@ -47,7 +45,7 @@
 </template>
 
 <script>
-import { HeaderItem } from '../../components/common';
+import { HeaderItem, Button } from '../../components/common';
 import * as authBase from '../../api/network/auth-base'
 import { Indicator, Toast, Header } from 'mint-ui'
 import { mapMutations, mapActions, mapState } from 'vuex'
@@ -187,21 +185,10 @@ export default {
   .header {
     @include header;
   }
-  .submit {
-    border-radius: 4px;
-    background-color: #f23030;
-    height: 44px;
-    margin-left: 10px;
-    margin-right: 10px;
-    margin-top: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  .text {
-    color: #ffffff;
-    font-size: 18px;
-  }
+  .button {
+    @include button;
+    margin-top: 40px; 
+  } 
   .retrieve-wrapper {
     height: 40px;
     margin-top: 10px;

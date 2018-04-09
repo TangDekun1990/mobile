@@ -35,6 +35,16 @@ const router = new VueRouter({
 	}
 })
 
+router.beforeEach((to, from, next) => {	
+	const toDepth = to.path.split('/').length
+	const fromDepth = from.path.split('/').length
+	if (toDepth < fromDepth) {
+		from.meta.keepAlive = false
+		to.meta.keepAlive = true
+	}
+	next()
+})
+
 Vue.use(VueRouter)
 Vue.use(Mint)
 Vue.use(VueResource)

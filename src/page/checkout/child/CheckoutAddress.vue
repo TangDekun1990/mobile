@@ -1,22 +1,22 @@
 <template>
   <div class="container" @click="onclick"> 
     <div class="top-wrapper">
-    </div>
-    <div v-if="hasAddress" class="selected-wrapper">
-      <div class="title-wrapper">
-        <img class="icon" src="../../../assets/image/change-icon/e5_address@2x.png" />
-        <label class="title">{{item.name}}</label>
-        <label class="title">{{item.mobile}}</label>
-        <label class="default" v-if="isDefault">默认</label>
+      <div v-if="hasAddress" class="selected-wrapper">
+        <div class="title-wrapper">
+          <img class="icon" src="../../../assets/image/change-icon/e5_address@2x.png" />
+          <label class="title">{{item.name}}</label>
+          <label class="title">{{item.mobile}}</label>
+          <label class="default" v-if="isDefault">默认</label>
+        </div>
+        <label class="desc address-text">{{detailAddress}}</label>
       </div>
-      <label class="desc address-text">{{detailAddress}}</label>
+      <div v-else class="unselected-wrapper">
+        <label class="desc">您还没有收获地址，点击这里添加。</label>
+      </div>       
+      <img class="indicator" src="../../../assets/image/change-icon/enter@2x.png" />     
     </div>
-    <div v-else class="unselected-wrapper">
-      <label class="desc">您还没有收获地址，点击这里添加。</label>
-    </div>       
-    <img class="indicator" src="../../../assets/image/change-icon/enter@2x.png" />    
-    <!-- <img class="line-wrapper" src="../../../assets/image/change-icon/bg_address_line@2x.png" /> -->
-  </div>
+    <img class="line-wrapper" src="../../../assets/image/change-icon/bg_address_line@2x.png" />
+  </div>    
 </template>
 
 <script>
@@ -62,6 +62,15 @@ export default {
 
 <style lang="scss" scoped>
   .container {    
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    background-color: #fff;
+    border-top: 1px solid #E8EAED;  
+  }
+  .top-wrapper {  
+    flex: 1;  
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
@@ -126,7 +135,7 @@ export default {
     margin-right: 10px;      
   }
   .line-wrapper {
-    position: absolute;
+    // position: relative;
     left: 0px;
     right: 0px;
     bottom: 0px;

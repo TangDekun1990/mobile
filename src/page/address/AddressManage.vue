@@ -4,6 +4,10 @@
       <header-item slot="left" v-bind:isBack=true v-on:onclick="goBack">
       </header-item>          
     </mt-header>
+    <div class="empty-wrapper" v-if="isEmpty">
+      <img src="../../assets/image/change-icon/address_empty@2x.png">
+      <label>您还没有添加收货地址</label>
+    </div>
     <manage-item 
       v-for="item in items" 
       :key="item.id" 
@@ -13,17 +17,14 @@
       v-on:onEdit="onEdit(item)" 
       v-on:onDelete="onDelete(item)">
     </manage-item>
-    <div class="submit" @click="addAddress">
-      <label class="text">添加收货地址</label>
-    </div>
+    <gk-button class="button" type="primary" v-on:click="addAddress">添加收货地址</gk-button>
   </div>
 </template>
 
 <script>
-import { Header } from 'mint-ui'
-import { HeaderItem } from '../../components/common'
+import { HeaderItem, Button } from '../../components/common'
 import ManageItem from './child/ManageItem'
-import { Indicator, Toast, MessageBox } from 'mint-ui'
+import { Header, Indicator, Toast, MessageBox } from 'mint-ui'
 import { mapState, mapMutations } from 'vuex'
 import * as consignee from '../../api/network/consignee'
 export default {
@@ -33,10 +34,20 @@ export default {
   computed: {
     ...mapState({
       defaultItem: state => state.address.defaultItem,
+      selectedItem: state => state.address.selectedItem,
       items: state => state.address.items,
     }),
+    isEmpty() {
+      if (this.items && this.items.length === 0) {
+        return true
+      }
+      return false
+    },
   },
   created: function () {
+    console.log('====================================');
+    console.log('Address Manage created:');
+    console.log('====================================');
     consignee.consigneeList().then(
       (response) => {
         let items = response.consignees                
@@ -44,13 +55,13 @@ export default {
       }, (error) => {
         Toast(error.errorMsg)
       })
-  },
+  },  
   methods: {
     ...mapMutations([
       'saveAddressItems',
       'setDefaultAddress',
       'removeAddressItem',
-    ]),
+    ]),    
     isDefaultItem(item) {
       if (item && this.defaultItem) {
         if (item.id === this.defaultItem.id) {
@@ -85,7 +96,7 @@ export default {
         Indicator.open()
         consignee.consigneeDelete(item.id).then(
         (response) => {
-          this.removeAddressItem(item.id)
+          this.removeAddressItem(item.id)           
           Indicator.close()
         }, (error) => {
           Indicator.close()
@@ -110,20 +121,28 @@ export default {
   .header {
     @include header;
   }
-  .submit {
-    border-radius: 4px;
-    background-color: #f23030;
-    height: 44px;
-    margin-left: 10px;
-    margin-right: 10px;
+  .button {    
+    @include button;    
+    margin-top: 40px; 
+    margin-bottom: 10px;
+  }
+  .empty-wrapper {
     margin-top: 40px;
+    height: 260px;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: flex-start;
     align-items: center;
   }
-  .text {
-    color: #ffffff;
+  .photo {
+    width: 112px;
+    height: 112px;
+  }
+  .title {
     font-size: 16px;
+    color: #8F8E94;
+    text-align: center;
+    margin-top: 30px;
   }
 </style>
 

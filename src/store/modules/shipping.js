@@ -11,7 +11,7 @@ const getters = {
 
 // mutations
 const mutations = {
-  selectItem(state, item) {
+  selectShippingItem(state, item) {
     const { selectedItem } = state
     if (selectedItem) {
       if (selectedItem.id !== item.id) {
@@ -23,7 +23,7 @@ const mutations = {
       }
     }
   },
-  saveItems(state, items) {
+  saveShippingItems(state, items) {
     state.items = items
   }  
 }
@@ -35,11 +35,11 @@ const actions = {
       (response) => {
         if (response && response.vendors) {
           let items = response.vendors
-          commit('saveItems', items)
+          commit('saveShippingItems', items)
           const { selectedItem } = state
           if (selectedItem === null || selectedItem === undefined) {
             if (items.length) {
-              commit('selectItem', items[0])
+              commit('selectShippingItem', items[0])
             }
           }
         }
@@ -50,5 +50,6 @@ const actions = {
 
 export default {  
   state,
+  mutations,
   actions
 }

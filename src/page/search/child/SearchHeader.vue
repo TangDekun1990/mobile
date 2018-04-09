@@ -25,16 +25,22 @@
 			}
 		},
 		methods: {
+			// 分类列表进入到搜索，完成后跳转到商品列表页面
 			search(e) {
 				let params = {'keywords': this.keywords};
 				this.$router.push({'name': 'product', 'params': params});
 				this.utils.stopPrevent(e);
 			},
+
+			// 取消返回上一级
 			cancel() {
 				this.$router.push({'name': 'category'});
 			}
 		}
 	}
+// CODE REVIEW: 去除多余换行
+
+
 </script>
 
 <style scoped lang="scss">

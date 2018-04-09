@@ -19,7 +19,7 @@
 				staticData: [
 					{
 						'name': '首页',
-						'link':'/home',
+						'link':'home',
 						'key': 0,
 						'bgurl': require('../../assets/image/tabbar-icon/tabbar_home_nor@2x.png'),
 						'activeBgurl': require('../../assets/image/tabbar-icon/tabbar_home_sel@2x.png'),
@@ -27,7 +27,7 @@
 					},
 					{
 						'name': '分类',
-						'link': '/category',
+						'link': 'category',
 						'key': 1,
 						'bgurl': require('../../assets/image/tabbar-icon/tabbar_sort_nor@2x.png'),
 						'activeBgurl': require('../../assets/image/tabbar-icon/tabbar_sort_sel@2x.png'),
@@ -35,7 +35,8 @@
 					},
 					{
 						'name': '购物车',
-						'link': '/cart',
+						'link': 'cart',
+						'params': {'type': 1},
 						'key': 2,
 						'bgurl': require('../../assets/image/tabbar-icon/tabbar_cart_nor@2x.png'),
 						'activeBgurl': require('../../assets/image/tabbar-icon/tabbar_cart_sel@2x.png'),
@@ -43,7 +44,7 @@
 					},
 					{
 						'name': '我的',
-						'link': '/profile',
+						'link': 'profile',
 						'key': 3,
 						'bgurl': require('../../assets/image/tabbar-icon/tabbar_profile_nor@2x.png'),
 						'activeBgurl': require('../../assets/image/tabbar-icon/tabbar_profile_sel@2x.png'),
@@ -59,7 +60,7 @@
 			},
 			setCurrentActive(item) {
 				this.currentItem = item;
-				this.$router.push({ path: item.link});
+				this.$router.push({ 'name': item.link, 'params': item.params});
 			}
 		}
 	}

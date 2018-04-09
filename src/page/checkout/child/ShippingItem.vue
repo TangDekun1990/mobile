@@ -7,9 +7,9 @@
     <div class="right-wrapper">
       <div class="title-wrapper">
         <label class="title">配送费：</label>
-        <label class="price">￥{{item.price}}</label>
+        <label class="price">AED {{item.fee}}</label>
       </div>
-      <label class="subtitle">{{item.desc}}</label>
+      <p class="desc">{{item.desc}}</p>
     </div>            
   </div>
 </template>
@@ -32,13 +32,21 @@ export default {
       }
       return false
     },
-    iconUrl() {
+    iconUrl: function () {
       if (this.isSelected) {
         return require("../../../assets/image/change-icon/multiple_choice@2x.png")
       } else {
         return require("../../../assets/image/change-icon/choice@2x.png")
       }
-    }
+    },
+    // getDesc: function () {
+    //   let data = ''
+    //   let desc = this.item.desc
+    //   if (desc && desc.length) {
+    //     data = desc.split('/n').join('</br>')
+    //   }
+    //   return data
+    // }
   }, 
   methods: {
     onclick() {
@@ -86,7 +94,7 @@ export default {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    align-items: stretch;
+    align-items: center;
     margin-top: 20px;    
   }
   .title {
@@ -97,11 +105,12 @@ export default {
     font-size: 15px;
     color: #FC2E39;
   }
-  .subtitle {
+  .desc {
     flex: 1;       
     color: #7C7F88;
     font-size: 14px;
     margin-top: 30px;
+    margin-right: 10px;
     margin-bottom: 20px;
   }  
 </style>

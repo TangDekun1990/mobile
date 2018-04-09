@@ -59,8 +59,6 @@ axios.interceptors.request.use(config => {
 
             let encry_post_body = '';
             let body = null;
-            console.log('url is', config.url)
-            console.log('params', params);
             if (post_body && post_body.length) {
                 encry_post_body = XXTEA.encryptToString(post_body, ENCRYPT_KEY);
                 body = toQueryString({ x: encry_post_body });
@@ -68,6 +66,10 @@ axios.interceptors.request.use(config => {
             }
             config.data = {};
             config.data = body;
+            // TODO:
+            if (process.env.NODE_ENV === 'development') { 
+                config.params = params ? JSON.stringify(params) : ''
+            }            
         }
     }
     return config
@@ -79,7 +81,7 @@ axios.interceptors.request.use(config => {
 axios.interceptors.response.use(response => {
     if (response) {
         let isAPIRequest = response.config.url.indexOf(apiBaseUrl) == 0 ? true : false;
-        if (isAPIRequest) {
+        if (isAPIRequest) { 
             if (response.data && response.data.data) {
                 var raw = XXTEA.decryptToString(response.data.data, ENCRYPT_KEY);
                 var json = JSON.parse(raw);
@@ -89,13 +91,20 @@ axios.interceptors.response.use(response => {
                         response.data[key] = json[key];
                     }
                 }
-                console.log('response is',response.data);
+                if (process.env.NODE_ENV === 'development') {
+                    console.log('====================================');
+                    console.log("request url is: ", response.config.url);
+                    console.log("request params is: ", response.config.params);
+                    console.log('response data is: ', response.data);                    
+                }                                
                 return response.data;
             } else if (response.data && response) {
                 let errorMessage = response.data.message;
                 let errorCode = response.data.code;
                 if (response.data.error) {
-                    console.log('网络错误, 错误代码:=' + errorCode + "错误信息:=" + errorMessage);
+                    if (process.env.NODE_ENV === 'development') { 
+                        console.log('网络错误, 错误代码:=' + errorCode + "错误信息:=" + errorMessage);
+                    }                    
                     return Promise.reject({ 'errorCode': errorCode, 'errorMsg': errorMessage });
                 } 
             }

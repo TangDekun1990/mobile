@@ -13,7 +13,7 @@ export const SORTKEY = [
 				key: ENUM.SORT_KEY.DEFAULT,
 				name: '综合排序',
 				value: ENUM.SORT_VALUE.DESC,
-				id:1
+				id: 1
 			},
 			{
 				key: ENUM.SORT_KEY.PRICE,
@@ -23,7 +23,7 @@ export const SORTKEY = [
 			},
 			{
 				key: ENUM.SORT_KEY.PRICE,
-				name:'价格从高到底',
+				name: '价格从高到底',
 				value: ENUM.SORT_VALUE.DESC,
 				id: 3
 			},

@@ -1,12 +1,35 @@
 <template>
 	<div class="cart-header-wrapper">
 		<h3>购物车</h3>
-		<span>完成</span>
+		<span v-if='!isShowHeader' @click="changeStatus(false, true)">编辑</span>
+		<span v-if='isShowHeader' @click="changeStatus(true, false)">完成</span>
 	</div>
 </template>
 
 <script>
-
+	import { mapState, mapMutations } from 'vuex';
+	export default {
+		data(){
+			return {}
+		},
+		computed: mapState({
+			isSelectedAll: state => state.cart.isSelectedAll,
+			isShowHeader: state => state.cart.isShowHeader
+		}),
+		methods: {
+			...mapMutations({
+				changedAll: 'changedSelectedAll',
+				changedHeader: 'changedIsShowHeader'
+			}),
+			changeStatus(value, isheader) {
+				this.changedAll(value);
+				this.changedHeader(isheader);
+				if (!isheader) {
+					this.$parent.$emit('redener-cart-list', true);
+				}
+			}
+		}
+	}
 </script>
 
 <style lang='scss' scoped>

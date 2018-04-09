@@ -1,6 +1,6 @@
 <!-- OrderHeader.vue -->
 <template>
-  <div class="">
+  <div>
     <order-header></order-header>
     <order-nav></order-nav>
   </div>
