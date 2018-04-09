@@ -45,6 +45,9 @@ export default {
     },
   },
   created: function () {
+    console.log('====================================');
+    console.log('Address Manage created:');
+    console.log('====================================');
     consignee.consigneeList().then(
       (response) => {
         let items = response.consignees                
