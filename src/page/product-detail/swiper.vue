@@ -72,7 +72,6 @@
 		},
 
 		mounted() {
-			// this.currentSwiperIndex = this.swiper.activeIndex;
 			this.$refs.mySwiper.swiper.on('slideChangeTransitionEnd', () => {
 	            this.setIndex(this.$refs.mySwiper.swiper.activeIndex);
 	        });

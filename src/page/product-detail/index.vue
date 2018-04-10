@@ -36,11 +36,6 @@
 		},
 
 		created(){
-			// 监听导航栏是否点击
-			// this.$on('nav-changed', (index) => {
-			// 	console.log(index);
-			// 	this.swiperIndex = index;
-			// });
 			this.getDetail();
 		},
 
