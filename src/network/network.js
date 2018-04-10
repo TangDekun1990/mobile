@@ -45,11 +45,11 @@ axios.interceptors.request.use(config => {
             let sign = CryptoJS.HmacSHA256(timestamp + post_body, SIGN_KEY);
 
             // xSign格式: sign,timestamp
-            let xSign = sign + ',' + timestamp;      
-            let token = null;      
+            let xSign = sign + ',' + timestamp;
+            let token = null;
             if (store.getters.isOnline && store.getters.token) {
                 token = store.getters.token;
-            } 
+            }
             config.headers['X-ECAPI-Authorization'] = store.state.auth.token;
             config.headers['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
             config.headers['X-ECAPI-Sign'] = xSign;
@@ -95,9 +95,10 @@ axios.interceptors.response.use(response => {
                 let errorMessage = response.data.message;
                 let errorCode = response.data.code;
                 if (response.data.error) {
+                	return response.data;
                     console.log('网络错误, 错误代码:=' + errorCode + "错误信息:=" + errorMessage);
-                    return Promise.reject({ 'errorCode': errorCode, 'errorMsg': errorMessage });
-                } 
+                    // return Promise.reject({ 'errorCode': errorCode, 'errorMsg': errorMessage });
+                }
             }
         } else {
             console.log("请求地址错误!");
@@ -105,8 +106,9 @@ axios.interceptors.response.use(response => {
     } else {
         console.log("网络错误");
     }
-}, error => {
-    return Promise.reject(error.response.data)
+    /*
+    error => {return Promise.reject(error.response.data}
+     */
 })
 
 // 发起请求

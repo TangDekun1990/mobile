@@ -15,6 +15,7 @@ import { ROUTERMODE } from './config/env'
 import utils from './util/util'
 
 import './assets/style/reset.scss'
+import './assets/style/common.scss'
 
 Vue.config.productionTip = false
 

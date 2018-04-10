@@ -1,32 +1,39 @@
 <!-- Like.vue -->
 <template>
-	<div class="ui-like-wrapper">
-		<div class="like-header">
-			<span>点赞</span>
-			<span v-if="detaillike">{{ detaillike.length }}</span>
-		</div>
-		<div class="like-body">
-			<div v-for="(item, index) in detaillike">
-				<img :src="item.thumb" v-if="item.thumb" v-bind:key="index">
-				<img src="../../../assets/image/change-icon/img_avatar@2x.png" v-if="!item.thumb">
+	<div class="ui-like-wrapper" v-if='detailInfo.collector && detailInfo.collector.length > 0'>
+		<div class="ui-detail-common">
+			<div class="header">
+				<span>点赞</span>
+				<span>{{ detailInfo.collector.length }}</span>
 			</div>
-			<!-- v-bind:style="{left: index * 10}" -->
+		</div>
+
+		<div class="like-body">
+			<div v-for="(item, index) in detailInfo.collector">
+				<img :src="item.thumb" v-if="item.thumb" v-bind:key="index">
+				<img src="../../../assets/image/change-icon/img_avatar@2x.png" v-if="!item.thumb"  v-bind:style="{left: -(index * 15) +'px', zIndex: detailInfo.collector.length - index}">
+			</div>
 		</div>
 	</div>
 </template>
 
 <script>
+	import { mapState, mapMutations } from 'vuex';
 	export default {
 		data() {
 			return {}
 		},
-		props: ['detaillike'],
+
 		mounted(){
-			// this.$nextTick(function() {
-   //          	console.log(document.querySelectorAll('like-body img').length)
-   //      	});
 		},
+
 		created() {
+		},
+
+		computed: {
+			...mapState({
+		      	detailInfo: state => state.detail.detailInfo
+		    })
 		}
 	}
 </script>
@@ -34,16 +41,8 @@
 <style lang='scss' scoped>
 	.ui-like-wrapper {
 		background-color: #ffffff;
-		padding: 0px 15px;
-		width:  auto;
-		margin-top: 8px;
-		.like-header {
-			display: flex;
-			justify-content: space-between;
-			align-content: center;
-			align-items: center;
-			padding: 15px 0px;
-			box-shadow: 0px 0.5px 0px 0px rgba(232,234,237,1);
+		.header{
+			border-bottom: 1px solid #e8eaed;
 			span:first-child{
 				font-size:16px;
 				font-family:'PingFangSC-Regular';
@@ -62,10 +61,9 @@
 			justify-content: flex-start;
 			align-items: center;
 			align-content: center;
-			padding: 15px 0px;
+			padding: 14px 11px;
 			position: relative;
-			height: 40px;
-			overflow: hidden;
+			overflow: auto;
 			div{
 				width:40px;
 				height:40px;
@@ -74,6 +72,7 @@
 				img {
 					width:40px;
 					height:40px;
+					position: relative;
 					/*position: absolute;*/
 				}
 			}

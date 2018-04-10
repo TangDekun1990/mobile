@@ -1,7 +1,7 @@
 <!-- Buy.vue -->
 <template>
-	<div class="ui-buy-wrapper">
-		<div class="buy-wrapper" @click="changeCartState()">
+	<div class="ui-buy-wrapper ui-detail-common">
+		<div class="buy-wrapper header" @click="changeCartState()">
 			<p v-if='number <= 0'>请选择购买数量分类</p>
 			<p v-if='number > 0'>已选数量{{number}}</p>
 			<img src="../../../assets/image/change-icon/enter@2x.png">
@@ -15,16 +15,19 @@
 		data(){
 			return{}
 		},
+
 		computed: {
 			...mapState({
 		      	number: state => state.detail.number
 		    })
 		},
+
 		methods: {
 			...mapMutations({
 				saveCartState: 'saveCartState',
 				setIsHideCommodity: 'setIsHideCommodity'
 			}),
+
 			changeCartState() {
 				this.saveCartState(true);
 				this.setIsHideCommodity(true);
@@ -33,22 +36,16 @@
 	}
 </script>
 
-<style lang="scss" >
+<style lang="scss" scoped>
 	.ui-buy-wrapper {
-		padding: 15px;
-		background-color: #ffffff;
-		margin-top: 8px;
 		.buy-wrapper {
-			display: flex;
-			width: auto;
-			justify-content: space-between;
-			align-content: center;
-			align-items: center;
 			p {
 				font-size:16px;
 				font-family:'PingFangSC-Regular';
 				color:rgba(78,84,93,1);
 				line-height:20px;
+				padding: 0px;
+				margin: 0px;
 			}
 			img {
 				width:5px;

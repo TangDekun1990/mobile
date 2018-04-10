@@ -75,6 +75,7 @@
 				}
 
 				this.loading = false;
+				// this.getMore();
 				this.getProductList();
 			});
 		},
@@ -142,6 +143,7 @@
 		}
 	}
 </script>
+
 
 <style lang='scss' scoped>
 	.ui-product {

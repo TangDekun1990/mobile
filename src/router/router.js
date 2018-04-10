@@ -51,6 +51,9 @@ import Detail from '../page/product-detail/index'
 // 购物车
 import Cart from '../page/cart/index'
 
+// 查看推荐商品
+import Recommend from '../page/recommend/Recommend'
+
 export default [
 	{
 		path: '/',
@@ -183,6 +186,11 @@ export default [
 				name: 'cart',
 				path: '/cart/:type?',
 				component: Cart
+			},
+			{
+				name: 'recommend',
+				path: '/recommend/:brand?/:category?/:shop?/:product?',
+				component: Recommend
 			}
 		]
 	}

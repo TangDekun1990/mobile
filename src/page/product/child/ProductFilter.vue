@@ -63,8 +63,9 @@ export default {
 		},
 		setActiveSortkey(item, index) {
 			this.currentSortKey = item;
+			this.getValue();
 			// if (index != 0) {
-				this.getValue();
+			// 	this.getValue();
 			// }
 		},
 		getValue(){

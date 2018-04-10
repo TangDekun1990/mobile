@@ -1,8 +1,9 @@
 <!-- recommend.vue -->
 <template>
 	<div class="ui-recommend-wrapper">
+
 		<div class="wrapper-swipe">
-			<mt-swipe :auto="0" >
+			<mt-swipe :auto="0" :show-indicators="false" @change="handleChange" :default-index="currentIndex" :stop-propagation='true' :speed='100'>
 			  	<mt-swipe-item v-for="(item, index) in list" :key="index">
 			  		<div class="image-swipe-wrapper">
 						<div v-for="image in item[0]">
@@ -13,9 +14,17 @@
 			  	</mt-swipe-item>
 			</mt-swipe>
 		</div>
-		<div class="ui-recommend-all">
+
+		<div class="swiper-indicators">
+			<div class="ui-indicator">
+				<div class="indicator-item" v-for='(item,index) in indicatorArray' v-bind:class="{'active': item.index == currentIndex}"></div>
+			</div>
+		</div>
+
+		<div class="ui-recommend-all" v-on:click='goRecommend()'>
 			查看全部
 		</div>
+
 	</div>
 </template>
 
@@ -24,13 +33,18 @@
 	export default {
 		data() {
 			return{
-				list: []
+				list: [],
+				indicatorArray: [],
+				currentIndex: 0
 			}
 		},
 		created() {
 			this.getRecommendList();
 		},
 		methods: {
+			/*
+				getRecommendList: 获取推荐商品
+			*/
 			getRecommendList() {
 				let params = {
 					"brand": this.$route.params.brand ? this.$route.params.brand : '',
@@ -43,9 +57,15 @@
 				getRecommendProduct(params).then(res => {
 					if (res) {
 						this.list =  this.buildList(res.products);
+						this.buildSwipeIndicators();
 					}
 				});
 			},
+
+			/*
+				buildList：构建促销展示商品的数据
+				@params： res 接口数据返回的促销商品
+			*/
 			buildList(res) {
 				let index = Math.ceil(res.length / 3 );
 				let newArray = [];
@@ -56,8 +76,36 @@
 						newArray.push(subArray);
 					}
 				}
-				console.log(newArray);
 				return newArray;
+			},
+
+			/*
+				buildSwipeIndicators: 根据轮播图的长度计算位于底部的按钮的个数
+			*/
+			buildSwipeIndicators() {
+				let photos = this.list;
+				for (let i = 0, len = photos.length-1; i <= len; i++) {
+					photos[i].index = i;
+					this.indicatorArray.push(photos[i]);
+				}
+			},
+
+			/*
+				handleChange: 查看大图的时候滑动大图设置位于底部的按钮的选中状态同时隐藏查看大图的头部信息
+				@params: index 当前滑动的图片的index
+			 */
+			handleChange(index) {
+				this.currentIndex = index;
+			},
+
+			/*
+				goRecommend: 跳转到相关商品页面
+			 */
+			goRecommend() {
+				this.params = {
+					product: this.$route.params.id ? this.$route.params.id : ''
+				};
+				this.$router.push({'name': 'recommend', 'params': this.params});
 			}
 		}
 	}
@@ -71,13 +119,18 @@
 		.wrapper-swipe {
 			.mint-swipe {
 				height: 105px;
-				padding-bottom: 40px;
 				.mint-swipe-items-wrap {
 					.mint-swipe-item{
 					}
 				}
 			}
 		}
+
+		.swiper-indicators {
+			position: relative;
+			margin: 25px 0px 10px 0px;
+		}
+
 		.ui-recommend-all {
 			height:44px;
 			background:rgba(255,255,255,1);

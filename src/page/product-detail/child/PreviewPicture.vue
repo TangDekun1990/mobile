@@ -31,15 +31,22 @@
 				isShowHeader: true
 			}
 		},
+
 		props: ['data', 'currentIndex', 'title'],
+
 		created(){
 			this.buildSwipeIndicators();
 		},
+
 		methods: {
 			...mapMutations({
 				change: 'changeStatus',
 				hideCommodity: 'setIsHideCommodity'
 			}),
+
+			/*
+				buildSwipeIndicators: 根据轮播图的长度计算位于底部的按钮的个数
+			*/
 			buildSwipeIndicators() {
 				let photos = this.data;
 				for (let i = 0, len = photos.length-1; i <= len; i++) {
@@ -47,15 +54,28 @@
 					this.indicatorArray.push(photos[i]);
 				}
 			},
+
+			/*
+				handleChange: 查看大图的时候滑动大图设置位于底部的按钮的选中状态同时隐藏查看大图的头部信息
+				@params: index 当前滑动的图片的index
+			 */
 			handleChange(index) {
 				this.currentIndex = index;
 				this.isShowHeader = false;
 			},
+
+			/*
+				closeModel: 关闭查看大图，向父级组件发送事件，同时改变父级组件header的显示
+			*/
 			closeModel() {
 				this.$parent.$emit('close-preview-picture');
 				this.change(false);
 				this.hideCommodity(false);
 			},
+
+			/*
+				showHeader: 点击图片， 关闭查看大图的header
+			 */
 			showHeader(ev) {
 				ev.preventDefault();
 				ev.stopPropagation();

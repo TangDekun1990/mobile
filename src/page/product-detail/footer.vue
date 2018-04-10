@@ -7,15 +7,15 @@
 				<img src="../../assets/image/change-icon/b0_cart@2x.png" v-on:click='goCart()'>
 				<span class="icon" v-if='quantity > 0'>{{ quantity }}</span>
 				<div class="price">
-					<span>AED {{ productinfo.current_price }}</span>
-					<span>AED {{ productinfo.price }}</span>
+					<span>AED {{ detailInfo.current_price }}</span>
+					<span>AED {{ detailInfo.price }}</span>
 				</div>
 			</div>
 			<!-- v-bind:class="{'disabled-cart': quantity <= 0, 'active-cart': quantity > 0}" -->
-			<div class="right" v-on:click="addShopping(true)" v-bind:class="{'disabled-cart': productinfo.good_stock <= 0, 'active-cart': productinfo.good_stock > 0}">加入购物车</div>
+			<div class="right" v-on:click="addShopping(true)" v-bind:class="{'disabled-cart': detailInfo.good_stock <= 0, 'active-cart': detailInfo.good_stock > 0}">加入购物车</div>
 		</div>
 
-		<shopping v-if='isShowcartInfo' :info="productinfo"></shopping>
+		<shopping v-if='isShowcartInfo'></shopping>
 
 		<!-- 加入购物车显示动画 -->
 		<div class="ui-cart-animation" v-if='isAnimation'>
@@ -37,14 +37,17 @@
 				quantity: 0  //购物车总数
 			}
 		},
+
 		components: {
 			shopping
 		},
+
 		computed: mapState({
-			////是否显示购物车浮层
-			isShowcartInfo: state => state.detail.isShowcartInfo
+			//是否显示购物车浮层
+			isShowcartInfo: state => state.detail.isShowcartInfo,
+			detailInfo: state => state.detail.detailInfo
 		}),
-		props: ['productinfo'],
+
 		created(){
 			this.getShoppingTotal();
 			this.$on('start-addcart-animation', () => {
@@ -57,15 +60,18 @@
 				this.getShoppingTotal();
 			});
 		},
+
 		methods: {
 			...mapMutations({
 				saveCartState: 'saveCartState',
 				hideCommodity: 'setIsHideCommodity'
 			}),
+
 			// 加入购物车
 			addShopping(value) {
 				this.saveCartState(value);
 			},
+
 			// 获取购物车总数
 			getShoppingTotal() {
 				getCartTotal().then(res => {
@@ -74,6 +80,7 @@
 					}
 				})
 			},
+
 			// 购物车
 			goCart() {
 				this.$router.push({'name':'cart'});
@@ -87,11 +94,13 @@
 		background:rgba(255,255,255,1);
 		box-shadow: 0px 0.5px 0px 0px rgba(232,234,237,1);
 		width: auto;
+
 		position: absolute;
 		bottom: 0px;
 		left: 0px;
 		right: 0px;
 		z-index: 1;
+
 		.footer-flex {
 			display: flex;
 			justify-content: space-between;

@@ -14,26 +14,37 @@ export default {
 	data(){
 		return {
 			data: header,
-			currentIndex: 0
+			currentIndex: this.$store.state.detail.currentSwiperIndex
 		}
 	},
+
 	computed: mapState({
 		currentSwiperIndex: state => state.detail.currentSwiperIndex
 	}),
+
 	created(){
 		this.currentIndex = this.currentSwiperIndex;
 	},
+
 	watch: {
 		currentSwiperIndex: function(index) {
 			this.currentIndex = index;
 		}
 	},
+
 	methods: {
+		...mapMutations({
+			'setSwiperIndex': 'setCurrentSwiperIndex',
+			saveNumber: 'saveNumber'
+		}),
+
 		changeEvent(index) {
-			this.currentIndex = index;
-			this.$parent.$emit('nav-changed', this.currentIndex);
+			this.setSwiperIndex(index);
 		},
+
 		goBack() {
+			this.setSwiperIndex(0);
+			this.saveNumber(0);
 			this.$router.go(-1);
 		}
 	}
@@ -47,17 +58,16 @@ export default {
 		height:44px;
 		background:rgba(255,255,255,1);
 		box-shadow: 0px -0.5px 0px 0px rgba(232,234,237,1);
-		display: flex;
-		display: -webkit-flex;
-		display: -moz-flex;
-		font-family: 'PingFangSC';
 		color: #55595F;
 		font-size: 17px;
+		width: auto;
+
+		display: flex;
 		justify-content: space-between;
 		align-content: center;
 		align-items: center;
 	    flex-basis: auto;
-	    width: auto;
+
 	    z-index: 1;
 	    position: absolute;
 	    top: 0px;
