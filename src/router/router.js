@@ -120,12 +120,18 @@ export default [
 			{
 				name: 'addressManage',
 				path: '/addressManage',
-				component: AddressManage
+				component: AddressManage,
+				meta: {
+					keepAlive: true,
+				},
 			},
 			{
 				name: 'addressEdit',
-				path: '/addressEdit',
-				component: AddressEdit
+				path: '/addressManage/addressEdit',
+				component: AddressEdit,
+				meta: {
+					keepAlive: true,
+				},
 			},
 			{
 				name: 'couponList',

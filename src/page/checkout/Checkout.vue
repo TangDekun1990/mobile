@@ -198,7 +198,33 @@ export default {
       // TODO:         
     }
   },
-  created: function() {    
+  beforeRouteEnter(to, from, next) {
+    console.log('====================================');
+    console.log('beforeRouteEnter')
+    console.log('from - to : ', from, to)
+    console.log('====================================');
+    next(vm => {
+      // 通过 `vm` 访问组件实例
+    })
+  },
+  beforeRouteUpdate(to, from, next) {
+    console.log('====================================');
+    console.log('beforeRouteUpdate')
+    console.log('from - to : ', from, to)
+    console.log('====================================');    
+    next()
+  },
+  beboreRouteLeave(to, from, next) {
+    console.log('====================================');    
+    console.log('beboreRouteLeave')
+    console.log('from - to : ', from, to)
+    console.log('====================================');    
+    next()
+  },
+  created: function() {   
+    console.log('====================================');
+    console.log('created');
+    console.log('===================================='); 
     this.fetchAddressList()    
     this.getOrderPrice()
     
@@ -309,7 +335,6 @@ export default {
             this.fetchCouponList()
           }
         }, (error) => {
-
         })
     },
     checkout() {
@@ -353,8 +378,9 @@ export default {
       }).then(
         (response) => {
           Indicator.close()
-          
-          this.$router.push('/payment')
+          if (response && response.order) {
+            this.$router.push({ name: 'payment', params: { order: response.order }})
+          }          
         }, (error) => {
           Indicator.close()
           Toast(error.errorMsg)

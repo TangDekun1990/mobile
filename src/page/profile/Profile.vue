@@ -18,7 +18,7 @@
         <div class="info-item">积分记录</div>
       </div>
     </div>
-    <div class="order-header" @click="goOrder(10)">
+    <div class="order-header" @click="goOrder( ENUM.ORDER_STATUS.ALL)">
       <div class="order-header-item" id="order-item-left">
         <img class="order-header-icon" src="../../assets/image/change-icon/e0_order@2x.png" />
         <label class="item-title order-header-title">我的订单</label>
@@ -33,28 +33,28 @@
       <order-item 
         class="order-item" 
         testAttr = 'order'
-        id='0'
+        :id='ENUM.ORDER_STATUS.CREATED'
         :icon="require('../../assets/image/change-icon/e0_payment@2x.png')"
         title="待付款">
       </order-item> 
       <order-item 
         class="order-item" 
         testAttr = 'order'
-        id='1'
+        :id='ENUM.ORDER_STATUS.PAID'
         :icon="require('../../assets/image/change-icon/e0_delivery@2x.png')"
         title="待发货">
       </order-item>
       <order-item 
         class="order-item" 
         testAttr = 'order'
-        id='2'
+        :id='ENUM.ORDER_STATUS.DELIVERING'
         :icon="require('../../assets/image/change-icon/e0_receiving@2x.png')"
         title="待收货">
       </order-item>
       <order-item
         class="order-item" 
         testAttr = 'order'
-        id='3'
+        :id='ENUM.ORDER_STATUS.DELIVERIED'
         :icon="require('../../assets/image/change-icon/e0_evaluate@2x.png')"
         title="待评价">
       </order-item>
@@ -94,6 +94,7 @@
 </template>
 
 <script>
+import { ENUM } from '../../config/enum';
 import Tabbar from "../../components/common/Tabbar";
 import InfoItem from "./child/InfoItem";
 import OrderItem from "./child/OrderItem";
@@ -104,6 +105,7 @@ export default {
    data() {
     return {
       orderAll:1,
+      ENUM: ENUM
     };
   },
   components: {

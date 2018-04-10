@@ -11,7 +11,7 @@
       </div>
       <div class="row-wrapper subtitle-wrapper">
         <label class="subtitle">合计：</label>
-        <label class="price">AED 1190</label>
+        <label class="price">AED {{getOrderAmount}}</label>
       </div>      
     </div>
     <div class="item-wrapper">
@@ -32,19 +32,49 @@
 
 <script>
 import { HeaderItem, Button } from '../../components/common'
-import { Header, MessageBox } from 'mint-ui'
+import { Header, MessageBox, Indicator, Toast } from 'mint-ui'
+import { paymentPay } from '../../api/network/payment'
 export default {
+  props: {
+    order: {
+      type: Object,
+    }
+  },
+  computed: {
+    getOrderAmount: function () {
+      let order = this.$route.params.order
+      return (order && order.total) ? order.total : ''
+    },
+  },
   methods: {
     leftClick() {
       MessageBox.confirm('商品一眨眼就没了 确定放弃支付吗？').then(action => {        
-        this.goBack() 
+        // this.goBack()
+        this.$router.replace('/order') 
       })
     },  
     goBack() {
       this.$router.go(-1) 
-    },
+    }, 
     pay() {
-      this.$router.push('/paySucceed')
+      Indicator.open()
+      let order = this.$route.params.order
+      if (order && order.id) {
+        paymentPay(order.id, 'cod.app').then(
+          (response) => {
+            Indicator.close()
+            if (response) {
+              this.goPaySucceed()
+            }
+          }, (error) => {
+            Indicator.close()
+            Toast(error.errorMsg)
+          })
+      }
+    },
+    goPaySucceed() {
+      let order = this.$route.params.order
+      this.$router.push({ name: 'paySucceed', params: { order: order }})
     }
   }
 }

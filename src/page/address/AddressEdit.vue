@@ -57,6 +57,9 @@ export default {
     }
   },
   created: function () {
+    console.log('====================================');
+    console.log('Address Edit created:');
+    console.log('====================================');
     this.fetchRegions()
   },
   computed: {
