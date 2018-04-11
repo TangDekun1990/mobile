@@ -217,6 +217,7 @@
 			}
 			img {
 				width: 20px;
+				margin-left: 11px;
 			}
 		}
 
