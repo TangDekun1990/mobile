@@ -9,6 +9,8 @@
 
 				<img class="product-img" v-bind:src="item.photos[0].thumb" v-if='item.photos.length > 0' data-src='../../../assets/image/change-icon/default_image_02@2x.png' v-lazy="item.photos[0].thumb">
 
+				<span class="" v-if="item.sales_count == item.good_stock">已售罄</span>
+
 			</div>
 			<!-- <span class="promos" v-if="item.promos.length > 0">促销</span> -->
 			<span class="promos" v-if="item.activity && item.activity.display_time">促销</span>
@@ -84,6 +86,7 @@ export default{
 				height: 110px;
 				flex-basis: 110px;
 				flex-shrink: 0;
+				position: relative;
 			}
 			img.product-img[lazy=loading] {
 				width: 30px;
@@ -99,6 +102,18 @@ export default{
 				flex-basis: 110px;
 				flex-shrink: 0;
 				background:rgba(255,255,255,1);
+			}
+
+			span {
+				position: absolute;
+				height:20px;
+				background:rgba(243,244,245,1);
+				line-height: 20px;
+				text-align: center;
+				font-size:14px;
+				color:rgba(242,48,48,1);
+				width: 110px;
+				bottom: 0px;
 			}
 		}
 
@@ -162,8 +177,7 @@ export default{
 			.price {
 				margin-bottom: 8px;
 				span {
-					font-family: 'PingFangSC';
-					&:last-child {
+					&:first-child {
 						color: #F23030;
 						font-size: 16px;
 					}

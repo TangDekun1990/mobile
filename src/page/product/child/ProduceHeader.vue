@@ -48,7 +48,7 @@
 				changeSearch: 'changeSearch'
 			}),
 			search(e) {
-				// this.changeSearch(true);
+				this.changeSearch(true);
 				let data = {
 					'isSearch': this.isSearch,
 					'keyword': this.keyword
@@ -58,9 +58,11 @@
 					this.utils.stopPrevent(e);
 				}
 			},
+
 			goBack() {
 				this.$router.go(-1);
 			},
+
 			getCarNumber() {
 				getCartTotal().then(res => {
 					if (res) {

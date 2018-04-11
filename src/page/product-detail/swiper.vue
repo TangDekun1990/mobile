@@ -3,9 +3,9 @@
 	<div class="ui-detail-swiper" v-bind:class="{'height-wrapper': isHideCart}">
 		<swiper ref="mySwiper" :options="swiperOption">
             <swiper-slide v-for="(item, index) in list" :key="index">
-            	<!-- <keep-alive> -->
+            	<keep-alive>
 					<component :is="item.component">{{ item.component }}</component>
-				<!-- </keep-alive> -->
+				</keep-alive>
             </swiper-slide>
         </swiper>
 	</div>

@@ -35,7 +35,8 @@ export default {
 	methods: {
 		...mapMutations({
 			'setSwiperIndex': 'setCurrentSwiperIndex',
-			saveNumber: 'saveNumber'
+			saveNumber: 'saveNumber',
+			saveInfo: 'saveDetailInfo'
 		}),
 
 		changeEvent(index) {
@@ -45,6 +46,7 @@ export default {
 		goBack() {
 			this.setSwiperIndex(0);
 			this.saveNumber(0);
+			// this.saveInfo();
 			this.$router.go(-1);
 		}
 	}

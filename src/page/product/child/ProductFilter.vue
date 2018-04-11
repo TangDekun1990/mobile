@@ -47,7 +47,8 @@ export default {
 	}),
 	methods: {
 		...mapMutations({
-			isShowProductModel: 'changeIsShowProductModel'
+			isShowProductModel: 'changeIsShowProductModel',
+			changeSearch: 'changeSearch'
 		}),
 		closeFiler() {
 			this.isShowMore = false;
@@ -64,13 +65,13 @@ export default {
 		setActiveSortkey(item, index) {
 			this.currentSortKey = item;
 			this.getValue();
-			// if (index != 0) {
-			// 	this.getValue();
-			// }
 		},
 		getValue(){
+			if (this.keyword) {
+				this.changeSearch(true);
+			}
 			let data = this.getSortValue();
-			this.$parent.$emit('change-list', {'value': data, 'isSearch': this.isSearch});
+			this.$parent.$emit('change-list', {'value': data, 'isSearch': this.isSearch, 'keyword': this.keyword});
 		},
 		getSortChild(item){
 			this.isShowProductModel(false);

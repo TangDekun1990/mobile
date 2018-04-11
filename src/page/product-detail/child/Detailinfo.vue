@@ -2,7 +2,7 @@
 <template>
 	<div class="ui-detail-info">
 		<div class="info-header ui-flex">
-			<h3>{{ detailInfo.name }}</h3>
+			<h3><span v-if="detailInfo.self_employed">自营</span>{{ detailInfo.name }}</h3>
 			<div>
 				<img src="../../../assets/image/change-icon/b2_comment@2x.png" @click="getCommentStatus()">
 
@@ -13,9 +13,10 @@
 		</div>
 
 		<div class="info-sub ui-flex" v-if="detailInfo.desc">
-			<p>
-				{{ detailInfo.desc}}
-			</p>
+			<p class="ui-clip" v-if="!isShowDesc">{{ detailInfo.desc}}</p>
+			<p v-if="isShowDesc">{{ detailInfo.desc}}</p>
+			<img src="../../../assets/image/change-icon/spread@2x.png" v-on:click="showDesc()" v-if="!isShowDesc">
+			<img src="../../../assets/image/change-icon/withdraw@2x.png" v-on:click="showDesc()" v-if="isShowDesc">
 		</div>
 
 		<div class="info-promotions" v-if='detailInfo.activity'>
@@ -41,7 +42,8 @@
 				orderTime: '',  //下单时间
 				arrivalsTime: '',  //到达时间
 				arrivalsTitle: '', // 到达时间的标题
-				arrivalsRange: ''  //到达时间区间
+				arrivalsRange: '',  //到达时间区间,
+				isShowDesc: false  // 商品简介是否显示更多
 			}
 		},
 
@@ -86,21 +88,21 @@
 					this.arrivalsRange = '10:00-14:30';
 				}
 				// 9:30 - 14；30
-				if (time > 930 || time <= 1430) {
+				else if (time > 930 || time <= 1430) {
 					this.orderTime = '14:30';
 					this.arrivalsTitle = '当天';
 					this.arrivalsTime = month + '月' + data + '日';
 					this.arrivalsRange = '15:00-20:00';
 				}
 				// 14: 30 - 18:30
-				if ( time > 1430 || time <  1830) {
+				else if ( time > 1430 || time <  1830) {
 					this.orderTime = '18:30';
 					this.arrivalsTitle = '当天';
 					this.arrivalsTime = month + '月' + data + '日';
 					this.arrivalsRange = '19:00-23:00';
 				}
 				// 18:30 - 24:00
-				if (time >= 1830 || time < 2400) {
+				else if (time >= 1830 || time < 2400) {
 					this.orderTime = '09:30';
 					this.arrivalsTitle = '次日';
 					this.arrivalsTime = month + '月' + (data+1) + '日';
@@ -137,8 +139,14 @@
 			 */
 			getCommentStatus() {
 				this.commentStatus(true);
-			}
+			},
 
+			/*
+				showDesc: 是否显示商品简介更多
+			 */
+			showDesc() {
+				this.isShowDesc = !this.isShowDesc;
+			}
 		}
 	}
 </script>
@@ -178,6 +186,18 @@
 					flex-shrink: 0;
 				}
 			}
+			span {
+				width:30px;
+				height:18px;
+				line-height: 18px;
+				text-align:center;
+				background:rgba(239,51,56,1);
+				border-radius: 2px ;
+				font-size:12px;
+				color:rgba(255,255,255,1);
+				display: inline-block;
+				margin-right: 10px;
+			}
 		}
 
 		.info-sub {
@@ -188,10 +208,15 @@
 				margin: 0px;
 				color: #EF3338;
 				font-size: 12px;
-				display: -webkit-box;
-				-webkit-box-orient: vertical;
-				-webkit-line-clamp: 3;
-				overflow: hidden;
+			    &.ui-clip {
+					display: -webkit-box;
+				    -webkit-box-orient: vertical;
+				    -webkit-line-clamp: 2;
+				    overflow: hidden;
+			    }
+			}
+			img {
+				width: 20px;
 			}
 		}
 
