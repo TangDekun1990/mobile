@@ -7,6 +7,7 @@
 		</div>
 		<div class="ui-recommend-body" v-infinite-scroll="getMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
 			<v-recommend-list v-for="(item, index) in recommendList" :item="item" :productId="item.id" v-bind:key="index"></v-recommend-list>
+			<!-- <v-recommend-list v-for="(item, index) in recommendList" :key="index" :item="item" :productId="item.id"></v-recommend-list> -->
 			<p class="recommend-no-more" v-if='!isMore'>没有更多了</p>
 		</div>
 	</div>

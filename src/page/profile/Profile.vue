@@ -9,7 +9,7 @@
       </div>
       <div class="top-info-wrapper">
         <div class="avatar-wrapper" @click="goProfileInfo">
-        <img class="avatar" src="../../assets/image/change-icon/img_avatar@2x.png" />        
+        <img class="avatar" :src="getAvatarUrl" />        
       </div>
       <label class="nickname" @click="goProfileInfo">{{nickname}}</label>
       </div>       
@@ -18,7 +18,7 @@
         <div class="info-item">积分记录</div>
       </div>
     </div>
-    <div class="order-header" @click="goOrder( ENUM.ORDER_STATUS.ALL)">
+    <div class="order-header" @click="goOrder(10)">
       <div class="order-header-item" id="order-item-left">
         <img class="order-header-icon" src="../../assets/image/change-icon/e0_order@2x.png" />
         <label class="item-title order-header-title">我的订单</label>
@@ -33,28 +33,28 @@
       <order-item 
         class="order-item" 
         testAttr = 'order'
-        :id='ENUM.ORDER_STATUS.CREATED'
+        id='0'
         :icon="require('../../assets/image/change-icon/e0_payment@2x.png')"
         title="待付款">
       </order-item> 
       <order-item 
         class="order-item" 
         testAttr = 'order'
-        :id='ENUM.ORDER_STATUS.PAID'
+        id='1'
         :icon="require('../../assets/image/change-icon/e0_delivery@2x.png')"
         title="待发货">
       </order-item>
       <order-item 
         class="order-item" 
         testAttr = 'order'
-        :id='ENUM.ORDER_STATUS.DELIVERING'
+        id='2'
         :icon="require('../../assets/image/change-icon/e0_receiving@2x.png')"
         title="待收货">
       </order-item>
       <order-item
         class="order-item" 
         testAttr = 'order'
-        :id='ENUM.ORDER_STATUS.DELIVERIED'
+        id='3'
         :icon="require('../../assets/image/change-icon/e0_evaluate@2x.png')"
         title="待评价">
       </order-item>
@@ -94,7 +94,6 @@
 </template>
 
 <script>
-import { ENUM } from '../../config/enum';
 import Tabbar from "../../components/common/Tabbar";
 import InfoItem from "./child/InfoItem";
 import OrderItem from "./child/OrderItem";
@@ -105,7 +104,6 @@ export default {
    data() {
     return {
       orderAll:1,
-      ENUM: ENUM
     };
   },
   components: {
@@ -116,7 +114,7 @@ export default {
   created: function() {
     if (this.isOnline) {
       userProfileGet().then(response => {}, error => {});
-    }
+    }        
   },
   computed: {
     ...mapState({
@@ -126,15 +124,38 @@ export default {
     nickname: function() {
       let title = "登录/注册";
       if (this.isOnline) {
-        if (
-          this.user &&
+        if (this.user &&
           typeof this.user != "undefined" &&
-          JSON.stringify(this.user) != "{}"
-        ) {
-          title = this.user.nickname;
+          JSON.stringify(this.user) != "{}") {
+            if (this.user.nickname) {
+              title = this.user.nickname;
+            } else if (this.user.username) {
+              title = this.user.username
+            }
         }
       }
       return title;
+    },
+    getAvatarUrl: function() {
+      let url = null
+      if (this.isOnline) {
+        if (this.user &&
+          typeof this.user != "undefined" &&
+          JSON.stringify(this.user) != "{}") {
+          let avatar = this.user.avatar
+          if (avatar) {
+            if (avatar.large && avatar.large) {
+              url = avatar.large
+            } else if (avatar.thumb && avatar.thumb) {
+              url = avatar.thumb
+            } 
+          }
+        }                        
+      }
+      if (url === null) {
+        url = require('../../assets/image/change-icon/img_avatar@2x.png')
+      }
+      return url
     }
   },
   methods: {
@@ -152,8 +173,7 @@ export default {
       this.$router.push("setting");
     },
     goFavourite() {
-      // TODO:
-      this.$router.push("checkout");
+      // TODO:      
     },
     goAddress() {      
       this.$router.push('addressManage')
