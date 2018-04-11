@@ -64,6 +64,7 @@ export default [
 				redirect: '/home'
 			},
 			{
+				name: 'home',
 				path: '/home',
 				component: Home
 			},

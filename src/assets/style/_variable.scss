@@ -5,11 +5,20 @@ $subFontColor: #4E545D;
 $mainFontColor: #8F8E94;
 $fontActive: #FC2E39;
 $whiteColor: RGBA(255, 255, 255, 1);
+$titleTextColor: #404245;
+$subtitleTextColor: #55595F;
+$descTextColor: #A2A6AD;
 
 // font size
 $fontSize: 12px;
 $mainFontSize: 17px;
 $subFontSize: 14px;
+$h1: 18px;
+$h2: 16px;
+$h3: 15px;
+$h4: 14px;
+$h5: 12px;
+$h6: 10px;
 
 // display
 $inlineLayout: 'inline-block';
@@ -18,6 +27,7 @@ $flex: 'flex';
 
 // background
 $mainbgColor: #F0F2F5;
+$cardbgColor: #FFFFFF;
 $assetBgColor: #F0F2F5;
 $lineColor: #E8EAED;
 $activeBg: RGBA(239, 51, 56, 1);
