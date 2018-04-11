@@ -59,5 +59,22 @@ export default {
 	 		el.style.left = x
 	 		el.style.top = y
 	 	}
+	},
+
+	/*
+		*@param start  开始展示的字符
+		*@param end 结束字符展示位置
+		*@param target 目标字符
+	*/
+	replaceStr(target,  start, end, length) {
+		let str = '';
+		if (start) {
+			str = target.substr(start, length) + '***';
+		} else if (end) {
+			str = '***'+ target.substr(end, length);
+		} else {
+			str = target.substr(0, 1) + '***'+ target.substr(target.length-1, 1);
+		}
+		return str;
 	}
 }

@@ -102,9 +102,9 @@ axios.interceptors.response.use(response => {
                 let errorMessage = response.data.message;
                 let errorCode = response.data.code;
                 if (response.data.error) {
-                	return response.data;
+                	// return response.data;
                     console.log('网络错误, 错误代码:=' + errorCode + "错误信息:=" + errorMessage);
-                    // return Promise.reject({ 'errorCode': errorCode, 'errorMsg': errorMessage });
+                    return Promise.reject({ 'errorCode': errorCode, 'errorMsg': errorMessage });
                 }
                     // if (process.env.NODE_ENV === 'development') {
                     //     console.log('网络错误, 错误代码:=' + errorCode + "错误信息:=" + errorMessage);

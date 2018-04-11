@@ -34,7 +34,8 @@
 	                direction:  'horizontal',
 	                initialSlide: 0
 	            },
-	            productId: this.$route.params.id ? this.$route.params.id : '' //商品id
+	            productId: this.$route.params.id ? this.$route.params.id : '', //商品id
+	            scroll: 0
 			}
 		},
 
@@ -75,6 +76,9 @@
 			this.$refs.mySwiper.swiper.on('slideChangeTransitionEnd', () => {
 	            this.setIndex(this.$refs.mySwiper.swiper.activeIndex);
 	        });
+		},
+
+		created() {
 		},
 
 		methods: {

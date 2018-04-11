@@ -1,36 +1,29 @@
 <!-- ProduceBody.vue -->
 <template>
 	<div class="ui-product-body">
-		<div class="list" v-on:click='goDetail()'>
+		<div class="list">
 
-			<div class="ui-image-wrapper">
-
+			<div class="ui-image-wrapper" v-on:click='goDetail()'>
 				<img src="../../../assets/image/change-icon/default_image_02@2x.png" class="product-img" v-if='item.photos <= 0'>
-
 				<img class="product-img" v-bind:src="item.photos[0].thumb" v-if='item.photos.length > 0' data-src='../../../assets/image/change-icon/default_image_02@2x.png' v-lazy="item.photos[0].thumb">
-
-				<span class="" v-if="item.sales_count == item.good_stock">已售罄</span>
-
+				<span v-if="item.good_stock == 0 ">已售罄</span>
+				<span v-if="item.good_stock > 0 && item.good_stock <= 10">仅剩{{ item.good_stock }}件</span>
 			</div>
-			<!-- <span class="promos" v-if="item.promos.length > 0">促销</span> -->
+
 			<span class="promos" v-if="item.activity && item.activity.display_time">促销</span>
 
 			<div class="flex-right">
-
 				<h3 class="title" style="-webkit-box-orient:vertical">{{ item.name }}</h3>
-
 				<span class="sub-title" style="-webkit-box-orient:vertical">{{ item.desc }}</span>
-
 				<div class="price">
 					<span>AED{{ item.current_price }}</span>
 					<span>AED{{ item.price }}</span>
 				</div>
-
 				<div class="sendway">
 					<span v-if="item.self_employed" class="self-support">自营</span>
 					<span>评论：{{ item.comment_count }}</span>
-					<span>收藏：{{item.is_liked}}</span>
-					<img src="../../../assets/image/change-icon/cart@2x.png">
+					<span>收藏：{{item.collector.length}}</span>
+					<img src="../../../assets/image/change-icon/cart@2x.png" @click="_cartAdd(item.id)">
 				</div>
 			</div>
 		</div>
@@ -38,16 +31,39 @@
 </template>
 
 <script>
+import { Toast, Indicator } from 'mint-ui';
+
+import { cartAdd } from '../../../api/network/cart';
+
 export default{
 	data(){
 		return{
 		}
 	},
-	props: ['item', 'productId'],
+	props: ['item', 'productId', 'requestparams'],
+
 	methods: {
+		/*
+			goDetail： 跳转到详情页
+		 */
 		goDetail() {
-			this.$router.push({'name': 'detail', 'params': {'id': this.productId}});
+			let data = Object.assign({}, {'id': this.productId}, this.requestparams)
+			this.$router.push({'name': 'detail', 'params': data});
+		},
+
+		/*
+		 * cartAdd: 加入购物车
+		 * @param： product： 商品id
+		*/
+		_cartAdd(product) {
+			cartAdd(product, '', 1).then(res => {
+				if (res) {
+					this.$parent.$emit('get-cart-quantity');
+					Toast({message: '操作成功', position: 'middle', duration: 5000});
+				}
+			});
 		}
+
 	}
 }
 </script>

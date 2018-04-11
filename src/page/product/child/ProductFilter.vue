@@ -5,15 +5,15 @@
 			<li class="item"
 				v-for='(item, index) in SORTKEY'
 				v-bind:key='item.id'
-				v-on:click='setActiveSortkey(item, index)'
+				v-on:click.stop.prevent='setActiveSortkey(item, index)'
 				v-bind:class="{'sortactive': item.id == currentSortKey.id, 'sortnormal' : item.id != currentSortKey.id}">
 				<a v-if='!item.isMore'>{{item.name}}</a>
 				<a v-if='item.isMore' v-on:click="isShowDroupMenu()">{{sort.name}}</a>
-				<img src="../../../assets/image/change-icon/triangle_click@2x.png" v-if='index == 0'>
+				<img src="../../../assets/image/change-icon/triangle_click@2x.png" v-if='item.isMore'>
 			</li>
 		</ul>
 
-		<div class="sort-model" v-if='currentSortKey.isMore && isShowMore' >
+		<div class="sort-model" v-if='isShowMore' >
 			<div v-for='(item, index) in childSort' v-bind:key='item.id' v-on:click='getSortChild(item)' v-bind:class="{'active': item.id == sort.id}">
 				<a>{{item.name}}</a>
 				<img src="../../../assets/image/change-icon/c1_choose@2x.png" v-if='item.id != sort.id'>
@@ -29,30 +29,39 @@ import { mapState, mapMutations } from 'vuex';
 export default {
 	data(){
 		return {
-			SORTKEY: SORTKEY,
-			currentSortKey: {},
-			childSort: [],
-			sort: {},
-			isShowMore: false
+			SORTKEY: SORTKEY,  //排序数据
+			currentSortKey: {},  //当前选中的排序
+			childSort: [],  //综合筛选
+			sort: {},  //综合筛选子集
+			isShowMore: false // 是否显示筛选模态框
 		}
 	},
-	props:['keyword'],
 	created(){
 		this.currentSortKey = SORTKEY[0];
 		this.childSort = this.currentSortKey.child;
 		this.sort = this.childSort[0];
 	},
+
 	computed: mapState({
 		isSearch: state => state.product.isSearch
 	}),
+
 	methods: {
 		...mapMutations({
 			isShowProductModel: 'changeIsShowProductModel',
 			changeSearch: 'changeSearch'
 		}),
+
+		/*
+		 * closeFiler: 关闭下拉筛选模态框
+		 */
 		closeFiler() {
 			this.isShowMore = false;
 		},
+
+		/*
+		* isShowDroupMenu: 点击显示下拉框， 并且显示模态框
+		*/
 		isShowDroupMenu(){
 			let item = this.currentSortKey;
 			if (item.isMore) {
@@ -62,23 +71,27 @@ export default {
 			}
 			this.isShowProductModel(this.isShowMore);
 		},
-		setActiveSortkey(item, index) {
+
+		/*
+		 * setActiveSortkey: 点击切换数据并设置选中的样式
+		 * @param: item 当前选中的item
+		*/
+		setActiveSortkey(item) {
 			this.currentSortKey = item;
 			this.getValue();
 		},
+
+		/*
+		 * getValue: 向父级组件发送改变列表事件， 并传递当前的sort_key， sort_value
+		*/
 		getValue(){
-			if (this.keyword) {
-				this.changeSearch(true);
-			}
 			let data = this.getSortValue();
-			this.$parent.$emit('change-list', {'value': data, 'isSearch': this.isSearch, 'keyword': this.keyword});
+			this.$parent.$emit('change-list', data);
 		},
-		getSortChild(item){
-			this.isShowProductModel(false);
-			this.sort = item;
-			this.isShowMore = !this.isShowMore;
-			this.getValue();
-		},
+
+		/*
+		 *  getSortValue: 获取排序值
+		 */
 		getSortValue() {
 			let sort = this.currentSortKey,
 				value = {'sort_key': '', 'sort_value':''};
@@ -90,6 +103,17 @@ export default {
 				value.sort_value = sort.value;
 			}
 			return value;
+		},
+
+		/*
+		 *  getSortChild: 获取综合筛选的子集， 关闭父级的阴影模态框， 关闭子集， 获取列表数据
+		 *  @param: item 模态框的item
+		 */
+		getSortChild(item){
+			this.isShowProductModel(false);
+			this.sort = item;
+			this.isShowMore = !this.isShowMore;
+			this.getValue();
 		}
 	}
 }

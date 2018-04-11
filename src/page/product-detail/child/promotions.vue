@@ -1,7 +1,7 @@
 <!-- promotions.vue -->
 
 <template>
-	<div class="ui-promotions-wrapper ui-detail-common" v-if="detailInfo.promos && detailInfo.promos.length > 0">
+	<div class="ui-promotions-wrapper ui-detail-common" v-if="detailInfo && detailInfo.promos && detailInfo.promos.length > 0">
 		<!-- header -->
 		<div class="promotions-header header" v-on:click='openPopup()'>
 			<h3>促销信息</h3>
