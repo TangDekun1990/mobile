@@ -13,7 +13,9 @@ const state = {
 
 	number: 0,
 
-	isComment: false
+	isComment: false,
+
+	isShowDetail: false
 }
 
 // mutations
@@ -46,8 +48,11 @@ const mutations = {
 	//评论
 	changeIsComment(state, value) {
 		state.isComment = value;
-	}
+	},
 
+	changeShowDetail(state, value) {
+		state.isShowDetail = value;
+	}
 }
 
 export default {

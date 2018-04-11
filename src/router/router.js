@@ -74,8 +74,11 @@ export default [
 			},
 			{
 				name: 'product',
-				path: '/product/:category?/:brand?/:shop?/:keywords?',
-				component: Product
+				path: '/product/:category?/:brand?/:shop?/:keywords?/',
+				component: Product,
+				meta: {
+					keepAlive: true
+				}
 			},
 			{
 				name: 'search',

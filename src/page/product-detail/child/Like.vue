@@ -1,6 +1,6 @@
 <!-- Like.vue -->
 <template>
-	<div class="ui-like-wrapper" v-if='detailInfo.collector && detailInfo.collector.length > 0'>
+	<div class="ui-like-wrapper" v-if='detailInfo && detailInfo.collector && detailInfo.collector.length > 0'>
 		<div class="ui-detail-common">
 			<div class="header">
 				<span>点赞</span>

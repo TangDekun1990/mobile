@@ -1,6 +1,6 @@
 <!-- Goodsreview.vue -->
 <template>
-	<div class="ui-goods-review" v-if='reviewList.length > 0'>
+	<div class="ui-goods-review" v-if='reviewList.length > 0' @click="getCommentStatus()">
 		<div class="ui-detail-common">
 			<div class="header">
 				<p>评价</p>
@@ -16,6 +16,7 @@
 <script>
 	import list from './List';
 	import { getReviewList } from '../../../api/network/product';
+	import { mapState, mapMutations } from 'vuex';
 	export default {
 		data() {
 			return{
@@ -33,6 +34,10 @@
 		},
 
 		methods: {
+			...mapMutations({
+				'commentStatus': 'changeIsComment'
+			}),
+
 			getReviewList() {
 				let params = {
 					"product": this.id,
@@ -45,6 +50,11 @@
 						this.reviewList = res.reviews.slice(0, 2);
 					}
 				})
+			},
+
+			/* 评论 */
+			getCommentStatus() {
+				this.commentStatus(true);
 			}
 		}
 	}

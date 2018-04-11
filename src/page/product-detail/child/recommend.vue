@@ -8,7 +8,7 @@
 			  		<div class="image-swipe-wrapper">
 						<div v-for="image in item[0]">
 							<img :src="image.photos[0].thumb">
-							<span>AED {{image.price}}</span>
+							<span>AED {{image.current_price}}</span>
 						</div>
 			  		</div>
 			  	</mt-swipe-item>

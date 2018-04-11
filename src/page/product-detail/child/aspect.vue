@@ -1,5 +1,5 @@
 <template>
-	<div class="ui-detail">
+	<div class="ui-detail" v-if="detailInfo">
 		<v-aspect-detail :url="detailInfo.intro_url" :unqie="detail" v-if='detailInfo'></v-aspect-detail>
 	</div>
 </template>

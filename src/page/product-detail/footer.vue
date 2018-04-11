@@ -1,6 +1,6 @@
 <!-- footer.vue -->
 <template>
-	<div class="ui-detail-footer">
+	<div class="ui-detail-footer" v-if="detailInfo">
 
 		<div class="footer-flex">
 			<div class="left">
