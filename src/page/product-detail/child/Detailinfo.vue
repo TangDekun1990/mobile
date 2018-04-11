@@ -1,24 +1,27 @@
 <!-- Detailinfo.vue -->
 <template>
 	<div class="ui-detail-info">
-
 		<div class="info-header ui-flex">
-			<h3>{{ productinfo.name }}</h3>
+			<h3><span v-if="detailInfo.self_employed">自营</span>{{ detailInfo.name }}</h3>
 			<div>
-				<img src="../../../assets/image/change-icon/b2_comment@2x.png">
-				<img src="../../../assets/image/change-icon/b2_unfavorite@2x.png">
+				<img src="../../../assets/image/change-icon/b2_comment@2x.png" @click="getCommentStatus()">
+
+				<img src="../../../assets/image/change-icon/b2_unfavorite@2x.png" v-on:click='productLike()' v-if='!detailInfo.is_liked'>
+
+				<img src="../../../assets/image/change-icon/b2-favorite@2x.png" v-on:click='productUnlike()' v-if='detailInfo.is_liked'>
 			</div>
 		</div>
 
-		<div class="info-sub ui-flex">
-			<p>
-				{{ productinfo.desc}}
-			</p>
+		<div class="info-sub ui-flex" v-if="detailInfo.desc">
+			<p class="ui-clip" v-if="!isShowDesc">{{ detailInfo.desc}}</p>
+			<p v-if="isShowDesc">{{ detailInfo.desc}}</p>
+			<img src="../../../assets/image/change-icon/spread@2x.png" v-on:click="showDesc()" v-if="!isShowDesc">
+			<img src="../../../assets/image/change-icon/withdraw@2x.png" v-on:click="showDesc()" v-if="isShowDesc">
 		</div>
 
-		<div class="info-promotions" v-if='productinfo.activity'>
+		<div class="info-promotions" v-if='detailInfo.activity'>
 			<img src="../../../assets/image/change-icon/b2_tag@2x.png">
-			<span>限购{{productinfo.limit_count }} 件 已售{{productinfo.sold_count }}件</span>
+			<span>限购{{detailInfo.activity.limit_count }} 件 已售{{detailInfo.activity.sold_count }}件</span>
 		</div>
 
 		<div class="info-tips ui-flex">
@@ -31,20 +34,36 @@
 </template>
 
 <script>
+	import { mapState, mapMutations } from 'vuex';
+	import { productLike, productUnlike } from '../../../api/network/product';
 	export default {
 		data(){
 			return {
-				orderTime: '',
-				arrivalsTime: '',
-				arrivalsTitle: '',
-				arrivalsRange: ''
+				orderTime: '',  //下单时间
+				arrivalsTime: '',  //到达时间
+				arrivalsTitle: '', // 到达时间的标题
+				arrivalsRange: '',  //到达时间区间,
+				isShowDesc: false  // 商品简介是否显示更多
 			}
 		},
-		props: ['productinfo'],
+
+		computed: {
+	      	...mapState({
+				detailInfo: state => state.detail.detailInfo
+			})
+		},
+
 		created(){
 			this.getCurrentDate();
 		},
+
 		methods: {
+			...mapMutations({
+				'commentStatus': 'changeIsComment'
+			}),
+			/*
+				getCurrentDate: 获取当前时间
+			*/
 			getCurrentDate() {
 				let date = new Date();
 				let month = date.getMonth() + 1,
@@ -54,28 +73,79 @@
 		            second = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
 		        this.getTimeRange(hour, minute, month, data);
 			},
+
+			/*
+				getTimeRange： 获取送货时间
+				@params： hour：小时  minute： 分钟  month： 月份  data： 日期
+			*/
 			getTimeRange(hour, minute, month, data) {
-				if ( (hour > 0 && hour <= 9) &&  (minute >= 0 && minute <= 30)){
+				let time = hour +""+minute;
+				// 24:00 - 9:30
+				if ( time >= 2400 || time <= 930) {
 					this.orderTime = '9:30';
 					this.arrivalsTitle = '当天';
 					this.arrivalsTime = month + '月' + data + '日';
 					this.arrivalsRange = '10:00-14:30';
-				} else if( (hour > 9 && hour <= 14) && (minute > 30 || minute <= 30)) {
+				}
+				// 9:30 - 14；30
+				else if (time > 930 || time <= 1430) {
 					this.orderTime = '14:30';
 					this.arrivalsTitle = '当天';
 					this.arrivalsTime = month + '月' + data + '日';
 					this.arrivalsRange = '15:00-20:00';
-				} else if ( (hour > 14 && hour <= 18) && (minute > 30 || minute <= 30) ) {
+				}
+				// 14: 30 - 18:30
+				else if ( time > 1430 || time <  1830) {
 					this.orderTime = '18:30';
 					this.arrivalsTitle = '当天';
 					this.arrivalsTime = month + '月' + data + '日';
 					this.arrivalsRange = '19:00-23:00';
-				} else if( (hour >18 && hour <= 24) && (minute > 30 || minute <= 0) ) {
+				}
+				// 18:30 - 24:00
+				else if (time >= 1830 || time < 2400) {
 					this.orderTime = '09:30';
 					this.arrivalsTitle = '次日';
 					this.arrivalsTime = month + '月' + (data+1) + '日';
 					this.arrivalsRange = '10:00-14:30';
 				}
+			},
+
+			/*
+				productLike： 收藏商品
+			*/
+			productLike() {
+				let id = this.detailInfo.id;
+				productLike(id).then( res => {
+					if (res) {
+						this.detailInfo.is_liked = res.is_liked;
+					}
+				})
+			},
+
+			/*
+				productUnlike： 取消收藏
+			*/
+			productUnlike() {
+				let id = this.detailInfo.id;
+				productUnlike(id).then( res => {
+					if (res) {
+						this.detailInfo.is_liked = res.is_liked;
+					}
+				})
+			},
+
+			/*
+				评论
+			 */
+			getCommentStatus() {
+				this.commentStatus(true);
+			},
+
+			/*
+				showDesc: 是否显示商品简介更多
+			 */
+			showDesc() {
+				this.isShowDesc = !this.isShowDesc;
 			}
 		}
 	}
@@ -116,20 +186,38 @@
 					flex-shrink: 0;
 				}
 			}
+			span {
+				width:30px;
+				height:18px;
+				line-height: 18px;
+				text-align:center;
+				background:rgba(239,51,56,1);
+				border-radius: 2px ;
+				font-size:12px;
+				color:rgba(255,255,255,1);
+				display: inline-block;
+				margin-right: 10px;
+			}
 		}
 
 		.info-sub {
-			box-shadow: 0px 0.5px 0px 0px rgba(232,234,237,1);
+			border-bottom: 1px solid #e8eaed;
 			padding-bottom: 15px;
 			p {
 				padding: 0px;
 				margin: 0px;
 				color: #EF3338;
 				font-size: 12px;
-				display: -webkit-box;
-				-webkit-box-orient: vertical;
-				-webkit-line-clamp: 3;
-				overflow: hidden;
+			    &.ui-clip {
+					display: -webkit-box;
+				    -webkit-box-orient: vertical;
+				    -webkit-line-clamp: 2;
+				    overflow: hidden;
+			    }
+			}
+			img {
+				width: 20px;
+				margin-left: 11px;
 			}
 		}
 
@@ -139,7 +227,7 @@
 			align-content: center;
 			align-items: center;
 			padding: 15px 0px;
-			box-shadow: 0px 0.5px 0px 0px rgba(232,234,237,1);
+			border-bottom: 1px solid #e8eaed;
 			span {
 				margin-left: 15px;
 				font-size:12px;

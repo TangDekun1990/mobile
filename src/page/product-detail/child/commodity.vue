@@ -1,12 +1,21 @@
 <template>
 	<!-- 商品 -->
 	<div class="commodity-wrapper" v-bind:class="{'hide-commodity': isHideCommodity, 'sroller-commodity': !isHideCommodity}">
-		<v-goods-swipe v-bind:photos='productDetail'></v-goods-swipe>
-		<v-goods-info :productinfo="productDetail"></v-goods-info>
+		<!-- 轮播图 -->
+		<v-goods-swipe></v-goods-swipe>
+		<!-- 商品信息 -->
+		<v-goods-info></v-goods-info>
+		<!-- 促销信息 -->
+		<v-goods-promotions></v-goods-promotions>
+		<!-- 购买 -->
 		<v-goods-buy></v-goods-buy>
+		<!-- 联系客服-->
 		<v-goods-concat></v-goods-concat>
-		<v-goods-like :detaillike="productDetail.collector"></v-goods-like>
+		<!-- 点赞 -->
+		<v-goods-like></v-goods-like>
+		<!-- 评论 -->
 		<v-goods-review></v-goods-review>
+		<!-- 推荐商品  -->
 		<v-goods-recommend></v-goods-recommend>
 	</div>
 </template>
@@ -14,6 +23,8 @@
 <script>
 	import goodsSwipe from './GoodsSwipe';
 	import detailInfo from './Detailinfo';
+	import promotions from './promotions';
+
 	import detailBuy from './Buy';
 	import detailConcat from './Concat';
 	import detailLike from './Like';
@@ -31,11 +42,12 @@
 			}
 		},
 		created(){
-			this.getDetail();
+			// this.getDetail();
 		},
 		components: {
 			'v-goods-swipe': goodsSwipe,
 			'v-goods-info': detailInfo,
+			'v-goods-promotions': promotions,
 			'v-goods-buy': detailBuy,
 			'v-goods-concat': detailConcat,
 			'v-goods-like': detailLike,

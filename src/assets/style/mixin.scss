@@ -59,7 +59,6 @@
 //flex 布局和 子元素 对其方式
 @mixin fj($type: space-between){
 	display: flex;
-	-webkit-display: flex;
 	justify-content: $type;
 }
 
@@ -106,15 +105,15 @@
 	padding-right: 0px;
 	&:focus {
 	outline-style: none;
-	}	
+	}
 }
 
 @mixin button {
-	border-radius: 4px;  
+	border-radius: 4px;
 	height: 44px;
 	margin-left: 10px;
 	margin-right: 10px;
-} 
+}
 
 @mixin linear-gradient($leftColor, $rightColor) {
 	background: -webkit-linear-gradient(left, $leftColor , $rightColor); /* Safari 5.1 - 6.0 */

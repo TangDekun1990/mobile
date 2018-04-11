@@ -1,59 +1,122 @@
-<!-- ProduceBody.vue -->
-<template>
-	<div class="ui-product-body">
-		<div class="list" v-on:click='goDetail()'>
+// 公共样式
 
-			<div class="ui-image-wrapper">
+// 购物车数量
+span.cart-number {
+    position: absolute;
+    padding: 3px 2px;
+    background: $activeBg;
+    border-radius: 20px;
+    font-size: 10px;
+    text-align: center;
+    color: $whiteColor;
+    font-weight: normal;
+}
 
-				<img src="../../../assets/image/change-icon/default_image_02@2x.png" class="product-img" v-if='item.photos <= 0'>
+// 公共header
+.header {
+	@include header;
+}
 
-				<img class="product-img" v-bind:src="item.photos[0].thumb" v-if='item.photos.length > 0' data-src='../../../assets/image/change-icon/default_image_02@2x.png' v-lazy="item.photos[0].thumb">
+.header-flex {
+	@include fj(space-around)
+	width: auto;
+	height: auto;
+	padding: 6px;
+	justify-content: space-around;
+	align-content: center;
+	align-items: center;
+}
 
-				<span class="" v-if="item.sales_count == item.good_stock">已售罄</span>
+.header .ui-back {
+	height: 16px;
+}
 
-			</div>
-			<!-- <span class="promos" v-if="item.promos.length > 0">促销</span> -->
-			<span class="promos" v-if="item.activity && item.activity.display_time">促销</span>
+.header .ui-cart {
+	width: 22px;
+	height: 20px;
+}
 
-			<div class="flex-right">
-
-				<h3 class="title" style="-webkit-box-orient:vertical">{{ item.name }}</h3>
-
-				<span class="sub-title" style="-webkit-box-orient:vertical">{{ item.desc }}</span>
-
-				<div class="price">
-					<span>AED{{ item.current_price }}</span>
-					<span>AED{{ item.price }}</span>
-				</div>
-
-				<div class="sendway">
-					<span v-if="item.self_employed" class="self-support">自营</span>
-					<span>评论：{{ item.comment_count }}</span>
-					<span>收藏：{{item.is_liked}}</span>
-					<img src="../../../assets/image/change-icon/cart@2x.png">
-				</div>
-			</div>
-		</div>
-	</div>
-</template>
-
-<script>
-export default{
-	data(){
-		return{
+// 促销信息
+.promos-list {
+	display: flex;
+    flex-basis: auto;
+    justify-content: space-between;
+    align-items: center;
+    align-content: center;
+    padding: 14px 10px;
+	div.item {
+		span.title {
+			font-size:12px;
+			color:rgba(78,84,93,1);
+			line-height:17px;
 		}
-	},
-	props: ['item', 'productId'],
-	methods: {
-		goDetail() {
-			this.$router.push({'name': 'detail', 'params': {'id': this.productId}});
+		span.name {
+			border: 1px solid #FC2E39;
+			padding: 1px 4px;
+			border-radius: 2px ;
+			font-size:10px;
+			color:rgba(252,46,57,1);
+			margin: 0px 10px;
+			display: inline-block;
+		}
+		span.promo {
+			font-size:12px;
+			color:rgba(78,84,93,1);
+			line-height:17px;
+		}
+    }
+}
+
+// 底部popup 样式
+.mint-popup-bottom {
+	width: 100%;
+}
+
+// 商品详情页每个区块的共同样式
+.ui-detail-common {
+	width: 100%;
+	height: 50px;
+	margin-top: 8px;
+	background:rgba(255,255,255,1);
+	padding: 0px 15px;
+	.header {
+		height: 100%;
+		display: flex;
+		justify-content: space-between;
+		align-content:center;
+		align-items: center;
+		width: auto;
+	}
+}
+
+// 公共的轮播图
+.swiper-indicators {
+	position: absolute;
+	bottom: 10px;
+	width: 100%;
+	.ui-indicator {
+		display: flex;
+		display: -webkit-flex;
+		display: -moz-flex;
+		width: 100%;
+		justify-content: center;
+		align-content: center;
+		align-items: center;
+		.indicator-item {
+			width: 10px;
+			height: 10px;
+			border-radius: 50%;
+			background-color: #EFEFF4;
+			margin-left: 10px;
+			&.active {
+				background-color: #EF3338;
+			}
 		}
 	}
 }
-</script>
 
-<style lang='scss'>
-.ui-product-body {
+// 商品列表， 每个商品的样式
+.product-list-item {
 	border-bottom: 1px solid rgba(232,234,237,1);
 	.list {
 		display: flex;
@@ -73,7 +136,7 @@ export default{
 			flex-shrink: 0;
 
 			background-position:center center!important;
-		    background: url("../../../assets/image/change-icon/default_image_02@2x.png");
+		    background: url("../image/change-icon/default_image_02@2x.png");
 		    background-size:100px 100px;
 		    background-repeat:no-repeat;
 		    -webkit-background-size: cover;
@@ -86,7 +149,6 @@ export default{
 				height: 110px;
 				flex-basis: 110px;
 				flex-shrink: 0;
-				position: relative;
 			}
 			img.product-img[lazy=loading] {
 				width: 30px;
@@ -103,23 +165,11 @@ export default{
 				flex-shrink: 0;
 				background:rgba(255,255,255,1);
 			}
-
-			span {
-				position: absolute;
-				height:20px;
-				background:rgba(243,244,245,1);
-				line-height: 20px;
-				text-align: center;
-				font-size:14px;
-				color:rgba(242,48,48,1);
-				width: 110px;
-				bottom: 0px;
-			}
 		}
 
 		span.promos {
 			position: absolute;
-			background: url('../../../assets/image/change-icon/label@2x.png') no-repeat;
+			background: url('../image/change-icon/label@2x.png') no-repeat;
 			width: 36px;
 			height: 19px;
 			color: #FFFFFF;
@@ -132,6 +182,7 @@ export default{
 			text-align: left;
 			padding-left: 5px;
 		}
+
 		.flex-right {
 			padding-left: 14px;
 			width: 100%;
@@ -139,7 +190,6 @@ export default{
 				color: #4E545D;
 				font-size: 16px;
 				font-weight: normal;
-				font-family: 'PingFangSC';
 
 				display:-moz-box;
 			    display:-webkit-box;
@@ -157,7 +207,6 @@ export default{
 			}
 			.sub-title {
 				color: #55595F;
-				font-family: 'PingFangSC';
 				font-size: 12px;
 
 				display:-moz-box;
@@ -177,7 +226,7 @@ export default{
 			.price {
 				margin-bottom: 8px;
 				span {
-					&:first-child {
+					&:last-child {
 						color: #F23030;
 						font-size: 16px;
 					}
@@ -193,8 +242,6 @@ export default{
 				justify-content: space-between;
 				align-items: center;
 				font-size: 12px;
-				font-family: 'PingFangSC';
-				font-weight: 'Regular';
 				span{
 					color: #7C7F88;
 					&.self-support {
@@ -213,4 +260,27 @@ export default{
 		}
 	}
 }
-</style>
+
+// 公共header
+.ui-commmon-header {
+	position: relative;
+	background:rgba(255,255,255,1);
+	box-shadow: 0px -0.5px 0px 0px rgba(232,234,237,1);
+	height: 44px;
+	padding: 0px 15px;
+	h3 {
+		padding: 0px;
+		margin: 0px;
+		font-size:17px;
+		color:rgba(78,84,93,1);
+		line-height: 44px;
+		height: 44px;
+		text-align: center;
+	}
+	img {
+		position: absolute;
+		height: 18px;
+		width: 11px;
+		top: 13px;
+	}
+}

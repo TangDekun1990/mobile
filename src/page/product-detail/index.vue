@@ -4,9 +4,9 @@
 		<!-- header  -->
 		<v-detail-nav v-if='!isHideHeader'></v-detail-nav>
 		<!-- body -->
-		<v-detail-swiper :index="swiperIndex"></v-detail-swiper>
+		<v-detail-swiper></v-detail-swiper>
 		<!-- footer -->
-		<v-detail-footer :productinfo="productDetail" v-if='!isHideCart'></v-detail-footer>
+		<v-detail-footer v-if='!isHideCart'></v-detail-footer>
 	</div>
 </template>
 
@@ -25,8 +25,7 @@
 			return {
 				productId: this.$route.params.id ? this.$route.params.id : '',
 				productDetail: {},
-				hideFooter: false,
-				swiperIndex: 0
+				hideFooter: false
 			}
 		},
 
@@ -35,21 +34,31 @@
 			'v-detail-swiper': detailSwiper,
 			'v-detail-footer': detailFooter
 		},
+
 		created(){
-			// 监听导航栏是否点击
-			this.$on('nav-changed', (index) => {
-				this.swiperIndex = index;
-			});
 			this.getDetail();
 		},
+
 		computed: mapState({
 			isHideCart: state => state.detail.isHideCart,
 			isHideHeader: state => state.detail.isHideHeader
 		}),
+
+		mounted() {
+		    // 计算内容高度
+		    // const target = document.querySelector('.ui-detail-swiper')
+		    // const totalHeight = 50 + 44;
+		    // this.fillTheScreen({target, totalHeight})
+		},
+
 		methods: {
 			...mapMutations({
 				saveInfo: 'saveDetailInfo'
 			}),
+
+			/*
+				getDetail: 获取商品详情， 并且存入状态管理
+			*/
 			getDetail() {
 				getProductDetail(this.productId).then(res => {
 					if (res) {

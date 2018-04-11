@@ -19,6 +19,8 @@
 	import { swiper, swiperSlide } from 'vue-awesome-swiper'
 	import { mapState, mapMutations } from 'vuex'
 
+	// import { productGet } from '../../api/network/product'
+
 	export default {
 		data() {
 			return {
@@ -29,42 +31,59 @@
 				],
 				swiperOption: {
 	                width: window.innerWidth,
-	                direction:  'horizontal'
+	                direction:  'horizontal',
+	                initialSlide: 0
 	            },
-	            currentSwiperIndex: 0
+	            productId: this.$route.params.id ? this.$route.params.id : '' //商品id
 			}
 		},
+
 		components: {
 			commodity,
 			aspect,
 			review
 		},
+
 		computed: {
 	      	...mapState({
 				isHideCart: state => state.detail.isHideCart,
-				isHideHeader: state => state.detail.isHideHeader
+				isHideHeader: state => state.detail.isHideHeader,
+				isComment: state => state.detail.isComment,
+				currentSwiperIndex: state => state.detail.currentSwiperIndex
 			}),
+
 			swiper() {
 	        	return this.$refs.mySwiper.swiper
 	      	}
 		},
-		props: ['index'],
+
 		watch: {
-			index: function(value) {
+			currentSwiperIndex: function(value) {
 				this.$refs.mySwiper.swiper.slideTo(value, 1000, false);
+			},
+
+			isComment: function(value) {
+				if (value) {
+					this.$refs.mySwiper.swiper.slideTo(2, 1000, false);
+					this.setIndex(2);
+					this.commentStatus(false);
+				}
 			}
 		},
+
 		mounted() {
-			this.currentSwiperIndex = this.swiper.activeIndex;
 			this.$refs.mySwiper.swiper.on('slideChangeTransitionEnd', () => {
 	            this.setIndex(this.$refs.mySwiper.swiper.activeIndex);
 	        });
 		},
-		created(){},
+
 		methods: {
 			...mapMutations({
-				'setSwiperIndex': 'setCurrentSwiperIndex'
+				'setSwiperIndex': 'setCurrentSwiperIndex',
+				'saveDetailInfo': 'saveDetailInfo',
+				'commentStatus': 'changeIsComment'
 			}),
+
 			setIndex(activeIndex) {
 	            this.setSwiperIndex(activeIndex);
 	        }
@@ -81,6 +100,7 @@
 		left: 0px;
 		right: 0px;
 		overflow: auto;
+		background: rgba(240,242,245,1);
 	}
 	.swiper-container {
 		height: 100%;

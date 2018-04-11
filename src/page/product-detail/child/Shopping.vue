@@ -2,22 +2,24 @@
 <template>
 	<div class="ui-add-shopping">
 		<div class="shopping-info">
-
 			<div class="info-header">
-				<img src="../../../assets/image/change-icon/default_image_02@2x.png" class="info-image" v-if=' !info.photos  || info.photos.length <= 0'>
-				<img v-bind:src="info.photos[0].thumb" class="info-image" v-if='info.photos && info.photos.length > 0'>
+				<img src="../../../assets/image/change-icon/default_image_02@2x.png" class="info-image" v-if=' !detailInfo.photos  || detailInfo.photos.length <= 0'>
+
+				<img v-bind:src="detailInfo.photos[0].thumb" class="info-image" v-if='detailInfo.photos && detailInfo.photos.length > 0'>
+
 				<div>
-					<span>&yen;{{ info.current_price }}</span>
-					<span><img src="../../../assets/image/change-icon/b2_tag@2x.png" v-if='info.activity'> 数量：{{ number }}</span>
-					<span v-if='info.activity'>限购{{info.activit.limit_count}}件 已售{{info.activit.sold_count }}件</span>
+					<span>AED {{ detailInfo.current_price }}</span>
+					<span><img src="../../../assets/image/change-icon/b2_tag@2x.png" v-if='detailInfo.activity'> 数量：{{ numbers }}</span>
+					<span v-if='detailInfo.activity'>限购{{detailInfo.activity.limit_count}}件 已售{{detailInfo.activity.sold_count }}件</span>
 				</div>
+
 				<img src="../../../assets/image/change-icon/close@2x.png" class="close" v-on:click='closeCartInfo(false)'>
 			</div>
 
 			<div class="info-body">
 				<p>数量</p>
 				<div class="ui-number">
-					<div class="reduce ui-common" v-on:click='reduceNumber()'>-</div><input type="number" min="1" class="number" value="1" v-model="number"><div class="add ui-common" v-on:click='addNumber()'>+</div>
+					<div class="reduce ui-common" v-on:click='reduceNumber()'>-</div><input type="number" min="1" class="number" value='1' v-model="numbers" v-on:keyup ='getInputNumber($event)'><div class="add ui-common" v-on:click='addNumber()'>+</div>
 				</div>
 			</div>
 
@@ -33,10 +35,12 @@
 
 	import { addShopCart } from '../../../api/network/cart';
 
+	import { ENUM } from '../../../config/enum';
+
 	export default {
 		data(){
 			return {
-				number: 1,
+				numbers: this.$store.state.detail.number > 0 ? this.$store.state.detail.number : 1,  //todo 临时解决
 				productId: this.$route.params.id ? this.$route.params.id : '',
 				toastConfig: {
 					message: '商品达到每单限购数量',
@@ -44,23 +48,33 @@
 				}
 			}
 		},
-		props: ['info'],
+
 		created(){},
+
 		computed: {
 			...mapState({
-		      	isOnline: state => state.auth.isOnline
+		      	isOnline: state => state.auth.isOnline,
+		      	detailInfo: state => state.detail.detailInfo,
+		      	number: state => state.detail.number
 		    })
 		},
+
 		watch: {
-			number: function(value) {
-				if (value <= 0) {
-					this.toastConfig.message = '受不了了，宝贝不能再少了';
-					Toast(this.toastConfig);
-				} else if (value > this.info.good_stock) {
-					this.toastConfig.message = '商品库存不足';
-					Toast(this.toastConfig);
+			numbers: function(value) {
+				if (value) {
+					if (value <= 0) {
+						this.numbers = 1;
+						this.toastConfig.message = '受不了了，宝贝不能再少了';
+						Toast(this.toastConfig);
+					} else if (value > this.detailInfo.good_stock) {
+						this.toastConfig.message = '商品库存不足';
+						Toast(this.toastConfig);
+						this.numbers = this.detailInfo.good_stock;
+					}
+					this.saveNumber(this.numbers);
 				}
-			}
+			},
+
 		},
 		methods: {
 			...mapMutations({
@@ -68,25 +82,35 @@
 				hideCommodity: 'setIsHideCommodity',
 				saveNumber: 'saveNumber'
 			}),
+
 			// 关闭购物车浮层
 			closeCartInfo(value) {
 				this.saveCartState(value);
 				this.hideCommodity(value);
 			},
+
 			// 数量加
 			addNumber() {
-				if (this.info.activit &&  this.number == this.info.activit.limit_count ) {
+				if (this.detailInfo.good_stock && this.numbers > this.detailInfo.good_stock) {
+					this.toastConfig.message = '商品库存不足';
 					Toast(this.toastConfig);
-					return;
+					this.numbers = this.detailInfo.good_stock;
+				} else {
+					this.numbers++;
 				}
-				this.number++;
 			},
+
 			// 数量减
 			reduceNumber() {
-				if (this.number > 1) {
-					this.number--;
+				if (this.numbers > 1) {
+					this.numbers--;
+				} else {
+					this.numbers = 1;
+					this.toastConfig.message = '受不了了，宝贝不能再少了';
+					Toast(this.toastConfig);
 				}
 			},
+
 			// 加入购物车
 			addShoppingCart() {
 				if (!this.isOnline) {
@@ -95,16 +119,30 @@
 					this.addShopCart();
 				}
 			},
+
 			addShopCart() {
 				this.$parent.$emit('start-addcart-animation');
-				let params = {'product': this.productId, 'property': '', 'amount': this.number};
+				let params = {'product': this.productId, 'property': '', 'amount': this.numbers};
 				addShopCart(params).then(res => {
-					if (res) {
+					if (res && res.code == ENUM.ERROR_CODE.OK) {
+						// this.$parent.$emit('start-addcart-animation');
+						this.saveNumber(this.numbers);
 						this.$parent.$emit('end-addcart-animation');
-						this.saveNumber(this.number);
+					} else {
+						this.$parent.$emit('end-addcart-animation');
+						// Toast(res.message);
 					}
 				})
+			},
+
+			getInputNumber(e) {
+				// alert(this.numbers);
+				// alert(e.keyCode);
+				// if (e.keyCode === 13) {
+				// 	alert(this.numbers);
+				// }
 			}
+
 		}
 	}
 </script>
@@ -146,10 +184,10 @@
 					margin-left: 120px;
 					span{
 						display: block;
+						color:rgba(239,51,56,1);
 						&:first-child {
 							font-size:18px;
-							font-family:'PingFangSC-Regular';
-							color:rgba(41,43,45,1);
+							/*color:rgba(41,43,45,1);*/
 							line-height:20px;
 							padding-bottom: 12px;
 						}
@@ -157,8 +195,7 @@
 							height: 20px;
 							line-height: 20px;
 							font-size:14px;
-							font-family:'PingFangSC-Regular';
-							color:rgba(143,142,148,1);
+							/*color:rgba(143,142,148,1);*/
 							line-height:20px;
 							padding-bottom: 12px;
 							img {
@@ -169,7 +206,6 @@
 						}
 						&:last-child {
 							font-size:14px;
-							font-family:'PingFangSC-Regular';
 							color:rgba(143,142,148,1);
 							line-height:14px;
 							padding-bottom: 9px;
@@ -189,7 +225,6 @@
 				padding: 15px 15px 20px 15px;
 				p {
 					font-size:16px;
-					font-family:'PingFangSC-Light';
 					color:rgba(41,43,45,1);
 					line-height:16px;
 					padding: 0px;
@@ -241,7 +276,6 @@
 				line-height: 44px;
 				text-align: center;
 				font-size:16px;
-				font-family:'PingFangSC-Regular';
 				color:rgba(255,255,255,1);
 				width: 100%;
 				position: absolute;

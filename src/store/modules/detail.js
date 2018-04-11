@@ -2,11 +2,18 @@
 const state = {
 	isHideCart: false,  // 点击看大图隐藏脚部
 	isHideHeader: false, // 点击看大图隐藏头部
+
 	detailInfo: {},    //保存商品详情
+
 	isShowcartInfo: false,  //是否显示购物车浮层
+
 	currentSwiperIndex: 0, //当前滑动的id
+
 	isHideCommodity: false, //点击查看大图，隐藏商品展示
-	number: 0
+
+	number: 0,
+
+	isComment: false
 }
 
 // mutations
@@ -34,7 +41,13 @@ const mutations = {
 	},
 	saveNumber(state, number) {
 		state.number = number;
+	},
+
+	//评论
+	changeIsComment(state, value) {
+		state.isComment = value;
 	}
+
 }
 
 export default {

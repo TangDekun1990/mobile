@@ -58,7 +58,6 @@
 			this.getUrlParams();
 			this.$on('change-list', (data) => {
 				let res = data;
-
 				this.params.page = 1;
 				this.total = 1;
 				this.isSearch = res.isSearch;
@@ -75,6 +74,7 @@
 				}
 
 				this.loading = false;
+				// this.getMore();
 				this.getProductList();
 			});
 		},
@@ -142,6 +142,7 @@
 		}
 	}
 </script>
+
 
 <style lang='scss' scoped>
 	.ui-product {
