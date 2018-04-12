@@ -80,7 +80,7 @@
 			*/
 			getTimeRange(hour, minute, month, data) {
 				let time = hour +""+minute;
-				debugger;
+				// debugger;
 				// 24:00 - 9:30
 				if ( time >= 2400 & time <= 930) {
 					this.orderTime = '9:30';

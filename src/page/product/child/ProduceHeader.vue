@@ -55,7 +55,7 @@
 				let data = {
 					'keyword': this.keyword
 				};
-				if (data.keyword) {
+				if (!data.keyword) {
 					Toast('请输入您要搜索的关键字');
 					return;
 				}

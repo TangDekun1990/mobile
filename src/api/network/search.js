@@ -1,9 +1,5 @@
 import { fetchEndpoint } from '../../network/network'
 
-// export const getKeywords = () => fetchEndpoint('/v2/ecapi.search.keyword.list', 'POST')
-
-// import { fetchEndpoint } from '../server/network';
-
 // 热门关键词
 export const searchKeywordList =
 () =>
