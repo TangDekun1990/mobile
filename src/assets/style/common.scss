@@ -284,3 +284,11 @@ span.cart-number {
 		top: 13px;
 	}
 }
+
+//  公共的从底部弹出的弹框样式
+.mint-popup-bottom {
+	width: 100%;
+    // height: 50%;
+    border: 0px;
+    overflow: auto;
+}

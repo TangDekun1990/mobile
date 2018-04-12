@@ -57,7 +57,7 @@ fetchEndpoint(
   '/v2/ecapi.cart.delete',
   'POST',
   {
-    "goods": goods,  // 购物车商品 id 数组
+    "good": goods,  // 购物车商品 id 数组
   }
 )
 

@@ -49,7 +49,7 @@ import OrderDetail from '../page/order/OrderDetail'
 import Detail from '../page/product-detail/index'
 
 // 购物车
-import Cart from '../page/cart/index'
+import Cart from '../page/cart/cart'
 
 // 查看推荐商品
 import Recommend from '../page/recommend/Recommend'
