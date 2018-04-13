@@ -82,7 +82,7 @@ export default [
 				path: '/product/:category?/:brand?/:shop?/:keywords?/',
 				component: Product,
 				meta: {
-					keepAlive: true
+					keepAlive: false
 				}
 			},
 			{
@@ -223,8 +223,11 @@ export default [
 			},
 			{
 				name: 'recommend',
-				path: '/recommend/:brand?/:category?/:shop?/:product?',
-				component: Recommend
+				path: 'recommend/:product?/:category?/:brand?/:shop?',
+				component: Recommend,
+				meta: {
+					keepAlive: false,
+				}
 			}
 		]
 	}

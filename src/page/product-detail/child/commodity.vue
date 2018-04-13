@@ -41,8 +41,7 @@
 	export default {
 		data() {
 			return{
-				productId: this.$route.params.id ? this.$route.params.id : '',
-				productDetail: {}
+				productId: this.$route.params.id ? this.$route.params.id : ''
 			}
 		},
 		created(){
@@ -83,14 +82,6 @@
 			...mapMutations({
 				setCurrentSwiperIndex: 'setCurrentSwiperIndex'
 			}),
-
-			getDetail() {
-				getProductDetail(this.productId).then(res => {
-					if (res) {
-						this.productDetail = res.product;
-					}
-				})
-			},
 
 			changeStatus() {
 				this.setCurrentSwiperIndex(1);

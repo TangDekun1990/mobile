@@ -264,6 +264,7 @@
 	    width: 100%;
 	    bottom: 44px;
 	    top: 44px;
+	    padding-top: 8px;
 		p.none-selected-all {
 			display: none;
 		}
