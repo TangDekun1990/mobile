@@ -90,7 +90,7 @@
 		align-items: center;
 		height: 44px;
 		background:rgba(255,255,255,1);
-		box-shadow: 0px 0.5px 0px 0px rgba(232,234,237,1);
+		border-bottom: 1px solid #E8EAED;
 		padding-left: 12px;
 		bottom: 0px;
     	position: absolute;
