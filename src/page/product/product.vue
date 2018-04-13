@@ -1,28 +1,29 @@
 <template>
 	<div class="ui-product">
-		<product-header v-bind:item="params" :list="productList" ref='header' :value="keyword"></product-header>
-
-		<product-filter :keyword="keyword" ref='filter'></product-filter>
-
-		<div class="product-body" v-bind:class="{'hide-product-list': isShowProductModel, 'show-product-list': !isShowProductModel}">
-
+		<!-- 商品头部 -->
+		<product-header ref='header' :value="params.keyword"></product-header>
+		<!-- 商品筛选 -->
+		<product-filter ref='filter'></product-filter>
+		<!-- 商品列表 -->
+		<div class="product-body"
+			v-bind:class="{'hide-product-list': isShowProductModel, 'show-product-list': !isShowProductModel}"
+		>
+			<!-- 无限加载滚动列表 -->
 			<div class="flex-wrapper" v-infinite-scroll="getMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
-				<product-body :item="item" v-for='(item, index) in productList' v-bind:key='item.id' :productId="item.id"></product-body>
-			</div>
-
-			<div class="loading-wrapper">
-				<p v-if='!isMore && productList.length > 0'>没有更多了</p>
-				<mt-spinner type="fading-circle" color='#26a2ff' :size='60' v-if='!loading'></mt-spinner>
-			</div>
-
-			<div class="wrapper-list-empty" v-if='productList.length <= 0 && loading'>
-				<div>
-					<img src="../../assets/image/change-icon/goods_empty@2x.png">
-					<p>暂无任何商品</p>
+				<product-body :item="item" v-for='(item, index) in productList' v-bind:key='item.id' :productId="item.id" :requestparams="params"></product-body>
+				<div class="loading-wrapper">
+					<p v-if='!isMore'>没有更多了</p>
+					<mt-spinner type="fading-circle" color='#26a2ff' :size='60' v-if='isMore'></mt-spinner>
 				</div>
-			</div>
 
-			<div class="show-product-model" v-if='isShowProductModel' @click="closeProductModel()"></div>
+				<div class="wrapper-list-empty" v-if='productList.length <= 0 && !isMore'>
+					<div>
+						<img src="../../assets/image/change-icon/goods_empty@2x.png">
+						<p>暂无任何商品</p>
+					</div>
+				</div>
+				<div class="show-product-model" v-if='isShowProductModel' @click="closeProductModel()"></div>
+			</div>
 		</div>
 
 	</div>
@@ -30,10 +31,14 @@
 
 <script>
 	import { mapState, mapMutations } from 'vuex';
+
 	import productHeader from './child/ProduceHeader';
 	import productBody from './child/ProduceBody';
 	import productFilter from './child/ProductFilter';
-	import { getproductList, getSearch } from '../../api/network/product';
+
+	import { productList } from '../../api/network/product';
+	import { searchProductList } from '../../api/network/search';
+
 	export default {
 		components: {
 			productHeader,
@@ -42,110 +47,151 @@
 		},
 		data(){
 			return {
-				params: {'brand': '', 'category': '', 'shop': '', 'sort_key': 0, 'sort_value': 2, 'page': 0, 'per_page': 10},
-				productList: [],
-				loading: false,
-				isMore: true,
-				total: 1,
-				isSearch: false,
-				keyword: null
+				params: {
+					'brand': this.$route.params.brand ? this.$route.params.brand : '',
+					'category': this.$route.params.category ? this.$route.params.category : '',
+					'shop': this.$route.params.shop ? this.$route.params.shop : '',
+					'sort_key': 0,
+					'sort_value': 2,
+					'page': 0,
+					'per_page': 10,
+					'keyword': this.$route.params.keywords ? this.$route.params.keywords : ''
+				},
+				productList: [],  //商品列表
+				loading: false,  //是否加载更多
+				isMore: true  //是否有更多
 			}
 		},
+
 		computed: mapState({
 			isShowProductModel: state => state.product.isShowProductModel
 		}),
+
 		created(){
+			//todo
 			this.getUrlParams();
+
 			this.$on('change-list', (data) => {
 				let res = data;
 				this.params.page = 1;
-				this.total = 1;
-				this.isSearch = res.isSearch;
 				this.productList = [];
-
-				if (res.keyword) {
-					this.keyword = res.keyword;
-				} else {
-					this.keyword = '';
-				}
-
-				if (!data.isSearch) {
-					this.params = Object.assign({}, this.params, data.value);
-				}
-
 				this.loading = false;
+				this.setParamsByData(res);
 				this.getProductList();
 			});
+
+			this.$on('get-cart-quantity', () => {
+				this.$refs.header.getCarNumber();
+			})
 		},
+
 		methods: {
+
 			...mapMutations({
 				changeIsShowProductModel: 'changeIsShowProductModel'
 			}),
+
+			/*
+			 * closeProductModel: 关闭筛选模态框
+			 */
 			closeProductModel() {
 				this.changeIsShowProductModel(false);
 				this.$refs.filter.closeFiler();
 			},
+
+			/*
+			 * getMore: 无限滚动加载
+			 */
 			getMore() {
 				this.loading = true;
 				this.params.page = ++this.params.page;
-				if (this.params.page <= this.total) {
+				if (this.isMore) {
 					this.loading = false;
 					this.getProductList(true);
 				}
 			},
+
+			/*
+			 *  getUrlParams: 获取url上的参数
+			 *  @param： category
+			 *  @param: brand
+			 *  @param: shop
+			 *  @param: keywords
+			 */
 			getUrlParams() {
-				let routerParams = this.$route.params;
-				this.params.category = routerParams.category;
-				if (routerParams.keywords) {
-					this.keyword = routerParams.keywords;
+				console.log(this.$route.params);
+				// this.params.brand = this.$route.params.brand ? this.$route.params.brand : '';
+				// this.params.category = this.$route.params.category ? this.$route.params.category : '';
+				// this.params.shop = this.$route.params.shop ? this.$route.params.shop : '';
+				// this.params.keyword = this.$route.params.keywords ? this.$route.params.keywords : '';
+			},
+
+			/*
+			 * getProductList: 获取商品列表
+			 * @param：  ispush ？ true ：false 是否需要向商品列表追加数据
+			 */
+			getProductList(ispush) {
+				let data = this.params;
+				if (data.keyword) {
+					searchProductList(data.brand, data.category, data.shop, data.keyword, data.sort_key, data.sort_value, data.page, data.per_page).then(res => {
+						this.buildData(ispush, res);
+					});
+				} else {
+					productList(data.brand, data.category, data.shop, data.sort_key, data.sort_value, data.page, data.per_page).then(res => {
+						this.buildData(ispush, res);
+					});
 				}
 			},
 
-			getProductList(ispush) {
-				let data = this.params;
-				if (this.isSearch || this.$route.params.keywords) {
-					data = Object.assign({}, data, {'keyword': this.keyword});
-					getSearch(data).then(res => {
-						this.getList(ispush, res);
-					});
-					this.setLocal(data.keyword);
-				} else {
-					getproductList(data).then(res => {
-						this.getList(ispush, res);
-					});
-				}
-			},
-			getList(ispush, res) {
+			/*
+			 *  getList: 构建数据
+			 *  @param: ispush 是否改变向元数据追加数据
+			 *  @param: res 接口请求返回的数据
+			 */
+			buildData(ispush, res) {
 				if (res) {
 					if (ispush) {
 						this.productList = this.productList.concat(res.products);
 					} else {
 						this.productList = res.products;
 					}
-					if (res.paged.more) {
-						this.isMore = true;
-						this.loading = false;
-					} else {
-						this.isMore = false;
-						this.loading = true;
-					}
-					this.total = res.paged.total;
+					this.isMore = res.paged.more == 1 ? true : false;
 				}
 			},
+
+			/*
+				setLocal: 历史搜索
+			 */
 			setLocal(key) {
 				let current = this.utils.fetch('keyword');
 				current.push(''+ key+'');
 				current = this.utils.arrayFilter(current);
 				this.utils.save('keyword', current);
+			},
+
+			/*
+			 * setParamsByData 根据事件传递的值来对请求列表重新赋值
+			 * @param data 事件传递的参数
+			 */
+			setParamsByData(data) {
+				let params = this.params;
+				for (let item in params) {
+					for (let list in data) {
+						if ( item == list) {
+							params[item] = data[list];
+						}
+					}
+				}
+				return params;
 			}
 		}
 	}
 </script>
 
+
 <style lang='scss' scoped>
 	.ui-product {
 		width: auto;
-		/*height: 100%;*/
 		background-color: #ffffff;
 		div.product-body{
 			.loading-wrapper {

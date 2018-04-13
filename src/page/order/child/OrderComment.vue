@@ -148,9 +148,9 @@ export default {
             background:rgba(247,249,250,1);
             border:1px solid #F7F9FA;
           }
+        }
       }
-    }
-  } 
+    } 
 </style>
 
 

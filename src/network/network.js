@@ -45,11 +45,11 @@ axios.interceptors.request.use(config => {
             let sign = CryptoJS.HmacSHA256(timestamp + post_body, SIGN_KEY);
 
             // xSign格式: sign,timestamp
-            let xSign = sign + ',' + timestamp;      
-            let token = null;      
+            let xSign = sign + ',' + timestamp;
+            let token = null;
             if (store.getters.isOnline && store.getters.token) {
                 token = store.getters.token;
-            } 
+            }
             config.headers['X-ECAPI-Authorization'] = store.state.auth.token;
             config.headers['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
             config.headers['X-ECAPI-Sign'] = xSign;
@@ -67,9 +67,9 @@ axios.interceptors.request.use(config => {
             config.data = {};
             config.data = body;
             // TODO:
-            if (process.env.NODE_ENV === 'development') { 
+            if (process.env.NODE_ENV === 'development') {
                 config.params = params ? JSON.stringify(params) : ''
-            }            
+            }
         }
     }
     return config
@@ -81,7 +81,7 @@ axios.interceptors.request.use(config => {
 axios.interceptors.response.use(response => {
     if (response) {
         let isAPIRequest = response.config.url.indexOf(apiBaseUrl) == 0 ? true : false;
-        if (isAPIRequest) { 
+        if (isAPIRequest) {
             if (response.data && response.data.data) {
                 var raw = XXTEA.decryptToString(response.data.data, ENCRYPT_KEY);
                 var json = JSON.parse(raw);
@@ -95,18 +95,21 @@ axios.interceptors.response.use(response => {
                     console.log('====================================');
                     console.log("request url is: ", response.config.url);
                     console.log("request params is: ", response.config.params);
-                    console.log('response data is: ', response.data);                    
-                }                                
+                    console.log('response data is: ', response.data);
+                }
                 return response.data;
             } else if (response.data && response) {
                 let errorMessage = response.data.message;
                 let errorCode = response.data.code;
                 if (response.data.error) {
-                    if (process.env.NODE_ENV === 'development') { 
-                        console.log('网络错误, 错误代码:=' + errorCode + "错误信息:=" + errorMessage);
-                    }                    
+                	// return response.data;
+                    console.log('网络错误, 错误代码:=' + errorCode + "错误信息:=" + errorMessage);
                     return Promise.reject({ 'errorCode': errorCode, 'errorMsg': errorMessage });
-                } 
+                }
+                    // if (process.env.NODE_ENV === 'development') {
+                    //     console.log('网络错误, 错误代码:=' + errorCode + "错误信息:=" + errorMessage);
+                    // }
+                    // return Promise.reject({ 'errorCode': errorCode, 'errorMsg': errorMessage });
             }
         } else {
             console.log("请求地址错误!");
@@ -114,8 +117,9 @@ axios.interceptors.response.use(response => {
     } else {
         console.log("网络错误");
     }
-}, error => {
-    return Promise.reject(error.response.data)
+    /*
+    error => {return Promise.reject(error.response.data}
+     */
 })
 
 // 发起请求

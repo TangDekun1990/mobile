@@ -1,0 +1,294 @@
+// 公共样式
+
+// 购物车数量
+span.cart-number {
+    position: absolute;
+    padding: 3px 2px;
+    background: $activeBg;
+    border-radius: 20px;
+    font-size: 10px;
+    text-align: center;
+    color: $whiteColor;
+    font-weight: normal;
+}
+
+// 公共header
+.header {
+	@include header;
+}
+
+.header-flex {
+	@include fj(space-around)
+	width: auto;
+	height: auto;
+	padding: 6px;
+	justify-content: space-around;
+	align-content: center;
+	align-items: center;
+}
+
+.header .ui-back {
+	height: 16px;
+}
+
+.header .ui-cart {
+	width: 22px;
+	height: 20px;
+}
+
+// 促销信息
+.promos-list {
+	display: flex;
+    flex-basis: auto;
+    justify-content: space-between;
+    align-items: center;
+    align-content: center;
+    padding: 14px 10px;
+	div.item {
+		span.title {
+			font-size:12px;
+			color:rgba(78,84,93,1);
+			line-height:17px;
+		}
+		span.name {
+			border: 1px solid #FC2E39;
+			padding: 1px 4px;
+			border-radius: 2px ;
+			font-size:10px;
+			color:rgba(252,46,57,1);
+			margin: 0px 10px;
+			display: inline-block;
+		}
+		span.promo {
+			font-size:12px;
+			color:rgba(78,84,93,1);
+			line-height:17px;
+		}
+    }
+}
+
+// 底部popup 样式
+.mint-popup-bottom {
+	width: 100%;
+}
+
+// 商品详情页每个区块的共同样式
+.ui-detail-common {
+	width: 100%;
+	height: 50px;
+	margin-top: 8px;
+	background:rgba(255,255,255,1);
+	padding: 0px 15px;
+	.header {
+		height: 100%;
+		display: flex;
+		justify-content: space-between;
+		align-content:center;
+		align-items: center;
+		width: auto;
+	}
+}
+
+// 公共的轮播图
+.swiper-indicators {
+	position: absolute;
+	bottom: 10px;
+	width: 100%;
+	.ui-indicator {
+		display: flex;
+		display: -webkit-flex;
+		display: -moz-flex;
+		width: 100%;
+		justify-content: center;
+		align-content: center;
+		align-items: center;
+		.indicator-item {
+			width: 10px;
+			height: 10px;
+			border-radius: 50%;
+			background-color: #EFEFF4;
+			margin-left: 10px;
+			&.active {
+				background-color: #EF3338;
+			}
+		}
+	}
+}
+
+// 商品列表， 每个商品的样式
+.product-list-item {
+	border-bottom: 1px solid rgba(232,234,237,1);
+	.list {
+		display: flex;
+		width: auto;
+		align-items: center;
+		justify-content: space-between;
+		margin: 11px 10px;
+		position: relative;
+		div.ui-image-wrapper {
+			width: 110px;
+			height: 110px;
+			display: flex;
+		    justify-content: center;
+		    align-content: center;
+		    align-items: center;
+			flex-basis: 110px;
+			flex-shrink: 0;
+
+			background-position:center center!important;
+		    background: url("../image/change-icon/default_image_02@2x.png");
+		    background-size:100px 100px;
+		    background-repeat:no-repeat;
+		    -webkit-background-size: cover;
+		    -moz-background-size: cover;
+		    -o-background-size: cover;
+		    background-size: cover;
+
+			img.product-img{
+				width: 110px;
+				height: 110px;
+				flex-basis: 110px;
+				flex-shrink: 0;
+			}
+			img.product-img[lazy=loading] {
+				width: 30px;
+				height: 30px;
+			}
+			img.product-im[lazy=error] {
+				width: 30px;
+				height: 30px;
+			}
+			img.product-img[lazy=loaded] {
+				width: 110px;
+				height: 110px;
+				flex-basis: 110px;
+				flex-shrink: 0;
+				background:rgba(255,255,255,1);
+			}
+		}
+
+		span.promos {
+			position: absolute;
+			background: url('../image/change-icon/label@2x.png') no-repeat;
+			width: 36px;
+			height: 19px;
+			color: #FFFFFF;
+			font-size: 10px;
+			top: 0px;
+			left: 0px;
+			background-size: cover;
+			font-weight: 100;
+			line-height: 19px;
+			text-align: left;
+			padding-left: 5px;
+		}
+
+		.flex-right {
+			padding-left: 14px;
+			width: 100%;
+			.title {
+				color: #4E545D;
+				font-size: 16px;
+				font-weight: normal;
+
+				display:-moz-box;
+			    display:-webkit-box;
+			    display:box;
+
+				-webkit-line-clamp: 2;
+				-moz-line-clamp: 2;
+
+				-moz-box-orient:vertical;
+				-webkit-box-orient:vertical;
+				box-orient:vertical;
+
+				overflow: hidden;
+				margin-bottom: 8px;
+			}
+			.sub-title {
+				color: #55595F;
+				font-size: 12px;
+
+				display:-moz-box;
+			    display:-webkit-box;
+			    display:box;
+
+				-webkit-line-clamp: 1;
+				-moz-line-clamp: 1;
+
+				-moz-box-orient:vertical;
+				-webkit-box-orient:vertical;
+				box-orient:vertical;
+
+				overflow: hidden;
+				margin-bottom: 8px;
+			}
+			.price {
+				margin-bottom: 8px;
+				span {
+					&:last-child {
+						color: #F23030;
+						font-size: 16px;
+					}
+					&:last-child {
+						color: #A4AAB3;
+						font-size: 12px;
+						text-decoration: line-through;
+					}
+				}
+			}
+			.sendway {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				font-size: 12px;
+				span{
+					color: #7C7F88;
+					&.self-support {
+						font-size: 10px;
+						color: #F34444;
+						padding: 3px;
+						border: 1px solid #F34444;
+						border-radius: 2px;
+					}
+				}
+				img {
+					width: 22px;
+					height: 20px;
+				}
+			}
+		}
+	}
+}
+
+// 公共header
+.ui-commmon-header {
+	position: relative;
+	background:rgba(255,255,255,1);
+	box-shadow: 0px -0.5px 0px 0px rgba(232,234,237,1);
+	height: 44px;
+	padding: 0px 15px;
+	h3 {
+		padding: 0px;
+		margin: 0px;
+		font-size:17px;
+		color:rgba(78,84,93,1);
+		line-height: 44px;
+		height: 44px;
+		text-align: center;
+	}
+	img {
+		position: absolute;
+		height: 18px;
+		width: 11px;
+		top: 13px;
+	}
+}
+
+//  公共的从底部弹出的弹框样式
+.mint-popup-bottom {
+	width: 100%;
+    // height: 50%;
+    border: 0px;
+    overflow: auto;
+}

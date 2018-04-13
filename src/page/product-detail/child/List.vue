@@ -4,7 +4,7 @@
 		<div class="list" v-for="(item, index) in list">
 			<div>
 				<span>
-					<!-- {{ item.author.username}} -->
+					{{ utils.replaceStr(item.author.username) }}
 					<span v-bind:class="{'good-review': item.grade == 3, 'medium-review': item.grade == 2, 'bad-review': item.grade == 1}">{{ getGrade(item.grade) }}</span>
 				</span>
 
@@ -20,9 +20,16 @@ export default {
 	data(){
 		return {}
 	},
+
 	props: ['list'],
+
 	created(){},
+
 	methods: {
+		/*
+			getGrade: 获取评论的等级
+			@params： grade 等级
+		 */
 		getGrade(grade) {
 			if (grade == 1) {
 				return '差评';
@@ -32,6 +39,11 @@ export default {
 				return '好评';
 			}
 		},
+
+		/*
+			getTime: 获取评论的时间
+			@params: timestamps 时间戳
+		 */
 		getTime(timestamps) {
 			let date = new Date(timestamps * 1000);
 			let year = date.getFullYear(),
@@ -48,7 +60,7 @@ export default {
 	background:rgba(255,255,255,1);
 	.list{
 		padding: 15px 0px;
-		box-shadow: 0px 0.5px 0px 0px rgba(232,234,237,1);
+		border-bottom: 1px solid #e8eaed;
 		color: #4E545D;
 		font-size: 15px;
 		font-family: 'PingFangSC';

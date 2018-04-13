@@ -22,21 +22,21 @@ Vue.filter('mySubstr',function(titleStr,num) {
 
 // 处理金额
 Vue.filter('money', function(val) {
-	val = val.toString().replace(/\$|\,/g,'');
+	val = val.toString().replace(/\$|\,/g,'')
 	if(isNaN(val)) {
 		val = "0";  
 	} 
-	let sign = (val == (val = Math.abs(val)));
-	val = Math.floor(val*100+0.50000000001);
+	let sign = (val == (val = Math.abs(val)))
+	val = Math.floor(val*100+0.50000000001)
 	let cents = val%100;
-	val = Math.floor(val/100).toString();
+	val = Math.floor(val/100).toString()
 	if(cents<10) {
 		 cents = "0" + cents
 	}
 	for (var i = 0; i < Math.floor((val.length-(1+i))/3); i++) {
 			val = val.substring(0,val.length-(4*i+3))+',' + val.substring(val.length-(4*i+3));
 	}
-	return (((sign)?'':'-') + val + '.' + cents);
+	return (((sign)?'':'-') + val + '.' + cents)
 })
 
 import 'swiper/dist/css/swiper.css'
@@ -46,6 +46,7 @@ import { ROUTERMODE } from './config/env'
 import utils from './util/util'
 
 import './assets/style/reset.scss'
+import './assets/style/common.scss'
 
 Vue.config.productionTip = false
 
@@ -66,21 +67,20 @@ const router = new VueRouter({
 	}
 })
 
-// router.beforeEach((to, from, next) => {	
-// 	const toDepth = to.path.split('/').length
-// 	const fromDepth = from.path.split('/').length
-// 	if (toDepth < fromDepth) {
-// 		from.meta.keepAlive = false
-// 		to.meta.keepAlive = true
-// 	}
-// 	next()
-// })
+router.beforeEach((to, from, next) => {
+	const toDepth = to.path.split('/').length
+	const fromDepth = from.path.split('/').length
+	if (toDepth < fromDepth) {
+		from.meta.keepAlive = false
+		to.meta.keepAlive = true
+	}
+	next()
+})
 
 Vue.use(VueRouter)
 Vue.use(Mint)
 Vue.use(VueResource)
 Vue.use(VueAwesomeSwiper)
-
 Vue.prototype.utils = utils;
 
 new Vue({

@@ -1,9 +1,12 @@
 <!-- Goodsreview.vue -->
 <template>
-	<div class="ui-goods-review" v-if='reviewList.length > 0'>
-		<div class="goods-review-header">
-			<p>评价</p>
+	<div class="ui-goods-review" v-if='reviewList.length > 0' @click="getCommentStatus()">
+		<div class="ui-detail-common">
+			<div class="header">
+				<p>评价</p>
+			</div>
 		</div>
+
 		<div class="goods-review-body">
 			<list :list="reviewList"></list>
 		</div>
@@ -13,6 +16,7 @@
 <script>
 	import list from './List';
 	import { getReviewList } from '../../../api/network/product';
+	import { mapState, mapMutations } from 'vuex';
 	export default {
 		data() {
 			return{
@@ -20,13 +24,20 @@
 				reviewList: []
 			}
 		},
+
 		components: {
 			list
 		},
+
 		created(){
 			this.getReviewList();
 		},
+
 		methods: {
+			...mapMutations({
+				'commentStatus': 'changeIsComment'
+			}),
+
 			getReviewList() {
 				let params = {
 					"product": this.id,
@@ -37,13 +48,13 @@
 				getReviewList(params).then(res => {
 					if (res) {
 						this.reviewList = res.reviews.slice(0, 2);
-						// if(res.reviews.length > 2) {
-						// 	this.reviewList = res.reviews.slice(0, 2);
-						// } else if(res.reviews.length > 2) {
-						// 	this.reviewList = res.reviews;
-						// }
 					}
 				})
+			},
+
+			/* 评论 */
+			getCommentStatus() {
+				this.commentStatus(true);
 			}
 		}
 	}
@@ -51,13 +62,8 @@
 
 <style lang="scss">
 	.ui-goods-review {
-		padding: 0px 15px;
-		background-color: #ffffff;
-		margin-top: 8px;
-		.goods-review-header {
-			padding: 15px 0px;
+		.header{
 			border-bottom: 1px solid #e8eaed;
-			box-shadow: 0px 0.5px 0px 0px rgba(232,234,237,1);
 			p{
 				font-size:16px;
 				font-family:'PingFangSC-Regular';
@@ -66,6 +72,10 @@
 				padding: 0px;
 				margin: 0px;
 			}
+		}
+		.goods-review-body {
+			padding: 0px 15px;
+			background:rgba(255,255,255,1);
 		}
 	}
 </style>

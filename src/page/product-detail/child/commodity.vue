@@ -1,24 +1,39 @@
 <template>
 	<!-- 商品 -->
 	<div class="commodity-wrapper" v-bind:class="{'hide-commodity': isHideCommodity, 'sroller-commodity': !isHideCommodity}">
-		<v-goods-swipe v-bind:photos='productDetail'></v-goods-swipe>
-		<v-goods-info :productinfo="productDetail"></v-goods-info>
+		<!-- 轮播图 -->
+		<v-goods-swipe></v-goods-swipe>
+		<!-- 商品信息 -->
+		<v-goods-info></v-goods-info>
+		<!-- 促销信息 -->
+		<v-goods-promotions></v-goods-promotions>
+		<!-- 购买 -->
 		<v-goods-buy></v-goods-buy>
+		<!-- 联系客服-->
 		<v-goods-concat></v-goods-concat>
-		<v-goods-like :detaillike="productDetail.collector"></v-goods-like>
+		<!-- 点赞 -->
+		<v-goods-like></v-goods-like>
+		<!-- 评论 -->
 		<v-goods-review></v-goods-review>
+		<!-- 推荐商品  -->
 		<v-goods-recommend></v-goods-recommend>
+		<!-- 详情 -->
+		<!-- <v-goods-aspect v-if='isShowDetail'></v-goods-aspect> -->
 	</div>
 </template>
 
 <script>
 	import goodsSwipe from './GoodsSwipe';
 	import detailInfo from './Detailinfo';
+	import promotions from './promotions';
+
 	import detailBuy from './Buy';
 	import detailConcat from './Concat';
 	import detailLike from './Like';
 	import goodsReview from './Goodsreview';
 	import recommend from './recommend';
+
+	import aspect from './aspect';
 
 	import { mapState, mapMutations } from 'vuex';
 	//  todo
@@ -31,27 +46,54 @@
 			}
 		},
 		created(){
-			this.getDetail();
+			// this.getDetail();
 		},
 		components: {
 			'v-goods-swipe': goodsSwipe,
 			'v-goods-info': detailInfo,
+			'v-goods-promotions': promotions,
 			'v-goods-buy': detailBuy,
 			'v-goods-concat': detailConcat,
 			'v-goods-like': detailLike,
 			'v-goods-review': goodsReview,
-			'v-goods-recommend': recommend
+			'v-goods-recommend': recommend,
+			'v-goods-aspect': aspect
 		},
 		computed: mapState({
-			isHideCommodity: state => state.detail.isHideCommodity
+			isHideCommodity: state => state.detail.isHideCommodity,
+			isShowDetail: state => state.detail.isShowDetail
 		}),
+
+		mounted() {
+			// 添加滚动事件
+			var element = this.$el;
+			var that = this;
+	        element.addEventListener('scroll', (event) => {
+	        	let params = {
+	        		'top': element.scrollTop,
+	        		'height': element.scrollHeight
+	        	};
+	        	if( params.height - (params.top + element.offsetHeight + 2) <  0) {
+	        		this.changeStatus();
+	        	}
+	        });
+		},
+
 		methods: {
+			...mapMutations({
+				setCurrentSwiperIndex: 'setCurrentSwiperIndex'
+			}),
+
 			getDetail() {
 				getProductDetail(this.productId).then(res => {
 					if (res) {
 						this.productDetail = res.product;
 					}
 				})
+			},
+
+			changeStatus() {
+				this.setCurrentSwiperIndex(1);
 			}
 		}
 	}

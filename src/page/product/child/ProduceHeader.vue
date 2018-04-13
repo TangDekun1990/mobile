@@ -5,57 +5,89 @@
 			<div class="search">
 				<img src="../../../assets/image/change-icon/back@2x.png" class="ui-back" @click="goBack()">
 				<input type="search" placeholder="请输入您要搜索的商品" v-model="keyword" autocomplete="off">
-				<img src="../../../assets/image/change-icon/b2_cart@2x.png" class="ui-cart">
+				<img src="../../../assets/image/change-icon/b2_cart@2x.png" class="ui-cart" v-on:click='goCart()'>
+				<span class="cart-number" v-if="quantity >=0 ">{{ quantity }}</span>
 			</div>
 		</form>
 	</div>
 </template>
 
 <script>
-	import { getSearch } from '../../../api/network/product';
 	import { mapState, mapMutations } from 'vuex';
+	import { cartQuantity } from '../../../api/network/cart';
+	import { Toast } from 'mint-ui';
+
 	export default {
-		props:['item', 'value'],
+		props:['value'],
+
 		data() {
 			return {
-				keyword: this.value ? this.value : '',
-				isAuto: false
+				keyword: this.value ? this.value : '',  //关键字
+				quantity: 0  //购物车数量
 			}
 		},
+
 		created(){
-			if (this.value) {
-				this.search();
-			}
+			this.getCarNumber();
 		},
+
 		computed: mapState({
 			isSearch: state => state.product.isSearch
 		}),
+
 		watch: {
-			keyword: function(value) {
-				if (value.length > 0) {
-					this.changeSearch(true);
-				} else {
-					this.changeSearch(false);
+			value: function(value) {
+				if (value) {
+					this.keyword = value;
 				}
 			}
 		},
+
 		methods: {
 			...mapMutations({
 				changeSearch: 'changeSearch'
 			}),
+
+			/*
+			 * search: 搜索
+			 */
 			search(e) {
-				// this.changeSearch(true);
 				let data = {
-					'isSearch': this.isSearch,
 					'keyword': this.keyword
 				};
+				if (!data.keyword) {
+					Toast('请输入您要搜索的关键字');
+					return;
+				}
 				this.$parent.$emit('change-list', data);
 				if (e) {
 					this.utils.stopPrevent(e);
 				}
 			},
+
+			/*
+			 * goBack: 返回上一级
+			 */
 			goBack() {
 				this.$router.go(-1);
+			},
+
+			/*
+			 *  getCarNumber: 获取购物车数量
+			 */
+			getCarNumber() {
+				cartQuantity().then(res => {
+					if (res) {
+						this.quantity = res.quantity;
+					}
+				})
+			},
+
+			/*
+			 *  goCart: 跳转到购物车列表
+			 */
+			goCart() {
+				this.$router.push({'name': 'cart', 'params': {type: 0}})
 			}
 		}
 	}
@@ -98,6 +130,13 @@
 			img.ui-cart {
 				width: 22px;
 				height: 20px;
+			}
+			span.cart-number {
+			    top: 5px;
+			    right: 20px;
+			    width: 18px;
+			    height: 14px;
+			    line-height: 14px;
 			}
 		}
 	}

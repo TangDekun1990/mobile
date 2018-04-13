@@ -53,7 +53,10 @@ import OrderSubmit from '../page/order/child/OrderSubmit'
 import Detail from '../page/product-detail/index'
 
 // 购物车
-import Cart from '../page/cart/index'
+import Cart from '../page/cart/cart'
+
+// 查看推荐商品
+import Recommend from '../page/recommend/Recommend'
 
 export default [
 	{
@@ -65,6 +68,7 @@ export default [
 				redirect: '/home'
 			},
 			{
+				name: 'home',
 				path: '/home',
 				component: Home
 			},
@@ -75,8 +79,11 @@ export default [
 			},
 			{
 				name: 'product',
-				path: '/product/:category?/:brand?/:shop?/:keywords?',
-				component: Product
+				path: '/product/:category?/:brand?/:shop?/:keywords?/',
+				component: Product,
+				meta: {
+					keepAlive: true
+				}
 			},
 			{
 				name: 'search',
@@ -214,6 +221,11 @@ export default [
 				path: '/cart/:type?',
 				component: Cart
 			},
+			{
+				name: 'recommend',
+				path: '/recommend/:brand?/:category?/:shop?/:product?',
+				component: Recommend
+			}
 		]
 	}
 ]

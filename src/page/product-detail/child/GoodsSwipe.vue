@@ -1,20 +1,21 @@
 <!-- GoodsSwipe.vue -->
 <template>
-	<div class="swipe ui-common-swiper">
+	<div class="swipe ui-common-swiper" v-if="detailInfo">
 		<!-- 轮播图 -->
 		<mt-swipe :auto="0" class='ui-common-swiper' :prevent=false :stop-propagation='isStopPropagation' @change="handleChange" v-if='!isShowMode'>
 
-		  	<mt-swipe-item v-for="(item,index) in photos.photos" v-bind:key="index" v-if='photos.photos && photos.photos.length > 0'>
+		  	<mt-swipe-item v-for="(item,index) in detailInfo.photos" v-bind:key="index" v-if='detailInfo.photos && detailInfo.photos.length > 0'>
 		  		<img v-bind:src="item.thumb" v-on:click='previewPicture(index)'>
 		  	</mt-swipe-item>
 
-		  	<mt-swipe-item v-if='!photos.photos || photos.photos.length <= 0'>
+		  	<mt-swipe-item v-if='!detailInfo.photos || detailInfo.photos.length <= 0'>
 		  		<img src="../../../assets/image/change-icon/default_image_02@2x.png" class="product-img">
 		  	</mt-swipe-item>
 		</mt-swipe>
 
 		<!-- 预览图片 -->
-		<preview-picture :data="photos.photos" v-bind:currentIndex="index" v-if='isShowMode' :title="title"></preview-picture>
+		<preview-picture :data="detailInfo.photos" v-bind:currentIndex="index" v-if='isShowMode' :title="title"></preview-picture>
+
 	</div>
 </template>
 
@@ -30,27 +31,45 @@
 				isStopPropagation: true
 			}
 		},
-		props: ['photos'],
+
+		computed: {
+	      	...mapState({
+				detailInfo: state => state.detail.detailInfo
+			})
+		},
+
 		components: {
 			PreviewPicture
 		},
+
 		created() {
 			this.$on('close-preview-picture', () => {
 				this.isShowMode = false;
 				this.hideCommodity(false);
 			});
 		},
+
 		methods: {
 			...mapMutations({
 				change: 'changeStatus',
 				hideCommodity: 'setIsHideCommodity'
 			}),
+
+			/*
+				previewPicture: 点击图片进入到查看大图组件
+				@params: index 当前滑动图片的index
+			 */
 			previewPicture(index) {
 				this.index = index;
 				this.isShowMode = true;
 				this.change(true);
 				this.hideCommodity(true);
 			},
+
+			/*
+				handleChange: 轮播图改变时设置是否阻止事件冒泡
+				@params: index 当前滑动的index
+			 */
 			handleChange(index) {
 				if (index == this.photos.length-1) {
 					this.isStopPropagation = false;
