@@ -2,12 +2,12 @@
 <template>
 	<div>
 		<div class="ui-cart-promos" @click="changeStatus()" v-if="!isCheckedAll" v-bind:class="{'has-bottom': issShowTabbar}">
-			<!-- {{ promos_list }} -->
 			<div class="promos-list">
-				<div class="item" v-for="item in promos_list" v-if='promos_list'>
+				<div class="item" v-for="(item, key) in promos_list" v-if='promos_list'>
 					<table>
-						<tr v-for="(list, index) in item.value" v-if="item.value.length > 0 && index <= 1">
-							<td v-bind:class="{'hide': index != 0}" class="title">{{ item.name}}</td>
+						<tr v-for="(list, index) in item" v-if="item.length > 0 && index <= 1">
+							<td v-bind:class="{'hide': index != 0}" class="title" v-if="key == 'promos'">已满足</td>
+							<td v-bind:class="{'hide': index != 0}" class="title" v-if="key == 'un_promos'">未满足的优惠</td>
 							<td class="name">{{ list.name }}</td>
 							<td class="promo">{{list.promo}}</td>
 							<td><img src="../../../assets/image/change-icon/enter@2x.png" v-bind:class="{'hide': index != 0}"></td>
@@ -23,10 +23,11 @@
 					<h3>订单促销</h3>
 					<img src="../../../assets/image/change-icon/close@2x.png" v-on:click="close()">
 				</div>
-				<div class="item" v-for="item in promos_list" v-if='promos_list' >
+				<div class="item" v-for="(item, key) in promos_list" v-if='promos_list' >
 					<table>
-						<tr v-for="(list, index) in item.value" v-if="item.value.length > 0 ">
-							<td v-bind:class="{'hide': index != 0}" class="title">{{ item.name}}</td>
+						<tr v-for="(list, index) in item" v-if="item.length > 0 ">
+							<td v-bind:class="{'hide': index != 0}" class="title" v-if="key == 'promos'">已满足</td>
+							<td v-bind:class="{'hide': index != 0}" class="title" v-if="key == 'un_promos'">未满足的优惠</td>
 							<td class="name">{{ list.name }}</td>
 							<td class="promo">{{list.promo}}</td>
 							<td style="display:none"><img src="../../../assets/image/change-icon/enter@2x.png"></td>
@@ -90,9 +91,7 @@
 			cartPromos(ids) {
 				cartPromos(ids).then(res => {
 					if (res) {
-						let data = res.cart_product_promos;
-						// this.promos_list = {};
-						this.promos_list = Object.assign({}, this.buildData(data));
+						this.promos_list = Object.assign({}, res.cart_product_promos);
 						this.height = this.getPromosHeight();
 						this.setHeight(this.height);
 					}
@@ -102,9 +101,10 @@
 			/*
 			 * buildData: 构建promos_list数据
 			 * @param： data 促销数据
+			 * TODO
 			 */
 			buildData(data) {
-				let list = this.promos_list;
+				let list = {};
 				if (data) {
 					for (let item in data) {
 						let name = '';
@@ -113,9 +113,11 @@
 						} else if (item == 'un_promos'){
 							name = '未满足的优惠';
 						}
-						list[item] = {'name': name, 'value': data[item]};
+						if (JSON.stringify(data[item]) !== '[]') {
+							list[item] = {'name': name, 'value': data[item]};
+						}
 					}
-				}
+				};
 				return list;
 			},
 
@@ -140,11 +142,13 @@
 				let data = this.promos_list,
 					height = 0;
 				for (const item in data) {
-					let value = data[item].value;
-					if (value.length = 1) {
-						height += 39;
-					} else if (value.length >= 2){
-						height += 2 * 39;
+					let value = data[item];
+					if (value && JSON.stringify(value) !== '[]') {
+						if (value.length = 1) {
+							height += 39;
+						} else if (value.length >= 2){
+							height += 2 * 39;
+						}
 					}
 				}
 				return height;
