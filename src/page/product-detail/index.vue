@@ -60,6 +60,7 @@
 				getDetail: 获取商品详情， 并且存入状态管理
 			*/
 			getDetail() {
+				this.saveInfo();
 				getProductDetail(this.productId).then(res => {
 					if (res) {
 						this.productDetail = res.product;

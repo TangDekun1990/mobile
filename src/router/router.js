@@ -44,12 +44,16 @@ import PaySucceed from '../page/payment/PaySucceed'
 // order
 import Order from '../page/order/Order'
 import OrderDetail from '../page/order/OrderDetail'
+import OrderTrack from '../page/order/child/OrderTrack'
+import OrderTrade from '../page/order/child/OrderTrade'
+import OrderComment from '../page/order/child/OrderComment'
+import OrderSubmit from '../page/order/child/OrderSubmit'
 
 // 商品详情
 import Detail from '../page/product-detail/index'
 
 // 购物车
-import Cart from '../page/cart/index'
+import Cart from '../page/cart/cart'
 
 // 查看推荐商品
 import Recommend from '../page/recommend/Recommend'
@@ -75,8 +79,11 @@ export default [
 			},
 			{
 				name: 'product',
-				path: '/product/:category?/:brand?/:shop?/:keywords?',
-				component: Product
+				path: '/product/:category?/:brand?/:shop?/:keywords?/',
+				component: Product,
+				meta: {
+					keepAlive: false
+				}
 			},
 			{
 				name: 'search',
@@ -181,8 +188,28 @@ export default [
 			},
 			{
 				name: 'orderDetail',
-				path: '/orderDetail',
+				path: '/orderDetail/:orderDetail?',
 				component: OrderDetail
+			},
+			{
+				name: 'orderTrack',
+				path: '/orderTrack/:orderTrack?',
+				component: OrderTrack
+			},
+			{
+				name: 'orderTrade',
+				path: '/orderTrade',
+				component: OrderTrade
+			},
+			{
+				name: 'orderComment',
+				path: '/orderComment',
+				component: OrderComment
+			},
+			{
+				name: 'orderSubmit',
+				path: '/orderSubmit',
+				component: OrderSubmit
 			},
 			{
 				name: 'detail',
@@ -196,8 +223,11 @@ export default [
 			},
 			{
 				name: 'recommend',
-				path: '/recommend/:brand?/:category?/:shop?/:product?',
-				component: Recommend
+				path: 'recommend/:product?/:category?/:brand?/:shop?',
+				component: Recommend,
+				meta: {
+					keepAlive: false,
+				}
 			}
 		]
 	}

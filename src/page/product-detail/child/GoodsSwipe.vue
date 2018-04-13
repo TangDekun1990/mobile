@@ -1,6 +1,6 @@
 <!-- GoodsSwipe.vue -->
 <template>
-	<div class="swipe ui-common-swiper">
+	<div class="swipe ui-common-swiper" v-if="detailInfo">
 		<!-- 轮播图 -->
 		<mt-swipe :auto="0" class='ui-common-swiper' :prevent=false :stop-propagation='isStopPropagation' @change="handleChange" v-if='!isShowMode'>
 

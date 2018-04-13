@@ -25,8 +25,8 @@ export default {
 
 	fillTheScreen(obj) {
 		const isWX = /micromessenger/.test(navigator.userAgent.toLowerCase())
-	  	// why?
-	  	let height = isWX ? document.documentElement.clientHeight : document.documentElement.clientHeight - document.documentElement.offsetHeight
+	  	// why? document.documentElement.clientHeight - document.documentElement.offsetHeight
+	  	let height = isWX ? document.documentElement.clientHeight : document.documentElement.offsetHeight
 	  	if (!obj.target || !obj.totalHeight) return
 	  	height = 1 - obj.totalHeight / height
 	  	obj.target.style.height = height * 100 + 'vh'
@@ -59,5 +59,22 @@ export default {
 	 		el.style.left = x
 	 		el.style.top = y
 	 	}
+	},
+
+	/*
+		*@param start  开始展示的字符
+		*@param end 结束字符展示位置
+		*@param target 目标字符
+	*/
+	replaceStr(target,  start, end, length) {
+		let str = '';
+		if (start) {
+			str = target.substr(start, length) + '***';
+		} else if (end) {
+			str = '***'+ target.substr(end, length);
+		} else {
+			str = target.substr(0, 1) + '***'+ target.substr(target.length-1, 1);
+		}
+		return str;
 	}
 }

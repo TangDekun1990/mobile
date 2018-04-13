@@ -1,8 +1,9 @@
 <template>
-	<div class="cart-header-wrapper">
+	<div class="cart-header-wrapper ui-commmon-header">
+		<img src="../../../assets/image/change-icon/back@2x.png" v-if="!issShowTabbar" @click="goBack()">
 		<h3>购物车</h3>
-		<span v-if='!isShowHeader' @click="changeStatus(false, true)">编辑</span>
-		<span v-if='isShowHeader' @click="changeStatus(true, false)">完成</span>
+		<span @click="changeFinishStatus()" v-if="!isFinish">编辑</span>
+		<span @click="changeFinishStatus()" v-if="isFinish">完成</span>
 	</div>
 </template>
 
@@ -10,23 +11,36 @@
 	import { mapState, mapMutations } from 'vuex';
 	export default {
 		data(){
-			return {}
+			return {
+				isFinish: false //是否是完成状态 编辑-完成false  ： 完成 - 编辑 true  s - true - false
+			}
 		},
-		computed: mapState({
-			isSelectedAll: state => state.cart.isSelectedAll,
-			isShowHeader: state => state.cart.isShowHeader
-		}),
+
+		props: {
+			issShowTabbar: {
+				type: Number,
+				default: 0
+			}
+		},
+
+		computed:{},
+
 		methods: {
-			...mapMutations({
-				changedAll: 'changedSelectedAll',
-				changedHeader: 'changedIsShowHeader'
-			}),
-			changeStatus(value, isheader) {
-				this.changedAll(value);
-				this.changedHeader(isheader);
-				if (!isheader) {
-					this.$parent.$emit('redener-cart-list', true);
-				}
+
+			/*
+			 * goBack: 返回上一页
+			 */
+			goBack() {
+				this.$router.go(-1);
+			},
+
+			/*
+			 *  changeFinishStatus: 点击编辑和完成向父组件发送事件， 编辑状态， 列表默认全选， 完成状态默认全部不选中, 并改变是否是完成的状态
+			 */
+			changeFinishStatus() {
+				this.isFinish = !this.isFinish;
+				let data = {'isFinish': this.isFinish};
+				this.$parent.$emit('change-list-selected', data);
 			}
 		}
 	}
@@ -34,8 +48,9 @@
 
 <style lang='scss' scoped>
 	.cart-header-wrapper {
-		display: relative;
-		height: 44px;
+		/*position: relative;
+		top: 0px;*/
+		/*height: 44px;
 		line-height: 44px;
 		top: 0px;
 		left: 0px;
@@ -43,24 +58,23 @@
 		width: auto;
 		text-align: center;
 		background-color: #fff;
-		margin-bottom: 6px;
-		h3 {
+		margin-bottom: 6px;*/
+		/*h3 {
 			padding: 0px;
 			margin: 0px;
 			font-size:17px;
 			font-family:'PingFangSC-Regular';
 			color:rgba(78,84,93,1);
-		}
+		}*/
 		span {
 			position: absolute;
-			right: 15px;
 			font-size:15px;
-			font-family:'PingFangSC-Regular';
 			color:rgba(78,84,93,1);
 			display: inline-block;
 			height: 44px;
 			line-height: 44px;
 			top: 0px;
+			right: 15px;
 		}
 	}
 </style>

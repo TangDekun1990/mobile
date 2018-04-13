@@ -8,7 +8,7 @@
 			  		<div class="image-swipe-wrapper">
 						<div v-for="image in item[0]">
 							<img :src="image.photos[0].thumb">
-							<span>AED {{image.price}}</span>
+							<span>AED {{image.current_price}}</span>
 						</div>
 			  		</div>
 			  	</mt-swipe-item>
@@ -102,10 +102,26 @@
 				goRecommend: 跳转到相关商品页面
 			 */
 			goRecommend() {
-				this.params = {
-					product: this.$route.params.id ? this.$route.params.id : ''
-				};
-				this.$router.push({'name': 'recommend', 'params': this.params});
+				let params = {};
+				if (this.$route.params.brand) {
+					params.brand = this.$route.params.brand;
+				}
+				if (this.$route.params.category) {
+					params.category = this.$route.params.category;
+				}
+				if (this.$route.params.shop) {
+					params.shop = this.$route.params.shop;
+				}
+				if (this.$route.params.id) {
+					params.product = this.$route.params.id;
+				}
+				// let params = {
+				// 	brand: this.$route.params.brand ? this.$route.params.brand : "",
+    //             	category: this.$route.params.category ? this.$route.params.category : "",
+    //             	shop: this.$route.params.shop ? this.$route.params.shop : "",
+    //             	product: this.$route.params.id ? this.$route.params.id : ""
+				// };
+				this.$router.push({'name': 'recommend', 'params': params});
 			}
 		}
 	}

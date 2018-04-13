@@ -1,16 +1,14 @@
 <template>
-	<div class="cart-list-wrapper" v-bind:class="{'has-bottom': type}">
-		<p class="none-selected-all">{{ isSelectedAll }}</p>
+	<div class="cart-list-wrapper">
+		<!-- <p class="none-selected-all">{{ isSelectedAll }}</p>  v-bind:class="{'has-bottom': type}"-->
+
 		<div class="list" v-for="(item, index) in cartList">
 			<div class="list-checkbox">
-				<input type="checkbox" class='checkbox' :id='index' v-model="item.checked" @change="changeCart()" v-if='!isShowHeader'>
-				<input type="checkbox" class='checkbox' :id='index' v-model="item.checked" v-if='isShowHeader'>
+				<input type="checkbox" class='checkbox' :id='index' v-model="item.checked" @change="changeSingleStatu(item.checked, index)">
 				<label :for="index"></label>
 			</div>
-
 			<img :src="item.product.photos[0].thumb" v-if='item.product.photos.length > 0'>
 			<img src="../../../assets/image/change-icon/default_image_02@2x.png" v-if='item.product.photos.length <= 0'>
-
 			<div class="list-info">
 				<h3> {{ item.product.name}}</h3>
 				<div class="info-price">
@@ -21,6 +19,7 @@
 				</div>
 			</div>
 		</div>
+
 	</div>
 </template>
 
@@ -28,141 +27,101 @@
 	import { mapState, mapMutations } from 'vuex';
 	import { Indicator } from 'mint-ui';
 	import { Toast } from 'mint-ui';
-
 	import { orderPrice } from '../../../api/network/order';
-	import { getCartGroup, updateCartQuantity, getCartPromos} from '../../../api/network/cart'
+	import { cartGet, cartDelete, cartUpdate} from '../../../api/network/cart'
 	export default {
 		data() {
 			return {
-				cartList: [],
-				updateGoods: {},
-				indicator: {
-					spinnerType: 'fading-circle'
-				},
-				orderprice: [], // 总价
-				promos: [],  //购物车促销信息
-				total_amount: 0 //购物车数量
+				cartList: [], //购物车列表
+				indicator: { spinnerType: 'fading-circle'},
+				orderprice: [], // 购物车总价
+				total_amount: 0, //购物车数量
+				promosIds: []  //促销信息IDS
 			}
 		},
+
 		created(){
 			this.getCartList(true);
 		},
-		props: ['type'],
-		computed:{
-			...mapState({
-				isSelectedAll: state => state.cart.isSelectedAll,
-				saveCartList: state => state.cart.saveCartList,
-				isShowHeader: state => state.cart.isShowHeader
-			})
-		},
-		watch: {
-			isSelectedAll: function(value) {
-				this.selectCartList(value);
+
+		props: {
+			isCheckedAll: {
+				type: Boolean,
+				default: false
 			}
 		},
+
+		mounted() {
+
+		},
+
 		methods: {
 			...mapMutations({
 				getAmount: 'calculationAmount',
-				getPrice: 'calculationPrice',
-				saveCartData: 'saveCartData'
+				getPrice: 'calculationPrice'
 			}),
 
-			// 获取购物车列表
 			/*
-			isUpdate: 数量加减之后关闭loading
-			value: 是否需要改变checkbox的值
-			isMerg: 是否需要合并两个数组
+			 * getCartList: 获取购物车列表
 			 */
 			getCartList(value){
-				this.cartList = [];
-				getCartGroup().then(res => {
+				cartGet().then(res => {
 					if (res && res.goods_groups.length > 0) {
-						this.cartList = Object.assign([], res.goods_groups[0].goods, this.cartList);
-						this.selectCartList(value);
+						this.cartList = Object.assign([], res.goods_groups[0].goods);
+						this.addChecked(value);
 						this.renderCart();
-						this.saveCartData(this.cartList);
 					}
 				})
 			},
 
-			//加减之后更新列表
-			updateList(index ) {
-				getCartGroup().then(res => {
+			/*
+			 * addChecked: 为每个商品添加checked 属性
+			 * @param: isSelectedall 是否选中商品 Boolean
+			 */
+			addChecked(isSelectedall) {
+				let list = this.cartList;
+				for (let i = 0, len = list.length-1; i <= len; i++ ) {
+					list[i].checked = isSelectedall;
+				}
+				this.cartList = Object.assign([], list);
+			},
+
+			/*
+			 *  updateList: 加减之后更新列表
+			 */
+			updateList(index) {
+				cartGet().then(res => {
 					if (res && res.goods_groups.length > 0) {
 						Indicator.close();
 						let data = res.goods_groups[0].goods;
 						this.cartList[index].amount = data[index].amount;
 						this.renderCart();
-						this.saveCartData(this.cartList);
 					}
 				})
 			},
 
-			//
-			getMergData(data) {
-
-				for (let i = 0, len = data.length; i <= len -1; i++) {
-
-					for (let j = 0; j <= this.cartList.length-1; j++) {
-
-						if (data[j].id == this.cartList[i].id) {
-
-							// this.cartList[i].checked = [j].checked;
-							this.cartList[j].amount = data[i].amount;
-						}
+			/*
+			 *  renderCart: 修改商品数量和点击是否选中后 重新计算商品价格和数量
+			 */
+			renderCart() {
+				let data = this.cartList;
+				this.total_amount = 0;
+				this.orderprice = [];
+				this.promosIds = [];
+				for (let i = 0, len = data.length; i <= len-1; i++) {
+					if (data[i].checked) {
+						this.orderprice.push({'goods_id': data[i].product.id, 'property': [], 'num': data[i].amount});
+						this.promosIds.push(data[i].id);
+						this.total_amount += data[i].amount;
 					}
 				}
+				this.$parent.$emit('get-promos-data', this.promosIds);
+				this.getOrderPrice();
 			},
 
-			// 数量减少
-			reduceNumber(id, amount, index) {
-				if (amount > 1) {
-					this.$parent.$emit('redener-promos');
-					Indicator.open(this.indicator);
-					amount--;
-					this.updateCartQuantity(id, amount, index);
-				} else {
-					Toast({
-						duration:1000,
-						message: '受不了了， 宝贝不能再少了'
-					});
-				}
-			},
-
-			// 数量增加
-			addNumber(id, amount, stock, index) {
-				if (amount <= stock) {
-					this.$parent.$emit('redener-promos');
-					Indicator.open(this.indicator);
-					amount++;
-					this.updateCartQuantity(id, amount, index);
-				} else {
-					Toast({
-						duration:1000,
-						message: '该商品总库存不足'
-					});
-				}
-			},
-
-			//  商品数量加减更新数量
-			updateCartQuantity(id, amount, index) {
-				let params = {'good': id, 'amount': amount};
-				updateCartQuantity(params).then( res => {
-					if (res) {
-						this.updateList(index);
-					}
-				});
-			},
-
-			// 商品是否全选
-			selectCartList(isselected) {
-				for (let i = 0, len = this.cartList.length; i <= len-1; i++) {
-					this.cartList[i].checked = isselected;
-				}
-				this.saveCartData(this.cartList);
-			},
-
-			// 获取商品价格
+			/*
+			 *  getOrderPrice 获取购物车价格
+			 */
 			getOrderPrice(){
 				let params = {
 					'shop': null,
@@ -177,39 +136,122 @@
 					params.order_product = JSON.stringify(this.orderprice);
 				} else {
 					this.getAmount(0);
-					this.getPrice(0);
+					this.getPrice(0.00);
 					return;
 				}
 				orderPrice(params.shop, params.order_product, params.consignee, params.shipping, params.coupon, params.cashgift, params.score).then(res => {
 					if (res) {
-						let price = res.order_price.total_price;
+						let price = res.order_price.product_price;
 						this.getAmount(this.total_amount);
 						this.getPrice(price);
 					}
 				})
 			},
 
-			// 点击是否选中重新计算商品价格和数量
-			renderCart() {
-				let data = this.cartList;
-				this.total_amount = 0;
-				this.promos = [];
-				this.orderprice = [];
+			/*
+			 * deleteSelected: 删除购物车数据
+			 */
+			deleteSelected() {
+				let data = this.cartList,
+					deleteGoods = [];
+				this.promosIds = [];
 				for (let i = 0, len = data.length; i <= len-1; i++) {
 					if (data[i].checked) {
-						this.orderprice.push({'goods_id': data[i].product.id, 'property': [], 'num': data[i].amount});
-						this.promos.push(data[i].id);
-						this.total_amount += data[i].amount;
+						deleteGoods.push(data[i].id);
+						this.promosIds.push(data[i].id);
 					}
 				}
-				this.getOrderPrice();
+				if (deleteGoods.length > 0) {
+					deleteGoods = JSON.stringify(deleteGoods);
+				} else {
+					Toast('当前没有可删除的商品');
+					return;
+				}
+				Indicator.open();
+				cartDelete(deleteGoods).then(res => {
+					if (res) {
+						this.getCartList(false);
+						Indicator.close();
+					}
+				})
 			},
 
-			// 点击复选框改变价格和数量
-			changeCart() {
-				this.renderCart();
-				this.saveCartData(this.cartList);
-				this.$parent.$emit('redener-promos');
+			/*
+			 *  changeSingleStatu: 改变单个商品是否选中的状态, 然后重新获取商品的件数和价格
+			 *  @param ： state 选中的状态
+			 *  @param: index 当前改变的商品的index
+			 */
+			changeSingleStatu(state, index) {
+				let data = this.cartList,
+					length = 0,
+					status = false;
+				for (let i = 0, len = data.length-1; i <= len; i++ ) {
+					if (data[i].checked) {
+						length = length+1;
+					}
+				}
+				if (length == data.length) {
+					status = true;
+				} else {
+					status = false;
+				}
+				this.$parent.$emit('change-footer-status', status);
+				if (!this.isCheckedAll) {
+					this.renderCart();
+				}
+			},
+
+			/*
+			 *  reduceNumber: 数量减少
+			 *  @param: id 当前减少的商品id
+			 *  @param: amount 数量
+			 *  @param： index 当前减少的index
+			 */
+			reduceNumber(id, amount, index) {
+				if (amount > 1) {
+					Indicator.open(this.indicator);
+					amount--;
+					this.updateCartQuantity(id, amount, index);
+				} else {
+					Toast({
+						duration:1000,
+						message: '受不了了， 宝贝不能再少了'
+					});
+				}
+			},
+
+			/*
+			 *  addNumber: 数量增加
+			 *  @param: id 当前减少的商品id
+			 *  @param: amount 数量
+			 *  @param: stock 库存
+			 *  @param： index 当前减少的index
+			 */
+			addNumber(id, amount, stock, index) {
+				if (amount <= stock) {
+					Indicator.open(this.indicator);
+					amount++;
+					this.updateCartQuantity(id, amount, index);
+				} else {
+					Toast({
+						duration:1000,
+						message: '该商品总库存不足'
+					});
+				}
+			},
+
+			/*
+			 * updateCartQuantity: 商品数量加减更新数
+			 * @param: id 当前减少的商品id
+			 * @param: amount 数量
+			 * @param： index 当前操作的商品的index
+			 */
+			updateCartQuantity(id, amount, index) {
+				cartUpdate(id, amount).then( res => {
+					if (res) {
+						this.updateList(index);
+					}
+				});
 			}
 		}
 	}
@@ -222,14 +264,12 @@
 	    width: 100%;
 	    bottom: 44px;
 	    top: 44px;
-	    /*min-height: 70%;
-	    max-height: 80%;*/
+	    padding-top: 8px;
 		p.none-selected-all {
 			display: none;
 		}
 		.list {
 			display: flex;
-			/*justify-content: space-around;*/
 			align-content: center;
 			align-items: center;
 			background-color: #fff;

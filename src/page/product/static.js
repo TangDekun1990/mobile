@@ -12,24 +12,28 @@ export const SORTKEY = [
 			{
 				key: ENUM.SORT_KEY.DEFAULT,
 				name: '综合排序',
+				isMore: false,
 				value: ENUM.SORT_VALUE.DESC,
 				id:1
 			},
 			{
 				key: ENUM.SORT_KEY.PRICE,
 				name: '价格从低到高',
+				isMore: false,
 				value: ENUM.SORT_VALUE.ASC,
 				id: 2
 			},
 			{
 				key: ENUM.SORT_KEY.PRICE,
 				name:'价格从高到底',
+				isMore: false,
 				value: ENUM.SORT_VALUE.DESC,
 				id: 3
 			},
 			{
 				key: ENUM.SORT_KEY.CREDIT,
 				name: '好评率',
+				isMore: false,
 				value: ENUM.SORT_VALUE.DESC,
 				id: 4
 			}

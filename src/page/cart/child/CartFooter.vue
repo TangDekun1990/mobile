@@ -1,24 +1,20 @@
 <!-- CartFooter.vue -->
 <template>
-	<div class="ui-cart-footer" v-bind:class="{'has-bottom': type}">
+	<div class="ui-cart-footer" v-bind:class="{'has-bottom': issShowTabbar}">
 		<div class="list-checkbox">
-
 			<input type="checkbox" class='checkbox' id='checkbox-all' v-model="isSelected" @change="selectedAll(isSelected)">
 			<label for="checkbox-all"></label>
-			<i v-if='isShowHeader'>全选</i>
-			<i v-if='!isShowHeader' class="total-price">合计<span>AED {{ total_price }} </span></i>
+			<i v-if='isCheckedAll'>全选</i>
+			<i v-if='!isCheckedAll' class="total-price">合计<span>AED {{ total_price }} </span></i>
 		</div>
-		<span class="cart-footer-btn" v-if='isShowHeader' @click="deleteSelected()">删除</span>
-		<span class="cart-footer-btn" v-if='!isShowHeader' @click="checkout">结算({{total_amount }})</span>
+		<span class="cart-footer-btn" v-if='isCheckedAll' @click="deleteSelected()">删除</span>
+		<span class="cart-footer-btn" v-if='!isCheckedAll' @click="checkout">结算({{total_amount }})</span>
 	</div>
 </template>
 
 <script>
 	import { mapState, mapMutations } from 'vuex';
-	import { Indicator } from 'mint-ui';
 	import { Toast } from 'mint-ui';
-
-	import { deleteCart, checkoutCart} from '../../../api/network/cart'
 	export default {
 		data() {
 			return {
@@ -27,69 +23,58 @@
 			}
 		},
 		computed: mapState({
-			isSelectedAll: state => state.cart.isSelectedAll,
-			isShowHeader: state => state.cart.isShowHeader,
 			total_amount: state => state.cart.total_amount,
-			total_price: state => state.cart.total_price,
-			saveCartList: state => state.cart.saveCartList
+			total_price: state => state.cart.total_price
 		}),
-		props: ['type'],
+
+		props:{
+			isCheckedAll: {
+				type: Boolean,
+				default: false
+			},
+			issShowTabbar: {
+				type: Number,
+				default: 0
+			},
+			isStatus: {
+				type: Boolean,
+				default: true
+			}
+		},
+
 		watch: {
-			// isSelected: function(value) {
-			// 	this.selectedAll(value)
-			// },
-			isSelectedAll: function (value) {
+			isCheckedAll: function(value) {
+				this.isSelected = !value;
+			},
+
+			isStatus: function(value) {
 				this.isSelected = value;
 			}
 		},
+
 		methods: {
-			...mapMutations({
-				changedAll: 'changedSelectedAll',
-				saveCartData: 'saveCartData'
-			}),
+			/*
+			 *  selectedAll: 底部全选按钮的状态
+			 *  @param: value 底部全选按钮的值
+			 */
 			selectedAll(value) {
-				this.$parent.$emit('redener-cart-price', value);
-				this.changedAll(value);
+				this.$parent.$emit('cart-bottom-status', {'isCheckAll': value});
 			},
 
-			//删除
+			/*
+			 *  deleteSelected: 删除购物车商品
+			 */
 			deleteSelected() {
-				let data = this.saveCartList;
-				for (let i = 0, len = data.length; i <= len-1; i++) {
-					if (data[i].checked) {
-						this.deleteGoods.push(data[i].id);
-					}
-				}
-				let params = {'good': (this.deleteGoods)};
-				if (this.deleteGoods.length > 0) {
-					params.good = JSON.stringify(params.good);
-				} else {
-					Toast('当前没有可删除的商品');
+				this.$parent.$emit('update-cart-list', {'isdelete': true});
+			},
+			/*
+			 *  checkout: 结算
+			 */
+			checkout() {
+				if (this.total_price < 30) {
+					Toast('30元起送');
 					return;
 				}
-				Indicator.open();
-				deleteCart(params).then(res => {
-					if (res) {
-						this.$parent.$emit('redener-cart-list', false);
-						// this.updateCartList();
-						Indicator.close();
-					}
-				})
-			},
-
-			// 删除之后更新购物车列表
-			updateCartList() {
-				let data = this.saveCartList;
-				for (let i = 0, len = data.length; i <= len-1; i++) {
-					for (let j = 0; j <= this.deleteGoods.length-1; j++) {
-						if (data[i].id == this.deleteGoods[j]) {
-							data.splice(i, 1);
-						}
-					}
-				}
-				this.saveCartData(data);
-			},
-			checkout() {
 				this.$router.push('/checkout')
 			}
 		}
@@ -105,15 +90,12 @@
 		align-items: center;
 		height: 44px;
 		background:rgba(255,255,255,1);
-		box-shadow: 0px 0.5px 0px 0px rgba(232,234,237,1);
+		border-bottom: 1px solid #E8EAED;
 		padding-left: 12px;
 		bottom: 0px;
     	position: absolute;
     	width: -webkit-fill-available;
 		.list-checkbox {
-			// width: 20px;
-			// height:20px;
-			// flex-basis: 20px;
 			flex-shrink: 0;
 			position: relative;
 			margin-right: 5px;

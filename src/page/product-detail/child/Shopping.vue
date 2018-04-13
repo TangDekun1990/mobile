@@ -1,7 +1,7 @@
 <!-- Shopping.vue -->
 <template>
 	<div class="ui-add-shopping">
-		<div class="shopping-info">
+		<div class="shopping-info" v-if="detailInfo">
 			<div class="info-header">
 				<img src="../../../assets/image/change-icon/default_image_02@2x.png" class="info-image" v-if=' !detailInfo.photos  || detailInfo.photos.length <= 0'>
 
