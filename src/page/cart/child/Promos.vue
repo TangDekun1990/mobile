@@ -2,6 +2,7 @@
 <template>
 	<div>
 		<div class="ui-cart-promos" @click="changeStatus()" v-if="!isCheckedAll" v-bind:class="{'has-bottom': issShowTabbar}">
+			<!-- {{ promos_list }} -->
 			<div class="promos-list">
 				<div class="item" v-for="item in promos_list" v-if='promos_list'>
 					<table>
@@ -90,8 +91,8 @@
 				cartPromos(ids).then(res => {
 					if (res) {
 						let data = res.cart_product_promos;
-						this.promos_list = {};
-						this.promos_list = Object.assign({}, this.buildData(data), this.promos_list);
+						// this.promos_list = {};
+						this.promos_list = Object.assign({}, this.buildData(data));
 						this.height = this.getPromosHeight();
 						this.setHeight(this.height);
 					}
