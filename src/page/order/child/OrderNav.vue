@@ -6,37 +6,66 @@
 			<ul>
 				<li class="item" 
 					v-for="(item, index) in ORDERNAV" 
-					v-bind::key="item.id" 
+					v-bind:key="item.id" 
 					v-bind:class="{'active': currentNAVId == item.id}"
 					v-on:click="setOrderNavActive(item)"
 				>{{ item.name }}</li>
 			</ul>
 		</div>
 		<!-- body -->
-		<div  v-infinite-scroll="getMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
+		<div v-infinite-scroll="getMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
 			<div class="order-body" v-if="orderList.length > 0 ">
 				<div class="list" v-for="(item, index) in orderList">
 					<h3 class="title">{{ getOrderStatusBy(item.status) }}</h3>
 					<div class="order-image" v-if="item.goods.length > 0">
-						<img v-bind:src="image.product.photos[0].large" v-for="image in item.goods" v-if="image.product.photos.length > 0" @click="goOrderDetail()">
+						<img v-bind:src="image.product.photos[0].large" v-for="image in item.goods" v-if="image.product.photos.length > 0" @click="goOrderDetail(item.id)">
 						<!-- <img src="../../../assets/image/change-icon/default_image_02@2x.png" > -->
 					</div>
 					<div class="price">(共计{{item.goods.length}}件商品) 合计 : AED <i>{{item.total}}</i><i class="freight">(含运费:AED8.40)</i>
 					</div>
 					<div class="order-list-opratio">
+						<!-- 待付款 -->
 						<div class="btn" v-if="item.status == 0">
 							<button v-on:click="cancel()">取消订单</button>
-							<button class="buttonright" v-on:click="payment()">去支付</button>
+							<mt-popup v-model="popupVisible" position="bottom" class="mint-popup">
+								<div class="cancels">
+									<div class="cancelInfo">
+										<span class="cancel" v-on:click="cancelInfo()">取消</span> 
+										<span class="success" v-on:click="complete(item.id, index)">完成</span>
+									</div>
+									<div class="reason">
+										<p v-for="(item, list) in reasonList" v-bind:key="list" v-on:click="getReasonItem(item)">{{item.name }} </p>
+									</div>
+								</div>
+							</mt-popup>
+							<button class="buttonright" v-on:click="payment(item.id)">去支付</button>
 						</div>
-
-						<div class="btn"  v-if="item.status == 1">
-							<button>查看物流</button>
-							<button class="buttonright"  v-on:click="confirm()">确认收货</button>
+						<!-- 待发货 -->
+						<div class="btn"  v-if="item.status == 1 ? '':checkState">
+						
 						</div>
-
+						<!-- 发货中 -->
+						<div class="btn"  v-if="item.status == 2">
+							<button v-on:click="track(item.id)">查看物流</button>
+							<button class="buttonright" v-on:click="confirm(item.id,index)">确认收货</button>
+						</div>
+						<!-- 已收货，待评价 -->
 						<div class="btn" v-if="item.status == 3" >
-							<button>评价晒单</button>
-							<button class="buttonright">再次购买</button>
+							<button v-on:click="goComment(item)">评价晒单</button>
+							<button class="buttonright" v-on:click="goBuy()">再次购买</button>
+						</div>
+						<!-- 已完成 -->
+						<div class="btn" v-if="item.status == 4" >
+							<button class="buttonright" v-on:click="goBuy()">再次购买</button>
+						</div>
+						<!-- 已取消 -->
+						<div class="btn" v-if="item.status == 5" >
+							<button class="buttonright" v-on:click="goBuy()">再次购买</button>
+						</div>
+						<!-- 配货中 -->
+						<div class="btn" v-if="item.status == 6" >
+							<button v-on:click="track(item.id)">查看物流</button>
+							<button class="buttonright" v-on:click="confirm(item.id,index)">确认收货</button>
 						</div>
 					</div>
 				</div>
@@ -44,7 +73,7 @@
 			<div v-if="orderList.length <= 0" class="order-air">
 				<img src="../../../assets/image/change-icon/order_empty@2x.png">
 				<p>你的订单为空</p>
-				<button class="button">随便逛逛</button>
+				<button class="button" v-on:click="goVisit()">随便逛逛</button>
 			</div>
 		</div>
 	</div>
@@ -53,25 +82,40 @@
 <script>
 // static 
 import { ORDERSTATUS, ORDERNAV } from '../static';
-import { orderList } from '../../../api/network/order-nav';
+import { orderList, orderCancel, orderReasonList, orderConfirm, shippingStatusGet} from '../../../api/network/order'; //订单列表  //取消订单 //获取退货原因 //确认收货 //查看物流
 import { Indicator, MessageBox, Popup  } from 'mint-ui';
-// import { MessageBox } from 'mint-ui';
-// import { Popup } from 'mint-ui';
+import OrderNav from './OrderNav';
   export default {
     name:'page-navbar',
     data() {
       	return {
-			ORDERNAV: ORDERNAV,
-			ORDERSTATUS: ORDERSTATUS,
-			currentNAVId: '',
-			orderListParams: {'page': 0, 'per_page': 10, status: ''},
-			orderList: [],
-			loading: false,
-			isMore: true
-      	}
+					ORDERNAV: ORDERNAV,
+					ORDERSTATUS: ORDERSTATUS,
+					currentNAVId: '',
+					orderListParams: {'page': 0, 'per_page': 10, status: ''},
+					orderList: [],
+					loading: false,
+					orderCancel:[],
+					isMore: true,
+					popupVisible:false,
+					slots: [
+						{
+						flex: 1,
+						values: ['不想要了','支付不成功', '价格较贵', '缺货', '等待时间过长'],
+						className: 'slot1',
+						textAlign: 'center'
+						}
+						],
+						reasonList: [],
+						success:[],
+						reasonId: '',
+						message:'',
+						checkState:''
+			}
     },
     created() {
 		this.getUrlParams();
+		this.orderReasonList();
 	},
 	methods: {
 
@@ -82,8 +126,8 @@ import { Indicator, MessageBox, Popup  } from 'mint-ui';
 			}
 		},
 		// 去订单详情
-		goOrderDetail(){
-			this.$router.push('/OrderDetail')
+		goOrderDetail(id){
+			this.$router.push({name: 'orderDetail',params: {orderDetail: id}})
 		},
 
 		setOrderNavActive(item) {
@@ -136,38 +180,77 @@ import { Indicator, MessageBox, Popup  } from 'mint-ui';
 
 		// 取消订单
 		cancel() {
-			alert(1)
+			this.popupVisible = true;
 		},
-
+		cancelInfo() {
+			this.popupVisible = false;
+		},
+		complete(id, index) {
+			this.popupVisible = false;
+			this.getordersuccess(id, index);
+		},
+		// 查看物流
+		track(id) {
+			this.$router.push({ name: 'orderTrack', params: {orderTrack: id}});
+		},
 		// 去支付
-		payment() {
-			this.$router.push('/OrderDetail')
+		payment(id) {
+			this.$router.push({ name: 'payment', params: { order: id }})
+		},
+		// 随便逛逛
+		goVisit() {
+			this.$router.push('/home');
 		},
 		// 确认收货
-		confirm() {
-			MessageBox({
-				title: '确认收货',
-				message: '是否确认收货？',
-				showCancelButton: true
+		confirm(id,index) {
+			MessageBox.confirm('是否确认收货？', '确认收货').then(action => {        
+			 this.$router.push('/OrderTrade');
+			 this.orderConfirms(id,index);
 			});
 		},
-
+		// 获取确认收货数据
+		orderConfirms(id, index) {
+			orderConfirm(id).then(res => {
+				if(res) {
+					this.orderList[index] = res.order;
+				}
+			})
+		},
 		
+		// 再次购买
+		goBuy() {
+			this.$router.push({ name:'cart'})
+		},
 
+		// 晒单评价
+		goComment(item) {
+      this.$router.push({ name: 'orderComment', params:{ order: item}});
+		},
 		
+		// 获取退货原因数据
+		orderReasonList() {
+			orderReasonList().then(res => {
+				if(res) {
+					this.reasonList = Object.assign([], this.reasonList, res.reasons);
+				}
+			})
+		},
+		// 获取取消订单数据
+		getordersuccess(id, index) {
+			orderCancel(id, this.reasonId).then(res=> {
+				if(res) {
+					this.orderList = [];
+					this.getOrderList();
+				}
+			})
+		},
+		// 
+		getReasonItem(item) {
+			this.reasonId = item.id;
+		}
 
-		// orderGet(ispush) {
-		// 	this.loading = true;
-		// 	setTimeout(() => {
-		// 		let last = this.orderList[this.orderList.length - 1];
-		// 		for (let i = 1; i <= 10; i++) {
-		// 		this.orderList.push(last + i);
-		// 		}
-		// 		this.loading = false;
-		// 	}, 2500);
-		// }
 	}
-  }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -200,15 +283,13 @@ import { Indicator, MessageBox, Popup  } from 'mint-ui';
 		}
 	}
 	.order-body {
-		margin-top: 11px;
-		height: 100%;
 		overflow: auto;
 	 	height: 100%;
 		position: absolute;
 		width: 100%;
 		.list {
 			width: 100%;
-			margin-top: 12px;
+			margin-top: 11px;
 			h3 {
 				padding: 0px;
 				margin: 0px;
@@ -226,7 +307,7 @@ import { Indicator, MessageBox, Popup  } from 'mint-ui';
 				height:91px; 
 				background:rgba(250,250,250,1);
 				width: 100%;
-    			overflow: auto;
+    		overflow: auto;
 				white-space:nowrap;
 				img {
 					width:60px;
@@ -283,6 +364,8 @@ import { Indicator, MessageBox, Popup  } from 'mint-ui';
 		}
 		.order-air {
 			width:100%;
+			vertical-align: middle;
+      text-align: center;
 			img {
 				width:52px;
 				height:59px; 
@@ -309,6 +392,41 @@ import { Indicator, MessageBox, Popup  } from 'mint-ui';
 				color:rgba(255,255,255,1);
 				font-size:16px;
 			}
+	}
+	.mint-popup {
+		width:100%;
+		height:235px;
+	}
+	.cancels {
+		height:100%;
+		.cancelInfo {
+			display: flex;
+			flex-wrap: nowrap;
+			justify-content:space-between;
+			span {
+				color:#000;
+				font-size: 14px;	
+			}
+			.cancel {
+				padding-left:15px;
+			}
+			.success {
+				padding-right: 15px;
+			}
+		}
+		.reason {
+			width: 100%;
+			p {
+				height:16px;
+				line-height: 16px;
+				width:100%;
+				text-align: center;
+				padding-top: 10px;
+				&:hover {
+					color:red;
+				}
+			}
+		}
 	}
 }
 </style>

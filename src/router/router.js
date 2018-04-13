@@ -44,6 +44,10 @@ import PaySucceed from '../page/payment/PaySucceed'
 // order
 import Order from '../page/order/Order'
 import OrderDetail from '../page/order/OrderDetail'
+import OrderTrack from '../page/order/child/OrderTrack'
+import OrderTrade from '../page/order/child/OrderTrade'
+import OrderComment from '../page/order/child/OrderComment'
+import OrderSubmit from '../page/order/child/OrderSubmit'
 
 // 商品详情
 import Detail from '../page/product-detail/index'
@@ -177,8 +181,28 @@ export default [
 			},
 			{
 				name: 'orderDetail',
-				path: '/orderDetail',
+				path: '/orderDetail/:orderDetail?',
 				component: OrderDetail
+			},
+			{
+				name: 'orderTrack',
+				path: '/orderTrack/:orderTrack?',
+				component: OrderTrack
+			},
+			{
+				name: 'orderTrade',
+				path: '/orderTrade',
+				component: OrderTrade
+			},
+			{
+				name: 'orderComment',
+				path: '/orderComment',
+				component: OrderComment
+			},
+			{
+				name: 'orderSubmit',
+				path: '/orderSubmit',
+				component: OrderSubmit
 			},
 			{
 				name: 'detail',
@@ -189,7 +213,7 @@ export default [
 				name: 'cart',
 				path: '/cart/:type?',
 				component: Cart
-			}
+			},
 		]
 	}
 ]
