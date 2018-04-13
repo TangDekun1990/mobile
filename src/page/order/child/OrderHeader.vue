@@ -11,7 +11,7 @@
 <script>
 import { HeaderItem } from '../../../components/common'
 import { Header } from 'mint-ui'
-import { mapState, mapMutations } from 'vuex'
+
 export default { 
   methods: {  
     goBack() {
