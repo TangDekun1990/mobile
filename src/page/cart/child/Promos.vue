@@ -169,6 +169,7 @@
 	.promos-list {
     	display: block;
     	padding-top: 0px;
+    	border-bottom: 1px solid #E8EAED;
     	div.header {
     		position: relative;
 			h3{

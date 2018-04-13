@@ -4,10 +4,12 @@
 		<div class="ui-commmon-header">
 			<img src="../../assets/image/change-icon/back@2x.png" v-on:click='goBack()'>
 			<h3>相关商品</h3>
+			<img src="../../assets/image/change-icon/b2_cart@2x.png" class="ui-cart" v-on:click='goCart()'>
+			<span class="cart-number" v-if="quantity <= 100">{{ quantity }}</span>
+			<span class="cart-number" v-if="quantity >= 100 ">99+</span>
 		</div>
 		<div class="ui-recommend-body" v-infinite-scroll="getMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
 			<v-recommend-list v-for="(item, index) in recommendList" :item="item" :productId="item.id" v-bind:key="index"></v-recommend-list>
-			<!-- <v-recommend-list v-for="(item, index) in recommendList" :key="index" :item="item" :productId="item.id"></v-recommend-list> -->
 			<p class="recommend-no-more" v-if='!isMore'>没有更多了</p>
 		</div>
 	</div>
@@ -15,21 +17,19 @@
 
 <script>
 	import { recommendProductList } from '../../api/network/recommend';
+	import { cartQuantity } from '../../api/network/cart';
 	import productList from '../product/child/ProduceBody';
 	export default {
 		data() {
 			return {
 				recommendList: [],
 				listParams: {
-					"brand": this.$route.params.brand ? this.$route.params.brand : '',
-                	"category": this.$route.params.category ? this.$route.params.category : '',
-                	"shop": this.$route.params.shop ? this.$route.params.shop : '',
-                	"product": this.$route.params.product ? this.$route.params.product : '',
                 	"page": 0,
                 	"per_page": 10
 				},
 				loading: false,
-				isMore: true
+				isMore: true,
+				quantity: 0
 			}
 		},
 
@@ -38,10 +38,24 @@
 		},
 
 		created(){
-			// this.recommendProductList()
+			this.getCarNumber();
+			this.$on('get-cart-quantity', () => {
+				this.getCarNumber();
+			})
 		},
 
 		methods: {
+			/*
+			 *  getCarNumber: 获取购物车数量
+			 */
+			getCarNumber() {
+				cartQuantity().then(res => {
+					if (res) {
+						this.quantity = res.quantity;
+					}
+				})
+			},
+
 			/*
 				goBack: 返回到上一页
 			 */
@@ -53,10 +67,11 @@
 				recommendProductList: 获取相关商品列表
 			 */
 			recommendProductList() {
-				let params = this.listParams;
+				console.log(this.$route);
+				let params = Object.assign({}, this.listParams, this.$route.params);
+				console.log(params);
 				recommendProductList(params.brand, params.category, params.shop, params.product, params.page, params.per_page).then(res => {
 					if (res) {
-						// Object.assign([], this.recommendList, res.products
 						this.recommendList = this.recommendList.concat(res.products);
 						this.isMore = res.paged.more;
 					}
@@ -73,7 +88,15 @@
 					this.loading = false;
 					this.recommendProductList(true);
 				}
+			},
+
+			/*
+			 *  goCart: 跳转到购物车
+			 */
+			goCart() {
+				this.$router.push({'name': 'cart', 'params': {type: 0}})
 			}
+
 		}
 	}
 </script>
@@ -81,6 +104,9 @@
 <style lang='scss' scoped>
 .recommend-wrapper {
 	background-color: #ffffff;
+	.ui-commmon-header {
+		border-bottom: 1px solid #E8EAED;
+	}
 	.recommend-no-more {
 		color: #7C7F88;
 		font-size: 12px;
@@ -90,7 +116,4 @@
     	padding: 10px 0px;
 	}
 }
-/*.ui-recommend-body {
-	background-color: #ffffff;
-}*/
 </style>

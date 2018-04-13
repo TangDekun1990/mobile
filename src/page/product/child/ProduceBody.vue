@@ -1,9 +1,9 @@
 <!-- ProduceBody.vue -->
 <template>
 	<div class="ui-product-body">
-		<div class="list">
+		<div class="list" v-on:click='goDetail()'>
 
-			<div class="ui-image-wrapper" v-on:click='goDetail()'>
+			<div class="ui-image-wrapper">
 				<img src="../../../assets/image/change-icon/default_image_02@2x.png" class="product-img" v-if='item.photos <= 0'>
 				<img class="product-img" v-bind:src="item.photos[0].thumb" v-if='item.photos.length > 0' data-src='../../../assets/image/change-icon/default_image_02@2x.png' v-lazy="item.photos[0].thumb">
 				<span v-if="item.good_stock == 0 ">已售罄</span>
@@ -17,13 +17,13 @@
 				<span class="sub-title" style="-webkit-box-orient:vertical">{{ item.desc }}</span>
 				<div class="price">
 					<span>AED{{ item.current_price }}</span>
-					<span>AED{{ item.price }}</span>
+					<span>AED{{ toFixedPrice(item.price)}}</span>
 				</div>
 				<div class="sendway">
 					<span v-if="item.self_employed" class="self-support">自营</span>
 					<span>评论：{{ item.comment_count }}</span>
 					<span>收藏：{{item.collector.length}}</span>
-					<img src="../../../assets/image/change-icon/cart@2x.png" @click="_cartAdd(item.id)">
+					<img src="../../../assets/image/change-icon/cart@2x.png" @click.stop="_cartAdd(item.id)">
 				</div>
 			</div>
 		</div>
@@ -59,9 +59,16 @@ export default{
 			cartAdd(product, '', 1).then(res => {
 				if (res) {
 					this.$parent.$emit('get-cart-quantity');
-					Toast({message: '操作成功', position: 'middle', duration: 5000});
+					Toast({message: '加入成功', position: 'middle', duration: 5000});
 				}
 			});
+		},
+
+		/*
+		 * toFixed: 商品原件显示两位数
+		 */
+		toFixedPrice(price) {
+			return parseFloat(price).toFixed(2)
 		}
 
 	}
@@ -81,6 +88,8 @@ export default{
 		div.ui-image-wrapper {
 			width: 110px;
 			height: 110px;
+			position: relative;
+
 			display: flex;
 		    justify-content: center;
 		    align-content: center;
@@ -102,7 +111,6 @@ export default{
 				height: 110px;
 				flex-basis: 110px;
 				flex-shrink: 0;
-				position: relative;
 			}
 			img.product-img[lazy=loading] {
 				width: 30px;
