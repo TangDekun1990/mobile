@@ -6,7 +6,7 @@
       <header-item slot="right" :icon="require('../../assets/image/change-icon/b0_message@2x.png')" v-on:onclick="rightClick">
       </header-item>        
     </mt-header>
-		<card-group v-for="(item, index) in getCardGroups" :key="index" :item="item">
+		<card-group class="section" v-for="(item, index) in getCardGroups" :key="index" :item="item">
 		</card-group>
 		<tab-bar></tab-bar>
 	</div>
@@ -85,5 +85,8 @@
 	.header {
 		@include header;
 		border-bottom: 1px solid $lineColor;
+	}
+	.section {
+		margin-top: 10px;
 	}
 </style>

@@ -38,7 +38,6 @@ export default {
       return url
     },
     getPhotoStyle: function () {
-      debugger
       return {
         width: this.photoWidth + 'px',
         height: this.photoHeight + 'px'
@@ -49,10 +48,10 @@ export default {
     this.$nextTick(() => {      
       this.photoWidth = this.$el.clientWidth
       this.photoHeight = this.$el.clientHeight
-      console.log('====================================');
-      console.log(this.$el.style.width)
-      console.log('Z2 (width, height)', this.photoWidth, this.photoHeight);
-      console.log('====================================');
+      // console.log('====================================');
+      // console.log(this.$el.style.width)
+      // console.log('Z2 (width, height)', this.photoWidth, this.photoHeight);
+      // console.log('====================================');
     })
   },
   methods: {

@@ -2,11 +2,17 @@
   <card-group-a v-if="isCardGroupA" :item="item"></card-group-a>
   <card-group-b1-l v-else-if="isCardGroupB1L" :item="item"></card-group-b1-l>
   <card-group-c1 v-else-if="isCardGroupC1" :item="item"></card-group-c1>
+  <card-group-c2 v-else-if="isCardGroupC2" :item="item"></card-group-c2>
 </template>
 
 <script>
 import { ENUM } from '../../../config/enum'
-import { CardGroupA, CardGroupB1L, CardGroupC1 } from '../../cardpage/group'
+import { 
+  CardGroupA, 
+  CardGroupB1L, 
+  CardGroupC1,
+  CardGroupC2, 
+} from '../../cardpage/group'
 export default {
   name: 'CardGroup',
   props: {
@@ -29,7 +35,10 @@ export default {
       let isGroupC1H = this.isGroupItemByStyle(ENUM.CARDGROUP_LAYOUT.C1H)
       let isGroupC1S = this.isGroupItemByStyle(ENUM.CARDGROUP_LAYOUT.C1S)
       return isGroupC1H || isGroupC1S
-    },   
+    }, 
+    isCardGroupC2: function () {
+      return this.isGroupItemByStyle(ENUM.CARDGROUP_LAYOUT.C2)
+    },  
   },
   methods: {     
     isGroupItemByStyle(itemLayout) {

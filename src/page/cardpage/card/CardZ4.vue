@@ -38,11 +38,7 @@ export default {
       }
       return url
     },
-    getPhotoStyle: function () {
-      debugger
-      console.log('====================================');
-      console.log('(Z4 photoWidth, photoHeight) is ', this.photoWidth, this.photoHeight);
-      console.log('====================================');
+    getPhotoStyle: function () {      
       return {
         width: this.photoWidth + 'px',
         height: this.photoHeight + 'px'

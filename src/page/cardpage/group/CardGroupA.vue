@@ -1,6 +1,12 @@
 <template>
   <div class="group-a-container">
-    <card-item class="item" v-bind:style="getItemStyle" v-for="(item, index) in getItems" :key="index" :item="item"></card-item>     
+    <card-item 
+      class="item" 
+      v-bind:style="getItemStyle" 
+      v-for="(item, index) in getItems" 
+      :key="index" 
+      :item="item">
+    </card-item>     
   </div>
 </template>
 
