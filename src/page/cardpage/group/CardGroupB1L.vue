@@ -1,9 +1,9 @@
 <template>
-  <div class="group-b1l-container" :class="getContainerStyle">
-    <card-item class="leftItem" v-if="getFirstItem" :item="getFirstItem"></card-item>
+  <div class="group-b1l-container" v-bind:style="getContainerStyle">
+    <card-item v-bind:style="getLeftItemStyle" v-if="getFirstItem" :size="getLeftItemSize" :item="getFirstItem"></card-item>
     <div class="right-wrapper">
-      <card-item class="rightItem" v-if="getSecondItem" :item="getSecondItem"></card-item>
-      <card-item class="rightItem" v-if="getThirdItem" :item="getThirdItem"></card-item>
+      <card-item class="top-item" v-bind:style="getRightItemStyle" v-if="getSecondItem" :size="getRightItemSize" :item="getSecondItem"></card-item>
+      <card-item v-bind:style="getRightItemStyle" v-if="getThirdItem" :size="getRightItemSize" :item="getThirdItem"></card-item>
     </div>     
   </div>
 </template>
@@ -39,18 +39,62 @@ export default {
     getThirdItem: function () {      
       return this.getItemByIndex(2)
     },
+    getLeftItemStyle: function () {
+      const { width, height } = this.getLeftItemSize
+      return {
+        width: width + 'px',
+        height: height + 'px'
+      }
+    },
+    getRightItemStyle: function () {
+      const { width, height } = this.getRightItemSize      
+      return {
+        width: width + 'px',
+        height: height + 'px'
+      }
+    },
+    getLeftItemSize: function () {
+      let itemWidth = 0
+      let itemHeight = 0
+      const { width, height } = this.getContainerSize
+      itemHeight = height
+      itemWidth = itemHeight * (3.0 / 4.0)
+      return {
+        width: itemWidth,
+        height: itemHeight
+      }
+    },
+    getRightItemSize: function () {
+      let itemWidth = 0
+      let itemHeight = 0
+      const { width, height } = this.getContainerSize
+      itemHeight = height * 0.5
+      itemWidth = itemHeight * (9.0 / 4.0)
+      return {
+        width: itemWidth,
+        height: itemHeight
+      }
+    },
     getContainerStyle: function() {
+      const { width, height } = this.getContainerSize
+      return {
+        width: width + 'px',
+        height: height + 'px'
+      }
+    },
+    getContainerSize: function() {
       let itemWidth = 0
       let itemHeight = 0
       const { width, height } = window.screen
       itemWidth = width
       itemHeight = itemWidth * (8.0 / 15.0)
+      
       console.log('====================================');
-      console.log('(w,)');
+      console.log('(w, h) is :', itemWidth, itemHeight);
       console.log('====================================');
       return {
-        width: itemWidth + 'px',
-        height: itemHeight + 'px'
+        width: itemWidth,
+        height: itemHeight
       }
     },
   },
@@ -74,19 +118,18 @@ export default {
     justify-content: flex-start;
     align-items: stretch;
     background-color: $cardbgColor;
-  }
-  .leftItem {
-    flex: 6;
+    border-top: 1px solid $lineColor;
+    // border-bottom: 1px solid $lineColor;    
   }
   .right-wrapper {
-    flex: 9;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: stretch;
+    border-left: 1px solid $lineColor;
   }
-  .rightItem {
-    flex: 1;
+  .top-item {
+    border-bottom: 1px solid $lineColor;
   }
 </style>
 

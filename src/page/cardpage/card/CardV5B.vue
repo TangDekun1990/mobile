@@ -1,6 +1,6 @@
 <template>
   <div class="card-v5b-container">
-    <img class="photo" :src="getPhotoUrl" />
+    <img class="photo" v-bind:style="getPhotoStyle" :src="getPhotoUrl" />
     <label class="title">{{getTitle}}</label>
     <label class="subtitle">{{getSubtitle}}</label>
     <label class="desc">{{getDesc}}</label>       
@@ -13,6 +13,11 @@ export default {
   props: {
     item: {
       type: Object
+    }
+  },
+  data() {
+    return {
+      photoHeight: 0
     }
   },
   computed: {
@@ -39,7 +44,18 @@ export default {
         url = require('../../../assets/image/change-icon/default_image_02@2x.png')
       }
       return url
+    },
+    getPhotoStyle: function () { 
+      return {
+        height: this.photoHeight + 'px'
+      }
     }
+  },
+  mounted() {
+    this.$nextTick(() => {
+      let width = this.$el.clientWidth
+      this.photoHeight = width - 10
+    })
   },
   methods: {
     getItemByKey(key) {
@@ -54,44 +70,45 @@ export default {
 
 <style lang="scss" scoped>
   .card-v5b-container {
-    flex: 1;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: space-around;
     align-items: stretch;
     background-color: $cardbgColor;
+    // border: 4px solid blue;
   }
-  .photo {    
-    flex: 1;
+  .photo { 
     margin-top: 5px;
     margin-left: 5px;
-    margin-bottom: 9px;
+    // margin-bottom: 9px;
     margin-right: 5px;
+    width: auto;    
+    // border: 4px solid greenyellow;
   }
   .title {
-    font-size: $h4;
+    font-size: $h5;
     color: $titleTextColor;
-    margin-top: 9px;
+    margin-top: 5px;
     margin-left: 9px;
     margin-right: 9px;
-    height: 20px;
+    @include limit-line(1); 
   }
   .subtitle {
-    font-size: $h5;
+    font-size: $h4;
     color: $subtitleTextColor;
-    margin-top: 40px;
+    margin-top: 10px;
     margin-left: 9px;
     margin-right: 9px;
     text-align: left;
-    height: 20px;
+    @include limit-line(1);
   }
   .desc {
-    font-size: $h5;
+    font-size: $h6;
     color: $subtitleTextColor;
     margin-left: 9px;
     margin-right: 9px;
     text-align: left;
-    height: 20px;
+    @include limit-line(1);
   }  
 </style>
 

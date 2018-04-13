@@ -16,10 +16,7 @@ export default {
   },
   computed: {  
     isCardGroupA: function () {
-      let layout = this.item ? this.item.layout : null
-      // console.log('====================================');
-      // console.log('layout is :', layout);
-      // console.log('====================================');
+      let layout = this.item ? this.item.layout : null      
       if (layout && layout.length && layout.indexOf('A') >= 0) {
         return true
       }
@@ -37,6 +34,9 @@ export default {
   methods: {     
     isGroupItemByStyle(itemLayout) {
       let layout = this.item ? this.item.layout : null
+      // console.log('====================================');
+      // console.log('layout is :', layout);
+      // console.log('====================================');
       if (layout === itemLayout) {
         return true
       }
@@ -46,14 +46,5 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-  .container {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: stretch;
-    background-color: $cardbgColor;
-  } 
-</style>
 
 

@@ -1,6 +1,6 @@
 <template>
-  <div class="container">
-    <img class="photo" :src="getPhotoUrl" />
+  <div ref="container" class="card-h1l-container">
+    <img ref="photo" class="photo" v-bind:style="getPhotoStyle" :src="getPhotoUrl" />
     <div class="right-wrapper">
       <label class="title">{{getTitle}}</label>
       <label class="subtitle">{{getSubtitle}}</label>      
@@ -11,9 +11,17 @@
 
 <script>
 export default {
+  data() {
+    return {
+      photoWidth: 0,
+    }
+  },
   name: 'CardH1L',
   props: {
     item: {
+      type: Object
+    },
+    size: {
       type: Object
     }
   },
@@ -41,6 +49,11 @@ export default {
         url = require('../../../assets/image/change-icon/default_image_02@2x.png')
       }
       return url
+    },
+    getPhotoStyle: function () {     
+      return {
+        width: this.photoWidth + 'px',
+      }
     }
   },
   methods: {
@@ -51,52 +64,61 @@ export default {
       return ''     
     },
   },
+  mounted() {
+    this.$nextTick(() => {    
+      let height = this.$el.clientHeight
+      this.photoWidth = height - 10
+    })
+  }
 }
 </script>
 
 <style lang="scss" scoped>
-  .container {
+  .card-h1l-container {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: flex-start;
     align-items: stretch;
     background-color: $cardbgColor;
-  }
-  .photo {
-    margin-top: 5px;
-    margin-left: 5px;
-    margin-bottom: 9px;
-    margin-right: 5px;
-  }
-  .right-wrapper {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: stretch;
-    margin: 12px;
-  }
-  .title {
-    font-size: $h4;
-    color: $titleTextColor;
-    margin-top: 9px;
-    margin-left: 9px;
-    margin-right: 9px;
-  }
-  .subtitle {
-    font-size: $h5;
-    color: $subtitleTextColor;
-    margin-left: 9px;
-    margin-right: 9px;
-    text-align: left;
-  } 
-  .desc {
-    font-size: $h5;
-    color: $subtitleTextColor;
-    text-align: left;
-    margin-top: 6px;
-    margin-right: 5px;
-  }  
+    // border: 4px solid lightblue;
+    .photo {
+      margin: 5px;
+      height: auto;
+      // border: 2px solid lightblue; 
+    }
+    .right-wrapper {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: stretch;
+      .title {
+        font-size: $h4;
+        color: $titleTextColor;
+        margin-top: 9px;
+        margin-left: 9px;
+        margin-right: 9px;
+        @include limit-line(2)
+      }
+      .subtitle {
+        font-size: $h5;
+        color: $subtitleTextColor;        
+        margin-left: 9px;
+        margin-right: 9px;
+        margin-top: 9px;
+        text-align: left;
+        @include limit-line(2)
+      } 
+      .desc {
+        font-size: $h5;
+        color: $subtitleTextColor;
+        text-align: left;
+        margin-top: 6px;
+        margin-right: 5px;
+        @include limit-line(1)
+      }
+    }
+  }    
 </style>
 
 

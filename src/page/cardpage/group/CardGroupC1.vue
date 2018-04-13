@@ -1,11 +1,9 @@
 <template>
-  <div class="group-c1-container" :class="getContainerStyle">
-    <mt-swipe>
-      <mt-swipe-item v-for="(item, index) in getItems" :key="index">
-        <card-item :item="item"></card-item>
-      </mt-swipe-item>
-    </mt-swipe>      
-  </div>
+  <mt-swipe :style="getContainerStyle">
+    <mt-swipe-item v-for="(item, index) in getItems" :key="index">
+      <card-item :style="getContainerStyle" :item="item"></card-item>
+    </mt-swipe-item>
+  </mt-swipe>
 </template>
 
 <script>
@@ -38,12 +36,12 @@ export default {
       itemWidth = width
       if (layout === ENUM.CARDGROUP_LAYOUT.C1H) {
         itemHeight = itemWidth * (1.0 / 2.0)
-        console.log('====================================');
-        console.log('CARDGROUP_LAYOUT.C1H is ', itemWidth, itemHeight);
-        console.log('====================================');
+        // console.log('====================================');
+        // console.log('CARDGROUP_LAYOUT.C1H is ', itemWidth, itemHeight);
+        // console.log('====================================');
       } else if (layout === ENUM.CARDGROUP_LAYOUT.C1S) {
         itemHeight = itemWidth * (1.0 / 3.0)
-        console.log('CARDGROUP_LAYOUT.C1S is ', itemWidth, itemHeight);
+        // console.log('CARDGROUP_LAYOUT.C1S is ', itemWidth, itemHeight);
       }           
       return {
         width: itemWidth + 'px',
@@ -56,10 +54,12 @@ export default {
 
 <style lang="scss" scoped>
   .group-c1-container {
+    position: relative;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     align-items: stretch;
+    flex-wrap: wrap;
     background-color: $cardbgColor;
   }
 </style>

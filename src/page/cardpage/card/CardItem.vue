@@ -16,6 +16,7 @@
   <card-z2-l v-else-if="isCardZ2L" :item="item"></card-z2-l>
   <card-z2-p v-else-if="isCardZ2P" :item="item"></card-z2-p>
   <card-z3 v-else-if="isCardZ3" :item="item"></card-z3>
+  <card-z4 v-else-if="isCardZ4" :item="item"></card-z4>
 </template>
 
 <script>
@@ -37,6 +38,7 @@ import {
   CardZ2L,
   CardZ2P,
   CardZ3,
+  CardZ4,
 } from './index'
 import { ENUM } from '../../../config/enum'
 export default {
@@ -98,6 +100,9 @@ export default {
     isCardZ3: function () {
       return this.isCardItemByStyle(ENUM.CARD_STYLE.Z3)
     },
+    isCardZ4: function () {
+      return this.isCardItemByStyle(ENUM.CARD_STYLE.Z4)
+    },
   },
   methods: {     
     isCardItemByStyle(itemStyle) {
@@ -114,14 +119,5 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-  .container {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: stretch;
-    background-color: $cardbgColor;
-  } 
-</style>
 
 

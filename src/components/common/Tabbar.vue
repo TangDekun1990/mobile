@@ -68,13 +68,17 @@
 
 <style scoped lang='scss'>
 	.ui-tabbar-wrapper {
+		position: fixed;
+		left: 0px;
+		right: 0px;
+		bottom: 0px;
 		width: 100%;
 		height: auto;
 		padding: 0px;
 		margin: 0px;
 		background-color: #ffffff;
 		border-top: 1px solid #F0F2F5;
-		@include pb();
+		// @include pb();
 		.tabbar-wrapper {
 			ul {
 				display: flex;
