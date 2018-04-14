@@ -5,38 +5,11 @@
 </template>
 
 <script>
+import Common from './Common'
 export default {
   name: 'CardZ2',
-  props: {
-    item: {
-      type: Object
-    }
-  },
-  data() {
-    return {
-      photoWidth: 0,
-      photoHeight: 0,
-    }
-  },
-  computed: {
-    getTitle: function () { 
-      return this.getItemByKey('title')          
-    },
-    getPhotoUrl: function () {
-      let url = null
-      let photo = this.item ? this.item.photo: null
-      if (photo) {
-        if (photo.large && photo.large) {
-            url = photo.large
-          } else if (photo.thumb && photo.thumb) {
-            url = photo.thumb
-          }
-      }
-      if (url === null) {
-        url = require('../../../assets/image/change-icon/default_image_02@2x.png')
-      }
-      return url
-    },
+  mixins: [ Common ],    
+  computed: {    
     getPhotoStyle: function () {
       return {
         width: this.photoWidth + 'px',
@@ -56,13 +29,7 @@ export default {
       }      
     })
   },
-  methods: {
-    getItemByKey(key) {
-      if (this.item && this.item[key]) {
-        return this.item[key]
-      } 
-      return ''     
-    },
+  methods: {    
   },
 }
 </script>
