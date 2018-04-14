@@ -1,8 +1,8 @@
 <template>
-  <div class="container">
+  <div class="card-v3t-container">
     <label class="title">{{getTitle}}</label>
     <label class="subtitle">{{getSubtitle}}</label>    
-    <img class="photo" :src="getPhotoUrl" />
+    <img class="photo" v-bind:style="getPhotoStyle" :src="getPhotoUrl" />
   </div>
 </template>
 
@@ -12,6 +12,11 @@ export default {
   props: {
     item: {
       type: Object
+    }
+  },
+  data() {
+    return {
+      photoHeight: 0
     }
   },
   computed: {
@@ -35,7 +40,18 @@ export default {
         url = require('../../../assets/image/change-icon/default_image_02@2x.png')
       }
       return url
+    },
+    getPhotoStyle: function () {
+      return {
+        height: this.photoHeight + 'px'
+      }
     }
+  },
+  mounted() {
+    this.$nextTick(() => {
+      let width = this.$el.clientWidth
+      this.photoHeight = width - 10
+    })
   },
   methods: {
     getItemByKey(key) {
@@ -49,7 +65,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .container {
+  .card-v3t-container {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;

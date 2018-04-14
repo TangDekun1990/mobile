@@ -1,6 +1,7 @@
 <template>
   <card-group-a v-if="isCardGroupA" :item="item"></card-group-a>
-  <card-group-b1-l v-else-if="isCardGroupB1L" :item="item"></card-group-b1-l>
+  <card-group-b1 v-else-if="isCardGroupB1" :item="item"></card-group-b1>
+  <card-group-b2 v-else-if="isCardGroupB2" :item="item"></card-group-b2>
   <card-group-c1 v-else-if="isCardGroupC1" :item="item"></card-group-c1>
   <card-group-c2 v-else-if="isCardGroupC2" :item="item"></card-group-c2>
 </template>
@@ -9,7 +10,8 @@
 import { ENUM } from '../../../config/enum'
 import { 
   CardGroupA, 
-  CardGroupB1L, 
+  CardGroupB1,
+  CardGroupB2, 
   CardGroupC1,
   CardGroupC2, 
 } from '../../cardpage/group'
@@ -28,8 +30,18 @@ export default {
       }
       return false
     }, 
-    isCardGroupB1L: function () {
-      return this.isGroupItemByStyle(ENUM.CARDGROUP_LAYOUT.B1L)
+    // isCardGroupB1L: function () {
+    //   return this.isGroupItemByStyle(ENUM.CARDGROUP_LAYOUT.B1L)
+    // },
+    isCardGroupB1: function () {
+      let isGroupB1L = this.isGroupItemByStyle(ENUM.CARDGROUP_LAYOUT.B1L)
+      let isGroupB1R = this.isGroupItemByStyle(ENUM.CARDGROUP_LAYOUT.B1R)
+      return isGroupB1L || isGroupB1R
+    },
+    isCardGroupB2: function () {
+      let isGroupB2L = this.isGroupItemByStyle(ENUM.CARDGROUP_LAYOUT.B2L)
+      let isGroupB2R = this.isGroupItemByStyle(ENUM.CARDGROUP_LAYOUT.B2R)
+      return isGroupB2L || isGroupB2R
     },
     isCardGroupC1: function () {
       let isGroupC1H = this.isGroupItemByStyle(ENUM.CARDGROUP_LAYOUT.C1H)

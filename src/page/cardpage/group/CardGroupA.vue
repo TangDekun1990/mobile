@@ -65,7 +65,7 @@ export default {
         ratio = 1.0 / 1.0
       } else if (layout === ENUM.CARDGROUP_LAYOUT.A3H) {                
         columnCount = 3
-        ratio = 5.0 / 6.0
+        ratio = 2.0 / 3.0 // TODO:
       } else if (layout === ENUM.CARDGROUP_LAYOUT.A3XH) {                
         columnCount = 3
         ratio = 11.0 / 15.0
@@ -92,10 +92,10 @@ export default {
       let seperatorWidth = (columnCount - 0) * 1 // 分割线宽度
       itemWidth = (width - seperatorWidth) / columnCount  
       itemHeight = itemWidth / ratio
-      console.log('====================================');
-      console.log('layout is: ', layout)
-      console.log('(itemWidth, itemHeight)', itemWidth, itemHeight);
-      console.log('====================================');
+      // console.log('====================================');
+      // console.log('layout is: ', layout)
+      // console.log('(itemWidth, itemHeight)', itemWidth, itemHeight);
+      // console.log('====================================');
       return {
         width: itemWidth + 'px',
         height: itemHeight + 'px'

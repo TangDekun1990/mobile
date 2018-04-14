@@ -3,8 +3,8 @@ let photoBaseUrl = '';
 
 if (process.env.NODE_ENV === 'development') {
 	// // apiBaseUrl = 'http://api.wenchao.dev.geek-zoo.cn';
-	// apiBaseUrl = 'http://api.wenchao.pre.geek-zoo.cn';
-	apiBaseUrl = 'http://api.wenchao.ae';	
+	apiBaseUrl = 'http://api.wenchao.pre.geek-zoo.cn';
+	// apiBaseUrl = 'http://api.wenchao.ae';	
 } else if (process.env.NODE_ENV === 'production') {
 	// apiBaseUrl = 'http://api.wenchao.pre.geek-zoo.cn';
 	// apiBaseUrl = 'http://api.wenchao.dev.geek-zoo.cn';

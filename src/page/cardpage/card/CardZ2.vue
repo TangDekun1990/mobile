@@ -48,10 +48,12 @@ export default {
     this.$nextTick(() => {      
       this.photoWidth = this.$el.clientWidth
       this.photoHeight = this.$el.clientHeight
-      // console.log('====================================');
-      // console.log(this.$el.style.width)
-      // console.log('Z2 (width, height)', this.photoWidth, this.photoHeight);
-      // console.log('====================================');
+      if (this.photoWidth == 0) {
+        this.photoWidth = this.$el.style.width.replace('px', '')
+      }
+      if (this.photoHeight == 0) {
+        this.photoHeight = this.$el.style.height.replace('px', '')
+      }      
     })
   },
   methods: {

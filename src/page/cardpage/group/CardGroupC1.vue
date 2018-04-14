@@ -1,7 +1,7 @@
 <template>
-  <mt-swipe :style="getContainerStyle">
+  <mt-swipe v-bind:style="getContainerStyle">
     <mt-swipe-item v-for="(item, index) in getItems" :key="index">
-      <card-item :style="getContainerStyle" :item="item"></card-item>
+      <card-item v-bind:style="getContainerStyle" :item="item"></card-item>
     </mt-swipe-item>
   </mt-swipe>
 </template>
@@ -36,12 +36,8 @@ export default {
       itemWidth = width
       if (layout === ENUM.CARDGROUP_LAYOUT.C1H) {
         itemHeight = itemWidth * (1.0 / 2.0)
-        // console.log('====================================');
-        // console.log('CARDGROUP_LAYOUT.C1H is ', itemWidth, itemHeight);
-        // console.log('====================================');
       } else if (layout === ENUM.CARDGROUP_LAYOUT.C1S) {
-        itemHeight = itemWidth * (1.0 / 3.0)
-        // console.log('CARDGROUP_LAYOUT.C1S is ', itemWidth, itemHeight);
+        itemHeight = itemWidth * (1.0 / 3.0)        
       }           
       return {
         width: itemWidth + 'px',
@@ -52,7 +48,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
   .group-c1-container {
     position: relative;
     display: flex;
@@ -61,6 +57,15 @@ export default {
     align-items: stretch;
     flex-wrap: wrap;
     background-color: $cardbgColor;
+  }
+  .mint-swipe-indicators {
+    div.mint-swipe-indicator{
+      background: #EFEFF4;
+      opacity: 1;
+      &.is-active {
+        background: #EF3338;
+      }
+    }
   }
 </style>
 

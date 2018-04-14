@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <img class="photo" :src="getPhotoUrl" />
+    <img class="photo" v-bind:style="getPhotoStyle" :src="getPhotoUrl" />
     <label class="title">{{getTitle}}</label>
     <label class="subtitle">{{getSubtitle}}</label>        
   </div>
@@ -12,6 +12,11 @@ export default {
   props: {
     item: {
       type: Object
+    }
+  },
+  data() {
+    return {
+      photoHeight: 0
     }
   },
   computed: {
@@ -35,7 +40,21 @@ export default {
         url = require('../../../assets/image/change-icon/default_image_02@2x.png')
       }
       return url
+    },
+    getPhotoStyle: function () {
+      console.log('====================================');
+      console.log('v3b is ', this.photoHeight);
+      console.log('====================================');
+      return {
+        height: this.photoHeight + 'px'
+      }
     }
+  },
+  mounted() {
+    this.$nextTick(() => {
+      let width = this.$el.clientWidth
+      this.photoHeight = width - 10
+    })
   },
   methods: {
     getItemByKey(key) {
