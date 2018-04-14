@@ -11,26 +11,14 @@
 
 <script>
 import Common from './Common'
+import PhotoH from './PhotoH'
 export default {
-  mixins: [ Common ],
+  mixins: [ Common, PhotoH ],
   name: 'CardH1R',  
   computed: {    
     getLeftDesc: function () {
       return this.getItemByKey('label1')     
     },    
-    getPhotoStyle: function () {     
-      return {
-        width: this.photoWidth + 'px',
-      }
-    }
-  },
-  mounted() {
-    this.$nextTick(() => {
-      let height = this.$el.clientHeight
-      this.photoWidth = height - 10
-    })
-  },
-  methods: { 
   },
 }
 </script>

@@ -8,14 +8,15 @@
         <label class="desc rightDesc">{{getRightDesc}}</label>
       </div> 
     </div>  
-    <img class="photo" :src="getPhotoUrl" />         
+    <img class="photo" v-bind:style="getPhotoStyle" :src="getPhotoUrl" />         
   </div>
 </template>
 
 <script>
 import Common from './Common'
+import PhotoH from './PhotoH'
 export default {
-  mixins: [ Common ],
+  mixins: [ Common, PhotoH ],
   name: 'CardH2R',
   props: {
     item: {

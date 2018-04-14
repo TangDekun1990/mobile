@@ -5,14 +5,15 @@
       <label class="subtitle">{{getSubtitle}}</label>
       <label class="desc">{{getDesc}}</label>
     </div>    
-    <img class="photo" :src="getPhotoUrl" />
+    <img class="photo" v-bind:style="getPhotoStyle" :src="getPhotoUrl" />
   </div>
 </template>
 
 <script>
 import Common from './Common'
+import PhotoV from './PhotoV'
 export default {
-  mixins: [ Common ],
+  mixins: [ Common, PhotoV ],
   name: 'CardV2T',
   computed: {        
   },

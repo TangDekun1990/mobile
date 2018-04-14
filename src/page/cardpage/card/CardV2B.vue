@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <img class="photo" :src="getPhotoUrl" />
+    <img class="photo" v-bind:style="getPhotoStyle" :src="getPhotoUrl" />
     <label class="title">{{getTitle}}</label>
     <div class="row-wrapper">
       <label class="subtitle">{{getSubtitle}}</label>
@@ -11,8 +11,9 @@
 
 <script>
 import Common from './Common'
+import PhotoV from './PhotoV'
 export default {
-  mixins: [ Common ],
+  mixins: [ Common, PhotoV ],
   name: 'CardV2B',
   computed: {        
   },

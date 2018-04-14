@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <img class="photo" :src="getPhotoUrl" />
+    <img class="photo" v-bind:style="getPhotoStyle" :src="getPhotoUrl" />
     <div class="right-wrapper">
       <label class="title">{{getTitle}}</label>
       <label class="subtitle">{{getSubtitle}}</label>      
@@ -14,8 +14,9 @@
 
 <script>
 import Common from './Common'
+import PhotoH from './PhotoH'
 export default {
-  mixins: [ Common ],
+  mixins: [ Common, PhotoH ],
   name: 'CardH2L',
   computed: {    
     getLeftDesc: function () {

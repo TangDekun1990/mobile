@@ -8,24 +8,10 @@
 
 <script>
 import Common from './Common'
+import PhotoV from './PhotoV'
 export default {
-  mixins: [ Common ],
+  mixins: [ Common, PhotoV ],
   name: 'CardV3T',  
-  computed: {    
-    getPhotoStyle: function () {
-      return {
-        height: this.photoHeight + 'px'
-      }
-    }
-  },
-  mounted() {
-    this.$nextTick(() => {
-      let width = this.$el.clientWidth
-      this.photoHeight = width - 10
-    })
-  },
-  methods: {    
-  },
 }
 </script>
 

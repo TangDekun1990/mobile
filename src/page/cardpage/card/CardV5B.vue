@@ -9,21 +9,11 @@
 
 <script>
 import Common from './Common'
+import PhotoV from './PhotoV'
 export default {
   name: 'CardV5B',
-  mixins: [ Common ],  
+  mixins: [ Common, PhotoV ],  
   computed: {    
-    getPhotoStyle: function () { 
-      return {
-        height: this.photoHeight + 'px'
-      }
-    }
-  },
-  mounted() {
-    this.$nextTick(() => {
-      let width = this.$el.clientWidth
-      this.photoHeight = width - 10
-    })
   },
   methods: {    
   },
