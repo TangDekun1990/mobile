@@ -60,7 +60,7 @@
           <label class="title">{{item.product.name | mySubstr(22)}}</label>
           <label class="count">数量：{{item.total_amount}}</label>
           <div class="desc-wrapper">
-            <label class="price">￥{{item.product_price  | money}}</label>
+            <label class="price">￥{{toFixedPrice(item.product_price)}}</label>
             
           </div>
         </div>
@@ -258,6 +258,10 @@
       goBuy() {
         this.$router.push({ name:'cart'})
       },
+      // 金额处理
+      toFixedPrice(price) {
+        return parseFloat(price).toFixed(2)
+      }
     },
   }
 </script>

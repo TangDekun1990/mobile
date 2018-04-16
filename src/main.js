@@ -11,7 +11,6 @@ import App from './App.vue'
 import routes from './router/router'
 import { ROUTERMODE } from './config/env'
 import utils from './util/util'
-
 import './assets/style/reset.scss'
 import './assets/style/common.scss'
 
@@ -65,23 +64,15 @@ Vue.filter('money', function(val) {
 			val = val.substring(0,val.length-(4*i+3))+',' + val.substring(val.length-(4*i+3));
 	}
 	return (((sign)?'':'-') + val + '.' + cents)
+
 })
 
-// router.beforeEach((to, from, next) => {
-// 	const toDepth = to.path.split('/').length
-// 	const fromDepth = from.path.split('/').length
-// 	if (toDepth < fromDepth) {
-// 		from.meta.keepAlive = false
-// 		to.meta.keepAlive = true
-// 	}
-// 	next()
-// })
-
+Vue.config.productionTip = false
 Vue.use(VueRouter)
 Vue.use(Mint)
 Vue.use(VueResource)
 Vue.use(VueAwesomeSwiper)
-Vue.prototype.utils = utils;
+Vue.prototype.utils = utils
 
 new Vue({
 	router,

@@ -5,9 +5,9 @@
     <label class="subtitle">{{getCondition}}</label>
     <div class="desc-wrapper">
       <label v-for="(item, index) in getTypeItems" :key="index">{{item}}</label>
-    </div> 
+    </div>
     <img class="indicator" v-if="isSelected" src="../../../assets/image/change-icon/d1_ticket_sel@2x.png">
-  </div>  
+  </div>
 </template>
 
 <script>
@@ -72,7 +72,7 @@ export default {
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
-      align-items: flex-end;      
+      align-items: flex-end;
       label {
         color: #8C8F93;
         font-size: 12px;
@@ -80,34 +80,34 @@ export default {
         margin-right: 10px;
         text-align: right;
       }
-    }    
+    }
   }
-  .top-img { 
+  .top-img {
     margin-top: 0px;
     margin-left: 0px;
-    margin-right: 0px;   
+    margin-right: 0px;
     height: 4px;
   }
   .title {
     margin-top: 10px;
     margin-left: 14px;
     color: #F75F5F;
-    font-size: 18px;      
+    font-size: 18px;
   }
   .subtitle {
     margin-top: 4px;
     margin-left: 14px;
-    margin-right: 8px; 
+    margin-right: 8px;
     color: #8C8F93;
     font-size: 12px;
-  }  
-  .indicator {    
+  }
+  .indicator {
     width: 36px;
     height: 36px;
     position: relative;
     left: 0px;
     bottom: 0px;
-  } 
+  }
 </style>
 
 
