@@ -17,24 +17,6 @@ import './assets/style/common.scss'
 
 Vue.config.productionTip = false
 
-const router = new VueRouter({
-	routes,
-	mode: ROUTERMODE,
-	// base: '/wenchao/',
-	strict: process.env.NODE_ENV !== 'production',
-	scrollBehavior (to, from, savedPosition) {
-		if (savedPosition) {
-			return savedPosition
-		} else {
-			if (from.meta.keepAlive) {
-				from.meta.savedPosition = document.body.scrollTop;
-			}
-			return { x: 0, y: to.meta.savedPosition || 0 }
-		}
-	}
-})
-
-
 // 使用moment处理日期格式
 import Moment from 'moment'
 Vue.filter('convertTime', function (timeStr) {
@@ -68,15 +50,6 @@ Vue.filter('money', function(val) {
 
 })
 
-import 'swiper/dist/css/swiper.css'
-import App from './App.vue'
-import routes from './router/router'
-import { ROUTERMODE } from './config/env'
-import utils from './util/util'
-
-import './assets/style/reset.scss'
-import './assets/style/common.scss'
-
 Vue.config.productionTip = false
 
 const router = new VueRouter({
@@ -94,7 +67,8 @@ const router = new VueRouter({
 			return { x: 0, y: to.meta.savedPosition || 0 }
 		}
 	}
-	
+});
+
 
 
 Vue.use(VueRouter)
