@@ -1,35 +1,23 @@
 <template>
-  <div class="group-c1-container" :class="getContainerStyle">
-    <mt-swipe>
-      <mt-swipe-item v-for="(item, index) in getItems" :key="index">
-        <card-item :item="item"></card-item>
-      </mt-swipe-item>
-    </mt-swipe>      
-  </div>
+  <mt-swipe v-bind:style="getContainerStyle">
+    <mt-swipe-item v-for="(item, index) in getItems" :key="index">
+      <card-item v-bind:style="getContainerStyle" :item="item"></card-item>
+    </mt-swipe-item>
+  </mt-swipe>
 </template>
 
 <script>
 import { Swipe, SwipeItem } from 'mint-ui'
 import CardItem from '../card/CardItem'
 import { ENUM } from '../../../config/enum'
+import Common from './Common'
 export default {
   name: 'CardGroupC1',
+  mixins: [ Common ],
   components: {
     CardItem,
   },
-  props: {
-    item: {
-      type: Object
-    }
-  },
   computed: {
-    getItems: function () {
-      let items = []
-      if (this.item && this.item.cards && this.item.cards.length) {
-        items = this.item.cards
-      }
-      return items
-    },
     getContainerStyle: function() {
       let itemWidth = 0
       let itemHeight = 0
@@ -38,12 +26,8 @@ export default {
       itemWidth = width
       if (layout === ENUM.CARDGROUP_LAYOUT.C1H) {
         itemHeight = itemWidth * (1.0 / 2.0)
-        console.log('====================================');
-        console.log('CARDGROUP_LAYOUT.C1H is ', itemWidth, itemHeight);
-        console.log('====================================');
       } else if (layout === ENUM.CARDGROUP_LAYOUT.C1S) {
-        itemHeight = itemWidth * (1.0 / 3.0)
-        console.log('CARDGROUP_LAYOUT.C1S is ', itemWidth, itemHeight);
+        itemHeight = itemWidth * (1.0 / 3.0)        
       }           
       return {
         width: itemWidth + 'px',
@@ -54,13 +38,24 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
   .group-c1-container {
+    position: relative;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     align-items: stretch;
+    flex-wrap: wrap;
     background-color: $cardbgColor;
+  }
+  .mint-swipe-indicators {
+    div.mint-swipe-indicator{
+      background: #EFEFF4;
+      opacity: 1;
+      &.is-active {
+        background: #EF3338;
+      }
+    }
   }
 </style>
 

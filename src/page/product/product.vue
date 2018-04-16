@@ -25,6 +25,8 @@
 				<div class="show-product-model" v-if='isShowProductModel' @click="closeProductModel()"></div>
 			</div>
 		</div>
+		<!-- 回到顶部 -->
+		<v-back-top v-if="productList.length > 10"></v-back-top>
 
 	</div>
 </template>
@@ -39,11 +41,14 @@
 	import { productList } from '../../api/network/product';
 	import { searchProductList } from '../../api/network/search';
 
+	import BackTop from '../../components/common/BackTop';
+
 	export default {
 		components: {
 			productHeader,
 			productFilter,
-			productBody
+			productBody,
+			'v-back-top': BackTop
 		},
 		data(){
 			return {

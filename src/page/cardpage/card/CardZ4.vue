@@ -1,16 +1,17 @@
 <template>
-  <div class="card-z2-container">
-    <img v-bind:style="getPhotoStyle" :src="getPhotoUrl" />    
+  <div class="card-z4-container">
+    <img v-bind:style="getPhotoStyle" :src="getPhotoUrl" />
+    <!-- <label class="title">{{getTitle}}</label> -->
   </div>
 </template>
 
 <script>
 import Common from './Common'
 export default {
-  name: 'CardZ2',
-  mixins: [ Common ],    
+  name: 'CardZ4',
+  mixins: [ Common ],  
   computed: {    
-    getPhotoStyle: function () {
+    getPhotoStyle: function () {      
       return {
         width: this.photoWidth + 'px',
         height: this.photoHeight + 'px'
@@ -18,15 +19,9 @@ export default {
     }
   },
   mounted() {
-    this.$nextTick(() => {      
+    this.$nextTick(() => {
       this.photoWidth = this.$el.clientWidth
       this.photoHeight = this.$el.clientHeight
-      if (this.photoWidth == 0) {
-        this.photoWidth = this.$el.style.width.replace('px', '')
-      }
-      if (this.photoHeight == 0) {
-        this.photoHeight = this.$el.style.height.replace('px', '')
-      }      
     })
   },
   methods: {    
@@ -35,13 +30,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .card-z2-container {
+  .card-z4-container {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: stretch;
     background-color: $cardbgColor;    
-    // border: 4px solid pink;
+    // border: 4px solid orange;
+  }
+  .title {
+    font-size: $h5;
+    color: $titleTextColor;    
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-top: 6px;
+    text-align: center;
   }
 </style>
 

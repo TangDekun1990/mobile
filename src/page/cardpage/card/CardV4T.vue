@@ -1,46 +1,16 @@
 <template>
   <div class="container">
     <label class="title">{{getTitle}}</label>  
-    <img class="photo" :src="getPhotoUrl" />
+    <img class="photo" v-bind:style="getPhotoStyle" :src="getPhotoUrl" />
   </div>
 </template>
 
 <script>
+import Common from './Common'
+import PhotoV from './PhotoV'
 export default {
   name: 'CardV4T',
-  props: {
-    item: {
-      type: Object
-    }
-  },
-  computed: {
-    getTitle: function () { 
-      return this.getItemByKey('title')          
-    },
-    getPhotoUrl: function () {
-      let url = null
-      let photo = this.item ? this.item.photo: null
-      if (photo) {
-        if (photo.large && photo.large) {
-            url = photo.large
-          } else if (photo.thumb && photo.thumb) {
-            url = photo.thumb
-          }        
-      }
-      if (url === null) {
-        url = require('../../../assets/image/change-icon/default_image_02@2x.png')
-      }
-      return url
-    }
-  },
-  methods: {
-    getItemByKey(key) {
-      if (this.item && this.item[key]) {
-        return this.item[key]
-      } 
-      return ''     
-    },
-  },
+  mixins: [ Common, PhotoV ],  
 }
 </script>
 
@@ -51,21 +21,22 @@ export default {
     justify-content: flex-start;
     align-items: stretch;
     background-color: $cardbgColor;
-  }
-  .title {
-    font-size: $h4;
-    color: $titleTextColor;
-    margin-top: 9px;
-    margin-left: 9px;
-    margin-right: 9px;
-    text-align: center;
-  }
-  .photo {
-    margin-top: 9px;
-    margin-left: 5px;
-    margin-bottom: 5px;
-    margin-right: 5px;
-  }
+    .title {
+      font-size: $h4;
+      color: $titleTextColor;
+      margin-top: 9px;
+      margin-left: 9px;
+      margin-right: 9px;
+      text-align: center;
+      @include limit-line(1);
+    }
+    .photo {
+      margin-top: 9px;
+      margin-left: 5px;
+      margin-bottom: 5px;
+      margin-right: 5px;
+    }
+  }  
 </style>
 
 

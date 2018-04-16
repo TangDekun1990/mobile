@@ -6,7 +6,7 @@
       <header-item slot="right" :icon="require('../../assets/image/change-icon/b0_message@2x.png')" v-on:onclick="rightClick">
       </header-item>        
     </mt-header>
-		<card-group v-for="(item, index) in getCardGroups" :key="index" :item="item">
+		<card-group class="section" v-for="(item, index) in getCardGroups" :key="index" :item="item">
 		</card-group>
 		<tab-bar></tab-bar>
 	</div>
@@ -36,6 +36,13 @@
 					Indicator.close()
 					if (response && response.cardpage) {
 						this.cardpage = response.cardpage
+						for (let i = 0; i < this.cardpage.groups.length; i++) {
+							const element = this.cardpage.groups[i];
+							let layout = element ? element.layout : null
+							console.log('====================================');
+							console.log('layout is :', layout);
+							console.log('====================================');
+						}
 					}
 				}, (error) => {
 					Indicator.close()
@@ -73,8 +80,13 @@
 		justify-content: flex-start;
 		align-items: stretch;
 		background-color: $mainbgColor;
+		margin-bottom: 50px;
 	}
 	.header {
 		@include header;
+		border-bottom: 1px solid $lineColor;
+	}
+	.section {
+		margin-bottom: 10px;
 	}
 </style>
