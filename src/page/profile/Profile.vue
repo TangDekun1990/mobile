@@ -202,6 +202,7 @@ export default {
   justify-content: flex-start;
   align-items: stretch;
   background-color: $mainbgColor;
+  margin-bottom: 50px;
   .top-wrapper {
     display: flex;
     flex-direction: column;

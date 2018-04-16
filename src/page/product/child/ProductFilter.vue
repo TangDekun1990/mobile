@@ -5,10 +5,10 @@
 			<li class="item"
 				v-for='(item, index) in SORTKEY'
 				v-bind:key='item.id'
-				v-on:click.stop.prevent='setActiveSortkey(item, index)'
+				v-on:click='setActiveSortkey(item, index)'
 				v-bind:class="{'sortactive': item.id == currentSortKey.id, 'sortnormal' : item.id != currentSortKey.id}">
 				<a v-if='!item.isMore'>{{item.name}}</a>
-				<a v-if='item.isMore' v-on:click="isShowDroupMenu()">{{sort.name}}</a>
+				<a v-if='item.isMore' v-on:click.stop="isShowDroupMenu()">{{sort.name}}</a>
 				<img src="../../../assets/image/change-icon/triangle_click@2x.png" v-if='item.isMore'>
 			</li>
 		</ul>
@@ -57,6 +57,7 @@ export default {
 		 */
 		closeFiler() {
 			this.isShowMore = false;
+			this.isShowProductModel(this.isShowMore);
 		},
 
 		/*
@@ -77,6 +78,7 @@ export default {
 		 * @param: item 当前选中的item
 		*/
 		setActiveSortkey(item) {
+			this.closeFiler();
 			this.currentSortKey = item;
 			this.getValue();
 		},

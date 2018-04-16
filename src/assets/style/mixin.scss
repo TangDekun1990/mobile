@@ -128,3 +128,12 @@
 	font-size: 18px;
 	background-color: #fff;
 }
+
+@mixin limit-line($lineCount) {
+	overflow: hidden;	
+	// text-overflow: ellipsis; 
+	// white-space: nowrap;
+	display: -webkit-box;
+	-webkit-line-clamp: $lineCount;
+	-webkit-box-orient: vertical;
+}

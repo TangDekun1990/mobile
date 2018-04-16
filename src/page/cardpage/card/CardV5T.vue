@@ -1,92 +1,65 @@
 <template>
-  <div class="container">
+  <div class="card-v5t-container">
     <label class="title">{{getTitle}}</label>
     <label class="subtitle">{{getSubtitle}}</label>
     <label class="desc">{{getDesc}}</label>    
-    <img class="photo" :src="getPhotoUrl" />
+    <img class="photo" v-bind:style="getPhotoStyle" :src="getPhotoUrl" />
   </div>
 </template>
 
 <script>
+import Common from './Common'
+import PhotoV from './PhotoV'
 export default {
   name: 'CardV5T',
-  props: {
-    item: {
-      type: Object
-    }
-  },
-  computed: {
-    getTitle: function () { 
-      return this.getItemByKey('title')          
-    },
-    getSubtitle: function () { 
-      return this.getItemByKey('subtitle')          
-    },
-    getDesc: function () { 
-      return this.getItemByKey('label1')          
-    },
-    getPhotoUrl: function () {
-      let url = null
-      let photo = this.item ? this.item.photo: null
-      if (photo) {
-        if (photo.large && photo.large) {
-            url = photo.large
-          } else if (photo.thumb && photo.thumb) {
-            url = photo.thumb
-          }
-      }
-      if (url === null) {
-        url = require('../../../assets/image/change-icon/default_image_02@2x.png')
-      }
-      return url
-    }
-  },
-  methods: {
-    getItemByKey(key) {
-      if (this.item && this.item[key]) {
-        return this.item[key]
-      } 
-      return ''     
-    },
+  mixins: [ Common, PhotoV ],  
+  methods: {    
   },
 }
 </script>
 
 <style lang="scss" scoped>
-  .container {
+  .card-v5t-container {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: space-around;
     align-items: stretch;
     background-color: $cardbgColor;
+    // border: 4px solid green;
   }
   .title {
-    font-size: $h4;
+    font-size: $h5;
     color: $titleTextColor;
-    margin-top: 9px;
+    margin-top: 5px;
     margin-left: 9px;
     margin-right: 9px;
+    @include limit-line(1);   
+    // background-color: red;
   }
   .subtitle {
-    font-size: $h5;
+    font-size: $h4;
     color: $subtitleTextColor;
+    margin-top: 10px;
     margin-left: 9px;
     margin-right: 9px;
     text-align: left;
+    @include limit-line(1);
   }
   .desc {
-    font-size: $h5;
+    font-size: $h6;
     color: $subtitleTextColor;
-    margin-top: 40px;
+    margin-top: 10px;
     margin-left: 9px;
     margin-right: 9px;
+    @include limit-line(1);
     text-align: right;
   }
-  .photo {
-    margin-top: 9px;
+  .photo {    
     margin-left: 5px;
     margin-bottom: 5px;
     margin-right: 5px;
+    width: auto;    
+    // border: 2px solid lightblue;
   }
 </style>
 

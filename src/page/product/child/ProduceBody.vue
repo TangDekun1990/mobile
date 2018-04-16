@@ -138,6 +138,7 @@ export default{
 				color:rgba(242,48,48,1);
 				width: 110px;
 				bottom: 0px;
+				left: 0px;
 			}
 		}
 
