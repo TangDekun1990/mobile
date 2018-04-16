@@ -36,18 +36,7 @@ export default {
       }
       return url
     },
-    // getPhotoStyle: function () { 
-    //   return {
-    //     height: this.photoHeight + 'px'
-    //   }
-    // }
   },
-  // mounted() {
-  //   this.$nextTick(() => {
-  //     let width = this.$el.clientWidth
-  //     this.photoHeight = width - 10
-  //   })
-  // },
   methods: {
     getItemByKey(key) {
       if (this.item && this.item[key]) {

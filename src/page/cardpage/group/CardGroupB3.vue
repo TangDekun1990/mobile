@@ -8,22 +8,27 @@
       </card-item>
       <div class="compose-wrapper border-left">
         <card-item 
-          class="top-item" 
-          v-bind:style="getColumnItemStyle" 
+          v-bind:style="getColumnSubItemStyle" 
           v-if="getItemByIndex(1)" 
-          :item="getItemByIndex(1)">
+          :item="getItemByIndex(2)">
+        </card-item>
+        <card-item 
+          class="border-left"
+          v-bind:style="getColumnSubItemStyle" 
+          v-if="getItemByIndex(2)" 
+          :item="getItemByIndex(2)">
         </card-item>
         <div class="row-wrapper">
           <card-item 
             v-bind:style="getColumnSubItemStyle" 
-            v-if="getItemByIndex(2)" 
-            :item="getItemByIndex(2)">
+            v-if="getItemByIndex(3)" 
+            :item="getItemByIndex(3)">
           </card-item>
           <card-item 
             class="border-left"
             v-bind:style="getColumnSubItemStyle" 
-            v-if="getItemByIndex(3)" 
-            :item="getItemByIndex(3)">
+            v-if="getItemByIndex(4)" 
+            :item="getItemByIndex(4)">
           </card-item>
         </div>
       </div>
@@ -31,10 +36,15 @@
     <div v-else class="content-wrapper">
       <div class="compose-wrapper">
         <card-item 
-          class="top-item" 
-          v-bind:style="getColumnItemStyle" 
-          v-if="getItemByIndex(0)" 
-          :item="getItemByIndex(0)">
+          v-bind:style="getColumnSubItemStyle" 
+          v-if="getItemByIndex(2)" 
+          :item="getItemByIndex(2)">
+        </card-item>
+        <card-item
+          class="border-left" 
+          v-bind:style="getColumnSubItemStyle" 
+          v-if="getItemByIndex(3)" 
+          :item="getItemByIndex(3)">
         </card-item>
         <div class="row-wrapper">
           <card-item 
@@ -65,7 +75,7 @@ import CardItem from '../card/CardItem'
 import { ENUM } from '../../../config/enum'
 import Common from './Common'
 export default {
-  name: 'CardGroupB2',
+  name: 'CardGroupB3',
   mixins: [ Common ],
   components: {
     CardItem,

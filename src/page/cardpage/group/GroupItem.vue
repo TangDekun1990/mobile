@@ -1,10 +1,10 @@
 <template>
   <div class="group-item-container">
-    <div v-if="hasChildItems(item)">
+    <div v-if="hasChildItems(layoutItem)">
       <group-item v-for="(subItem, index) in item.children" :key="index"></group-item>
     </div>
     <div v-else>
-      <card-item :item="item"></card-item>
+      <card-item :item="getCardItemByIndex(layoutItem.index)" v-bind:style="getItemStyle"></card-item>
     </div> 
   </div>
 </template>
@@ -17,43 +17,26 @@ export default {
     CardItem,
   },
   props: {
-    item: {
+    layoutItem: {
       type: Object,
     },
-    data: {
+    cardItem: {
+      type: Object,
+    },
+    items: {
       type: Array,
-    }
-  },
-  data() {
-    return {  
-      b1lItems: [
-        {
-          id: '1-1',
-          ratio: 3.0 / 4.0,
-          children: [],
-        },
-        {
-          id: '2-1',
-          ratio: 9.0 / 8.0,
-          children: [
-            {
-              id: '2-1-1',
-              ratio: 9.0 / 4.0,
-              children: [],
-            },
-            {
-              id: '2-1-2',
-              ratio: 9.0 / 4.0,
-              children: [],
-            },
-          ],
-        },
-      ],    
+    },
+    size: {
+      type: Object
     }
   },
   computed: {   
-    getItemStyle(item) {
-      
+    getItemStyle() {
+      const { width, height } = this.size
+      return {
+        width: width + 'px',
+        height: height + 'px',
+      }
     }     
   },
   methods: {
@@ -62,7 +45,14 @@ export default {
         return true
       }
       return false
-    },     
+    },
+    getCardItemByIndex(index) {
+      let item = null
+      if (index > -1) {
+        item = (this.items && this.items.length >= index) ? this.items[index] : null
+      }      
+      return item
+    }     
   }
 }
 </script>
@@ -73,7 +63,8 @@ export default {
     flex-direction: row;
     justify-content: flex-start;
     align-items: stretch;
-    background-color: $cardbgColor;
+    flex-wrap: wrap;
+    // background-color: $cardbgColor;
     // border-top: 1px solid $lineColor;
     // border-bottom: 1px solid $lineColor;    
   }

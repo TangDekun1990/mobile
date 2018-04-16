@@ -3,20 +3,20 @@
     <div v-if="isLeft" class="content-wrapper">
       <card-item 
         v-bind:style="getRowItemStyle" 
-        v-if="getFirstItem"
-        :item="getFirstItem">
+        v-if="getItemByIndex(0)"
+        :item="getItemByIndex(0)">
       </card-item>
-      <div class="column-wrapper">
+      <div class="column-wrapper border-left">
         <card-item 
           class="top-item" 
           v-bind:style="getColumnItemStyle" 
-          v-if="getSecondItem" 
-          :item="getSecondItem">
+          v-if="getItemByIndex(1)" 
+          :item="getItemByIndex(1)">
         </card-item>
         <card-item 
           v-bind:style="getColumnItemStyle" 
-          v-if="getThirdItem" 
-          :item="getThirdItem">
+          v-if="getItemByIndex(2)" 
+          :item="getItemByIndex(2)">
         </card-item>
       </div>
     </div>
@@ -25,19 +25,20 @@
         <card-item 
           class="top-item" 
           v-bind:style="getColumnItemStyle" 
-          v-if="getFirstItem" 
-          :item="getFirstItem">
+          v-if="getItemByIndex(0)" 
+          :item="getItemByIndex(0)">
         </card-item>
         <card-item 
           v-bind:style="getColumnItemStyle" 
-          v-if="getSecondItem" 
-          :item="getSecondItem">
+          v-if="getItemByIndex(2)" 
+          :item="getItemByIndex(2)">
         </card-item>
       </div>
       <card-item 
+        class="border-left"
         v-bind:style="getRowItemStyle" 
-        v-if="getThirdItem"
-        :item="getThirdItem">
+        v-if="getItemByIndex(1)"
+        :item="getItemByIndex(1)">
       </card-item>
     </div>         
   </div>
@@ -46,15 +47,12 @@
 <script>
 import CardItem from '../card/CardItem'
 import { ENUM } from '../../../config/enum'
+import Common from './Common'
 export default {
   name: 'CardGroupB1',
+  mixins: [ Common ],
   components: {
     CardItem,
-  },
-  props: {
-    item: {
-      type: Object
-    }
   },
   computed: {
     isLeft() {
@@ -63,22 +61,6 @@ export default {
         return true
       }
       return false
-    },
-    getItems: function () {
-      let items = []
-      if (this.item && this.item.cards && this.item.cards.length) {
-        items = this.item.cards
-      }
-      return items
-    },
-    getFirstItem: function () {
-      return this.getItemByIndex(0)
-    },
-    getSecondItem: function () {
-      return this.getItemByIndex(1)
-    },
-    getThirdItem: function () {      
-      return this.getItemByIndex(2)
     },
     getRowItemStyle: function () {
       const { width, height } = this.getLeftItemSize
@@ -99,7 +81,7 @@ export default {
       let itemHeight = 0
       const { width, height } = this.getContainerSize
       itemHeight = height
-      itemWidth = itemHeight * (3.0 / 4.0)
+      itemWidth = itemHeight * (3.0 / 4.0) - 1
       return {
         width: itemWidth,
         height: itemHeight
@@ -139,15 +121,6 @@ export default {
       }
     },
   },
-  methods: {
-    getItemByIndex(index) {
-      let items = this.getItems
-      if (items && items.length > index) {
-        return items[index]
-      }
-      return null
-    }, 
-  }
 }
 </script>
 
@@ -168,7 +141,9 @@ export default {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    align-items: stretch;
+    align-items: stretch;    
+  }
+  .border-left {
     border-left: 1px solid $lineColor;
   }
   .top-item {

@@ -14,24 +14,14 @@
 import { Swipe, SwipeItem } from 'mint-ui'
 import CardItem from '../card/CardItem'
 import { ENUM } from '../../../config/enum'
+import Common from './Common'
 export default {
   name: 'CardGroupA',
+  mixins: [ Common ],
   components: {
     CardItem,
   },
-  props: {
-    item: {
-      type: Object
-    }
-  },
   computed: {
-    getItems: function () {
-      let items = []
-      if (this.item && this.item.cards && this.item.cards.length) {
-        items = this.item.cards
-      }
-      return items
-    },
     getItemStyle: function () {
       const { width, height } = window.screen
       let itemWidth = 0
@@ -69,8 +59,7 @@ export default {
       } else if (layout === ENUM.CARDGROUP_LAYOUT.A3XH) {                
         columnCount = 3
         ratio = 11.0 / 15.0
-      } else if (layout === ENUM.CARDGROUP_LAYOUT.A3XXH) { 
-        debugger               
+      } else if (layout === ENUM.CARDGROUP_LAYOUT.A3XXH) {                       
         columnCount = 3
         ratio = 7.0 / 10.0
       } else if (layout === ENUM.CARDGROUP_LAYOUT.A4H) {                

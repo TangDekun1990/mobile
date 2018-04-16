@@ -22,29 +22,31 @@ export default {
     justify-content: flex-start;
     align-items: stretch;
     background-color: $cardbgColor;
-  }
-  .title {
-    font-size: $h4;
-    color: $titleTextColor;
-    margin-top: 9px;
-    margin-left: 9px;
-    margin-right: 9px;
-    text-align: center;
-  }
-  .subtitle {
-    font-size: $h5;
-    color: $subtitleTextColor;
-    margin-top: 6px;
-    margin-left: 9px;
-    margin-right: 9px;
-    text-align: center;
-  }
-  .photo {
-    margin-top: 9px;
-    margin-left: 5px;
-    margin-bottom: 5px;
-    margin-right: 5px;
-  }
+    .title {
+      font-size: $h4;
+      color: $titleTextColor;
+      margin-top: 9px;
+      margin-left: 9px;
+      margin-right: 9px;
+      text-align: center;
+    }
+    .subtitle {
+      font-size: $h5;
+      color: $subtitleTextColor;
+      margin-top: 4px;
+      margin-left: 9px;
+      margin-right: 9px;
+      text-align: center;
+      @include limit-line(1);
+    }
+    .photo {
+      margin-top: 9px;
+      margin-left: 5px;
+      margin-bottom: 5px;
+      margin-right: 5px;
+      @include limit-line(1);
+    }
+  }  
 </style>
 
 

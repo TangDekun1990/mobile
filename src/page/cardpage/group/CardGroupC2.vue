@@ -13,24 +13,14 @@
 <script>
 import CardItem from '../card/CardItem'
 import { ENUM } from '../../../config/enum'
+import Common from './Common'
 export default {
   name: 'CardGroupC2',
+  mixins: [ Common ],
   components: {
     CardItem,
   },
-  props: {
-    item: {
-      type: Object
-    }
-  },
   computed: {
-    getItems: function () {
-      let items = []
-      if (this.item && this.item.cards && this.item.cards.length) {
-        items = this.item.cards
-      }
-      return items
-    },
     getItemStyle: function () {
       const { width, height } = window.screen
       let itemWidth = 0

@@ -29,41 +29,45 @@ export default {
     justify-content: flex-start;
     align-items: stretch;
     background-color: $cardbgColor;
-  }
-  .title {
-    font-size: $h4;
-    color: $titleTextColor;
-    margin-top: 9px;
-    margin-left: 9px;
-    margin-right: 9px;
-  }
-  .row-wrapper {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: stretch;
-    margin-top: 6px;
-  }
-  .subtitle {
-    font-size: $h5;
-    color: $subtitleTextColor;
-    margin-left: 9px;
-    margin-right: 9px;
-    text-align: left;
-  }
-  .desc {
-    font-size: $h5;
-    color: $subtitleTextColor;
-    margin-left: 9px;
-    margin-right: 9px;
-    text-align: right;
-  }
-  .photo {
-    margin-top: 9px;
-    margin-left: 5px;
-    margin-bottom: 5px;
-    margin-right: 5px;
-  }
+    .title {
+      font-size: $h4;
+      color: $titleTextColor;
+      margin-top: 9px;
+      margin-left: 9px;
+      margin-right: 9px;
+      @include limit-line(1);
+    }
+    .row-wrapper {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      align-items: stretch;
+      margin-top: 4px;
+      label {
+        flex: 1;
+      }
+      .subtitle {
+        font-size: $h5;
+        color: $subtitleTextColor;
+        margin-left: 9px;
+        text-align: left;
+        @include limit-line(1);
+      }
+      .desc {
+        font-size: $h5;
+        color: $subtitleTextColor;
+        margin-right: 9px;
+        text-align: right;
+        @include limit-line(1);
+      }
+    }
+    .photo {
+      margin-top: 9px;
+      margin-left: 5px;
+      margin-bottom: 5px;
+      margin-right: 5px;
+    }
+  }    
 </style>
 
 

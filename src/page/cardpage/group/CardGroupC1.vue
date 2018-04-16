@@ -10,24 +10,14 @@
 import { Swipe, SwipeItem } from 'mint-ui'
 import CardItem from '../card/CardItem'
 import { ENUM } from '../../../config/enum'
+import Common from './Common'
 export default {
   name: 'CardGroupC1',
+  mixins: [ Common ],
   components: {
     CardItem,
   },
-  props: {
-    item: {
-      type: Object
-    }
-  },
   computed: {
-    getItems: function () {
-      let items = []
-      if (this.item && this.item.cards && this.item.cards.length) {
-        items = this.item.cards
-      }
-      return items
-    },
     getContainerStyle: function() {
       let itemWidth = 0
       let itemHeight = 0
