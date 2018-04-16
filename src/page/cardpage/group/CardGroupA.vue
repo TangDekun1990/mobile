@@ -81,10 +81,6 @@ export default {
       let seperatorWidth = (columnCount - 0) * 1 // 分割线宽度
       itemWidth = (width - seperatorWidth) / columnCount  
       itemHeight = itemWidth / ratio
-      // console.log('====================================');
-      // console.log('layout is: ', layout)
-      // console.log('(itemWidth, itemHeight)', itemWidth, itemHeight);
-      // console.log('====================================');
       return {
         width: itemWidth + 'px',
         height: itemHeight + 'px'

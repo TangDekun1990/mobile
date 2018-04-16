@@ -7,17 +7,19 @@
         :item="getItemByIndex(0)">
       </card-item>
       <div class="compose-wrapper border-left">
-        <card-item 
-          v-bind:style="getColumnSubItemStyle" 
-          v-if="getItemByIndex(1)" 
-          :item="getItemByIndex(2)">
-        </card-item>
-        <card-item 
-          class="border-left"
-          v-bind:style="getColumnSubItemStyle" 
-          v-if="getItemByIndex(2)" 
-          :item="getItemByIndex(2)">
-        </card-item>
+        <div class="row-wrapper border-bottom">
+          <card-item 
+            v-bind:style="getColumnSubItemStyle" 
+            v-if="getItemByIndex(1)" 
+            :item="getItemByIndex(1)">
+          </card-item>
+          <card-item 
+            class="border-left"
+            v-bind:style="getColumnSubItemStyle" 
+            v-if="getItemByIndex(2)" 
+            :item="getItemByIndex(2)">
+          </card-item>
+        </div>        
         <div class="row-wrapper">
           <card-item 
             v-bind:style="getColumnSubItemStyle" 
@@ -35,36 +37,38 @@
     </div>
     <div v-else class="content-wrapper">
       <div class="compose-wrapper">
-        <card-item 
-          v-bind:style="getColumnSubItemStyle" 
-          v-if="getItemByIndex(2)" 
-          :item="getItemByIndex(2)">
-        </card-item>
-        <card-item
-          class="border-left" 
-          v-bind:style="getColumnSubItemStyle" 
-          v-if="getItemByIndex(3)" 
-          :item="getItemByIndex(3)">
-        </card-item>
+        <div class="row-wrapper border-bottom">
+          <card-item             
+            v-bind:style="getColumnSubItemStyle" 
+            v-if="getItemByIndex(0)" 
+            :item="getItemByIndex(0)">
+          </card-item>
+          <card-item
+            class="border-left"
+            v-bind:style="getColumnSubItemStyle" 
+            v-if="getItemByIndex(1)" 
+            :item="getItemByIndex(1)">
+          </card-item>
+        </div>
         <div class="row-wrapper">
           <card-item 
             v-bind:style="getColumnSubItemStyle" 
-            v-if="getItemByIndex(2)" 
-            :item="getItemByIndex(2)">
+            v-if="getItemByIndex(3)" 
+            :item="getItemByIndex(3)">
           </card-item>
           <card-item
             class="border-left" 
             v-bind:style="getColumnSubItemStyle" 
-            v-if="getItemByIndex(3)" 
-            :item="getItemByIndex(3)">
+            v-if="getItemByIndex(4)" 
+            :item="getItemByIndex(4)">
           </card-item>
         </div>
       </div>
       <card-item
         class="border-left" 
         v-bind:style="getRowItemStyle" 
-        v-if="getItemByIndex(1)"
-        :item="getItemByIndex(1)">
+        v-if="getItemByIndex(2)"
+        :item="getItemByIndex(2)">
       </card-item>
     </div>         
   </div>
@@ -80,14 +84,7 @@ export default {
   components: {
     CardItem,
   },  
-  computed: {
-    isLeft() {
-      let layout = this.item.layout
-      if (layout === ENUM.CARDGROUP_LAYOUT.B2L) {
-        return true
-      }
-      return false
-    },       
+  computed: {      
     getRowItemStyle: function () {
       const { width, height } = this.getRowItemSize
       return {
@@ -119,8 +116,8 @@ export default {
     getColumnItemSize: function () {
       const { width, height } = this.getContainerSize
       return {
-        width: height * 0.5 * (9.0 / 4.0) - 1,
-        height: height * 0.5
+        width: height * 0.5 * (9.0 / 4.0) - 2,
+        height: height * 0.5 - 1
       }
     },
     getColumnSubItemSize: function () {
@@ -139,9 +136,6 @@ export default {
     },
     getContainerSize: function() {
       const { width } = window.screen
-      // console.log('====================================');
-      // console.log('(w, h) is :', itemWidth, itemHeight);
-      // console.log('====================================');
       return {
         width: width,
         height: width * (8.0 / 15.0)
@@ -160,8 +154,7 @@ export default {
     flex-direction: row;
     justify-content: flex-start;
     align-items: stretch;
-    background-color: $cardbgColor;
-    border-top: 1px solid $lineColor;    
+    background-color: $cardbgColor;   
   }
   .compose-wrapper {
     display: flex;
@@ -172,15 +165,14 @@ export default {
   .border-left {
     border-left: 1px solid $lineColor;
   }
+  .border-bottom {
+    border-bottom: 1px solid $lineColor;
+  }
   .row-wrapper {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    align-items: stretch;  
-    border-bottom: 1px solid $lineColor;     
-  }
-  .top-item {
-    border-bottom: 1px solid $lineColor;
+    align-items: stretch;    
   }
 </style>
 
