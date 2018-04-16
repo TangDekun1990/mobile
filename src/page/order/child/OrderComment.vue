@@ -14,10 +14,11 @@
           <img v-bind:src="item.product.photos[0].large" >
         </div>
         <div class="comment">
-          <span>{{item.product.name}}</span>
+          <span>{{item.product.name | mySubstr(10)}}</span>
           <ul>
             <li class="good"> 
-              <img src="../../../assets/image/change-icon/e7_good_sel@2x.png">
+              <!-- v-on:click="changeImage(item.grade)" v-if="item.grade" -->
+              <img src="../../../assets/image/change-icon/e7_good_nor@2x.png" v-bind:class="{'active':item.isActive}" v-on:click="changeImage(index)">
               <label>好评</label>
             </li>
             <li class="normal">
@@ -31,7 +32,7 @@
           </ul>
         </div>
         <div class="enter">
-          <textarea cols="" rows="" placeholder="请在此输入评价"></textarea>
+          <textarea cols="" rows="" placeholder="请在此输入评价" v-model="item.content"></textarea>
         </div>
     </div>
   </div>
@@ -57,8 +58,7 @@ export default {
       this.$router.go(-1); 
     },
     submit() {
-      this.$router.push('/orderSubmit');
-      let id = this.$route.params.orderComment ?  this.$route.params.orderComment : '';
+      let id = this.$route.params.order.id ?  this.$route.params.order.id : '';
       this.getComment(id);
     },
 
@@ -67,10 +67,18 @@ export default {
 			orderReview(id, JSON.stringify([{goods:id,grade:'1',content:''}]), 1).then(res => {
 				if(res) {
           this.commentList = Object.assign([],this.commentList, res.order);
-          // this.commentinfo = res;
+          this.$router.push('/orderSubmit');
 				}
 			})
-		},
+    },
+    
+    changeImage(data){
+      console.log(11111111);
+      this.commentinfo.goods.forEach(function(obj){
+        obj.isActive = false;
+      });
+        data.isActive = !data.isActive;        
+    }
   }
 }
 </script>
@@ -94,7 +102,7 @@ export default {
         img {
           width:75px;
           height:75px;
-          padding:15px 14px 15px 15px;
+          padding:15px 14px 15px 13px;
         }
       }
       .comment {
@@ -107,19 +115,24 @@ export default {
           color:rgba(124,127,136,1);
           line-height:16px;
           position: absolute;
-          padding: 26px 107px 24px 0px;
+          padding: 9px 107px 24px 0px;
           vertical-align:middle;
           }
           ul {
-            padding: 66px 2px 13px 14px;
+            display: flex;
+            justify-content: space-between;
+            padding: 26px 4px 26px 0px;
             li {
               float: left;
               margin-right: 38px;
-              cursor: pointer;
+              // cursor: pointer;
               img {
                 width:19px;
                 height:19px; 
                 vertical-align: text-bottom;
+                &:active {
+                  background-color:rgba(242,48,48,1);
+                }
               }
               label {
                 height:14px; 

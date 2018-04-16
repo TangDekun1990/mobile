@@ -21,6 +21,7 @@ import Agreement from '../page/auth/Agreement'
 import Profile from '../page/profile/Profile'
 import ProfileInfo from '../page/profile/ProfileInfo'
 import Setting from '../page/profile/Setting'
+import SettingAbout from '../page/profile/child/SettingAbout'
 
 // address
 import AddressList from '../page/address/AddressList'
@@ -114,6 +115,11 @@ export default [
 				name: 'setting',
 				path: '/setting',
 				component: Setting
+			},
+			{
+				name: 'SettingAbout',
+				path: '/SettingAbout',
+				component: SettingAbout
 			},
 			{
 				name: 'profileInfo',
