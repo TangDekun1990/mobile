@@ -10,66 +10,18 @@
 </template>
 
 <script>
+import Common from './Common'
+import PhotoH from './PhotoH'
 export default {
-  data() {
-    return {
-      photoWidth: 0,
-    }
-  },
+  mixins: [ Common, PhotoH ],  
   name: 'CardH1L',
-  props: {
-    item: {
-      type: Object
-    },
-    size: {
-      type: Object
-    }
-  },
   computed: {
-    getTitle: function () {       
-      return this.getItemByKey('title')
-    },
-    getSubtitle: function () {
-      return this.getItemByKey('subtitle')
-    },
     getLeftDesc: function () {
       return this.getItemByKey('label1')     
-    },
-    getPhotoUrl: function () {
-      let url = null
-      let photo = this.item ? this.item.photo: null
-      if (photo) {
-        if (photo.large && photo.large) {
-            url = photo.large
-          } else if (photo.thumb && photo.thumb) {
-            url = photo.thumb
-          }
-      }
-      if (url === null) {
-        url = require('../../../assets/image/change-icon/default_image_02@2x.png')
-      }
-      return url
-    },
-    getPhotoStyle: function () {     
-      return {
-        width: this.photoWidth + 'px',
-      }
-    }
+    },        
   },
   methods: {
-    getItemByKey(key) {
-      if (this.item && this.item[key]) {
-        return this.item[key]
-      } 
-      return ''     
-    },
   },
-  mounted() {
-    this.$nextTick(() => {    
-      let height = this.$el.clientHeight
-      this.photoWidth = height - 10
-    })
-  }
 }
 </script>
 

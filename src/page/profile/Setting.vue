@@ -1,9 +1,27 @@
 <template>
   <div class="container">
+    <!-- header -->
     <mt-header class="header" title="设置">
       <header-item slot="left" v-bind:isBack=true v-on:onclick="goBack">
       </header-item>    
     </mt-header>
+    <!-- body -->
+    <div class="settings-body">
+      <ul>
+        <li>
+          <span>展示高清图片</span>
+          <mt-switch v-model="value"></mt-switch>
+        </li>
+        <li>
+          <span>接收消息通知</span>
+          <mt-switch v-model="value"></mt-switch>
+        </li>
+        <li v-on:click="about()">
+          <span>关于我们</span>
+          <img src="../../assets/image/change-icon/enter@2x.png" >
+        </li>
+      </ul>
+    </div>
     <gk-button class="button" type="primary" v-on:click="signout" v-if="isOnline">退出登录</gk-button>
   </div>
 </template>
@@ -11,8 +29,13 @@
 <script>
 import { HeaderItem, Button } from '../../components/common'
 import { mapState, mapMutations } from 'vuex'
-import { Header, MessageBox } from 'mint-ui'
+import { Header, MessageBox, Switch } from 'mint-ui'
 export default {
+  data() {
+    return {
+      value:false
+    }
+  },
   computed: {
     ...mapState({
       isOnline: state => state.auth.isOnline
@@ -30,6 +53,9 @@ export default {
         this.clearToken() 
         this.goBack() 
       })
+    },
+    about() {
+      this.$router.push('/SettingAbout');
     }
   }
 }
@@ -42,23 +68,50 @@ export default {
     justify-content: flex-start;
     align-items: stretch;
     background-color: #fff;
+    .header {
+      @include header;
+    }
+    .button {
+      @include button;    
+      position: absolute; 
+      width: 90%;    
+      left: 5%;
+      right: 5%;
+      bottom: 36px; 
+      margin: 0px;
+    }
+    .text {
+      color: #ffffff;
+      font-size: 18px;
+    }
+    .settings-body {
+      width:100%;
+      ul {
+        li{
+          height: 60px;
+          display: flex;
+          flex-wrap: nowrap;
+          justify-content:space-between;
+          align-items: center;
+          padding:0px 20px;
+          border-bottom:1px solid #E8EAED;
+          span {
+            height:16px; 
+            font-size:15px;
+            font-family:'PingFangSC-Regular';
+            color:rgba(78,84,93,1);
+            line-height:16px;
+          }
+          img {  
+            width:7px; 
+            height:11px;     
+          }
+        }
+      }
+    }
   }
-  .header {
-    @include header;
-  }
-  .button {
-    @include button;    
-    position: absolute; 
-    width: 90%;    
-    left: 5%;
-    right: 5%;
-    bottom: 36px; 
-    margin: 0px;
-  }
-  .text {
-    color: #ffffff;
-    font-size: 18px;
-  }
+  
+
 </style>
 
 

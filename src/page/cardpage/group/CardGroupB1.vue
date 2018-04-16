@@ -1,52 +1,75 @@
 <template>
-  <div class="group-b1l-container" v-bind:style="getContainerStyle">
-    <card-item v-bind:style="getLeftItemStyle" v-if="getFirstItem" :size="getLeftItemSize" :item="getFirstItem"></card-item>
-    <div class="right-wrapper">
-      <card-item class="top-item" v-bind:style="getRightItemStyle" v-if="getSecondItem" :size="getRightItemSize" :item="getSecondItem"></card-item>
-      <card-item v-bind:style="getRightItemStyle" v-if="getThirdItem" :size="getRightItemSize" :item="getThirdItem"></card-item>
-    </div>     
+  <div class="group-b1-container" v-bind:style="getContainerStyle">
+    <div v-if="isLeft" class="content-wrapper">
+      <card-item 
+        v-bind:style="getRowItemStyle" 
+        v-if="getItemByIndex(0)"
+        :item="getItemByIndex(0)">
+      </card-item>
+      <div class="column-wrapper border-left">
+        <card-item 
+          class="top-item" 
+          v-bind:style="getColumnItemStyle" 
+          v-if="getItemByIndex(1)" 
+          :item="getItemByIndex(1)">
+        </card-item>
+        <card-item 
+          v-bind:style="getColumnItemStyle" 
+          v-if="getItemByIndex(2)" 
+          :item="getItemByIndex(2)">
+        </card-item>
+      </div>
+    </div>
+    <div v-else class="content-wrapper">
+      <div class="column-wrapper">
+        <card-item 
+          class="top-item" 
+          v-bind:style="getColumnItemStyle" 
+          v-if="getItemByIndex(0)" 
+          :item="getItemByIndex(0)">
+        </card-item>
+        <card-item 
+          v-bind:style="getColumnItemStyle" 
+          v-if="getItemByIndex(2)" 
+          :item="getItemByIndex(2)">
+        </card-item>
+      </div>
+      <card-item 
+        class="border-left"
+        v-bind:style="getRowItemStyle" 
+        v-if="getItemByIndex(1)"
+        :item="getItemByIndex(1)">
+      </card-item>
+    </div>         
   </div>
 </template>
 
 <script>
-import { Swipe, SwipeItem } from 'mint-ui'
 import CardItem from '../card/CardItem'
 import { ENUM } from '../../../config/enum'
+import Common from './Common'
 export default {
-  name: 'CardGroupB1L',
+  name: 'CardGroupB1',
+  mixins: [ Common ],
   components: {
     CardItem,
   },
-  props: {
-    item: {
-      type: Object
-    }
-  },
   computed: {
-    getItems: function () {
-      let items = []
-      if (this.item && this.item.cards && this.item.cards.length) {
-        items = this.item.cards
+    isLeft() {
+      let layout = this.item.layout
+      if (layout === ENUM.CARDGROUP_LAYOUT.B1L) {
+        return true
       }
-      return items
+      return false
     },
-    getFirstItem: function () {
-      return this.getItemByIndex(0)
-    },
-    getSecondItem: function () {
-      return this.getItemByIndex(1)
-    },
-    getThirdItem: function () {      
-      return this.getItemByIndex(2)
-    },
-    getLeftItemStyle: function () {
+    getRowItemStyle: function () {
       const { width, height } = this.getLeftItemSize
       return {
         width: width + 'px',
         height: height + 'px'
       }
     },
-    getRightItemStyle: function () {
+    getColumnItemStyle: function () {
       const { width, height } = this.getRightItemSize      
       return {
         width: width + 'px',
@@ -58,7 +81,7 @@ export default {
       let itemHeight = 0
       const { width, height } = this.getContainerSize
       itemHeight = height
-      itemWidth = itemHeight * (3.0 / 4.0)
+      itemWidth = itemHeight * (3.0 / 4.0) - 1
       return {
         width: itemWidth,
         height: itemHeight
@@ -89,30 +112,23 @@ export default {
       itemWidth = width
       itemHeight = itemWidth * (8.0 / 15.0)
       
-      console.log('====================================');
-      console.log('(w, h) is :', itemWidth, itemHeight);
-      console.log('====================================');
+      // console.log('====================================');
+      // console.log('(w, h) is :', itemWidth, itemHeight);
+      // console.log('====================================');
       return {
         width: itemWidth,
         height: itemHeight
       }
     },
   },
-  methods: {
-    getItemByIndex(index) {
-      let items = this.getItems
-      if (items && items.length > index) {
-        return items[index]
-      }
-      return null
-    }, 
-  }
 }
 </script>
 
 <style lang="scss" scoped>
-  .group-b1l-container {
-    flex: 1;
+  .group-b1-container {
+    display: flex;   
+  }
+  .content-wrapper {    
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
@@ -121,11 +137,13 @@ export default {
     border-top: 1px solid $lineColor;
     // border-bottom: 1px solid $lineColor;    
   }
-  .right-wrapper {
+  .column-wrapper {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    align-items: stretch;
+    align-items: stretch;    
+  }
+  .border-left {
     border-left: 1px solid $lineColor;
   }
   .top-item {

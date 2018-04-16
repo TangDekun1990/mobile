@@ -5,7 +5,7 @@
   <card-h2-r v-else-if="isCardH2R" :item="item"></card-h2-r>
   <card-v2-b v-else-if="isCardV2B" :item="item"></card-v2-b>
   <card-v2-t v-else-if="isCardV2T" :item="item"></card-v2-t>
-  <card-v2-b v-else-if="isCardV3B" :item="item"></card-v2-b>
+  <card-v3-b v-else-if="isCardV3B" :item="item"></card-v3-b>
   <card-v3-t v-else-if="isCardV3T" :item="item"></card-v3-t>
   <card-v4-b v-else-if="isCardV4B" :item="item"></card-v4-b>
   <card-v4-t v-else-if="isCardV4T" :item="item"></card-v4-t>

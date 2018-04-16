@@ -80,13 +80,13 @@
 		justify-content: flex-start;
 		align-items: stretch;
 		background-color: $mainbgColor;
-		margin-bottom: 60px;
+		margin-bottom: 50px;
 	}
 	.header {
 		@include header;
 		border-bottom: 1px solid $lineColor;
 	}
 	.section {
-		margin-top: 10px;
+		margin-bottom: 10px;
 	}
 </style>
