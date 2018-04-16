@@ -1,5 +1,5 @@
 <template>
-  <card-group-a v-if="isCardGroup('A')" :item="item"></card-group-a>
+  <card-group-a v-if="isCardGroupAN" :item="item"></card-group-a>
   <!-- <card-group-b v-else-if="isCardGroupB" :item="item"></card-group-b> -->
   <card-group-b1 v-else-if="isCardGroupB1B5" :item="item"></card-group-b1> 
   <card-group-b2 v-else-if="isCardGroup('B2')" :item="item"></card-group-b2> 
@@ -28,7 +28,10 @@ export default {
       type: Object
     }
   },
-  computed: {      
+  computed: {  
+    isCardGroupAN: function () {
+      return this.isCardGroup('A') || this.isCardGroup('N')
+    },     
     isCardGroupB1B5: function () {
       return this.isCardGroup('B1') || this.isCardGroup('B5')
     },    
