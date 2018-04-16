@@ -11,7 +11,6 @@ import App from './App.vue'
 import routes from './router/router'
 import { ROUTERMODE } from './config/env'
 import utils from './util/util'
-
 import './assets/style/reset.scss'
 import './assets/style/common.scss'
 
@@ -49,27 +48,6 @@ Vue.filter('money', function(val) {
 	return (((sign)?'':'-') + val + '.' + cents)
 
 })
-
-Vue.config.productionTip = false
-
-const router = new VueRouter({
-	routes,
-	mode: ROUTERMODE,
-	// base: '/wenchao/',
-	strict: process.env.NODE_ENV !== 'production',
-	scrollBehavior (to, from, savedPosition) {
-		if (savedPosition) {
-			return savedPosition
-		} else {
-			if (from.meta.keepAlive) {
-				from.meta.savedPosition = document.body.scrollTop;
-			}
-			return { x: 0, y: to.meta.savedPosition || 0 }
-		}
-	}
-});
-
-
 
 Vue.use(VueRouter)
 Vue.use(Mint)
