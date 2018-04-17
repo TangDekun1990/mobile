@@ -16,6 +16,24 @@ import './assets/style/common.scss'
 
 Vue.config.productionTip = false
 
+const router = new VueRouter({
+	routes,
+	mode: ROUTERMODE,
+	// base: '/wenchao/',
+	strict: process.env.NODE_ENV !== 'production',
+	scrollBehavior (to, from, savedPosition) {
+		if (savedPosition) {
+			return savedPosition
+		} else {
+			if (from.meta.keepAlive) {
+				from.meta.savedPosition = document.body.scrollTop;
+			}
+			return { x: 0, y: to.meta.savedPosition || 0 }
+		}
+	}
+})
+
+
 // 使用moment处理日期格式
 import Moment from 'moment'
 Vue.filter('convertTime', function (timeStr) {
@@ -49,11 +67,22 @@ Vue.filter('money', function(val) {
 
 })
 
+// router.beforeEach((to, from, next) => {
+// 	const toDepth = to.path.split('/').length
+// 	const fromDepth = from.path.split('/').length
+// 	if (toDepth < fromDepth) {
+// 		from.meta.keepAlive = false
+// 		to.meta.keepAlive = true
+// 	}
+// 	next()
+// })
+
+Vue.config.productionTip = false
 Vue.use(VueRouter)
 Vue.use(Mint)
 Vue.use(VueResource)
 Vue.use(VueAwesomeSwiper)
-Vue.prototype.utils = utils
+Vue.prototype.utils = utils;
 
 new Vue({
 	router,

@@ -83,9 +83,6 @@ export default {
     goBack() {
       this.$router.go(-1) 
     },
-    selectType(index) {
-
-    },
     onTypeIndexChanged() {      
       if (this.toggle) {         
         this.setInvoiceToggle(false)

@@ -95,7 +95,7 @@ export default {
       return this.isCardItemByStyle(ENUM.CARD_STYLE.Z2L)
     },
     isCardZ2P: function () {
-      return this.isCardItemByStyle(ENUM.CARD_STYLE.V5T)
+      return this.isCardItemByStyle(ENUM.CARD_STYLE.Z2P)
     },
     isCardZ3: function () {
       return this.isCardItemByStyle(ENUM.CARD_STYLE.Z3)

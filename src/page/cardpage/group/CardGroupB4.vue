@@ -1,42 +1,27 @@
 <template>
-  <div class="group-b1-container" v-bind:style="getContainerStyle">
+  <div class="group-b4-container" v-bind:style="getContainerStyle">
     <div v-if="isLeft" class="content-wrapper">
       <card-item 
-        v-bind:style="getRowItemStyle" 
+        v-bind:style="getLeftItemStyle" 
         v-if="getItemByIndex(0)"
         :item="getItemByIndex(0)">
       </card-item>
-      <div class="column-wrapper border-left">
-        <card-item 
-          class="top-item" 
-          v-bind:style="getColumnItemStyle" 
-          v-if="getItemByIndex(1)" 
-          :item="getItemByIndex(1)">
-        </card-item>
-        <card-item 
-          v-bind:style="getColumnItemStyle" 
-          v-if="getItemByIndex(2)" 
-          :item="getItemByIndex(2)">
-        </card-item>
-      </div>
+      <card-item
+        class="border-left"
+        v-bind:style="getRightItemStyle" 
+        v-if="getItemByIndex(1)" 
+        :item="getItemByIndex(1)">
+      </card-item>
     </div>
-    <div v-else class="content-wrapper">
-      <div class="column-wrapper">
-        <card-item 
-          class="top-item" 
-          v-bind:style="getColumnItemStyle" 
-          v-if="getItemByIndex(0)" 
-          :item="getItemByIndex(0)">
-        </card-item>
-        <card-item 
-          v-bind:style="getColumnItemStyle" 
-          v-if="getItemByIndex(2)" 
-          :item="getItemByIndex(2)">
-        </card-item>
-      </div>
+    <div v-else class="content-wrapper"> 
+      <card-item         
+        v-bind:style="getRightItemStyle" 
+        v-if="getItemByIndex(0)"
+        :item="getItemByIndex(0)">
+      </card-item>
       <card-item 
         class="border-left"
-        v-bind:style="getRowItemStyle" 
+        v-bind:style="getLeftItemStyle" 
         v-if="getItemByIndex(1)"
         :item="getItemByIndex(1)">
       </card-item>
@@ -49,20 +34,20 @@ import CardItem from '../card/CardItem'
 import { ENUM } from '../../../config/enum'
 import Common from './Common'
 export default {
-  name: 'CardGroupB1',
+  name: 'CardGroupB4',
   mixins: [ Common ],
   components: {
     CardItem,
   },
   computed: {
-    getRowItemStyle: function () {
+    getLeftItemStyle: function () {
       const { width, height } = this.getLeftItemSize
       return {
         width: width + 'px',
         height: height + 'px'
       }
     },
-    getColumnItemStyle: function () {
+    getRightItemStyle: function () {
       const { width, height } = this.getRightItemSize      
       return {
         width: width + 'px',
@@ -71,28 +56,16 @@ export default {
     },
     getLeftItemSize: function () {
       const { width, height } = this.getContainerSize
-      let ratio = 1
-      if (this.isCardGroup('B1')) {
-        ratio = 3.0 / 4.0
-      } else {
-        ratio = 1.0 / 1.0
-      }
       return {
-        width: height * ratio - 1,
+        width: width * (2.0 / 3.0) - 1,
         height: height,
       }
     },
     getRightItemSize: function () {
       const { width, height } = this.getContainerSize
-      let ratio = 1
-      if (this.isCardGroup('B1')) {
-        ratio = 9.0 / 4.0
-      } else {
-        ratio = 6.0 / 5.0
-      }
       return {
-        width: height * 0.5 * ratio,
-        height: height * 0.5
+        width: width * (1.0 / 3.0),
+        height: height
       }
     },
     getContainerStyle: function() {
@@ -104,15 +77,9 @@ export default {
     },
     getContainerSize: function() {
       const { width, height } = window.screen
-      let ratio = 1
-      if (this.isCardGroup('B1')) {
-        ratio = 8.0 / 15.0
-      } else {
-        ratio = 5.0 / 8.0
-      }
       return {
         width: width,
-        height: width * ratio
+        height: width * (5.0 / 9.0)
       }
     },
   },
@@ -120,7 +87,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .group-b1-container {
+  .group-b4-container {
     display: flex;   
   }
   .content-wrapper {    

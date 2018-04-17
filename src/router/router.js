@@ -22,6 +22,8 @@ import Profile from '../page/profile/Profile'
 import ProfileInfo from '../page/profile/ProfileInfo'
 import Setting from '../page/profile/Setting'
 import SettingAbout from '../page/profile/child/SettingAbout'
+import News from '../page/profile/News'
+import Help from '../page/profile/Help'
 
 // address
 import AddressList from '../page/address/AddressList'
@@ -125,6 +127,16 @@ export default [
 				name: 'profileInfo',
 				path: '/profileInfo',
 				component: ProfileInfo
+			},
+			{
+				name: 'News',
+				path: '/news',
+				component: News
+			},
+			{
+				name: 'Help',
+				path: '/help',
+				component: Help
 			},
 			{
 				name: 'addressList',
