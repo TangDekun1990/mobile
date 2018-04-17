@@ -5,8 +5,8 @@
     <mt-header class="header" title="关于我们">
       <header-item slot="left" v-bind:isBack=true v-on:onclick="goBack">
       </header-item>     
-      <header-item slot="right" :icon="require('../../../assets/image/change-icon/b0_share@2x.png')">
-      </header-item>        
+      <header-item slot="right" :icon="require('../../../assets/image/change-icon/b0_share@2x.png')" v-on:onclick="share()">
+      </header-item>  
     </mt-header>
     <!-- body -->
     <div class="about-body">
@@ -16,7 +16,7 @@
         <img class="code" src="../../../assets/image/change-icon/default_image_02@2x.png">
         <p>扫描二维码，您的朋友也可以下载温超客户端！</p>
       </div>
-      <div>
+      <div class="introduce">
         <p>
           <span>公司简介</span> 
           <img src="../../../assets/image/change-icon/enter@2x.png" >
@@ -26,16 +26,46 @@
           <img src="../../../assets/image/change-icon/enter@2x.png" >
         </p>
       </div>
+      <div class="copy">
+        <p>Copyright©2004-2017</p>
+        <p>温超wenchao.ae版权所有</p>
+      </div>
     </div>
+    <mt-popup v-model="popupVisible" position="bottom">
+      <div>
+          <p>分享到</p>
+          <div>
+            <label>
+              <img src="">
+              <span>微信</span>
+            </label>
+            <label>
+              <img src="">
+              <span>QQ</span>
+            </label>
+          </div>
+          <p>取消</p>
+        </div>     
+    </mt-popup>
   </div>
 </template>
 
 <script>
+import { Actionsheet } from 'mint-ui'
   export default {
+    data() {
+      return {
+        popupVisible: false,
+        actions:[],  
+      }
+    },
     methods: {
       goBack() {
         this.$router.go(-1) 
       },
+      share() {
+        this.popupVisible = true
+      }
     }
   }
 </script>
@@ -62,7 +92,7 @@
         .code {
           width: 150px;
           height: 150px;
-          padding:12px; 
+          // padding:12px; 
         }
         p {
           height:17px; 
@@ -70,6 +100,36 @@
           font-family:'PingFangSC-Regular';
           color:rgba(124,127,136,1);
           line-height:17px;
+        }
+      }
+      .introduce {
+        padding-top:30px;
+        p {
+          height:40px;
+          background-color: #fff;
+          padding:0px 15px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          border-bottom:1px solid #E8EAED;
+          span {
+           height:20px; 
+           font-size:14px;
+           font-family:'PingFangSC-Regular';
+           color:rgba(78,84,93,1);
+           line-height:20px;
+          }
+          img {
+            width:5px;
+            height:10px; 
+
+          }
+        }
+      }
+      .copy {
+        padding:207px 0px 25px 0px;
+        p {
+          text-align: center;
         }
       }
     }

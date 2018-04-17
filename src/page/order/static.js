@@ -57,3 +57,21 @@ export const ORDERNAV = [
     'id': ENUM.ORDER_STATUS.DELIVERIED
   }
 ];
+
+export const IMAGE = [
+  {
+    name: '好评',
+    id: 0,
+    isActive: false
+  },
+  {
+    name: '中评',
+    id: 1,
+    isActive: false
+  },
+  {
+    name: '差评',
+    id: 2,
+    isActive: false
+  }
+];

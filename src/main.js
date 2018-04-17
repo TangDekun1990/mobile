@@ -67,12 +67,22 @@ Vue.filter('money', function(val) {
 
 })
 
+// router.beforeEach((to, from, next) => {
+// 	const toDepth = to.path.split('/').length
+// 	const fromDepth = from.path.split('/').length
+// 	if (toDepth < fromDepth) {
+// 		from.meta.keepAlive = false
+// 		to.meta.keepAlive = true
+// 	}
+// 	next()
+// })
+
 Vue.config.productionTip = false
 Vue.use(VueRouter)
 Vue.use(Mint)
 Vue.use(VueResource)
 Vue.use(VueAwesomeSwiper)
-Vue.prototype.utils = utils
+Vue.prototype.utils = utils;
 
 new Vue({
 	router,

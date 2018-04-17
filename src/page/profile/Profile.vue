@@ -4,7 +4,7 @@
       <div class="nav-item" id="left-nav-item" @click="goSetting">
         <img class="nav-icon" src="../../assets/image/change-icon/e0_setup@2x.png" />
       </div>
-      <div class="nav-item" id="right-nav-item">
+      <div class="nav-item" id="right-nav-item" @click="goNews()">
         <img class="nav-icon" src="../../assets/image/change-icon/e0_message@2x.png" />
       </div>
       <div class="top-info-wrapper">
@@ -79,7 +79,7 @@
       title="优惠券">
     </info-item>
     <info-item 
-      v-on:onclick="goGoodsList"
+      v-on:onclick="goHelp()"
       class="info-item-wrapper section-header" 
       :icon="require('../../assets/image/change-icon/e0_clause@2x.png')" 
       title="使用帮助">
@@ -172,6 +172,9 @@ export default {
     goSetting() {
       this.$router.push("setting");
     },
+    goNews() {
+      this.$router.push('news')
+    },
     goFavourite() {
       // TODO:      
     },
@@ -181,8 +184,8 @@ export default {
     goCoupon() {
       this.$router.push("couponUsable");
     },
-    goGoodsList() {
-      this.$router.push("goodsList");
+    goHelp() {
+      this.$router.push("help");
     },
     goOrder(id) {
       let params = {'order': id};
