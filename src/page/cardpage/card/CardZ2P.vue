@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <img class="photo" :src="getPhotoUrl" />
+    <img class="photo" v-bind:style="getPhotoStyle" :src="getPhotoUrl" />
     <!-- <label class="title">{{getTitle}}</label>       -->
   </div>
 </template>
@@ -10,7 +10,19 @@ import Common from './Common'
 export default {
   name: 'CardZ2P',
   mixins: [ Common ],    
-  computed: {    
+  computed: {  
+    getPhotoStyle: function () {
+      return {
+        width: this.photoWidth + 'px',
+        height: this.photoHeight + 'px'
+      }
+    }  
+  },
+  mounted() {
+    this.$nextTick(() => {      
+      this.photoWidth = this.$el.clientWidth - 10
+      this.photoHeight = this.$el.clientHeight - 10           
+    })
   },
   methods: {
   },

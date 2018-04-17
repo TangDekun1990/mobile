@@ -1,13 +1,19 @@
 <template>
   <div class="group-b-container" v-bind:style="getContainerStyle">
+    <!-- <label 
+      v-for="(layoutItem, index) in getLayoutItems" 
+      :key="index">
+      {{getItemSizeT(layoutItem)}}
+    </label>   -->
     <group-item 
-      v-for="(item, index) in getLayoutItems" 
+      v-for="(layoutItem, index) in getLayoutItems" 
       :key="index" 
-      :layoutItem="item" 
-      :size="getItemSize(item)"
+      :layoutItem="layoutItem" 
+      :itemSize="getItemSize(layoutItem)"
+      :containerSize="getContainerSize"
       :items="getItems"
-      v-bind:style="getItemLayout(item)">
-    </group-item>
+      v-bind:style="getItemLayout(layoutItem)">
+    </group-item>   
   </div>  
 </template>
 
@@ -374,20 +380,22 @@ export default {
         height: height + 'px',
       }
     },
-  },
-  methods: {
-    getLayoutItems: function () {
+    getLayoutItems: function () {      
+      console.log('getLayoutItems')
       let items = []
       let data = this.getLayoutData()
       if (data && data.items && data.items.length) {
         items = data.items
       }
-      debugger
+      console.log('====================================');
+      console.log('getLayoutItems is ', items);
+      console.log('====================================');
       return items
     },
-    getLayoutData: function () {
-      let data = null
-      debugger
+  },
+  methods: {    
+    getLayoutData() {
+      let data = null      
       let layout = this.item ? this.item.layout : null      
       if (layout === ENUM.CARDGROUP_LAYOUT.B1L) {                
         data = this.b1lItems
@@ -402,6 +410,9 @@ export default {
       } else if (layout === ENUM.CARDGROUP_LAYOUT.B3R) {                
         data = this.b3rItems
       }
+      console.log('====================================');
+      console.log('getLayoutData ...', data);
+      console.log('====================================');
       return data
     },
     calculateRatio(items, widthRatio) {
@@ -432,7 +443,10 @@ export default {
        }
       }
     },
-    getItemSize: function (item) {
+    getItemSize(item) {
+      console.log('====================================');
+      console.log('item is ', item);
+      console.log('====================================');
       const { width, height } = this.getContainerSize()      
       
       let itemWidth = item.sizeRatio.width * width
@@ -442,12 +456,21 @@ export default {
         height: itemHeight,
       }
     },
-    getContainerSize: function (item) {
+     getItemSizeT(item) {
+      console.log('====================================');
+      console.log('item is ', item);
+      console.log('====================================');
+      return '123213231'
+    },
+    getContainerSize(item) {
       const { width, height } = window.screen
       let data = this.getLayoutData()
-      debugger
-      let containerWidth = width
-      let containerHeight = containerWidth / data.containerRatio      
+      let containerWidth = 0
+      let containerHeight = 0
+      if (data && data.containerRatio) {
+        containerWidth = width
+        containerHeight = containerWidth / data.containerRatio
+      } 
       return {
         width: containerWidth,
         height: containerHeight,

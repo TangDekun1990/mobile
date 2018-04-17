@@ -20,7 +20,7 @@ export default {
   computed: { 
     getData: function () {
       let data = new Array()
-      let items = this.items.slice(0)
+      let items = this.items ? this.items.slice(0) : null
       // 默认最多展示4个
       if (items && items.length >= 4) {
         data = items.splice(0, 4)

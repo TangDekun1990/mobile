@@ -70,14 +70,7 @@ export default {
   components: {
     CardItem,
   },  
-  computed: {
-    isLeft() {
-      let layout = this.item.layout
-      if (layout === ENUM.CARDGROUP_LAYOUT.B2L) {
-        return true
-      }
-      return false
-    },       
+  computed: {   
     getRowItemStyle: function () {
       const { width, height } = this.getRowItemSize
       return {
@@ -129,9 +122,6 @@ export default {
     },
     getContainerSize: function() {
       const { width } = window.screen
-      // console.log('====================================');
-      // console.log('(w, h) is :', itemWidth, itemHeight);
-      // console.log('====================================');
       return {
         width: width,
         height: width * (8.0 / 15.0)
@@ -150,8 +140,7 @@ export default {
     flex-direction: row;
     justify-content: flex-start;
     align-items: stretch;
-    background-color: $cardbgColor;
-    border-top: 1px solid $lineColor;    
+    background-color: $cardbgColor;   
   }
   .compose-wrapper {
     display: flex;
