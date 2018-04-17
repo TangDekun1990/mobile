@@ -14,7 +14,7 @@
         </li>
         <li>
           <span>接收消息通知</span>
-          <mt-switch v-model="value"></mt-switch>
+          <mt-switch v-model="index"></mt-switch>
         </li>
         <li v-on:click="about()">
           <span>关于我们</span>
@@ -33,7 +33,8 @@ import { Header, MessageBox, Switch } from 'mint-ui'
 export default {
   data() {
     return {
-      value:false
+      value:false,
+      index:false
     }
   },
   computed: {
