@@ -11,7 +11,6 @@ import App from './App.vue'
 import routes from './router/router'
 import { ROUTERMODE } from './config/env'
 import utils from './util/util'
-
 import './assets/style/reset.scss'
 import './assets/style/common.scss'
 
@@ -68,7 +67,6 @@ Vue.filter('money', function(val) {
 
 })
 
-
 // router.beforeEach((to, from, next) => {
 // 	const toDepth = to.path.split('/').length
 // 	const fromDepth = from.path.split('/').length
@@ -79,6 +77,7 @@ Vue.filter('money', function(val) {
 // 	next()
 // })
 
+Vue.config.productionTip = false
 Vue.use(VueRouter)
 Vue.use(Mint)
 Vue.use(VueResource)
