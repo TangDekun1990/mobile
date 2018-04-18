@@ -67,7 +67,7 @@ export default {
 	methods: {
 		...mapMutations({
 			clearToken: 'signout',
-			signin: 'signin'
+			saveUser: 'saveUser'
 		}),
 
 		/*
@@ -101,7 +101,7 @@ export default {
 			let params = this.params;
 			userProfileUpdate(params.values, params.gender, params.nickname, params.avatar_url).then(res => {
 				if (res) {
-					this.signin({'user': res.user});
+					this.saveUser({'user': res.user});
 				}
 			})
 		}
