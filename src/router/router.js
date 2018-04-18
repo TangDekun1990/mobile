@@ -61,6 +61,9 @@ import Cart from '../page/cart/cart'
 // 查看推荐商品
 import Recommend from '../page/recommend/Recommend'
 
+//
+import updateinfo from '../page/profile/child/Update'
+
 export default [
 	{
 		path: '/',
@@ -246,6 +249,11 @@ export default [
 				meta: {
 					keepAlive: false,
 				}
+			},
+			{
+				name: 'updateinfo',
+				path: '/updateinfo/:type',
+				component: updateinfo
 			}
 		]
 	}

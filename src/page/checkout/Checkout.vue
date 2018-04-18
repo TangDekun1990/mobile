@@ -6,30 +6,31 @@
       <header-item slot="right" title="联系客服" v-on:onclick="rightClick">
       </header-item>        
     </mt-header>
-
-    <checkout-address class="address" v-on:onclick="goAddress" v-bind:item="selectedAddress">
-    </checkout-address>
-    <checkout-goods class="goods section-header" v-on:onclick="goGoodsList" :items="cartGoods">
-    </checkout-goods>
-    <checkout-item class="item" title="配送方式" :subtitle="getShippingName" v-on:onclick="goShipping">
-    </checkout-item>
-    <checkout-item class="item section-header" title="送货时间" :subtitle="getSelectedDateStr" v-on:onclick="goDuration">
-    </checkout-item>
-    <checkout-item class="item section-header" title="发票类型" :subtitle="getInoviceTitle" v-on:onclick="goInvoice">
-    </checkout-item>
-    <checkout-item class="item section-header" title="优惠券" :subtitle="getCouponName" :tips="getCouponTips" v-on:onclick="goCouponList">
-    </checkout-item>  
-    <checkout-comment ref="comment" class="comment section-header">
-    </checkout-comment>
-    <div class="desc section-header section-footer">
-      <checkout-desc class="desc-item" title="商品金额" :subtitle="getOrderProductPrice">
-      </checkout-desc>
-      <checkout-desc class="desc-item" title="税额" :subtitle="getOrderTaxPrice">
-      </checkout-desc>
-      <checkout-desc class="desc-item" title="运费" :subtitle="getOrderShippingPrice">
-      </checkout-desc>
-      <checkout-desc class="desc-item" title="优惠券" :subtitle="getOrderDiscountPrice">
-      </checkout-desc>
+    <div class="body">
+      <checkout-address class="address" v-on:onclick="goAddress" v-bind:item="selectedAddress">
+      </checkout-address>
+      <checkout-goods class="goods section-header" v-on:onclick="goGoodsList" :items="cartGoods">
+      </checkout-goods>
+      <checkout-item class="item" title="配送方式" :subtitle="getShippingName" v-on:onclick="goShipping">
+      </checkout-item>
+      <checkout-item class="item section-header" title="送货时间" :subtitle="getSelectedDateStr" v-on:onclick="goDuration">
+      </checkout-item>
+      <checkout-item class="item section-header" title="发票类型" :subtitle="getInoviceTitle" v-on:onclick="goInvoice">
+      </checkout-item>
+      <checkout-item class="item section-header" title="优惠券" :subtitle="getCouponName" :tips="getCouponTips" v-on:onclick="goCouponList">
+      </checkout-item>  
+      <checkout-comment ref="comment" class="comment section-header">
+      </checkout-comment>
+      <div class="desc section-header section-footer">
+        <checkout-desc class="desc-item" title="商品金额" :subtitle="getOrderProductPrice">
+        </checkout-desc>
+        <checkout-desc class="desc-item" title="税额" :subtitle="getOrderTaxPrice">
+        </checkout-desc>
+        <checkout-desc class="desc-item" title="运费" :subtitle="getOrderShippingPrice">
+        </checkout-desc>
+        <checkout-desc class="desc-item" title="优惠券" :subtitle="getOrderDiscountPrice">
+        </checkout-desc>
+      </div>
     </div>
     <div class="bottom-wrapper">
       <div class="amount-wrapper">
@@ -176,6 +177,19 @@ export default {
         str = date + '/' +time
       } 
       return str
+    },
+    getPromos: function () {
+      let promos = this.getPriceByKey('promos')
+    },
+    getPromoTitle: function (promo) {
+      switch (promo) {
+        case 'preferential':
+          
+          break;
+      
+        default:
+          break;
+      }
     },
     getOrderTotalPrice: function () {
       return 'AED ' + this.getPriceByKey('total_price')
@@ -378,6 +392,13 @@ export default {
   .header {
     @include header;
   }
+  .body {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    margin-bottom: 50px;
+  }
   .address {
     height: 100px;
   }
@@ -410,6 +431,10 @@ export default {
     flex: 1;    
   }
   .bottom-wrapper {
+    position: fixed;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
     height: 50px;
     display: flex;
     flex-direction: row;

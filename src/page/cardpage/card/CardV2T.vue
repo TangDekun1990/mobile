@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container" @click="onClick">
     <label class="title">{{getTitle}}</label>
     <div class="row-wrapper">
       <label class="subtitle">{{getSubtitle}}</label>

@@ -6,7 +6,11 @@
       <header-item slot="right" :icon="require('../../assets/image/change-icon/b0_message@2x.png')" v-on:onclick="rightClick">
       </header-item>        
     </mt-header>
-		<card-group class="section" v-for="(item, index) in getCardGroups" :key="index" :item="item">
+		<card-group 
+			class="section" 
+			v-for="(item, index) in getCardGroups" 
+			:key="index" 
+			:item="item" v-on:onClick="onClick">
 		</card-group>
 		<tab-bar></tab-bar>
 	</div>
@@ -18,6 +22,7 @@
 	import { Header, Indicator, Toast } from 'mint-ui'
 	import { cardpageGet } from '../../api/network/cardpage'
 	import CardGroup from '../cardpage/group/CardGroup'
+	import Bus from '../cardpage/bus'
 	export default {
 		name: 'Home',
 		data() {
@@ -36,18 +41,24 @@
 					Indicator.close()
 					if (response && response.cardpage) {
 						this.cardpage = response.cardpage
-						for (let i = 0; i < this.cardpage.groups.length; i++) {
-							const element = this.cardpage.groups[i];
-							let layout = element ? element.layout : null
-							console.log('====================================');
-							console.log('layout is :', layout);
-							console.log('====================================');
-						}
+						// for (let i = 0; i < this.cardpage.groups.length; i++) {
+						// 	const element = this.cardpage.groups[i];
+						// 	let layout = element ? element.layout : null
+						// 	console.log('====================================');
+						// 	console.log('layout is :', layout);
+						// 	console.log('====================================');
+						// }
 					}
 				}, (error) => {
 					Indicator.close()
 					Toast(error.errorMsg)
 				})
+			
+			Bus.$on('onClick', item => {
+				console.log('====================================');
+				console.log('onClick item deeplink is: ', item.link);
+				console.log('====================================');
+			})
 		},
 		computed: {
 			getCardGroups: function () {
@@ -62,13 +73,11 @@
 			rightClick() {
 
 			},
-			isCardItemByStyle(item, itemStyle) {
-      let style = item ? item.style : null
-      if (style === itemStyle) {
-        return true
-      }
-      return false
-    }
+			onClick() {
+				console.log('====================================');
+				console.log('onClick');
+				console.log('====================================');
+			}
 		},
 	}
 </script>

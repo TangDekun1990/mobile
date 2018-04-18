@@ -1,5 +1,5 @@
 <template>
-  <div class="card-z4-container">
+  <div class="card-z4-container" @click="onClick">
     <img v-bind:style="getPhotoStyle" :src="getPhotoUrl" />
     <!-- <label class="title">{{getTitle}}</label> -->
   </div>

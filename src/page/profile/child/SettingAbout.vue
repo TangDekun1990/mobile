@@ -13,7 +13,7 @@
       <div class="logoimg">
         <img class="logo" src="../../../assets/image/change-icon/logo_wenchao@2x.png">
         <p>For iPhone V6.1.0</p>
-        <img class="code" src="../../../assets/image/change-icon/default_image_02@2x.png">
+        <img class="code" src="../../../assets/image/change-icon/img_qrcode@2x.png">
         <p>扫描二维码，您的朋友也可以下载温超客户端！</p>
       </div>
       <div class="introduce">
@@ -30,23 +30,23 @@
         <p>Copyright©2004-2017</p>
         <p>温超wenchao.ae版权所有</p>
       </div>
-    </div>
-    <mt-popup v-model="popupVisible" position="bottom">
-      <div>
-          <p>分享到</p>
-          <div>
-            <label>
-              <img src="">
-              <span>微信</span>
-            </label>
-            <label>
-              <img src="">
-              <span>QQ</span>
-            </label>
-          </div>
-          <p>取消</p>
-        </div>     
+       <mt-popup v-model="popupVisible" position="bottom" class="mint-popup">
+      <div class="share">
+        <p>分享到</p>
+        <div class="image">
+          <label v-on:click="goWachat()">
+            <img src="../../../assets/image/change-icon/c7_commodity_list_2@2x.png"> 
+            <p>微信</p>
+          </label>
+          <label>
+            <img src="../../../assets/image/change-icon/c7_commodity_list_3@2x.png"> 
+            <p>QQ</p>
+          </label>
+        </div>
+        <p class="cancel" v-on:click="cancelInfo()">取消</p>
+      </div>     
     </mt-popup>
+    </div>
   </div>
 </template>
 
@@ -55,8 +55,7 @@ import { Actionsheet } from 'mint-ui'
   export default {
     data() {
       return {
-        popupVisible: false,
-        actions:[],  
+        popupVisible: false, 
       }
     },
     methods: {
@@ -64,7 +63,13 @@ import { Actionsheet } from 'mint-ui'
         this.$router.go(-1) 
       },
       share() {
-        this.popupVisible = true
+        this.popupVisible = true;
+      },
+      cancelInfo() {
+        this.popupVisible = false;
+      },
+      goWachat() {
+        this.$router.push('home');
       }
     }
   }
@@ -130,6 +135,33 @@ import { Actionsheet } from 'mint-ui'
         padding:207px 0px 25px 0px;
         p {
           text-align: center;
+        }
+      }
+      .mint-popup {
+        width:100%;
+      }
+      .share {
+        width:100%;
+        height:200px;
+        background:rgba(240,242,245,1);
+        p {
+          text-align: center;
+          padding-top: 15px;
+          font-size: 16px; 
+        }
+        .image {
+          display: flex;
+          justify-content:space-around;
+          align-items: center;
+          padding-bottom:20px;
+          img {
+            width:60px;
+            height:60px;
+          }
+        }
+        .cancel {
+          background-color: #fff;
+          padding-bottom:8px;
         }
       }
     }
