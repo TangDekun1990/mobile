@@ -9,7 +9,7 @@
 				<img src="../../../assets/image/change-icon/e2_delete@2x.png" @click="clearUsername()">
 			</div>
 			<div class="ui-save-btn">
-				<button @click="saveBtn()">保存</button>
+				<span @click="saveBtn()">保存</span>
 			</div>
 		</div>
 		<div v-if="type == 2">
@@ -104,8 +104,14 @@ export default {
 			 		Toast('用户名不能为空');
 			 		return false;
 			 	}
+
+			 	if (params.nickname.length < 1 || params.nickname.length > 25) {
+			 		Toast('请输入1-25个字符');
+			 		return false;
+			 	}
 			 	userProfileUpdate(params.values, params.gender, params.nickname, params.avatar_url).then(res => {
 			 		if (res) {
+			 			Toast('保存成功');
 			 			this.saveUser({'user': res.user});
 						// this.signin({'user': res.user});
 					}
@@ -162,10 +168,13 @@ export default {
 		}
 		.updeta-user-name {
 			position: relative;
+			input {
+				border: 0px;
+			}
 			img{
 				position: absolute;
 				top: 17px;
-				right: 20px;
+				right: 5px;
 				width: 16px;
 				height: 16px;
 				cursor: pointer;
