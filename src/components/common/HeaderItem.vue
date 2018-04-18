@@ -7,7 +7,7 @@
       <img class="icon" v-bind:src="icon" />
     </div>
     <div v-else-if="title" @click="onclick">
-      <label class="title">{{title}}</label>
+      <label class="title" v-bind:style="{color: titleColor}">{{title}}</label>
     </div>
   </div> 
 </template>
@@ -25,6 +25,10 @@ export default {
     isBack: {
       type: Boolean,
       default: false,
+    },
+    titleColor: {
+      type: String,
+      default: '#48505D'
     }
   },
   methods: {
