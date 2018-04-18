@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container" @click="onClick">
     <img class="photo" :src="getPhotoUrl" />
     <label class="title">{{getTitle}}</label>      
   </div>

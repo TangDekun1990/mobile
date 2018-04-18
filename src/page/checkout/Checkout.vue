@@ -70,7 +70,8 @@ export default {
   },
   data () {
     return {
-      order_price: null
+      order_price: null,
+      cartGoods: [],
     }
   },
   computed: {
@@ -83,8 +84,7 @@ export default {
       selectedCoupon: state => state.coupon.selectedItem,
       invoice: state => state.invoice,
       selectedDate: state => state.delivery.selectedDate,
-      selectedTime: state => state.delivery.selectedTime,
-      cartGoods: state => state.cart.saveCartList,
+      selectedTime: state => state.delivery.selectedTime,      
     }),
     // 获取订单商品数组(计算价格/获取货运公司列表)
     getOrderProducts: function () {
@@ -193,40 +193,9 @@ export default {
       return '-AED ' + this.getPriceByKey('discount_price')
     }, 
   },
-  watch: {
-    selectedAddress: function () {
-      // TODO:         
-    }
-  },
-  beforeRouteEnter(to, from, next) {
-    console.log('====================================');
-    console.log('beforeRouteEnter')
-    console.log('from - to : ', from, to)
-    console.log('====================================');
-    next(vm => {
-      // 通过 `vm` 访问组件实例
-    })
-  },
-  beforeRouteUpdate(to, from, next) {
-    console.log('====================================');
-    console.log('beforeRouteUpdate')
-    console.log('from - to : ', from, to)
-    console.log('====================================');    
-    next()
-  },
-  beboreRouteLeave(to, from, next) {
-    console.log('====================================');    
-    console.log('beboreRouteLeave')
-    console.log('from - to : ', from, to)
-    console.log('====================================');    
-    next()
-  },
-  created: function() {   
-    console.log('====================================');
-    console.log('created');
-    console.log('===================================='); 
+  created: function() { 
     this.fetchAddressList()    
-    this.getOrderPrice()
+    this.fetchCartList()    
     
     // 配送时间列表
     this.fetchDeliveryList()      
@@ -289,6 +258,15 @@ export default {
     goCouponList() {      
       this.$router.push('couponUsable')
     }, 
+    fetchCartList(){
+      cart.cartGet().then((response) => {
+        if (response && response.goods_groups.length > 0) {
+          this.cartGoods = Object.assign([], response.goods_groups[0].goods);
+          
+          this.getOrderPrice()
+        }
+      })
+    },
     // 收货地址列表 
     fetchAddressList() {
       consignee.consigneeList().then(

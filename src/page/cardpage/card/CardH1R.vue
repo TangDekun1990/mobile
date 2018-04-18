@@ -1,5 +1,5 @@
 <template>
-  <div class="card-h1r-container">    
+  <div class="card-h1r-container" @click="onClick">    
     <div class="left-wrapper">
       <label class="title">{{getTitle}}</label>
       <label class="subtitle">{{getSubtitle}}</label>      

@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container" @click="onClick">
     <label class="title">{{getTitle}}</label>  
     <img class="photo" v-bind:style="getPhotoStyle" :src="getPhotoUrl" />
   </div>

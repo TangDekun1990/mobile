@@ -1,5 +1,5 @@
 <template>
-  <div class="card-v5t-container">
+  <div class="card-v5t-container" @click="onClick">
     <label class="title">{{getTitle}}</label>
     <label class="subtitle">{{getSubtitle}}</label>
     <label class="desc">{{getDesc}}</label>    

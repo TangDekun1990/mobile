@@ -10,160 +10,157 @@
     </mt-header>
     <!-- body -->
     <div class="order-comment-body" v-for="(item, index) in commentinfo.goods">
+      <div class="body-list">
         <div class="image" >
           <img v-bind:src="item.product.photos[0].large" >
         </div>
         <div class="comment">
           <span>{{item.product.name | mySubstr(10)}}</span>
           <ul>
-            <li class="good"> 
-              <!-- v-on:click="changeImage(item.grade)" v-if="item.grade" -->
-              <img src="../../../assets/image/change-icon/e7_good_nor@2x.png" v-bind:class="{'active':item.isActive}" v-on:click="changeImage(index)">
-              <label>好评</label>
-            </li>
-            <li class="normal">
-              <img src="../../../assets/image/change-icon/e7_good_nor@2x.png">
-              <label>中评</label>
-            </li>
-            <li class="bad">
-              <img src="../../../assets/image/change-icon/e7_bad_nor@2x.png">
-              <label>差评</label> 
+            <li class="good" v-for="(image, indexs) in item.IMAGE"  v-on:click="changeImage(image, indexs)"> 
+              <img src="../../../assets/image/change-icon/e7_good_nor@2x.png" v-if="!image.isActive">
+              <img src="../../../assets/image/change-icon/e7_good_sel@2x.png" v-if="image.isActive">
+              <label>{{image.name}}</label>
             </li>
           </ul>
         </div>
-        <div class="enter">
-          <textarea cols="" rows="" placeholder="请在此输入评价" v-model="item.content"></textarea>
-        </div>
+      </div>
+      <div class="enter">
+        <textarea cols="" rows="" placeholder="请在此输入评价" v-model="item.content"></textarea>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import { HeaderItem } from '../../../components/common'
-import { Header } from 'mint-ui'
-import { orderReview } from '../../../api/network/order' //评价晒单
-export default { 
+import { HeaderItem } from "../../../components/common";
+import { Header } from "mint-ui";
+import { orderReview } from "../../../api/network/order"; //评价晒单
+import { IMAGE } from "../static";
+
+export default {
   data() {
     return {
       commentinfo: {},
-    }
+      IMAGE: IMAGE
+    };
   },
   created() {
-    let id = this.$route.params.order ?  this.$route.params.order : '';
+    let id = this.$route.params.order ? this.$route.params.order : "";
     this.commentinfo = id;
-    console.log(id);
+    this.buildData();
   },
-  methods: {  
+  methods: {
     goBack() {
-      this.$router.go(-1); 
+      this.$router.go(-1);
     },
     submit() {
-      let id = this.$route.params.order.id ?  this.$route.params.order.id : '';
+      let id = this.$route.params.order.id ? this.$route.params.order.id : "";
       this.getComment(id);
     },
 
     // 获取评价晒单数据
-		getComment(id) {
-			orderReview(id, JSON.stringify([{goods:id,grade:'1',content:''}]), 1).then(res => {
-				if(res) {
-          this.commentList = Object.assign([],this.commentList, res.order);
-          this.$router.push('/orderSubmit');
-				}
-			})
-    },
-    
-    changeImage(data){
-      console.log(11111111);
-      this.commentinfo.goods.forEach(function(obj){
-        obj.isActive = false;
+    getComment(id) {
+      orderReview(
+        id,
+        JSON.stringify([{ goods: id, grade: "1", content: "" }]),
+        1
+      ).then(res => {
+        if (res) {
+          this.commentList = Object.assign([], this.commentList, res.order);
+          this.$router.push("/orderSubmit");
+        }
       });
-        data.isActive = !data.isActive;        
+    },
+
+    buildData() {
+     let data = this.commentinfo.goods;
+     for(let i = 0; i <=data.length-1; i++ ) {
+       data[i].IMAGE = this.IMAGE;
+     }
+     this.commentinfo.goods = Object.assign([], data);
+    },
+
+    changeImage(image, indexs) {
+      // console.log(this.commentinfo.goods);
+      // this.commentinfo.goods[index].isActive = true;
+      // item.isActive = !item.isActive;
+      image.isActive = !image.isActive;
+      // this.commentinfo.goods = Object.assign([], this.commentinfo.goods, item);
+      // console.log(this.commentinfo.goods);
     }
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
-  .container {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: stretch;
-    .header {
-      @include header;
-      border-bottom:1px solid #E8EAED;
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  .header {
+    @include header;
+    border-bottom: 1px solid #e8eaed;
+  }
+  .order-comment-body {
+    background: rgba(255, 255, 255, 1);
+    border-bottom: 1px solid #e8eaed;
+    padding: 15px;
+    .body-list {
+      display: flex;
+      justify-content: left;
+      align-content: center;
+      align-items: center;
     }
-    .order-comment-body {
-      height:256px; 
-      background:rgba(255,255,255,1);
-      box-shadow: 0px -0.5px 0px 0px rgba(232,234,237,1);
-      .image {
-        float: left;
-        img {
-          width:75px;
-          height:75px;
-          padding:15px 14px 15px 13px;
-        }
+    .image {
+      width: 75px;
+      height: 75px;
+      flex-shrink: 0;
+      img {
+        width: 100%;
+        height: 100%;
       }
-      .comment {
-        border-bottom: 1px solid #E8EAED;
-        padding: 15px 0px;
-        span {
-          height:16px; 
-          font-size:16px;
-          font-family:'PingFangSC-Regular';
-          color:rgba(124,127,136,1);
-          line-height:16px;
-          position: absolute;
-          padding: 9px 107px 24px 0px;
-          vertical-align:middle;
+    }
+    .comment {
+      flex-basis: 100%;
+      padding-left: 15px;
+      span {
+        font-size: 16px;
+        color: #7c7f88;
+        text-align: left;
+      }
+      ul {
+        display: flex;
+        justify-content: space-between;
+        align-content: center;
+        align-items: center;
+        margin-top: 24px;
+        li {
+          img {
+            width: 19px;
+            height: 19px;
+            flex-shrink: 0;
           }
-          ul {
-            display: flex;
-            justify-content: space-between;
-            padding: 26px 4px 26px 0px;
-            li {
-              float: left;
-              margin-right: 38px;
-              // cursor: pointer;
-              img {
-                width:19px;
-                height:19px; 
-                vertical-align: text-bottom;
-                &:active {
-                  background-color:rgba(242,48,48,1);
-                }
-              }
-              label {
-                height:14px; 
-                font-size:14px;
-                font-family:'PingFangSC-Regular';
-                color:rgba(78,84,93,1);
-                line-height:14px;
-                display: inline-block;
-                vertical-align: middle;
-                overflow: hidden;
-              }
-            }
-          }
-        }
-        p {
-          width:100%;
-          height:1px;
-          background-color: #E8EAED;
-          margin-top: 26px;
-        }
-        .enter {
-          margin: 15px;
-          textarea {
-            width:100%;
-            height:120px; 
-            background:rgba(247,249,250,1);
-            border:1px solid #F7F9FA;
+          label {
+            font-size: 14px;
+            color: rgba(78, 84, 93, 1);
+            font-weight: normal;
           }
         }
       }
-    } 
+    }
+    .enter {
+      margin: 15px;
+      textarea {
+        width: 100%;
+        height: 120px;
+        background: rgba(247, 249, 250, 1);
+        border: 1px solid #f7f9fa;
+      }
+    }
+  }
+}
 </style>
 
 

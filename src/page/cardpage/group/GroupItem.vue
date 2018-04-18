@@ -1,11 +1,20 @@
 <template>
   <div class="group-item-container">
-    <div v-if="hasChildItems(layoutItem)">
-      <group-item v-for="(subItem, index) in item.children" :key="index"></group-item>
+    <!-- <div v-if="hasChildItems(layoutItem)">      
+      <group-item 
+        v-for="(subItem, index) in item.children" 
+        :key="index" 
+        :layoutItem="subItem" 
+        :itemSize="itemSize"
+        :containerSize="containerSize"
+        :items="items"        
+        v-bind:style="getItemStyle">
+      </group-item>
     </div>
-    <div v-else>
-      <card-item :item="getCardItemByIndex(layoutItem.index)" v-bind:style="getItemStyle"></card-item>
-    </div> 
+    <div v-else> -->
+      <!-- <card-item :item="getCardItemByIndex(layoutItem.index)" v-bind:style="getItemStyle"></card-item> -->
+    <!-- </div>  -->
+    <label>32123312321123123</label>
   </div>
 </template>
 
@@ -26,13 +35,16 @@ export default {
     items: {
       type: Array,
     },
-    size: {
+    itemSize: {
       type: Object
-    }
+    },
+    containerSize: {
+      type: Object
+    },
   },
   computed: {   
     getItemStyle() {
-      const { width, height } = this.size
+      const { width, height } = this.itemSize
       return {
         width: width + 'px',
         height: height + 'px',
@@ -41,6 +53,10 @@ export default {
   },
   methods: {
     hasChildItems(item) {
+      console.log('====================================');
+      console.log('hasChildItems');
+      console.log('====================================');
+      debugger
       if (item && item.children && item.children.length) {
         return true
       }
@@ -52,7 +68,7 @@ export default {
         item = (this.items && this.items.length >= index) ? this.items[index] : null
       }      
       return item
-    }     
+    },         
   }
 }
 </script>

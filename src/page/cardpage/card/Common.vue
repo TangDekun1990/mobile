@@ -1,4 +1,5 @@
 <script>
+import Bus from '../bus'
 export default {  
   props: {
     item: {
@@ -43,6 +44,10 @@ export default {
         return this.item[key]
       } 
       return ''     
+    },
+
+    onClick() {
+      Bus.$emit('onClick', this.item)
     },
   },
 }
