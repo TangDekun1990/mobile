@@ -3,7 +3,7 @@
     <mt-header class="header" title="确认订单">
       <header-item slot="left" v-bind:isBack=true v-on:onclick="leftClick">
       </header-item> 
-      <header-item slot="right" title="联系客服" v-on:onclick="rightClick">
+      <header-item slot="right" titleColor="#F23030" title="联系客服" v-on:onclick="rightClick">
       </header-item>        
     </mt-header>
     <div class="body">
@@ -28,7 +28,7 @@
         </checkout-desc>
         <checkout-desc class="desc-item" title="运费" :subtitle="getOrderShippingPrice">
         </checkout-desc>
-        <checkout-desc class="desc-item" title="优惠券" :subtitle="getOrderDiscountPrice">
+        <checkout-desc class="desc-item" v-for="(item, index) in getPromos" :key="index" :title="getPromoTitle(item)" :subtitle="getOrderDiscountPrice(item)">
         </checkout-desc>
       </div>
     </div>
@@ -118,6 +118,8 @@ export default {
       let item = this.selectedShipping
       if (item && item.name) {
         name = item.name
+      } else {
+        name = '请选择配送方式'
       }
       return name
     },
@@ -178,36 +180,37 @@ export default {
       } 
       return str
     },
-    getPromos: function () {
-      let promos = this.getPriceByKey('promos')
-    },
-    getPromoTitle: function (promo) {
-      switch (promo) {
-        case 'preferential':
-          
-          break;
-      
-        default:
-          break;
-      }
-    },
+    getPromos: function () {      
+      return this.getPriceByKey('promos')
+    },    
     getOrderTotalPrice: function () {
-      return 'AED ' + this.getPriceByKey('total_price')
+      let price = 'AED ' + this.getPriceByKey('total_price')
+      return price
     },
     getOrderProductPrice: function () {
-      return 'AED ' + this.getPriceByKey('product_price')
+      let price = 'AED ' + this.getPriceByKey('product_price')
+      return price
     },
     getOrderTaxPrice: function () {
-      return 'AED ' + this.getPriceByKey('tax_price')
+      let price = 'AED ' + this.getPriceByKey('tax_price')
+      return price
     },
     getOrderShippingPrice: function () {
-      return 'AED ' + this.getPriceByKey('shipping_price')
-    },
-    getOrderDiscountPrice: function () {
-      return '-AED ' + this.getPriceByKey('discount_price')
-    }, 
+      let priceStr = ''
+      // let price = this.getPriceByKey('shipping_price')
+      if (this.getPriceByKey('shipping_price') == 0) {
+        priceStr = '免运费'
+      } else {
+        priceStr = 'AED ' + this.getPriceByKey('shipping_price')
+      }
+      // console.log('====================================');
+      // console.log('price', price);
+      // console.log('====================================');
+      return priceStr
+    },     
   },
   created: function() { 
+    debugger
     this.fetchAddressList()    
     this.fetchCartList()    
     
@@ -217,14 +220,17 @@ export default {
   methods: {
     ...mapMutations({
       saveAddressItems: 'saveAddressItems',
-      selectAddressItem: 'selectAddressItem',      
+      selectAddressItem: 'selectAddressItem', 
+      unselectCouponItem: 'unselectCouponItem', 
+      clearInvoiceInfo: 'clearInvoiceInfo', 
+      unselectDelivery: 'unselectDelivery',   
     }),
     ...mapActions({
       fetchShippingList: 'fetchShippingList',
       fetchCouponUsable: 'fetchCouponUsable', 
       fetchDeliveryList: 'fetchDeliveryList',     
     }),
-    getPriceByKey (key) {
+    getPriceByKey(key) {
       let total = ''
       let order_price = this.order_price
       if (order_price && order_price[key]) {
@@ -232,8 +238,68 @@ export default {
       }
       return total
     },
+    getPromoTitle(item) {
+      let title = null
+      let promo = item.promo
+      switch (promo) {
+        case 'preferential':
+        {
+          title = '优惠金额'
+        }
+        break;
+        case 'cashgift':
+        {
+          title = '商家红包'
+        }
+        break;
+        case 'score':
+        {
+          title = '积分抵现'
+        }
+        break;
+        case 'order_reduction':
+        {
+          title = '订单促销'
+        }
+        break;
+        case 'goods_reduction':
+        {
+          title = '商品促销'
+        }
+        break;
+        case 'coupon_reduction':
+        {
+          title = '优惠券'
+        }
+        break;
+        case 'combined_promos':
+        {
+          title = '团购'
+        }
+        break;
+        case 'transportTitle':
+        {
+          title = '运费'
+        }
+        break;          
+      
+        default:
+          break;
+      }
+      return title
+    },
+    getOrderDiscountPrice(item) {
+      return '-AED ' + (item.price ? item.price : 0)
+    },
     goBack() {
       this.$router.go(-1)
+      
+      this.clearSelectedInfo()
+    },
+    clearSelectedInfo() {
+      this.unselectCouponItem()
+      this.clearInvoiceInfo()
+      this.unselectDelivery()
     },
     leftClick() {
       MessageBox.confirm('好货不等人 请三思而行').then(action => {
@@ -251,10 +317,10 @@ export default {
       }       
     },    
     goGoodsList() {      
-      this.$router.push('goodsList')
+      this.$router.push({ name: 'goodsList' })
     },
     goShipping() {
-      this.$router.push('shipping')
+      this.$router.push({ name: 'shipping' })
     },
     goInvoice() {
       let title = this.invoice ? this.invoice.title : ''
@@ -270,7 +336,7 @@ export default {
       
     },
     goCouponList() {      
-      this.$router.push('couponUsable')
+      this.$router.push({ name: 'couponUsable'})
     }, 
     fetchCartList(){
       cart.cartGet().then((response) => {
@@ -418,7 +484,6 @@ export default {
     height: 145px;
   }
   .desc {
-    height: 140px;
     background-color: #fff;
     display: flex;
     flex-direction: column;
@@ -428,7 +493,7 @@ export default {
     padding-bottom: 10px;
   }
   .desc-item {
-    flex: 1;    
+    height: 30px;    
   }
   .bottom-wrapper {
     position: fixed;

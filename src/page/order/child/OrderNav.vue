@@ -38,7 +38,7 @@
 									</div>
 								</div>
 							</mt-popup>
-							<button class="buttonright" v-on:click="payment(item.id)">去支付</button>
+							<button class="buttonright" v-on:click="payment(item)">去支付</button>
 						</div>
 						<!-- 待发货 -->
 						<div class="btn"  v-if="item.status == 1 ? '':checkState">
@@ -194,8 +194,8 @@ import OrderNav from './OrderNav';
 			this.$router.push({ name: 'orderTrack', params: {orderTrack: id}});
 		},
 		// 去支付
-		payment(id) {
-			this.$router.push({ name: 'payment', params: { order: id }})
+		payment(order) {
+			this.$router.push({ name: 'payment', params: { order: order }})
 		},
 		// 随便逛逛
 		goVisit() {

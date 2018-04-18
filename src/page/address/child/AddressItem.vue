@@ -6,7 +6,7 @@
         <label class="title">{{item.mobile}}</label>
         <label class="default" v-if="isDefault">默认</label>
       </div>
-      <label class="desc address-text">{{detailAddress}}</label>
+      <label class="desc address-text" style="-webkit-box-orient:vertical">{{detailAddress}}</label>
     </div>
     <img class="indicator" v-bind:src="iconUrl" />    
   </div>
@@ -111,6 +111,7 @@ export default {
     margin-top: 10px;
     margin-bottom: 10px;
     margin-left: 20px;
+    @include limit-line(2)
   }
   .unselected-wrapper {
     flex: 1;

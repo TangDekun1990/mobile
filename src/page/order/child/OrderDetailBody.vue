@@ -96,7 +96,7 @@
         </p>
         <P>
           <span>-商家红包</span>
-          <span> AED 18.46</span>
+          <span> AED 18.46</span> <!-- Code Review -->
         </P>
         <label class="amount">实付款 : <span>AED {{orderDetail.order.total}}</span> </label>    
       </div>
@@ -114,7 +114,7 @@
 							</div>
 						</div>
 					</mt-popup>
-          <button class="buttonbottom" v-on:click="payment()"> 去支付 </button>
+          <button class="buttonbottom" v-on:click="payment"> 去支付 </button>
       </div>
 
       <!-- 待发货按钮 -->
@@ -207,8 +207,11 @@
         this.getordersuccess(id, index);
       },
       // 去支付
-      payment(id) {
-        this.$router.push({ name: 'payment', params: { order: id }})
+      payment() {
+        let order = this.orderDetail ? this.orderDetail.order : null        
+        if (order) {
+          this.$router.push({ name: 'payment', params: { order: order }})
+        }        
       },
       // 获取退货原因数据
       orderReasonList() {
