@@ -1,6 +1,6 @@
 <template>
 	<div class="ui-popup-right">
-		<mt-header class="header" title="个人资料">
+		<mt-header class="header" v-bind:title="title">
 			<header-item slot="left" v-bind:isBack=true v-on:onclick="goBack()"></header-item>
 		</mt-header>
 		<div v-if="type == 1">
@@ -42,7 +42,8 @@ export default {
 			oldpass: '',
 			newpass: '',
 			confirpass: '',
-			type: this.$route.params.type
+			type: this.$route.params.type,
+			title: this.$route.params.type == 1 ? '修改昵称': '修改密码'
 		}
 	},
 
@@ -61,7 +62,8 @@ export default {
 	methods: {
 		...mapMutations({
 			clearToken: 'signout',
-			signin: 'signin'
+			saveUser: 'saveUser',
+			signout: 'signout'
 		}),
 
 			/*
@@ -104,6 +106,7 @@ export default {
 			 	}
 			 	userProfileUpdate(params.values, params.gender, params.nickname, params.avatar_url).then(res => {
 			 		if (res) {
+			 			this.saveUser({'user': res.user});
 						// this.signin({'user': res.user});
 					}
 				})
@@ -141,7 +144,8 @@ export default {
 			 	}
 			 	userPasswordUpdate(this.oldpass, this.newpass).then(res => {
 			 		if (res) {
-			 			console.log(res);
+			 			this.signout();
+			 			this.$router.push({'name': 'signin'});
 			 		}
 			 	})
 			 }
