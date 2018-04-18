@@ -1,19 +1,10 @@
 <!-- Updata-name.vue 修改昵称 -->
 <template>
 	<div class="ui-update-name">
-		<div class="common-update-avatar">
+		<div class="common-update-avatar" @click="goStatus()">
 			<span>修改昵称</span>
-			<span class="info">{{user.nickname}}</span>
+			<span class="info">{{username}}</span>
 		</div>
-
-		<mt-popup v-model="popupVisible" position="right">
-		  	<div>
-		  		<mt-header class="header" title="个人资料">
-					<header-item slot="left" v-bind:isBack=true v-on:onclick="goBack"></header-item>
-				</mt-header>
-		  	</div>
-		</mt-popup>
-
 	</div>
 </template>
 
@@ -23,38 +14,31 @@
 	export default {
 		data() {
 			return{
-				popupVisible: false
-
+				username: ''
 			}
 		},
 
 		computed: {
 			...mapState({
-				user: state => state.auth.user,
-				config: state => state.config.config
+				user: state => state.auth.user
 			}),
 		},
 
-		components: {
-
+		created(){
+			this.setUserName();
 		},
 
 		methods: {
-			...mapMutations({
-				clearToken: 'signout',
-				signin: 'signin'
-			}),
-
-			/*
-			 *  返回上一页
-			 */
-			goBack() {
-				this.$router.go(-1)
+			goStatus() {
+				this.$router.push({'name': 'updateinfo', 'params': {'type': 1}})
 			},
+
+			setUserName() {
+				this.username = this.user.nickname ? this.user.nickname : this.user.username
+			}
 		}
 	}
 </script>
 
 <style lang="scss" scoped>
-
 </style>

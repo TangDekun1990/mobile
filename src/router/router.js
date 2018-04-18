@@ -61,7 +61,8 @@ import Cart from '../page/cart/cart'
 // 查看推荐商品
 import Recommend from '../page/recommend/Recommend'
 
-import deom from '../page/demo/demo'
+//
+import updateinfo from '../page/profile/child/Update'
 
 export default [
 	{
@@ -250,9 +251,9 @@ export default [
 				}
 			},
 			{
-				name: 'deom',
-				path: '/deom',
-				component: deom
+				name: 'updateinfo',
+				path: '/updateinfo/:type',
+				component: updateinfo
 			}
 		]
 	}

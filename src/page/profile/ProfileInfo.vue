@@ -7,12 +7,19 @@
 			<!-- 修改头像 -->
 			<v-update-avatar></v-update-avatar>
 			<!-- 修改昵称 -->
-			<v-update-name></v-update-name>
-
-			<!-- <div class="user-avtor">
-				<span>修改昵称</span>
-				<span class="info">诺兰·谢顿</span>
+			<div class="ui-update-name">
+				<div class="common-update-avatar" @click="goStatus(1)">
+					<span>修改昵称</span>
+					<span class="info">{{username}}</span>
+				</div>
 			</div>
+			<!-- 修改密码 -->
+			<div class="ui-update-pass">
+				<div class="common-update-avatar" @click="goStatus(2)">
+					<span>修改密码</span>
+				</div>
+			</div>
+			<!--
 
 			<div class="user-avtor">
 				<span>性别</span>
@@ -46,11 +53,13 @@ export default {
 
 	data(){
 		return {
-			params: { "values":'', "gender": "", "nickname": "", "avatar_url": ""}
+			params: { "values":'', "gender": "", "nickname": "", "avatar_url": ""},
+			username: ''
 		}
 	},
 
 	created() {
+		this.setUserName();
 		this.$on('update-user-info', (data) => {
 			if (data) {
 				this.setParams(data);
@@ -104,6 +113,18 @@ export default {
 					this.signin({'user': res.user});
 				}
 			})
+		},
+		/*
+		 *  goStatus: 路由跳转
+		 */
+		goStatus(type) {
+			this.$router.push({'name': 'updateinfo', 'params': {'type': type}})
+		},
+		/*
+		 * setUserName: 设置用户名
+		 */
+		setUserName() {
+			this.username = this.user.nickname ? this.user.nickname : this.user.username
 		}
 	}
 }
