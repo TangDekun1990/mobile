@@ -182,7 +182,7 @@ export default {
       this.$router.push('addressManage')
     },
     goCoupon() {
-      this.$router.push("couponUsable");
+      this.$router.push({ name: "couponList" });
     },
     goHelp() {
       this.$router.push("help");

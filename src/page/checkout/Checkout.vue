@@ -196,8 +196,17 @@ export default {
       return price
     },
     getOrderShippingPrice: function () {
-      let price = 'AED ' + this.getPriceByKey('shipping_price')
-      return price
+      let priceStr = ''
+      // let price = this.getPriceByKey('shipping_price')
+      if (this.getPriceByKey('shipping_price') == 0) {
+        priceStr = '免运费'
+      } else {
+        priceStr = 'AED ' + this.getPriceByKey('shipping_price')
+      }
+      // console.log('====================================');
+      // console.log('price', price);
+      // console.log('====================================');
+      return priceStr
     },     
   },
   created: function() { 

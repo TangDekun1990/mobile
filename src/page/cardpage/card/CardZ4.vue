@@ -1,7 +1,7 @@
 <template>
   <div class="card-z4-container" @click="onClick">
     <img v-bind:style="getPhotoStyle" :src="getPhotoUrl" />
-    <!-- <label class="title">{{getTitle}}</label> -->
+    <!-- <label class="title" style="-webkit-box-orient:vertical">{{getTitle}}</label> -->
   </div>
 </template>
 
@@ -45,6 +45,7 @@ export default {
     margin-right: 5px;
     margin-top: 6px;
     text-align: center;
+    @include limit-line(1);
   }
 </style>
 

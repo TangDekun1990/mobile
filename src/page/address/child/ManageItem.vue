@@ -5,7 +5,7 @@
         <label class="title">{{item.name}}</label>
         <label class="title">{{item.mobile}}</label>        
       </div>
-      <label class="desc address-text">{{detailAddress}}</label>
+      <label class="desc address-text" style="-webkit-box-orient:vertical">{{detailAddress}}</label>
     </div>
     <div class="bottom-wrapper">
       <div class="bottom-left-wrapper" @click="onDefault">
@@ -124,6 +124,8 @@ export default {
     margin-top: 10px;
     margin-bottom: 10px;
     margin-left: 20px;
+    margin-right: 10px;
+    @include limit-line(2);
   }
   .bottom-wrapper {
     height: 50px;
