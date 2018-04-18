@@ -59,6 +59,8 @@ import Cart from '../page/cart/cart'
 // 查看推荐商品
 import Recommend from '../page/recommend/Recommend'
 
+import deom from '../page/demo/demo'
+
 export default [
 	{
 		path: '/',
@@ -234,6 +236,11 @@ export default [
 				meta: {
 					keepAlive: false,
 				}
+			},
+			{
+				name: 'deom',
+				path: '/deom',
+				component: deom
 			}
 		]
 	}

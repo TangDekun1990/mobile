@@ -5,6 +5,7 @@ import 'mint-ui/lib/style.css'
 import store from './store/index'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import VueResource from 'vue-resource'
+import * as qiniu from 'qiniu-js'
 
 import 'swiper/dist/css/swiper.css'
 import App from './App.vue'
@@ -72,6 +73,7 @@ Vue.use(VueRouter)
 Vue.use(Mint)
 Vue.use(VueResource)
 Vue.use(VueAwesomeSwiper)
+Vue.use(qiniu)
 Vue.prototype.utils = utils
 
 new Vue({

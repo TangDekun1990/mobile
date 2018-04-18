@@ -312,3 +312,17 @@ span.cart-number {
 		cursor: pointer;
 	}
 }
+
+// 更新用户资料 公共的样式
+.common-update-avatar {
+	background: url('../../assets/image/change-icon/enter@2x.png') no-repeat center right;
+	background-size: 7px 11px;
+	display: flex;
+	justify-content: space-between;
+	align-content: center;
+	align-items: center;
+	background-color: #fff;
+	height: 50px;
+	padding-right: 11px;
+	border-bottom: 1px solid #E8EAED;
+}
