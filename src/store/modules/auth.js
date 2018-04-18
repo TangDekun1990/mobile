@@ -8,15 +8,27 @@ const state = {
 // mutations 
 const mutations = {
   signin(state, payload) {
-    state.isOnline = true
-    state.token = payload.token
+    this.commit('saveUser', payload)
+    this.commit('saveToken', payload)
+  },  
+  signout(state) {
+    this.commit('clearUser')
+    this.commit('clearToken')
+  },
+  saveUser(state, payload) {
     state.user = Object.assign({}, payload.user)
   },
-  signout(state) {
+  saveToken(state, payload) {
+    state.isOnline = true
+    state.token = payload.token
+  },
+  clearUser(state) {
+    state.user = null
+  },
+  clearToken(state) {
     state.isOnline = false
     state.token = null
-    state.user = null
-  }
+  },
 }
 
 export default {
