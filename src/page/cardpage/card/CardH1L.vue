@@ -2,8 +2,8 @@
   <div class="card-h1l-container" @click="onClick">
     <img ref="photo" class="photo" v-bind:style="getPhotoStyle" :src="getPhotoUrl" />
     <div class="right-wrapper">
-      <label class="title">{{getTitle}}</label>
-      <label class="subtitle">{{getSubtitle}}</label>      
+      <label class="title" style="-webkit-box-orient:vertical">{{getTitle}}</label>
+      <label class="subtitle" style="-webkit-box-orient:vertical">{{getSubtitle}}</label>      
       <label class="desc">{{getLeftDesc}}</label>
     </div>           
   </div>
