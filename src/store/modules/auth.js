@@ -5,12 +5,12 @@ const state = {
   user: null,
 }
 
-// mutations 
+// mutations
 const mutations = {
   signin(state, payload) {
     this.commit('saveUser', payload)
     this.commit('saveToken', payload)
-  },  
+  },
   signout(state) {
     this.commit('clearUser')
     this.commit('clearToken')

@@ -48,10 +48,8 @@
 			});
 			this.$on('get-image-cropper', (data) => {
 				this.startUpload(data);
-				// if (data) {
-				// 	this.startUpload();
-				// }
-			})
+			});
+			console.log(this.user);
 		},
 
 		methods: {
@@ -173,14 +171,14 @@
 				// 上传参数
 				let params = {
 					'bolbfile': bolbfile ? bolbfile : file,
-					'filename': file.name,
+					'filename': this.user.id +'-'+ this.getCurrentTime(),
 					'token': this.config.qiniu.token,
 					'config': {
 						'concurrentRequestLimit': 0,
 						'useCdnDomain': true
 					},
 					'putExtra': {
-						'fname': file.name,
+						'fname': this.user.id +'-'+ this.getCurrentTime(),
 						'mimeType': ["image/png", "image/jpeg", "image/gif"]
 					}
 				};
