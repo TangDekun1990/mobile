@@ -1,5 +1,5 @@
 <template>
-  <div ref="container" class="card-h1l-container">
+  <div class="card-h1l-container" @click="onClick">
     <img ref="photo" class="photo" v-bind:style="getPhotoStyle" :src="getPhotoUrl" />
     <div class="right-wrapper">
       <label class="title">{{getTitle}}</label>
@@ -20,7 +20,7 @@ export default {
       return this.getItemByKey('label1')     
     },        
   },
-  methods: {
+  methods: {    
   },
 }
 </script>

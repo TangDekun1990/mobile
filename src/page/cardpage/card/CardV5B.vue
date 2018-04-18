@@ -1,5 +1,5 @@
 <template>
-  <div class="card-v5b-container">
+  <div class="card-v5b-container" @click="onClick">
     <img class="photo" v-bind:style="getPhotoStyle" :src="getPhotoUrl" />
     <label class="title">{{getTitle}}</label>
     <label class="subtitle">{{getSubtitle}}</label>
