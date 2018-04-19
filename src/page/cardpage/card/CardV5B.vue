@@ -1,9 +1,9 @@
 <template>
-  <div class="card-v5b-container">
+  <div class="card-v5b-container" @click="onClick">
     <img class="photo" v-bind:style="getPhotoStyle" :src="getPhotoUrl" />
-    <label class="title">{{getTitle}}</label>
-    <label class="subtitle">{{getSubtitle}}</label>
-    <label class="desc">{{getDesc}}</label>       
+    <label class="title" style="-webkit-box-orient:vertical">{{getTitle}}</label>
+    <label class="subtitle" style="-webkit-box-orient:vertical">{{getSubtitle}}</label>
+    <label class="desc" style="-webkit-box-orient:vertical">{{getDesc}}</label>       
   </div>
 </template>
 

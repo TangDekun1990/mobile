@@ -1,7 +1,7 @@
 <template>
-  <div class="container">
+  <div class="container" @click="onClick">
     <img class="photo" v-bind:style="getPhotoStyle" :src="getPhotoUrl" />
-    <label ref="title" class="title">{{getTitle}}</label>      
+    <label ref="title" class="title" style="-webkit-box-orient:vertical">{{getTitle}}</label>      
   </div>
 </template>
 
@@ -48,6 +48,7 @@ export default {
     margin-right: 2px;
     margin-bottom: 5px;
     text-align: center;
+    @include limit-line(1);
   }
   .photo {
     margin-top: 5px;

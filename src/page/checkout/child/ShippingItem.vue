@@ -7,7 +7,7 @@
     <div class="right-wrapper">
       <div class="title-wrapper">
         <label class="title">配送费：</label>
-        <label class="price">AED {{item.fee}}</label>
+        <label class="price">AED {{getPrice}}</label>
       </div>
       <p class="desc">{{item.desc}}</p>
     </div>            
@@ -39,6 +39,10 @@ export default {
         return require("../../../assets/image/change-icon/choice@2x.png")
       }
     },
+    getPrice: function () {
+      let price = this.item ? this.item.fee : null
+      return (price ? this.toFixedPrice(price) : '')
+    },
     // getDesc: function () {
     //   let data = ''
     //   let desc = this.item.desc
@@ -51,7 +55,10 @@ export default {
   methods: {
     onclick() {
       this.$emit('onclick')
-    }
+    },
+    toFixedPrice(price) {
+      return parseFloat(price).toFixed(2)
+    },
   }
 }
 </script>

@@ -1,7 +1,7 @@
 <template>
-  <div class="container">
+  <div class="container" @click="onClick">
     <img class="photo" v-bind:style="getPhotoStyle" :src="getPhotoUrl" />
-    <label class="title">{{getTitle}}</label>       
+    <label class="title" style="-webkit-box-orient:vertical">{{getTitle}}</label>       
   </div>
 </template>
 

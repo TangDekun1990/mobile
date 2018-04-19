@@ -1,11 +1,11 @@
 <template>
-  <div class="container">    
+  <div class="container" @click="onClick">    
     <div class="left-wrapper">
-      <label class="title">{{getTitle}}</label>
-      <label class="subtitle">{{getSubtitle}}</label>      
+      <label class="title" style="-webkit-box-orient:vertical">{{getTitle}}</label>
+      <label class="subtitle" style="-webkit-box-orient:vertical">{{getSubtitle}}</label>      
       <div class="row-wrapper">
-        <label class="desc leftDesc">{{getLeftDesc}}</label>
-        <label class="desc rightDesc">{{getRightDesc}}</label>
+        <label class="desc leftDesc" style="-webkit-box-orient:vertical">{{getLeftDesc}}</label>
+        <label class="desc rightDesc" style="-webkit-box-orient:vertical">{{getRightDesc}}</label>
       </div> 
     </div>  
     <img class="photo" v-bind:style="getPhotoStyle" :src="getPhotoUrl" />         
@@ -64,6 +64,7 @@ export default {
     margin-top: 9px;
     margin-left: 9px;
     margin-right: 9px;
+    @include limit-line(2);
   }
   .subtitle {
     font-size: $h5;
@@ -71,6 +72,7 @@ export default {
     margin-left: 9px;
     margin-right: 9px;
     text-align: left;
+    @include limit-line(2);
   }
   .row-wrapper {
     display: flex;
@@ -86,10 +88,12 @@ export default {
   .leftDesc {
     text-align: left;
     margin-right: 5px;
+    @include limit-line(1);
   }
   .rightDesc {
     text-align: right;
     margin-left: 5px;
+    @include limit-line(1);
   }
 </style>
 

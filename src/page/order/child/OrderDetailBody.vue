@@ -89,9 +89,7 @@
         </checkout-desc>
         <checkout-desc class="desc-item  cashgift" title="-商家红包" :subtitle="getOrderDiscountPrice">
         </checkout-desc>
-        <div class="actual">
-          <p>实付款：<span> AED 518.24 </span></p>
-        </div>
+        <label class="amount">实付款 : <span>AED {{orderDetail.order.total}}</span> </label>
       </div>
       <!-- 待付款按钮 -->
       <div class="btn" v-if="orderDetail.order.status == 0">
@@ -107,7 +105,7 @@
 							</div>
 						</div>
 					</mt-popup>
-          <button class="buttonbottom" v-on:click="payment()"> 去支付 </button>
+          <button class="buttonbottom" v-on:click="payment"> 去支付 </button>
       </div>
 
       <!-- 待发货按钮 -->
@@ -202,8 +200,11 @@
         this.getordersuccess(id, index);
       },
       // 去支付
-      payment(id) {
-        this.$router.push({ name: 'payment', params: { order: id }})
+      payment() {
+        let order = this.orderDetail ? this.orderDetail.order : null        
+        if (order) {
+          this.$router.push({ name: 'payment', params: { order: order }})
+        }        
       },
       // 获取退货原因数据
       orderReasonList() {
@@ -450,35 +451,21 @@
       padding-bottom:12px;
       border-bottom:1px solid #E8EAED;
     }
-    .actual {
-      display: flex;
-      justify-content: flex-end;
-      padding-right:12px;
-      p {
-        height:45px;
-        line-height: 45px;
-        font-size:14px;
-        color:#4E545D;
-        span {
-          font-size:16px;
-          color:#F33C3C;
-        }
+    .amount {
+      display: flex;  
+      justify-content:flex-end;
+      font-size: 14px;
+      color: #4E545D;
+      padding-right: 15px;
+      border-top: 1px solid $lineColor; 
+      padding-top:13px;
+      span {
+        font-size: 16px;
+        color:#F33C3C;
       }
     }
   }
-  .amount {
-    display: flex;  
-    justify-content:flex-end;
-    font-size: 14px;
-    color: #4E545D;
-    padding-right: 15px;
-    border-top: 1px solid $lineColor; 
-    padding-top:13px;
-    span {
-      font-size: 16px;
-      color:#F33C3C;
-    }
-  }
+  
   .btn {
     height: 54px;
     display: flex;

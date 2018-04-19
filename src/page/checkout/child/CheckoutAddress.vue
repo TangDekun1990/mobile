@@ -8,7 +8,7 @@
           <label class="title">{{item.mobile}}</label>
           <label class="default" v-if="isDefault">默认</label>
         </div>
-        <label class="desc address-text">{{detailAddress}}</label>
+        <label class="desc address-text" style="-webkit-box-orient:vertical">{{detailAddress}}</label>
       </div>
       <div v-else class="unselected-wrapper">
         <label class="desc">您还没有收获地址，点击这里添加。</label>
@@ -120,6 +120,7 @@ export default {
     margin-top: 10px;
     margin-bottom: 10px;
     margin-left: 36px;
+    @include limit-line(2)
   }
   .unselected-wrapper {
     flex: 1;

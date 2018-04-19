@@ -312,3 +312,42 @@ span.cart-number {
 		cursor: pointer;
 	}
 }
+
+// 更新用户资料 公共的样式
+.common-update-avatar {
+	background: url('../../assets/image/change-icon/enter@2x.png') no-repeat center right;
+	background-size: 7px 11px;
+	display: flex;
+	justify-content: space-between;
+	align-content: center;
+	align-items: center;
+	background-color: #fff;
+	height: 50px;
+	padding-right: 11px;
+	border-bottom: 1px solid #E8EAED;
+}
+
+//  更新用户资料 右侧弹出
+.mint-popup-right {
+	width: 100%;
+    height: 100%;
+}
+
+//
+.ui-common-update {
+	height:50px;
+	padding: 0px 20px;
+	background:rgba(255,255,255,1);
+	border-bottom: 1px solid rgba(232,234,237,1);
+	width: auto;
+	input {
+		width: -webkit-fill-available;
+		height: -webkit-fill-available;
+		font-size:14px;
+		color:rgba(78,84,93,1);
+    	&:focus {
+    		outline-offset: 0px;
+    		outline: none;
+    	}
+	}
+}

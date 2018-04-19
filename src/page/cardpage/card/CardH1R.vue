@@ -1,8 +1,8 @@
 <template>
-  <div class="card-h1r-container">    
+  <div class="card-h1r-container" @click="onClick">    
     <div class="left-wrapper">
-      <label class="title">{{getTitle}}</label>
-      <label class="subtitle">{{getSubtitle}}</label>      
+      <label class="title" style="-webkit-box-orient:vertical">{{getTitle}}</label>
+      <label class="subtitle" style="-webkit-box-orient:vertical">{{getSubtitle}}</label>      
       <label class="desc">{{getLeftDesc}}</label> 
     </div>  
     <img class="photo" v-bind:style="getPhotoStyle" :src="getPhotoUrl" />         

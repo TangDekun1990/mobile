@@ -42,6 +42,10 @@ const mutations = {
   unselectDeliveryTime(state) {
     state.selectedTime = null
   },
+  unselectDelivery(state) {
+    this.commit('unselectDeliveryDate')
+    this.commit('unselectDeliveryTime')
+  },
 }
 
 // actions

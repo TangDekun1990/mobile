@@ -133,7 +133,12 @@
 	overflow: hidden;	
 	// text-overflow: ellipsis; 
 	// white-space: nowrap;
-	display: -webkit-box;
+	display:-moz-box;
+	display:-webkit-box;
+	display:box;
 	-webkit-line-clamp: $lineCount;
-	-webkit-box-orient: vertical;
+	-moz-line-clamp: lineCount;	
+	-moz-box-orient:vertical;
+	-webkit-box-orient:vertical;
+	box-orient:vertical;
 }

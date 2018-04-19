@@ -3,33 +3,34 @@
     <mt-header class="header" title="确认订单">
       <header-item slot="left" v-bind:isBack=true v-on:onclick="leftClick">
       </header-item> 
-      <header-item slot="right" title="联系客服" v-on:onclick="rightClick">
+      <header-item slot="right" titleColor="#F23030" title="联系客服" v-on:onclick="rightClick">
       </header-item>        
     </mt-header>
-
-    <checkout-address class="address" v-on:onclick="goAddress" v-bind:item="selectedAddress">
-    </checkout-address>
-    <checkout-goods class="goods section-header" v-on:onclick="goGoodsList" :items="cartGoods">
-    </checkout-goods>
-    <checkout-item class="item" title="配送方式" :subtitle="getShippingName" v-on:onclick="goShipping">
-    </checkout-item>
-    <checkout-item class="item section-header" title="送货时间" :subtitle="getSelectedDateStr" v-on:onclick="goDuration">
-    </checkout-item>
-    <checkout-item class="item section-header" title="发票类型" :subtitle="getInoviceTitle" v-on:onclick="goInvoice">
-    </checkout-item>
-    <checkout-item class="item section-header" title="优惠券" :subtitle="getCouponName" :tips="getCouponTips" v-on:onclick="goCouponList">
-    </checkout-item>  
-    <checkout-comment ref="comment" class="comment section-header">
-    </checkout-comment>
-    <div class="desc section-header section-footer">
-      <checkout-desc class="desc-item" title="商品金额" :subtitle="getOrderProductPrice">
-      </checkout-desc>
-      <checkout-desc class="desc-item" title="税额" :subtitle="getOrderTaxPrice">
-      </checkout-desc>
-      <checkout-desc class="desc-item" title="运费" :subtitle="getOrderShippingPrice">
-      </checkout-desc>
-      <checkout-desc class="desc-item" title="优惠券" :subtitle="getOrderDiscountPrice">
-      </checkout-desc>
+    <div class="body">
+      <checkout-address class="address" v-on:onclick="goAddress" v-bind:item="selectedAddress">
+      </checkout-address>
+      <checkout-goods class="goods section-header" v-on:onclick="goGoodsList" :items="cartGoods">
+      </checkout-goods>
+      <checkout-item class="item" title="配送方式" :subtitle="getShippingName" v-on:onclick="goShipping">
+      </checkout-item>
+      <checkout-item class="item section-header" title="送货时间" :subtitle="getSelectedDateStr" v-on:onclick="goDuration">
+      </checkout-item>
+      <checkout-item class="item section-header" title="发票类型" :subtitle="getInoviceTitle" v-on:onclick="goInvoice">
+      </checkout-item>
+      <checkout-item class="item section-header" title="优惠券" :subtitle="getCouponName" :tips="getCouponTips" v-on:onclick="goCouponList">
+      </checkout-item>  
+      <checkout-comment ref="comment" class="comment section-header">
+      </checkout-comment>
+      <div class="desc section-header section-footer">
+        <checkout-desc class="desc-item" title="商品金额" :subtitle="getOrderProductPrice">
+        </checkout-desc>
+        <checkout-desc class="desc-item" title="税额" :subtitle="getOrderTaxPrice">
+        </checkout-desc>
+        <checkout-desc class="desc-item" title="运费" :subtitle="getOrderShippingPrice">
+        </checkout-desc>
+        <checkout-desc class="desc-item" v-for="(item, index) in getPromos" :key="index" :title="getPromoTitle(item)" :subtitle="getOrderDiscountPrice(item)">
+        </checkout-desc>
+      </div>
     </div>
     <div class="bottom-wrapper">
       <div class="amount-wrapper">
@@ -59,6 +60,7 @@ import * as consignee from '../../api/network/consignee'
 import * as order from '../../api/network/order'
 import * as cart from '../../api/network/cart'
 import { Toast, Indicator, MessageBox } from 'mint-ui'
+import Promos from './Promos'
 export default {
   components: {
     CheckoutAddress,
@@ -68,6 +70,7 @@ export default {
     CheckoutDesc,
     DeliveryTime,
   },
+  mixins: [ Promos ],
   data () {
     return {
       order_price: null,
@@ -117,6 +120,8 @@ export default {
       let item = this.selectedShipping
       if (item && item.name) {
         name = item.name
+      } else {
+        name = '请选择配送方式'
       }
       return name
     },
@@ -125,8 +130,13 @@ export default {
       let coupon = this.selectedCoupon
       if (coupon && coupon.name) {
         name = coupon.name 
-      } else {
-        name = '未使用'
+      } else { 
+        let total = this.couponTotal
+        if (total && total > 0) {
+          name = '未使用'
+        } else {
+          name = '无可用'
+        } 
       }
       return name
     },
@@ -137,7 +147,11 @@ export default {
         tips = '已选1张'
       } else {
         let total = this.couponTotal
-        tips = total + '张可用'        
+        if (total && total > 0) {
+          tips = total + '张可用'         
+        } else {
+          tips = ''
+        }     
       }  
       return tips   
     },  
@@ -177,23 +191,30 @@ export default {
       } 
       return str
     },
-    getOrderTotalPrice: function () {
-      return 'AED ' + this.getPriceByKey('total_price')
+    getPromos: function () {      
+      return this.getPriceByKey('promos')
+    },    
+    getOrderTotalPrice: function () {            
+      return this.getFormatPrice('total_price')
     },
-    getOrderProductPrice: function () {
-      return 'AED ' + this.getPriceByKey('product_price')
+    getOrderProductPrice: function () {            
+      return this.getFormatPrice('product_price')
     },
-    getOrderTaxPrice: function () {
-      return 'AED ' + this.getPriceByKey('tax_price')
+    getOrderTaxPrice: function () {            
+      return this.getFormatPrice('tax_price')
     },
     getOrderShippingPrice: function () {
-      return 'AED ' + this.getPriceByKey('shipping_price')
-    },
-    getOrderDiscountPrice: function () {
-      return '-AED ' + this.getPriceByKey('discount_price')
-    }, 
+      let priceStr = ''
+      let price = this.getPriceByKey('shipping_price')
+      if (price && price.length) {
+        priceStr = 'AED ' + this.toFixedPrice(price)
+      } else {
+        priceStr = '免运费'
+      }
+      return priceStr
+    },     
   },
-  created: function() { 
+  created: function() {     
     this.fetchAddressList()    
     this.fetchCartList()    
     
@@ -203,23 +224,44 @@ export default {
   methods: {
     ...mapMutations({
       saveAddressItems: 'saveAddressItems',
-      selectAddressItem: 'selectAddressItem',      
+      selectAddressItem: 'selectAddressItem', 
+      unselectCouponItem: 'unselectCouponItem', 
+      clearInvoiceInfo: 'clearInvoiceInfo', 
+      unselectDelivery: 'unselectDelivery',   
     }),
     ...mapActions({
       fetchShippingList: 'fetchShippingList',
       fetchCouponUsable: 'fetchCouponUsable', 
       fetchDeliveryList: 'fetchDeliveryList',     
     }),
-    getPriceByKey (key) {
+    getPriceByKey(key) {
       let total = ''
       let order_price = this.order_price
       if (order_price && order_price[key]) {
         total = order_price[key]
       }
       return total
+    },    
+    getOrderDiscountPrice(item) {
+      return '-AED ' + (item.price ? item.price : 0)
+    },    
+    toFixedPrice(price) {
+      return parseFloat(price).toFixed(2)
+    },
+    getFormatPrice (key) {
+      let price = this.getPriceByKey(key)
+      let priceStr = 'AED ' + (price ? this.toFixedPrice(price) : '')
+      return priceStr
     },
     goBack() {
       this.$router.go(-1)
+      
+      this.clearSelectedInfo()
+    },
+    clearSelectedInfo() {
+      this.unselectCouponItem()
+      this.clearInvoiceInfo()
+      this.unselectDelivery()
     },
     leftClick() {
       MessageBox.confirm('好货不等人 请三思而行').then(action => {
@@ -237,10 +279,10 @@ export default {
       }       
     },    
     goGoodsList() {      
-      this.$router.push('goodsList')
+      this.$router.push({ name: 'goodsList' })
     },
     goShipping() {
-      this.$router.push('shipping')
+      this.$router.push({ name: 'shipping' })
     },
     goInvoice() {
       let title = this.invoice ? this.invoice.title : ''
@@ -256,7 +298,7 @@ export default {
       
     },
     goCouponList() {      
-      this.$router.push('couponUsable')
+      this.$router.push({ name: 'couponUsable'})
     }, 
     fetchCartList(){
       cart.cartGet().then((response) => {
@@ -378,6 +420,13 @@ export default {
   .header {
     @include header;
   }
+  .body {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    margin-bottom: 50px;
+  }
   .address {
     height: 100px;
   }
@@ -397,7 +446,6 @@ export default {
     height: 145px;
   }
   .desc {
-    height: 140px;
     background-color: #fff;
     display: flex;
     flex-direction: column;
@@ -407,9 +455,13 @@ export default {
     padding-bottom: 10px;
   }
   .desc-item {
-    flex: 1;    
+    height: 30px;    
   }
   .bottom-wrapper {
+    position: fixed;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
     height: 50px;
     display: flex;
     flex-direction: row;

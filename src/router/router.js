@@ -64,6 +64,9 @@ import Cart from '../page/cart/cart'
 // 查看推荐商品
 import Recommend from '../page/recommend/Recommend'
 
+//
+import updateinfo from '../page/profile/child/Update'
+
 export default [
 	{
 		path: '/',
@@ -184,13 +187,19 @@ export default [
 			},
 			{
 				name: 'couponUsable',
-				path: '/couponUsable',
-				component: CouponUsable
+				path: '/checkout/couponUsable',
+				component: CouponUsable,
+				meta: {
+					keepAlive: true,
+				},
 			},
 			{
 				name: 'checkout',
 				path: '/checkout',
-				component: Checkout
+				component: Checkout,
+				meta: {
+					keepAlive: true,
+				},
 			},
 			{
 				name: 'payment',
@@ -204,17 +213,17 @@ export default [
 			},
 			{
 				name: 'goodsList',
-				path: '/goodsList',
+				path: '/checkout/goodsList',
 				component: GoodsList
 			},
 			{
 				name: 'shipping',
-				path: '/shipping',
+				path: '/checkout/shipping',
 				component: Shipping
 			},
 			{
 				name: 'invoice',
-				path: '/invoice',
+				path: '/checkout/invoice',
 				component: Invoice
 			},
 			{
@@ -264,6 +273,11 @@ export default [
 				meta: {
 					keepAlive: false,
 				}
+			},
+			{
+				name: 'updateinfo',
+				path: '/updateinfo/:type',
+				component: updateinfo
 			}
 		]
 	}
