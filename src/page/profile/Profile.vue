@@ -76,7 +76,7 @@
       v-on:onclick="goCoupon"
       class="info-item-wrapper section-footer" 
       :icon="require('../../assets/image/change-icon/e0_coupon@2x.png')" 
-      title="优惠券">
+      title="我的优惠券">
     </info-item>
     <info-item 
       v-on:onclick="goHelp()"

@@ -5,7 +5,7 @@
       <label class="title">{{getTitle}}</label>
       <label class="subtitle">{{item.property}}</label>
       <div class="desc-wrapper">
-        <label class="price">AED {{item.price}}</label>
+        <label class="price">AED {{getPrice}}</label>
         <label class="count">x{{item.amount}}</label>
       </div>
     </div>
@@ -44,6 +44,10 @@ export default {
     getDesc: function () {
       return this.getItemByKey('desc')
     },
+    getPrice: function () {
+      let price = this.getItemByKey('price')
+      return (price ? this.toFixedPrice(price) : '')
+    },
   },
   methods: {
     getItemByKey: function (key) {
@@ -53,6 +57,9 @@ export default {
         desc = item.product[key]
       }
       return desc
+    },
+    toFixedPrice(price) {
+      return parseFloat(price).toFixed(2)
     },
   }
 }
