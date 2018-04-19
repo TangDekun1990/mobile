@@ -186,8 +186,8 @@ export default{
 				font-size: 12px;
 
 				display:-moz-box;
-			    display:-webkit-box;
-			    display:box;
+			  display:-webkit-box;
+			  display:box;
 
 				-webkit-line-clamp: 1;
 				-moz-line-clamp: 1;

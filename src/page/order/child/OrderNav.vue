@@ -17,8 +17,8 @@
 			<div class="order-body" v-if="orderList.length > 0 ">
 				<div class="list" v-for="(item, index) in orderList">
 					<h3 class="title">{{ getOrderStatusBy(item.status) }}</h3>
-					<div class="order-image" v-if="item.goods.length > 0">
-						<img v-bind:src="image.product.photos[0].large" v-for="image in item.goods" v-if="image.product.photos.length > 0" @click="goOrderDetail(item.id)">
+					<div class="order-image" v-if="item.goods.length > 0"  @click="goOrderDetail(item.id)">
+						<img v-bind:src="image.product.photos[0].large" v-for="image in item.goods" v-if="image.product.photos.length > 0">
 						<!-- <img src="../../../assets/image/change-icon/default_image_02@2x.png" > -->
 					</div>
 					<div class="price">(共计{{item.goods.length}}件商品) 合计 : AED <i>{{item.total}}</i><i class="freight">(含运费:AED8.40)</i>
@@ -73,7 +73,9 @@
 			<div v-if="orderList.length <= 0" class="order-air">
 				<img src="../../../assets/image/change-icon/order_empty@2x.png">
 				<p>你的订单为空</p>
-				<button class="button" v-on:click="goVisit()">随便逛逛</button>
+				<button class="button" v-on:click="goVisit()">
+					<label>随便逛逛</label>
+					</button>
 			</div>
 		</div>
 	</div>
@@ -344,13 +346,13 @@ import OrderNav from './OrderNav';
 				background:rgba(255,255,255,1);
 				border-radius: 2px ; 
 				button {
-				width: 90px;
-				height: 30px;
-				font-size:14px;
-				border-radius: 2px;
-				margin: 7px 15px 7px 0px;
-				background-color: #fff;
-				border:1px solid #ccc;
+					width: 90px;
+					height: 30px;
+					font-size:14px;
+					border-radius: 2px;
+					margin: 7px 15px 7px 0px;
+					background-color: #fff;
+					border:1px solid #ccc;
 				}
 				.buttonright {
 					background:rgba(255,255,255,1);
@@ -359,9 +361,8 @@ import OrderNav from './OrderNav';
 					border:1px solid #F23030;
 				}
 			}
-			
 		}
-		}
+	}
 		.order-air {
 			width:100%;
 			vertical-align: middle;
@@ -387,10 +388,16 @@ import OrderNav from './OrderNav';
 				background:rgba(252,46,57,1);
 				border-radius: 2px ; 
 				padding:14px 68px;
-				margin: 28px 87px 88px;
+				margin: 28px auto;
 				border:none;
-				color:rgba(255,255,255,1);
+			}
+			label {
 				font-size:16px;
+				color:#fff;
+				display:inline-block;
+				vertical-align: middle;
+				height:16px;
+				line-height: 16px;
 			}
 	}
 	.mint-popup {

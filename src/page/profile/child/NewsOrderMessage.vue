@@ -1,0 +1,114 @@
+<template>
+  <div class="container">
+    <!-- header -->
+    <mt-header class="header" title="订单消息">
+      <header-item slot="left" v-bind:isBack=true v-on:onclick="goBack">
+      </header-item>    
+    </mt-header>
+    <!-- body -->
+    <div class="order-message-body">
+      <p>2017年5月16日 22:47</p>
+      <div class="order-track">
+        <span>您的订单状态发生改变</span>
+        <div class="order-status"> 
+          <div class="orderImage">
+            <img src="../../../assets/image/change-icon/default_image_02@2x.png">
+          </div>
+          <p>您的订单 170043137516319 已发货，点击查看订单详情</p>
+          <div class="arrow-right">
+            <img src="../../../assets/image/change-icon/enter@2x.png">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import { HeaderItem } from '../../../components/common'
+import { Header } from 'mint-ui'
+import { messageOrderList } from '../../../api/network/message' //订单消息列表
+export default { 
+  data() {
+    return {
+      orderMessage:[],
+    }    
+  },
+  created() {
+    this.getmessageOrderList();
+  },
+  methods: {  
+    goBack() {
+      this.$router.go(-1) 
+    },
+    // 获取订单消息列表数据
+    getmessageOrderList() {
+      messageOrderList(1, 10).then( res => {
+        if(res) {
+          this.orderMessage = res;
+        }
+      })
+    }
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+  .container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    .header {
+      @include header;
+    }
+    .order-message-body {
+      width:100%;
+      >p {
+        text-align: center;
+        margin-top:20px;
+        margin-bottom:10px;
+        font-size:12px;
+      }
+      .order-track {
+        height:120px; 
+        background:rgba(255,255,255,1);
+        border-radius: 2px ; 
+        margin: 0px 10px;
+        span {
+          display: inline-block;
+          padding:12px 0px 0px 15px;
+        }
+        .order-status {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          .orderImage {
+            img {
+              width:60px;
+              height:60px;
+              padding:14px 10px 14px 15px;
+            }
+          }
+          p {
+            font-size: 13px;
+            color:rgba(124,127,136,1);
+            width:240px;
+            height:36px;
+          }
+          .arrow-right {
+            img {
+              width:5px;
+              height:10px;
+              padding-right:12px;
+              padding-left:13px;
+            }
+          }
+        }
+      }
+    }
+  }
+  
+</style>
+
+
