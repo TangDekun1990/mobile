@@ -7,6 +7,10 @@
     <div class="tips-wrapper">
       <label class="tips">可使用优惠券{{total}}张</label>
     </div>    
+    <div class="empty-wrapper" v-if="isEmpty">
+      <img class="photo" src="../../assets/image/change-icon/coupons_empty@2x.png">
+      <label class="title">您暂时没有任何优惠券</label>
+    </div>
     <div class="list">
       <coupon-item 
         class="item" 
@@ -38,6 +42,12 @@ export default {
       items: state => state.coupon.items,
       selectedItem: state => state.coupon.selectedItem
     }),    
+    isEmpty: function () {
+      if (this.items && this.items.length === 0) {
+        return true
+      }
+      return false
+    }
   },
   methods: {
     ...mapMutations({
@@ -118,6 +128,24 @@ export default {
   .text {
     color: #4E545D;
     font-size: 16px;
+  }
+  .empty-wrapper {
+    margin-top: 40px;
+    height: 260px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  .photo {
+    width: 112px;
+    height: 112px;
+  }
+  .title {
+    font-size: 16px;
+    color: #8F8E94;
+    text-align: center;
+    margin-top: 30px;
   }
 </style>
 

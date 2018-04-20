@@ -139,3 +139,4 @@
 ###扩展
 * TypeScript支持
 * TypeScript模板
+* 日志插件

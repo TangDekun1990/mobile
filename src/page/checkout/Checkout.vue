@@ -60,6 +60,7 @@ import * as consignee from '../../api/network/consignee'
 import * as order from '../../api/network/order'
 import * as cart from '../../api/network/cart'
 import { Toast, Indicator, MessageBox } from 'mint-ui'
+import Promos from './Promos'
 export default {
   components: {
     CheckoutAddress,
@@ -69,6 +70,7 @@ export default {
     CheckoutDesc,
     DeliveryTime,
   },
+  mixins: [ Promos ],
   data () {
     return {
       order_price: null,
@@ -128,8 +130,13 @@ export default {
       let coupon = this.selectedCoupon
       if (coupon && coupon.name) {
         name = coupon.name 
-      } else {
-        name = '未使用'
+      } else { 
+        let total = this.couponTotal
+        if (total && total > 0) {
+          name = '未使用'
+        } else {
+          name = '无可用'
+        } 
       }
       return name
     },
@@ -140,7 +147,11 @@ export default {
         tips = '已选1张'
       } else {
         let total = this.couponTotal
-        tips = total + '张可用'        
+        if (total && total > 0) {
+          tips = total + '张可用'         
+        } else {
+          tips = ''
+        }     
       }  
       return tips   
     },  
@@ -183,25 +194,27 @@ export default {
     getPromos: function () {      
       return this.getPriceByKey('promos')
     },    
-    getOrderTotalPrice: function () {
-      let price = 'AED ' + this.getPriceByKey('total_price')
-      return price
+    getOrderTotalPrice: function () {            
+      return this.getFormatPrice('total_price')
     },
-    getOrderProductPrice: function () {
-      let price = 'AED ' + this.getPriceByKey('product_price')
-      return price
+    getOrderProductPrice: function () {            
+      return this.getFormatPrice('product_price')
     },
-    getOrderTaxPrice: function () {
-      let price = 'AED ' + this.getPriceByKey('tax_price')
-      return price
+    getOrderTaxPrice: function () {            
+      return this.getFormatPrice('tax_price')
     },
     getOrderShippingPrice: function () {
-      let price = 'AED ' + this.getPriceByKey('shipping_price')
-      return price
+      let priceStr = ''
+      let price = this.getPriceByKey('shipping_price')
+      if (price && price.length) {
+        priceStr = 'AED ' + this.toFixedPrice(price)
+      } else {
+        priceStr = '免运费'
+      }
+      return priceStr
     },     
   },
-  created: function() { 
-    debugger
+  created: function() {     
     this.fetchAddressList()    
     this.fetchCartList()    
     
@@ -228,59 +241,17 @@ export default {
         total = order_price[key]
       }
       return total
-    },
-    getPromoTitle(item) {
-      let title = null
-      let promo = item.promo
-      switch (promo) {
-        case 'preferential':
-        {
-          title = '优惠金额'
-        }
-        break;
-        case 'cashgift':
-        {
-          title = '商家红包'
-        }
-        break;
-        case 'score':
-        {
-          title = '积分抵现'
-        }
-        break;
-        case 'order_reduction':
-        {
-          title = '订单促销'
-        }
-        break;
-        case 'goods_reduction':
-        {
-          title = '商品促销'
-        }
-        break;
-        case 'coupon_reduction':
-        {
-          title = '优惠券'
-        }
-        break;
-        case 'combined_promos':
-        {
-          title = '团购'
-        }
-        break;
-        case 'transportTitle':
-        {
-          title = '运费'
-        }
-        break;          
-      
-        default:
-          break;
-      }
-      return title
-    },
+    },    
     getOrderDiscountPrice(item) {
       return '-AED ' + (item.price ? item.price : 0)
+    },    
+    toFixedPrice(price) {
+      return parseFloat(price).toFixed(2)
+    },
+    getFormatPrice (key) {
+      let price = this.getPriceByKey(key)
+      let priceStr = 'AED ' + (price ? this.toFixedPrice(price) : '')
+      return priceStr
     },
     goBack() {
       this.$router.go(-1)

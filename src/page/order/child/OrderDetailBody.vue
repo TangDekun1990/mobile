@@ -61,7 +61,6 @@
           <label class="count">数量：{{item.total_amount}}</label>
           <div class="desc-wrapper">
             <label class="price">￥{{toFixedPrice(item.product_price)}}</label>
-            
           </div>
         </div>
       </div>  
@@ -81,24 +80,16 @@
           <p> 配送时间：{{orderDetail.order.delivery_time}}</p>
         </div>
       </div>
-      <div class="prices">
-        <p>
-          <span>商品总额</span>
-          <span> AED {{orderDetail.order.goods[0].total_price}}</span>
-        </p>
-        <p>
-          <span>+税额</span>
-          <span> AED {{orderDetail.order.tax}}</span>
-        </p>
-        <p>
-          <span>+运费</span>
-          <span> AED {{orderDetail.order.shipping.price}}</span>
-        </p>
-        <P>
-          <span>-商家红包</span>
-          <span> AED 18.46</span>
-        </P>
-        <label class="amount">实付款 : <span>AED {{orderDetail.order.total}}</span> </label>    
+      <div class="desc section-header section-footer">
+        <checkout-desc class="desc-item" title="商品总额" :subtitle="getOrderProductPrice">
+        </checkout-desc>
+        <checkout-desc class="desc-item" title="+税额" :subtitle="getOrderTaxPrice">
+        </checkout-desc>
+        <checkout-desc class="desc-item" title="+运费" :subtitle="getOrderShippingPrice">
+        </checkout-desc>
+        <checkout-desc class="desc-item  cashgift" title="-商家红包" :subtitle="getOrderDiscountPrice">
+        </checkout-desc>
+        <label class="amount">实付款 : <span>AED {{orderDetail.order.total}}</span> </label>
       </div>
       <!-- 待付款按钮 -->
       <div class="btn" v-if="orderDetail.order.status == 0">
@@ -114,7 +105,7 @@
 							</div>
 						</div>
 					</mt-popup>
-          <button class="buttonbottom" v-on:click="payment()"> 去支付 </button>
+          <button class="buttonbottom" v-on:click="payment"> 去支付 </button>
       </div>
 
       <!-- 待发货按钮 -->
@@ -156,6 +147,7 @@
   import OrderItem from './OrderItem';
   import OrderPrice from './OrderPrice';
   import { Indicator, MessageBox, Popup  } from 'mint-ui';
+  import CheckoutDesc from './CheckoutDesc'
   import { orderGet, orderReasonList, orderCancel, orderConfirm} from '../../../api/network/order' //订单详情 //获取退货原因 //取消订单
   export default {
     data() {
@@ -178,7 +170,8 @@
     },
     components: {
       OrderItem,
-      OrderPrice
+      OrderPrice,
+      CheckoutDesc,
     },
     created() {
       let id = this.$route.params.orderDetail ?  this.$route.params.orderDetail : '';
@@ -207,8 +200,11 @@
         this.getordersuccess(id, index);
       },
       // 去支付
-      payment(id) {
-        this.$router.push({ name: 'payment', params: { order: id }})
+      payment() {
+        let order = this.orderDetail ? this.orderDetail.order : null        
+        if (order) {
+          this.$router.push({ name: 'payment', params: { order: order }})
+        }        
       },
       // 获取退货原因数据
       orderReasonList() {
@@ -261,8 +257,33 @@
       // 金额处理
       toFixedPrice(price) {
         return parseFloat(price).toFixed(2)
-      }
+      },
+      getPriceByKey (key) {
+        let total = ''
+        let order_price = this.order_price
+        if (order_price && order_price[key]) {
+          total = order_price[key]
+        }
+        return total
+      },
     },
+    computed: {
+      getOrderTotalPrice: function () {
+      return 'AED ' + this.getPriceByKey('total_price')
+    },
+    getOrderProductPrice: function () {
+      return 'AED ' + this.getPriceByKey('product_price')
+    },
+    getOrderTaxPrice: function () {
+      return 'AED ' + this.getPriceByKey('tax_price')
+    },
+    getOrderShippingPrice: function () {
+      return 'AED ' + this.getPriceByKey('shipping_price')
+    },
+    getOrderDiscountPrice: function () {
+      return '-AED ' + this.getPriceByKey('discount_price')
+    }, 
+    }
   }
 </script>
 <style lang="scss" scoped>
@@ -293,7 +314,6 @@
     justify-content: flex-start;
     align-items: stretch;
     background-color: #fff;
-    border-bottom: 1px solid #E8EAED;
   }
   .photo {
     width: 70px;
@@ -410,44 +430,47 @@
         padding-top: 6px;
       }
      }
-     input {
-        background-color: #fff;
-        border:1px solid #7C7F88;
-      }
+      input {
+          background-color: #fff;
+          border:1px solid #7C7F88;
+        }
   }
-  .prices {
+  .desc {
     height: 163px;
     background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    padding-top: 12px;
     box-sizing: border-box;
-    p {
-     display: flex;
-     justify-content:space-between;
-     height:20px; 
-     font-size:14px;
-     font-family:'PingFangSC-Regular';
-     color:rgba(78,84,93,1);
-     line-height:20px;
-     padding:5px 12px;
+    .desc-item {  
+      padding:5px 0px 0px;
+    }
+    .cashgift {
+      padding-bottom:12px;
+      border-bottom:1px solid #E8EAED;
+    }
+    .amount {
+      display: flex;  
+      justify-content:flex-end;
+      font-size: 14px;
+      color: #4E545D;
+      padding-right: 15px;
+      border-top: 1px solid $lineColor; 
+      padding-top:13px;
+      span {
+        font-size: 16px;
+        color:#F33C3C;
+      }
     }
   }
-  .amount {
-    display: flex;  
-    justify-content:flex-end;
-    font-size: 14px;
-    color: #4E545D;
-    padding-right: 15px;
-    border-top: 1px solid $lineColor; 
-    padding-top:13px;
-    span {
-      font-size: 16px;
-      color:#F33C3C;
-    }
-  }
+  
   .btn {
     height: 54px;
     display: flex;
     justify-content:flex-end;
-    margin-top: 26px;
+    margin-top: 10px;
     background-color: #fff;
     align-items:center;
     button {
