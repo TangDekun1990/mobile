@@ -6,15 +6,15 @@
       </header-item>    
     </mt-header>
     <!-- body -->
-    <div class="order-message-body">
-      <p>2017年5月16日 22:47</p>
+    <div class="order-message-body" v-for="(item, index) in orderMessage" v-on:click="getOrderDetail(item.id)">
+      <p>{{item.created_at | convertTime }}</p>
       <div class="order-track">
-        <span>您的订单状态发生改变</span>
+        <span>{{item.title}}</span>
         <div class="order-status"> 
           <div class="orderImage">
-            <img src="../../../assets/image/change-icon/default_image_02@2x.png">
+            <img :src="item.photo.large">
           </div>
-          <p>您的订单 170043137516319 已发货，点击查看订单详情</p>
+          <p>{{item.content}}</p>
           <div class="arrow-right">
             <img src="../../../assets/image/change-icon/enter@2x.png">
           </div>
@@ -45,9 +45,12 @@ export default {
     getmessageOrderList() {
       messageOrderList(1, 10).then( res => {
         if(res) {
-          this.orderMessage = res;
+          this.orderMessage = res.messages;
         }
       })
+    },
+    getOrderDetail(id){
+      this.$router.push({name: 'orderDetail',params: {orderDetail: id}})
     }
   }
 }

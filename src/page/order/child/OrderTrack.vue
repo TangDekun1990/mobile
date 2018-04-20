@@ -12,7 +12,7 @@
       <div class="pic">
         <img class="imgone" src="../../../assets/image/change-icon/e5_dot_red@2x.png">
         <img class="imgtwo" src="../../../assets/image/change-icon/e5_dot@2x.png">
-        <span></span>
+        <img class="imgthree" src="../../../assets/image/change-icon/e5_dot@2x.png">
       </div>
       <div class="info">
         <div class="match" v-for="(item,index) in trackList.status" v-bind:key="item.id">
@@ -92,10 +92,10 @@ export default {
       flex-direction:row;
      .pic {
        float: left;
-       width:1px;
-       height:190px; 
-       background:rgba(197,203,209,1);
-       border-radius: 3px;
+      //  width:1px;
+      //  height:190px; 
+      //  background:rgba(197,203,209,1);
+      //  border-radius: 3px;
        margin: 24px;
         img  {
         width:11px; 
@@ -108,12 +108,9 @@ export default {
           padding-top:20px;
         }
         }
-        span {
-          display: inline-block;
+        .imgthree {
           width:7px;
           height:7px; 
-          background:rgba(197,203,209,1);
-          border-radius: 50%;
         }
       }
       .info {

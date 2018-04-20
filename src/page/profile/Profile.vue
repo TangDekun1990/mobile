@@ -35,7 +35,8 @@
         testAttr = 'order'
         id='0'
         :icon="require('../../assets/image/change-icon/e0_payment@2x.png')"
-        title="待付款">
+        title="待付款"
+        >
       </order-item> 
       <order-item 
         class="order-item" 
@@ -104,6 +105,7 @@ export default {
    data() {
     return {
       orderAll:1,
+      
     };
   },
   components: {
@@ -114,7 +116,7 @@ export default {
   created: function() {
     if (this.isOnline) {
       userProfileGet().then(response => {}, error => {});
-    }        
+    };     
   },
   computed: {
     ...mapState({
@@ -191,6 +193,7 @@ export default {
       let params = {'order': id};
       this.$router.push({'name':'order', 'params':params});
     },
+    
   },
 };
 </script>

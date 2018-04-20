@@ -62,16 +62,19 @@ export const IMAGE = [
   {
     name: '好评',
     id: 0,
-    isActive: false
+    img: require('../../assets/image/change-icon/e7_good_nor@2x.png'),
+    isActive: true
   },
   {
     name: '中评',
     id: 1,
+    img: require('../../assets/image/change-icon/e7_medium_nor@2x.png'),
     isActive: false
   },
   {
     name: '差评',
     id: 2,
+    img: require('../../assets/image/change-icon/e7_bad_nor@2x.png'),
     isActive: false
   }
 ];
