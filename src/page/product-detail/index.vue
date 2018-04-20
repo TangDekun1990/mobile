@@ -4,7 +4,7 @@
 		<!-- header  -->
 		<v-detail-nav v-if='!isHideHeader'></v-detail-nav>
 		<!-- body -->
-		<v-detail-swiper></v-detail-swiper>
+		<v-detail-swiper :isStock="productDetail.good_stock"></v-detail-swiper>
 		<!-- footer -->
 		<v-detail-footer v-if='!isHideCart'></v-detail-footer>
 	</div>
@@ -37,6 +37,7 @@
 
 		created(){
 			this.getDetail();
+			this.saveCartState(false);
 		},
 
 		computed: mapState({
@@ -53,7 +54,8 @@
 
 		methods: {
 			...mapMutations({
-				saveInfo: 'saveDetailInfo'
+				saveInfo: 'saveDetailInfo',
+				saveCartState: 'saveCartState'
 			}),
 
 			/*

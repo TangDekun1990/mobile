@@ -1,6 +1,6 @@
 <!-- 商品详情  -->
 <template>
-	<div class="ui-detail-swiper" v-bind:class="{'height-wrapper': isHideCart}">
+	<div class="ui-detail-swiper" v-bind:class="{'height-wrapper': isHideCart, 'has-goods-stock': isStock <= 0}">
 		<swiper ref="mySwiper" :options="swiperOption">
             <swiper-slide v-for="(item, index) in list" :key="index">
             	<keep-alive>
@@ -39,6 +39,8 @@
 			}
 		},
 
+		props: ['isStock'],
+
 		components: {
 			commodity,
 			aspect,
@@ -50,7 +52,8 @@
 				isHideCart: state => state.detail.isHideCart,
 				isHideHeader: state => state.detail.isHideHeader,
 				isComment: state => state.detail.isComment,
-				currentSwiperIndex: state => state.detail.currentSwiperIndex
+				currentSwiperIndex: state => state.detail.currentSwiperIndex,
+				detailInfo: state => state.detail.detailInfo
 			}),
 
 			swiper() {
@@ -105,6 +108,9 @@
 		right: 0px;
 		overflow: auto;
 		background: rgba(240,242,245,1);
+		&.has-goods-stock {
+			bottom: 82px;
+		}
 	}
 	.swiper-container {
 		height: 100%;
