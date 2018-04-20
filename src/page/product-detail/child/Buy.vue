@@ -1,7 +1,12 @@
 <!-- Buy.vue -->
 <template>
-	<div class="ui-buy-wrapper ui-detail-common">
-		<div class="buy-wrapper header" @click="changeCartState()">
+	<div class="ui-buy-wrapper ui-detail-common" v-if="detailInfo">
+		<div class="buy-wrapper header" @click="changeCartState()" v-if="detailInfo.good_stock > 0">
+			<p v-if='number <= 0'>请选择购买数量分类</p>
+			<p v-if='number > 0'>已选数量{{number}}</p>
+			<img src="../../../assets/image/change-icon/enter@2x.png">
+		</div>
+		<div class="buy-wrapper header isopacity" v-if="detailInfo.good_stock <= 0">
 			<p v-if='number <= 0'>请选择购买数量分类</p>
 			<p v-if='number > 0'>已选数量{{number}}</p>
 			<img src="../../../assets/image/change-icon/enter@2x.png">
@@ -18,7 +23,8 @@
 
 		computed: {
 			...mapState({
-		      	number: state => state.detail.number
+		      	number: state => state.detail.number,
+		      	detailInfo: state => state.detail.detailInfo
 		    })
 		},
 
@@ -39,6 +45,9 @@
 <style lang="scss" scoped>
 	.ui-buy-wrapper {
 		.buy-wrapper {
+			&.isopacity {
+				opacity: 0.5;
+			}
 			p {
 				font-size:16px;
 				font-family:'PingFangSC-Regular';

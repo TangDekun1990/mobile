@@ -203,6 +203,7 @@
 			    border: 1px solid;
 			    opacity: 0;
 	    		filter: alpha(opacity=0);
+	    		width: 100%;
 			    &:focus {
 					outline: 0px;
 			    }
@@ -210,6 +211,7 @@
 			img {
 				width:45px;
 				height:45px;
+				border-radius: 50%;
 			}
 		}
 	}

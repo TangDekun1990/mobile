@@ -11,9 +11,9 @@
 					<span>AED {{ detailInfo.price }}</span>
 				</div>
 			</div>
-			<!-- v-bind:class="{'disabled-cart': quantity <= 0, 'active-cart': quantity > 0}" -->
 			<div class="right" v-on:click="addShopping(true)" v-bind:class="{'disabled-cart': detailInfo.good_stock <= 0, 'active-cart': detailInfo.good_stock > 0}">加入购物车</div>
 		</div>
+		<p class="good-stock-none" v-if='detailInfo.good_stock <= 0'>所选产品暂时无货，非常抱歉！</p>
 
 		<shopping v-if='isShowcartInfo'></shopping>
 
@@ -107,6 +107,21 @@
 			align-content: center;
 			align-items: center;
 			height:50px;
+		}
+		p.good-stock-none {
+			width:100%;
+			height:32px;
+			background:rgba(216,216,216,1);
+			opacity:0.5;
+            font-size:14px;
+            color:rgba(78,84,93,1);
+            line-height:20px;
+            position: absolute;
+            text-align: center;
+            line-height: 32px;
+            padding: 0px;
+            margin: 0px;
+            bottom: 50px;
 		}
 		div.left{
 			display: flex;

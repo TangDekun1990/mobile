@@ -21,7 +21,7 @@
 
 		<div class="info-promotions" v-if='detailInfo.activity'>
 			<img src="../../../assets/image/change-icon/b2_tag@2x.png">
-			<span>限购{{detailInfo.activity.limit_count }} 件 已售{{detailInfo.activity.sold_count }}件</span>
+			<span>{{detailInfo.activity.name}}</span>
 		</div>
 
 		<div class="info-tips ui-flex">
