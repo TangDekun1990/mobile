@@ -136,7 +136,7 @@ export default {
             }
         }
       }
-      return title;
+      return title;      
     },
     getAvatarUrl: function() {
       let url = null

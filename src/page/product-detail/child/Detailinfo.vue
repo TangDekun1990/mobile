@@ -35,7 +35,8 @@
 
 <script>
 	import { mapState, mapMutations } from 'vuex';
-	import { productLike, productUnlike } from '../../../api/network/product';
+	import { productLike, productUnlike, getProductDetail } from '../../../api/network/product';
+
 	export default {
 		data(){
 			return {
@@ -43,13 +44,15 @@
 				arrivalsTime: '',  //到达时间
 				arrivalsTitle: '', // 到达时间的标题
 				arrivalsRange: '',  //到达时间区间,
-				isShowDesc: false  // 商品简介是否显示更多
+				isShowDesc: false,  // 商品简介是否显示更多
+				productId: this.$route.params.id ? this.$route.params.id : '',
 			}
 		},
 
 		computed: {
 	      	...mapState({
-				detailInfo: state => state.detail.detailInfo
+				detailInfo: state => state.detail.detailInfo,
+				user: state => state.auth.user
 			})
 		},
 
@@ -59,7 +62,8 @@
 
 		methods: {
 			...mapMutations({
-				'commentStatus': 'changeIsComment'
+				'commentStatus': 'changeIsComment',
+				'saveInfo': 'saveDetailInfo'
 			}),
 			/*
 				getCurrentDate: 获取当前时间
@@ -115,22 +119,45 @@
 				productLike： 收藏商品
 			*/
 			productLike() {
-				let id = this.detailInfo.id;
-				productLike(id).then( res => {
-					if (res) {
-						this.detailInfo.is_liked = res.is_liked;
-					}
-				})
+				var that = this;
+				if (this.user) {
+					let id = this.detailInfo.id;
+					productLike(id).then( res => {
+						if (res) {
+							this.detailInfo.is_liked = res.is_liked;
+							this.getDetail();
+						}
+					})
+				} else {
+					this.$router.push({'name': 'signin'});
+				}
 			},
 
 			/*
 				productUnlike： 取消收藏
 			*/
 			productUnlike() {
-				let id = this.detailInfo.id;
-				productUnlike(id).then( res => {
+				var that = this;
+				if (this.user) {
+					let id = this.detailInfo.id;
+					productUnlike(id).then( res => {
+						if (res) {
+							this.detailInfo.is_liked = res.is_liked;
+							this.getDetail();
+						}
+					})
+				} else {
+					this.$router.push({'name': 'signin'});
+				}
+			},
+
+			/*
+				getDetail: 获取商品详情， 并且存入状态管理
+			*/
+			getDetail() {
+				getProductDetail(this.productId).then(res => {
 					if (res) {
-						this.detailInfo.is_liked = res.is_liked;
+						this.detailInfo.collector = Object.assign([], res.product.collector);
 					}
 				})
 			},

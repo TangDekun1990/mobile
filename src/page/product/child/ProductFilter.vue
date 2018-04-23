@@ -8,7 +8,7 @@
 				v-on:click='setActiveSortkey(item, index)'
 				v-bind:class="{'sortactive': item.id == currentSortKey.id, 'sortnormal' : item.id != currentSortKey.id}">
 				<a v-if='!item.isMore'>{{item.name}}</a>
-				<a v-if='item.isMore' v-on:click.stop="isShowDroupMenu()">{{sort.name}}</a>
+				<a v-if='item.isMore'>{{sort.name}}</a>
 				<img src="../../../assets/image/change-icon/triangle_click@2x.png" v-if='item.isMore'>
 			</li>
 		</ul>
@@ -33,7 +33,8 @@ export default {
 			currentSortKey: {},  //当前选中的排序
 			childSort: [],  //综合筛选
 			sort: {},  //综合筛选子集
-			isShowMore: false // 是否显示筛选模态框
+			isShowMore: false, // 是否显示筛选模态框
+			isFrist: true //是否是第一次点击
 		}
 	},
 	created(){
@@ -41,6 +42,8 @@ export default {
 		this.childSort = this.currentSortKey.child;
 		this.sort = this.childSort[0];
 	},
+
+	watch: {},
 
 	computed: mapState({
 		isSearch: state => state.product.isSearch
@@ -77,10 +80,21 @@ export default {
 		 * setActiveSortkey: 点击切换数据并设置选中的样式
 		 * @param: item 当前选中的item
 		*/
-		setActiveSortkey(item) {
-			this.closeFiler();
+		setActiveSortkey(item, index) {
 			this.currentSortKey = item;
-			this.getValue();
+			if (item.isMore) {
+				if (this.isFrist) {
+					this.isShowMore = !this.isShowMore;
+					this.isShowProductModel(this.isShowMore);
+				} else if( !this.isFrist && !this.isShowMore){
+					this.getValue();
+					this.isFrist = true;
+				}
+			} else {
+				this.isFrist = false;
+				this.closeFiler();
+				this.getValue();
+			}
 		},
 
 		/*
@@ -134,7 +148,7 @@ export default {
     		border-left: 0px;
     		border-right: 0px;
     		li{
-    			padding: 15px 0px;
+    			/* padding: 15px 0px; */
     			font-size: 14px;
     			color: #4E545D;
     			font-family: 'PingFangSC';
@@ -142,6 +156,13 @@ export default {
     			position: relative;
     			flex-basis: 100px;
 				text-align: center;
+				height: 50px;
+			    padding: 0px;
+			    line-height: 50px;
+			    a {
+			    	height: 50px;
+			    	display: inline-block;
+			    }
 				img {
 					height: 4px;
 				    width: 8px;

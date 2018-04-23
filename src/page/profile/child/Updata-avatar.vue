@@ -193,6 +193,10 @@
 	.ui-update-avater {
 		.common-update-avatar{
 			position: relative;
+			span {
+				color: #4E545D;
+				font-size:15px;
+			}
 			input[type='file'] {
 				position: absolute;
 			    top: 0px;

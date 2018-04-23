@@ -6,7 +6,7 @@
 			<mt-swipe :auto="0" :show-indicators="false" @change="handleChange" :default-index="currentIndex" :stop-propagation='true' :speed='100'>
 			  	<mt-swipe-item v-for="(item, index) in list" :key="index">
 			  		<div class="image-swipe-wrapper">
-						<div v-for="image in item[0]">
+						<div v-for="image in item[0]" @click="goDetail(image.id)">
 							<img :src="image.photos[0].thumb">
 							<span>AED {{image.current_price}}</span>
 						</div>
@@ -115,13 +115,12 @@
 				if (this.$route.params.id) {
 					params.product = this.$route.params.id;
 				}
-				// let params = {
-				// 	brand: this.$route.params.brand ? this.$route.params.brand : "",
-    //             	category: this.$route.params.category ? this.$route.params.category : "",
-    //             	shop: this.$route.params.shop ? this.$route.params.shop : "",
-    //             	product: this.$route.params.id ? this.$route.params.id : ""
-				// };
 				this.$router.push({'name': 'recommend', 'params': params});
+			},
+
+			goDetail(id) {
+				let data = Object.assign({}, {'id':id});
+				this.$router.push({'name': 'redetail', 'params': {'id':id}});
 			}
 		}
 	}

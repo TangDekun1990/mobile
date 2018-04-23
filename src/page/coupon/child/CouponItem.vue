@@ -1,16 +1,22 @@
 <template>
   <div class="container" @click="onclick">
-    <img class="top-img" src="../../../assets/image/change-icon/ticket_bg@2x.png">
-    <label class="title">{{getName}}</label>
+    <img class="top-img" v-bind:src="getTopBg">
+    <label class="title" :class="{enableText: isAvaiable, disableText: !isAvaiable}">{{getName}}</label>
     <label class="subtitle">{{getCondition}}</label>
     <div class="desc-wrapper">
       <label v-for="(item, index) in getTypeItems" :key="index">{{item}}</label>
-    </div>
+      <label>{{getDuration}}</label>
+      <div class="row-wrapper">
+        <label class="state">{{getStatus}}</label>
+        <label>{{item.id}}</label>
+      </div>      
+    </div>    
     <img class="indicator" v-if="isSelected" src="../../../assets/image/change-icon/d1_ticket_sel@2x.png">
   </div>
 </template>
 
 <script>
+import { ENUM } from "../../../config/enum";
 export default {
   props: {
     item: {
@@ -21,6 +27,18 @@ export default {
     }
   },
   computed: {
+    isAvaiable: function () {
+      return (this.item && this.item.status === ENUM.COUPON_STATUS.AVAILABLE) ? true : false
+    },
+    getTopBg: function () {
+      let img = null      
+      if (this.isAvaiable) {
+        img = require('../../../assets/image/change-icon/e7_coupon@2x.png')                
+      } else {
+        img = require('../../../assets/image/change-icon/e7_coupon_gray@2x.png')
+      }
+      return img
+    },
     getName: function () {
       let name = ''
       if (this.item) {
@@ -46,9 +64,38 @@ export default {
       let duration = ''
       let item = this.item
       if (item && item.start_at && item.end_at) {
-        duration = item.start_at + ' ~ ' + item.end_at
+        let start_at = new Date(item.start_at * 1000)
+        let end_at = new Date(item.end_at * 1000)
+        duration = this.utils.formatDate(start_at, 'yyyy.M.d') + ' ~ ' + this.utils.formatDate(end_at, 'yyyy.M.d')
       }
       return duration
+    },
+    getStatus: function () {
+      let status = ''
+      let item = this.item
+      debugger
+      if (item) {
+        switch (item.status) {
+          case ENUM.COUPON_STATUS.AVAILABLE:
+            {
+              status = ''
+            }
+            break;
+          case ENUM.COUPON_STATUS.USED:
+            {
+              status = '已使用'
+            }
+            break;
+          case ENUM.COUPON_STATUS.EXPIRED:
+            {
+              status = '已过期'
+            }
+            break;
+          default:
+            break;
+        }        
+      }
+      return status
     },
   },
   methods: {
@@ -72,13 +119,25 @@ export default {
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
-      align-items: flex-end;
+      align-items: stretch;
+      margin-bottom: 10px;
       label {
         color: #8C8F93;
         font-size: 12px;
         margin-top: 5px;
         margin-right: 10px;
         text-align: right;
+      }
+      .row-wrapper {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .state {
+        text-align: left;  
+        flex: 1;  
+        margin-left: 10px;
       }
     }
   }
@@ -90,9 +149,14 @@ export default {
   }
   .title {
     margin-top: 10px;
-    margin-left: 14px;
-    color: #F75F5F;
+    margin-left: 14px; 
     font-size: 18px;
+  }
+  .enableText {
+    color: #F75F5F;
+  }
+  .disableText {
+    color: #8C8F93;
   }
   .subtitle {
     margin-top: 4px;
@@ -107,7 +171,7 @@ export default {
     position: relative;
     left: 0px;
     bottom: 0px;
-  }
+  }  
 </style>
 
 
