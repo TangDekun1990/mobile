@@ -169,7 +169,7 @@ export default [
 				path: '/addressManage',
 				component: AddressManage,
 				meta: {
-					keepAlive: true,
+					keepAlive: false,
 				},
 			},
 			{
@@ -177,7 +177,7 @@ export default [
 				path: '/addressManage/addressEdit',
 				component: AddressEdit,
 				meta: {
-					keepAlive: true,
+					keepAlive: false,
 				},
 			},
 			{
@@ -190,7 +190,7 @@ export default [
 				path: '/checkout/couponUsable',
 				component: CouponUsable,
 				meta: {
-					keepAlive: true,
+					keepAlive: false,
 				},
 			},
 			{
@@ -198,7 +198,7 @@ export default [
 				path: '/checkout',
 				component: Checkout,
 				meta: {
-					keepAlive: true,
+					keepAlive: false,
 				},
 			},
 			{

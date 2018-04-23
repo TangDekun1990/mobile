@@ -17,7 +17,7 @@
 				<span class="sub-title" style="-webkit-box-orient:vertical">{{ item.desc }}</span>
 				<div class="price">
 					<span>AED{{ item.current_price }}</span>
-					<span>AED{{ toFixedPrice(item.price)}}</span>
+					<span>AED{{ utils.currencyPrice(item.price)}}</span>
 				</div>
 				<div class="sendway">
 					<span v-if="item.self_employed" class="self-support">自营</span>
@@ -75,14 +75,6 @@ export default{
 				this.$router.push({'name': 'signin'});
 			}
 		},
-
-		/*
-		 * toFixed: 商品原件显示两位数
-		 */
-		toFixedPrice(price) {
-			return parseFloat(price).toFixed(2)
-		}
-
 	}
 }
 </script>

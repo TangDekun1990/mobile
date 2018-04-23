@@ -49,7 +49,11 @@ export default {
 		}
 		return str;
 	},
-
+	
+	/*
+		date 日期
+		fmt 显示的格式
+	*/
 	formatDate(date, fmt) {
 		if (/(y+)/.test(fmt)) {
 			fmt = fmt.replace(RegExp.$1, (date.getFullYear() + '').substr(4 - RegExp.$1.length));
@@ -72,5 +76,13 @@ export default {
 
 	padLeftZero(str) {
 		return ('00' + str).substr(str.length);
-	}
+	},
+
+	/*
+		price 价格
+		格式化价格（保留两位小数）
+	*/
+	currencyPrice(price) {
+		return parseFloat(price).toFixed(2)
+	},
 }

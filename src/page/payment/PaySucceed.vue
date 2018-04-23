@@ -26,7 +26,7 @@ export default {
       
     },
     goShopping() {
-
+      this.$router.push('/home')
     },
   }
 }

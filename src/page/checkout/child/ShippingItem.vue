@@ -41,7 +41,7 @@ export default {
     },
     getPrice: function () {
       let price = this.item ? this.item.fee : null
-      return (price ? this.toFixedPrice(price) : '')
+      return (price ? this.utils.currencyPrice(price) : '')
     },
     // getDesc: function () {
     //   let data = ''
@@ -55,9 +55,6 @@ export default {
   methods: {
     onclick() {
       this.$emit('onclick')
-    },
-    toFixedPrice(price) {
-      return parseFloat(price).toFixed(2)
     },
   }
 }

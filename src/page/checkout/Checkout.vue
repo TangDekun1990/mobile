@@ -201,13 +201,13 @@ export default {
       return this.getFormatPrice('product_price')
     },
     getOrderTaxPrice: function () {            
-      return this.getFormatPrice('tax')
+      return this.getFormatPrice('tax_price')
     },
     getOrderShippingPrice: function () {
       let priceStr = ''
       let price = this.getPriceByKey('shipping_price')
       if (price && price.length) {
-        priceStr = 'AED ' + this.toFixedPrice(price)
+        priceStr = 'AED ' + this.utils.currencyPrice(price)
       } else {
         priceStr = '免运费'
       }
@@ -244,13 +244,10 @@ export default {
     },    
     getOrderDiscountPrice(item) {
       return '-AED ' + (item.price ? item.price : 0)
-    },    
-    toFixedPrice(price) {
-      return parseFloat(price).toFixed(2)
     },
     getFormatPrice (key) {
       let price = this.getPriceByKey(key)
-      let priceStr = 'AED ' + (price ? this.toFixedPrice(price) : '')
+      let priceStr = 'AED ' + (price ? this.utils.currencyPrice(price) : '')
       return priceStr
     },
     goBack() {
