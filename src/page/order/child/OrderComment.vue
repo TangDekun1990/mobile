@@ -15,18 +15,20 @@
           <img v-bind:src="item.product.photos[0].large" >
         </div>
         <div class="comment">
-          <span>{{item.product.name | mySubstr(10)}}</span>
+          <span>{{item.product.name }}</span>
           <ul>
             <li class="good" v-for="(image, indexs) in item.IMAGE"  v-on:click="changeImage(image, indexs)"> 
-              <img src="../../../assets/image/change-icon/e7_good_nor@2x.png" v-if="!image.isActive">
-              <img src="../../../assets/image/change-icon/e7_good_sel@2x.png" v-if="image.isActive">
+              <!-- <img src="../../../assets/image/change-icon/e7_good_nor@2x.png" v-if="!image.isActive">
+              <img src="../../../assets/image/change-icon/e7_good_sel@2x.png" v-if="image.isActive"> -->
+              <img :src="image.img" v-if="!image.isActive">
+              <img :src="image.img" v-if="image.isActive">
               <label>{{image.name}}</label>
             </li>
           </ul>
         </div>
       </div>
       <div class="enter">
-        <textarea cols="" rows="" placeholder="请在此输入评价" v-model="item.content"></textarea>
+        <textarea placeholder="请在此输入评价" v-model="item.content"></textarea>
       </div>
     </div>
   </div>
@@ -82,12 +84,8 @@ export default {
     },
 
     changeImage(image, indexs) {
-      // console.log(this.commentinfo.goods);
-      // this.commentinfo.goods[index].isActive = true;
-      // item.isActive = !item.isActive;
       image.isActive = !image.isActive;
-      // this.commentinfo.goods = Object.assign([], this.commentinfo.goods, item);
-      // console.log(this.commentinfo.goods);
+      console.log(indexs);
     }
   }
 };
@@ -105,13 +103,15 @@ export default {
   }
   .order-comment-body {
     background: rgba(255, 255, 255, 1);
-    border-bottom: 1px solid #e8eaed;
+    height: 226px;
     padding: 15px;
     .body-list {
       display: flex;
       justify-content: left;
       align-content: center;
       align-items: center;
+      padding-bottom:15px;
+      border-bottom: 1px solid #E8EAED;
     }
     .image {
       width: 75px;
@@ -151,12 +151,13 @@ export default {
       }
     }
     .enter {
-      margin: 15px;
+      padding-top: 15px;
       textarea {
         width: 100%;
         height: 120px;
         background: rgba(247, 249, 250, 1);
         border: 1px solid #f7f9fa;
+        box-sizing: border-box;
       }
     }
   }

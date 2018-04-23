@@ -9,8 +9,11 @@
 
 				<div>
 					<span>AED {{ detailInfo.current_price }}</span>
-					<span><img src="../../../assets/image/change-icon/b2_tag@2x.png" v-if='detailInfo.activity'> 数量：{{ numbers }}</span>
-					<span v-if='detailInfo.activity'>限购{{detailInfo.activity.limit_count}}件 已售{{detailInfo.activity.sold_count }}件</span>
+					<span>
+						<img src="../../../assets/image/change-icon/b2_tag@2x.png" v-if='detailInfo.activity'>
+						<span v-if='detailInfo.activity'>{{detailInfo.activity.name}}</span>
+					</span>
+					<span>数量：{{ numbers }}</span>
 				</div>
 
 				<img src="../../../assets/image/change-icon/close@2x.png" class="close" v-on:click='closeCartInfo(false)'>
@@ -55,7 +58,8 @@
 			...mapState({
 		      	isOnline: state => state.auth.isOnline,
 		      	detailInfo: state => state.detail.detailInfo,
-		      	number: state => state.detail.number
+		      	number: state => state.detail.number,
+		      	user: state => state.auth.user
 		    })
 		},
 
@@ -113,7 +117,7 @@
 
 			// 加入购物车
 			addShoppingCart() {
-				if (!this.isOnline) {
+				if (!this.user) {
 					this.$router.push({'name': 'signin'});
 				} else {
 					this.addShopCart();
@@ -132,6 +136,9 @@
 						this.$parent.$emit('end-addcart-animation');
 						// Toast(res.message);
 					}
+				},(error) => {
+					Toast(error.message);
+					this.$parent.$emit('end-addcart-animation');
 				})
 			},
 
@@ -182,33 +189,37 @@
 				div {
 					padding-left: 15px;
 					margin-left: 120px;
+					width: 100%;
 					span{
 						display: block;
 						color:rgba(239,51,56,1);
 						&:first-child {
 							font-size:18px;
-							/*color:rgba(41,43,45,1);*/
 							line-height:20px;
 							padding-bottom: 12px;
 						}
 						&:nth-child(2) {
-							height: 20px;
-							line-height: 20px;
-							font-size:14px;
-							/*color:rgba(143,142,148,1);*/
-							line-height:20px;
-							padding-bottom: 12px;
 							img {
-								width: 38px;
 								vertical-align: middle;
 								padding-right: 10px;
+								width: 50px;
+    							height: 20px;
+							}
+							span {
+								display: inline;
+								font-size:14px;
+								color:rgba(143,142,148,1);
+								line-height:14px;
+								padding-bottom: 9px;
+								padding-top: 12px;
 							}
 						}
 						&:last-child {
+							height: 20px;
+							line-height: 20px;
 							font-size:14px;
-							color:rgba(143,142,148,1);
-							line-height:14px;
-							padding-bottom: 9px;
+							line-height:20px;
+							padding-top: 12px;
 						}
 					}
 				}

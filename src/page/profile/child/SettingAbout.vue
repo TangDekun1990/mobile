@@ -30,22 +30,22 @@
         <p>Copyright©2004-2017</p>
         <p>温超wenchao.ae版权所有</p>
       </div>
-       <mt-popup v-model="popupVisible" position="bottom" class="mint-popup">
-      <div class="share">
-        <p>分享到</p>
-        <div class="image">
-          <label v-on:click="goWachat()">
-            <img src="../../../assets/image/change-icon/c7_commodity_list_2@2x.png"> 
-            <p>微信</p>
-          </label>
-          <label>
-            <img src="../../../assets/image/change-icon/c7_commodity_list_3@2x.png"> 
-            <p>QQ</p>
-          </label>
-        </div>
-        <p class="cancel" v-on:click="cancelInfo()">取消</p>
-      </div>     
-    </mt-popup>
+        <mt-popup v-model="popupVisible" position="bottom" class="mint-popup">
+        <div class="share">
+          <p>分享到</p>
+          <div class="image">
+            <label v-on:click="goWachat()">
+              <img src="../../../assets/image/change-icon/c7_commodity_list_2@2x.png"> 
+              <p>微信</p>
+            </label>
+            <label>
+              <img src="../../../assets/image/change-icon/c7_commodity_list_3@2x.png"> 
+              <p>QQ</p>
+            </label>
+          </div>
+          <p class="cancel" v-on:click="cancelInfo()">取消</p>
+        </div>     
+       </mt-popup>
     </div>
   </div>
 </template>

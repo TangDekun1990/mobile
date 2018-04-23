@@ -1,7 +1,7 @@
 <template>
   <p v-html="html"></p>
 </template>
-</template>
+
 
 <script>
 import axios from 'axios'

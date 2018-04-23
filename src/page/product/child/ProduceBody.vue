@@ -32,7 +32,7 @@
 
 <script>
 import { Toast, Indicator } from 'mint-ui';
-
+import { mapState, mapMutations } from 'vuex';
 import { cartAdd } from '../../../api/network/cart';
 
 export default{
@@ -41,6 +41,12 @@ export default{
 		}
 	},
 	props: ['item', 'productId', 'requestparams'],
+
+	computed: {
+		...mapState({
+			user: state => state.auth.user
+		}),
+	},
 
 	methods: {
 		/*
@@ -56,12 +62,18 @@ export default{
 		 * @param： product： 商品id
 		*/
 		_cartAdd(product) {
-			cartAdd(product, '', 1).then(res => {
-				if (res) {
-					this.$parent.$emit('get-cart-quantity');
-					Toast({message: '加入成功', position: 'middle', duration: 5000});
-				}
-			});
+			if (this.user) {
+				cartAdd(product, '', 1).then(res => {
+					if (res) {
+						this.$parent.$emit('get-cart-quantity');
+						Toast({message: '加入成功', position: 'middle', duration: 5000});
+					}
+				}, (error) => {
+					Toast(error.errorMsg);
+				});
+			} else {
+				this.$router.push({'name': 'signin'});
+			}
 		},
 
 		/*
@@ -186,8 +198,8 @@ export default{
 				font-size: 12px;
 
 				display:-moz-box;
-			    display:-webkit-box;
-			    display:box;
+			  display:-webkit-box;
+			  display:box;
 
 				-webkit-line-clamp: 1;
 				-moz-line-clamp: 1;

@@ -201,7 +201,7 @@ export default {
       return this.getFormatPrice('product_price')
     },
     getOrderTaxPrice: function () {            
-      return this.getFormatPrice('tax_price')
+      return this.getFormatPrice('tax')
     },
     getOrderShippingPrice: function () {
       let priceStr = ''

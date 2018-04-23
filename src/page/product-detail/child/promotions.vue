@@ -13,7 +13,7 @@
 			<div class="promos-list">
 				<div class="item">
 					<div v-for="(list, index) in detailInfo.promos">
-						<span class="title" v-show="index == 0">{{ item.name}}</span>
+						<!-- <span class="title" v-show="index == 0">{{ item.name}}</span> -->
 						<span class="name">{{ list.name }}</span>
 						<span class="promo">{{list.promo}}</span>
 					</div>

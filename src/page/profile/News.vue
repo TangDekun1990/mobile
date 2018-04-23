@@ -7,7 +7,7 @@
     </mt-header>
     <!-- body -->
     <div class="flex-wrapper">
-      <div class="newslist">
+      <div class="newslist"  v-on:click="getOrderMessage()">
         <div class="ui-image-wrapper">
           <img src="../../assets/image/change-icon/e12_logistics@2x.png">
         </div>
@@ -16,7 +16,7 @@
           <span>订单已签收！您购买的2016年文艺小白鞋夏季新款...</span>
         </div>
       </div>
-      <div class="newslist">
+      <div class="newslist" v-on:click="getNoticeMessage()">
         <div class="ui-image-wrapper">
           <img src="../../assets/image/change-icon/e12_message@2x.png">
         </div>
@@ -25,7 +25,7 @@
           <span>今日店铺有新品上架哦！</span>
         </div>
       </div>
-      <div class="newslist">
+      <div class="newslist" v-on:click="getServiceMessage()">
         <div class="ui-image-wrapper">
           <img src="../../assets/image/change-icon/e12_service@2x.png">
         </div>
@@ -44,6 +44,15 @@
       goBack() {
         this.$router.go(-1) 
       },
+      getOrderMessage() {
+        this.$router.push('newsOrderMessage')
+      },
+      getNoticeMessage() {
+        this.$router.push('newsNoticeMessage')
+      },
+      getServiceMessage() {
+        console.log('客服消息')
+      }
     }
   }
 </script>

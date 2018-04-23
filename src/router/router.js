@@ -22,8 +22,11 @@ import Profile from '../page/profile/Profile'
 import ProfileInfo from '../page/profile/ProfileInfo'
 import Setting from '../page/profile/Setting'
 import SettingAbout from '../page/profile/child/SettingAbout'
-import News from '../page/profile/News'
 import Help from '../page/profile/Help'
+import HelpUrl from '../page/profile/child/HelpUrl'
+import News from '../page/profile/News'
+import NewsOrderMessage from '../page/profile/child/NewsOrderMessage'
+import NewsNoticeMessage from '../page/profile/child/NewsNoticeMessage'
 
 // address
 import AddressList from '../page/address/AddressList'
@@ -132,14 +135,29 @@ export default [
 				component: ProfileInfo
 			},
 			{
+				name: 'Help',
+				path: '/help',
+				component: Help
+			},
+			{
+				name: 'HelpUrl',
+				path: '/helpUrl',
+				component: HelpUrl
+			},
+			{
 				name: 'News',
 				path: '/news',
 				component: News
 			},
 			{
-				name: 'Help',
-				path: '/help',
-				component: Help
+				name: 'NewsOrderMessage',
+				path: '/newsOrderMessage',
+				component: NewsOrderMessage
+			},
+			{
+				name: 'NewsNoticeMessage',
+				path: '/newsNoticeMessage',
+				component: NewsNoticeMessage
 			},
 			{
 				name: 'addressList',

@@ -7,14 +7,14 @@
     </mt-header>
     <!-- body -->
     <div class="help-body">
-      <help-item v-for="(item, index) in articleData" v-bind:key="item.id" v-on:onclick="goinfo(item.url)"
+      <help-item v-for="(item, index) in articleData" v-bind:key="item.id" v-on:onclick="getHelpInfo(item.url, item.title)"
         class="section-footer" 
         :icon="require('../../assets/image/change-icon/b10_order@2x.png')" 
         :title="item.title"
         :url="item.url">
       </help-item>
     </div>
-  </div>
+  </div>  
 </template>
 
 <script>
@@ -26,14 +26,15 @@ export default {
   data() {
     return {
       articleData:[],
+      aggrementUrl: '', 
     }
   },
   components: {
     HelpItem
   }, 
   created(){
-    this.getArticleList()
-	},
+    this.getArticleList(); 
+  },
   methods: {
     goBack() {
       this.$router.go(-1) 
@@ -46,8 +47,9 @@ export default {
         }
       })
     },
-    goinfo(url) {
-      window.location.href = url;
+    getHelpInfo(url, title) {
+      this.$router.push({ name: 'HelpUrl', params: {'url': url,'title': title}})
+      // window.location.href = url;
     }
   }
 }
@@ -64,7 +66,6 @@ export default {
       border-bottom:1px solid #E8EAED;
     }
   }
-  
 </style>
 
 
