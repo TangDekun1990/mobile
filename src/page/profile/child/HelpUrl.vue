@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="containers">
     <!-- header -->
     <mt-header class="header" :title="getTitle">
       <header-item slot="left" v-bind:isBack=true v-on:onclick="goBack"></header-item>  
@@ -75,7 +75,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .container {
+  .containers {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
