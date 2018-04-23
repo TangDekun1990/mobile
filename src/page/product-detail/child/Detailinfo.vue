@@ -49,7 +49,8 @@
 
 		computed: {
 	      	...mapState({
-				detailInfo: state => state.detail.detailInfo
+				detailInfo: state => state.detail.detailInfo,
+				user: state => state.auth.user
 			})
 		},
 
@@ -115,24 +116,32 @@
 				productLike： 收藏商品
 			*/
 			productLike() {
-				let id = this.detailInfo.id;
-				productLike(id).then( res => {
-					if (res) {
-						this.detailInfo.is_liked = res.is_liked;
-					}
-				})
+				if (this.user) {
+					let id = this.detailInfo.id;
+					productLike(id).then( res => {
+						if (res) {
+							this.detailInfo.is_liked = res.is_liked;
+						}
+					})
+				} else {
+					this.$router.push({'name': 'signin'});
+				}
 			},
 
 			/*
 				productUnlike： 取消收藏
 			*/
 			productUnlike() {
-				let id = this.detailInfo.id;
-				productUnlike(id).then( res => {
-					if (res) {
-						this.detailInfo.is_liked = res.is_liked;
-					}
-				})
+				if (this.user) {
+					let id = this.detailInfo.id;
+					productUnlike(id).then( res => {
+						if (res) {
+							this.detailInfo.is_liked = res.is_liked;
+						}
+					})
+				} else {
+					this.$router.push({'name': 'signin'});
+				}
 			},
 
 			/*

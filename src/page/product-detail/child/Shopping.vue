@@ -137,7 +137,7 @@
 						// Toast(res.message);
 					}
 				},(error) => {
-					Toast(error.message);
+					Toast(error.errorMsg);
 					this.$parent.$emit('end-addcart-animation');
 				})
 			},

@@ -7,6 +7,8 @@
 		<v-goods-info></v-goods-info>
 		<!-- 促销信息 -->
 		<v-goods-promotions></v-goods-promotions>
+		<!-- 促销商品的活动结束时间 -->
+		<v-goods-time></v-goods-time>
 		<!-- 购买 -->
 		<v-goods-buy></v-goods-buy>
 		<!-- 联系客服-->
@@ -27,6 +29,7 @@
 	import detailInfo from './Detailinfo';
 	import promotions from './promotions';
 
+	import promotionTime from './Time';
 	import detailBuy from './Buy';
 	import detailConcat from './Concat';
 	import detailLike from './Like';
@@ -51,6 +54,7 @@
 			'v-goods-swipe': goodsSwipe,
 			'v-goods-info': detailInfo,
 			'v-goods-promotions': promotions,
+			'v-goods-time': promotionTime,
 			'v-goods-buy': detailBuy,
 			'v-goods-concat': detailConcat,
 			'v-goods-like': detailLike,
