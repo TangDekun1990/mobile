@@ -1,7 +1,7 @@
 <!-- OrderDetailBody.vue -->
 <template>
   <div>
-    <div class="order-body" >
+    <div class="order-body" v-if="orderDetail && orderDetail.order">
 
       <div class="image" v-if="orderDetail.order.status == 0">
         <img src="../../../assets/image/change-icon/e5_clock@2x.png">
@@ -57,20 +57,19 @@
         
         <img class="photo" v-bind:src="item.product.photos[0].large">
         <div class="right-wrapper">
-          <label class="title">{{item.product.name | mySubstr(22)}}</label>
+          <label class="title">{{item.product.name}}</label>
           <label class="count">数量：{{item.total_amount}}</label>
           <div class="desc-wrapper">
             <label class="price">￥{{toFixedPrice(item.product_price)}}</label>
           </div>
         </div>
       </div>  
-      <!-- <order-item></order-item> -->
       <div class="detail">
         <div class="number">
           <label>订单编号：{{orderDetail.order.sn}} &nbsp;
-            <input type="submit" value=" 复制 "> 
+            <input type="submit" value=" 复制 " v-on:click="getCopy()"> 
           </label> 
-          <p>下单时间：2018-04-03 14:45:30</p>
+          <p>下单时间：{{orderDetail.order.created_at | convertTime}}</p>
         </div>
       <div class="pay">
           <p>支付方式：货到付款</p>
@@ -87,11 +86,11 @@
         </checkout-desc>
         <checkout-desc class="desc-item" title="+运费" :subtitle="getOrderShippingPrice">
         </checkout-desc>
-        <checkout-desc class="desc-item  cashgift" title="-商家红包" :subtitle="getOrderDiscountPrice">
+        <checkout-desc class="desc-item" v-for="(item, index) in getPromos" :key="index" :title="getPromoTitle(item)" :subtitle="getOrderDiscountPrice(item)">
         </checkout-desc>
-        <label class="amount">实付款 : <span>AED {{orderDetail.order.total}}</span> </label>
+        <label class="amount">实付款 : <span> {{ getOrderTotalPrice }}</span> </label>
       </div>
-      <!-- 待付款按钮 -->
+       <!-- 待付款按钮 -->
       <div class="btn" v-if="orderDetail.order.status == 0">
           <button v-on:click="cancel()">取消订单</button>
           <mt-popup v-model="popupVisible" position="bottom" class="mint-popup">
@@ -101,7 +100,7 @@
 								<span class="success" v-on:click="complete(orderDetail.order.id)">完成</span>
 							</div>
 							<div class="reason">
-								<p v-for="(item, list) in reasonList" v-bind:key="list" v-on:click="getReasonItem(item)">{{item.name }} </p>
+								<p v-for="(item, list) in reasonList" v-bind:key="list" v-on:click="getReasonItem(item)">{{ item.name }} </p>
 							</div>
 						</div>
 					</mt-popup>
@@ -138,8 +137,7 @@
 				<button v-on:click="track(item.id)">查看物流</button>
 				<button class="buttonbottom" v-on:click="confirm(item.id,index)">确认收货</button>
 			</div>
-
-    </div>
+    </div>  
   </div>
 </template>
 <script>
@@ -148,8 +146,11 @@
   import OrderPrice from './OrderPrice';
   import { Indicator, MessageBox, Popup  } from 'mint-ui';
   import CheckoutDesc from './CheckoutDesc'
+  import Promos from '../../checkout/Promos'
   import { orderGet, orderReasonList, orderCancel, orderConfirm} from '../../../api/network/order' //订单详情 //获取退货原因 //取消订单
+  import { Toast } from 'mint-ui';
   export default {
+     mixins: [ Promos ],
     data() {
       return {
         orderDetail:{},
@@ -161,6 +162,8 @@
 				currentNAVId: '',
         orderListParams: {'page': 0, 'per_page': 10, status: ''},
         index:'',
+        order: {},
+        total_price: [],
       }
     },
      props: {
@@ -183,8 +186,9 @@
       orderInfo(id) {
         orderGet(id).then(res => {
           if(res) {
-            this.orderInfoList = Object.assign([],this.orderInfoList, this.order);
             this.orderDetail = res;
+            this.order = res.order;
+            this.total_price = res.order.goods;
           }
         })
       },
@@ -254,35 +258,74 @@
       goBuy() {
         this.$router.push({ name:'cart'})
       },
+      getOrderDiscountPrice(item) {
+        return '-AED ' + (item.price ? item.price : 0)
+      }, 
       // 金额处理
       toFixedPrice(price) {
         return parseFloat(price).toFixed(2)
       },
-      getPriceByKey (key) {
+      getFormatPrice (key) {
+        let price = this.getPriceByKey(key)
+        let priceStr = 'AED ' + (price ? this.toFixedPrice(price) : '')
+        return priceStr
+      },
+      getPriceByKey(key) {
         let total = ''
-        let order_price = this.order_price
-        if (order_price && order_price[key]) {
-          total = order_price[key]
+        let order = this.order
+        if (order && order[key]) {
+          total = order[key]
         }
         return total
+      },   
+      // 计算商品总额
+      goodsTotalPrice() {
+        let totalPrice = 0;
+        let total_price = this.total_price
+          if(total_price.length > 0){
+              for(let i = 0, len = total_price.length; i <= len-1; i++) {
+                if(total_price[i].total_price) {
+                  totalPrice += parseFloat(total_price[i].total_price) 
+                }
+              }
+              return 'AED ' + this.toFixedPrice(totalPrice)
+          } else {
+              return 'AED ' + this.toFixedPrice(totalPrice);
+            }
+      }, 
+      
+      // 复制
+      getCopy() {
+        Toast({
+          message: '复制成功',
+          iconClass: require('../../../assets/image/change-icon/e5_checkmark_toast@2x.png'),
+          duration: 3000
+        });
       },
     },
     computed: {
-      getOrderTotalPrice: function () {
-      return 'AED ' + this.getPriceByKey('total_price')
-    },
-    getOrderProductPrice: function () {
-      return 'AED ' + this.getPriceByKey('product_price')
-    },
-    getOrderTaxPrice: function () {
-      return 'AED ' + this.getPriceByKey('tax_price')
-    },
-    getOrderShippingPrice: function () {
-      return 'AED ' + this.getPriceByKey('shipping_price')
-    },
-    getOrderDiscountPrice: function () {
-      return '-AED ' + this.getPriceByKey('discount_price')
-    }, 
+      getPromos: function () {      
+        return this.getPriceByKey('promos')
+      },    
+      getOrderTotalPrice: function () {            
+        return this.getFormatPrice('total')
+      },
+      getOrderProductPrice: function () {            
+        return this.goodsTotalPrice()
+      },
+      getOrderTaxPrice: function () {            
+        return this.getFormatPrice('tax')
+      },
+      getOrderShippingPrice: function () {
+        let priceStr = ''
+        let price = this.getPriceByKey('shipping')
+        if (price) {
+          priceStr = 'AED ' + this.toFixedPrice(price.price)
+        } else {
+          priceStr = '免运费'
+        }
+        return priceStr
+      },     
     }
   }
 </script>
@@ -325,12 +368,18 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: stretch;
+    padding:0px 15px 0px 0px;   
+    overflow: hidden;
   }
   .title {
     margin-top: 8px;
     color: #4E545D;
     font-size: 14px;  
-    margin-right: 10px;    
+    margin-right: 10px;  
+
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
   }
   .count {
     margin-top: 4px;
@@ -396,7 +445,7 @@
       height: 13px; 
     }
   }
-   
+
   .detail {
     display: flex;
     flex-direction: column;
@@ -445,11 +494,7 @@
     padding-top: 12px;
     box-sizing: border-box;
     .desc-item {  
-      padding:5px 0px 0px;
-    }
-    .cashgift {
-      padding-bottom:12px;
-      border-bottom:1px solid #E8EAED;
+      flex:1;
     }
     .amount {
       display: flex;  
@@ -458,7 +503,9 @@
       color: #4E545D;
       padding-right: 15px;
       border-top: 1px solid $lineColor; 
-      padding-top:13px;
+      margin-top:12px;
+      height: 45px;
+      line-height: 45px;
       span {
         font-size: 16px;
         color:#F33C3C;
@@ -521,5 +568,5 @@
       }
     }
   }
-
+  
 </style>

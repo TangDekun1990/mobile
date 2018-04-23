@@ -103,7 +103,7 @@
 			padding: 6px;
 			justify-content: space-around;
 			align-content: center;
-	    	align-items: center;
+	    align-items: center;
 			img.ui-back {
 				height: 16px;
 			}
@@ -133,11 +133,11 @@
 				height: 20px;
 			}
 			span.cart-number {
-			    top: 5px;
-			    right: 20px;
-			    width: 18px;
-			    height: 14px;
-			    line-height: 14px;
+			  top: 5px;
+			  right: 20px;
+			  width: 18px;
+			  height: 14px;
+			  line-height: 14px;
 			}
 		}
 	}

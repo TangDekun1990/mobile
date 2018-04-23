@@ -104,7 +104,7 @@ export default {
 	}
 
 	.item {
-    	height: 125px;
-  	}
+		// height: 125px;
+	}
 </style>
 

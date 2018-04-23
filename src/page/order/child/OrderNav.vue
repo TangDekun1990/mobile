@@ -19,9 +19,8 @@
 					<h3 class="title">{{ getOrderStatusBy(item.status) }}</h3>
 					<div class="order-image" v-if="item.goods.length > 0"  @click="goOrderDetail(item.id)">
 						<img v-bind:src="image.product.photos[0].large" v-for="image in item.goods" v-if="image.product.photos.length > 0">
-						<!-- <img src="../../../assets/image/change-icon/default_image_02@2x.png" > -->
 					</div>
-					<div class="price">(共计{{item.goods.length}}件商品) 合计 : AED <i>{{item.total}}</i><i class="freight">(含运费:AED8.40)</i>
+					<div class="price">(共计{{item.goods.length}}件商品) 合计 : AED <i>{{item.total}}</i><i class="freight">(含运费:AED{{ item.shipping.price }})</i>
 					</div>
 					<div class="order-list-opratio">
 						<!-- 待付款 -->
@@ -329,6 +328,10 @@ import OrderNav from './OrderNav';
 				border-bottom: 1px solid $lineColor;
 				box-sizing: border-box;
 				text-align: right;
+
+				overflow: hidden;
+				text-overflow:ellipsis;
+				white-space: nowrap;
 			 	i{
 					font-size: 19px;
 					padding-left:5px;
