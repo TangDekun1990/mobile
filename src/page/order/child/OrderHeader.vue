@@ -13,9 +13,9 @@ import { HeaderItem } from '../../../components/common'
 import { Header } from 'mint-ui'
 
 export default { 
-  methods: {      
-    goBack() {  
-      this.$router.push('/profile')    
+  methods: {  
+    goBack() {
+      this.$router.push('/profile') 
     },
   }
 }

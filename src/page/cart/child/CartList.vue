@@ -2,19 +2,23 @@
 	<div class="cart-list-wrapper">
 		<div class="list" v-for="(item, index) in cartList">
 			<div class="list-checkbox">
-				<input type="checkbox" class='checkbox' :id='index' v-model="item.checked" @change="changeSingleStatu(item.checked, index)">
+				<input type="checkbox" class='checkbox' :id='index' v-model="item.checked" @change="changeSingleStatu(item.checked, index)" :disabled="item.product.good_stock == 0">
 				<label :for="index"></label>
 			</div>
 			<div class="list-item" @click="goDetail(item.product.id)">
 				<div class="item">
-					<img :src="item.product.photos[0].thumb" v-if='item.product.photos.length > 0'>
-					<img src="../../../assets/image/change-icon/default_image_02@2x.png" v-if='item.product.photos.length <= 0'>
+					<div class="ui-image">
+						<img :src="item.product.photos[0].thumb" v-if='item.product.photos.length > 0'>
+						<img src="../../../assets/image/change-icon/default_image_02@2x.png" v-if='item.product.photos.length <= 0'>
+						<span v-if="item.product.good_stock == 0 ">已售罄</span>
+						<span v-if="item.product.good_stock > 0 && item.product.good_stock <= 10">仅剩{{ item.product.good_stock }}件</span>
+					</div>
 					<div class="list-info">
-						<h3> {{ item.product.name}}</h3>
+						<h3 v-bind:class="{'disabled-list': item.product.good_stock == 0}"> {{ item.product.name}}</h3>
 						<div class="info-price">
-							<p>AED {{ item.product.current_price }}</p>
+							<p v-bind:class="{'disabled-list': item.product.good_stock == 0}">AED {{ item.product.current_price }}</p>
 							<div class="ui-number">
-								<div class="reduce ui-common" @click="reduceNumber(item.id, item.amount, index)">-</div><input type="number" min="1" class="number" value="1" v-model="item.amount" readonly="true"><div class="add ui-common" @click="addNumber(item.id, item.amount, item.product.good_stock, index)">+</div>
+								<div class="reduce ui-common" @click.stop="reduceNumber(item.id, item.amount, index)">-</div><input type="number" min="1" class="number" value="1" v-model="item.amount" readonly="true"><div class="add ui-common" @click.stop="addNumber(item.id, item.amount, item.product.good_stock, index)">+</div>
 							</div>
 						</div>
 					</div>
@@ -86,7 +90,11 @@ export default {
 		 addChecked(isSelectedall) {
 		 	let list = this.cartList;
 		 	for (let i = 0, len = list.length-1; i <= len; i++ ) {
-		 		list[i].checked = isSelectedall;
+		 		if (list[i].product.good_stock == 0) {
+		 			list[i].checked = false;
+		 		} else {
+		 			list[i].checked = isSelectedall;
+		 		}
 		 	}
 		 	this.cartList = Object.assign([], list);
 		 },
@@ -213,13 +221,12 @@ export default {
 		 *  @param： index 当前减少的index
 		 */
 		 reduceNumber(id, amount, index) {
+		 	debugger;
 		 	if (amount > 1) {
-		 		Indicator.open(this.indicator);
 		 		amount--;
 		 		this.updateCartQuantity(id, amount, index);
 		 	} else {
 		 		Toast({
-		 			duration:1000,
 		 			message: '受不了了， 宝贝不能再少了'
 		 		});
 		 	}
@@ -234,12 +241,10 @@ export default {
 		 */
 		 addNumber(id, amount, stock, index) {
 		 	if (amount <= stock) {
-		 		Indicator.open(this.indicator);
 		 		amount++;
 		 		this.updateCartQuantity(id, amount, index);
 		 	} else {
 		 		Toast({
-		 			duration:1000,
 		 			message: '该商品总库存不足'
 		 		});
 		 	}
@@ -254,17 +259,20 @@ export default {
 		 updateCartQuantity(id, amount, index) {
 		 	cartUpdate(id, amount).then( res => {
 		 		if (res) {
+		 			Indicator.open(this.indicator);
 		 			this.updateList(index);
 		 		}
+		 	}, (error) => {
+		 		Toast(error.errorMsg);
 		 	});
 		 },
 
 		/*
 		 *  goDetail: 跳转到详情
 		 */
-		 goDetail(id) {
-		 	this.$router.push({'name': 'detail', 'params': {'id': id}});
-		 }
+		goDetail(id) {
+		  this.$router.push({'name': 'detail', 'params': {'id': id}});
+		}
 	}
 }
 </script>
@@ -326,13 +334,28 @@ export default {
 			div.item {
 				display: flex;
 				width: 100%;
-				img {
-					width: 90px;
-					height: 90px;
-					flex-shrink: 0;
-					flex-basis: 90px;
-					border: 1px solid #E8EAED;
-					border-radius: 3px;
+				div.ui-image{
+					position: relative;
+					img {
+						width: 90px;
+						height: 90px;
+						flex-shrink: 0;
+						flex-basis: 90px;
+						border: 1px solid #E8EAED;
+						border-radius: 3px;
+					}
+					span {
+						position: absolute;
+						height:20px;
+						background:rgba(243,244,245,1);
+						line-height: 20px;
+						text-align: center;
+						font-size:14px;
+						color:rgba(242,48,48,1);
+						width: 100%;
+						bottom: 0px;
+						left: 0px;
+					}
 				}
 				div.list-info {
 					margin-left: 5px;
@@ -349,6 +372,9 @@ export default {
 						-webkit-box-orient: vertical;
 						-webkit-line-clamp: 2;
 						overflow: hidden;
+						&.disabled-list {
+							color: #A4AAB3;
+						}
 					}
 					div.info-price {
 						width: 100%;
@@ -367,6 +393,9 @@ export default {
 							padding: 0px;
 							margin: 0px;
 							display: inline-block;
+							&.disabled-list {
+								color: #A4AAB3;
+							}
 						}
 					}
 					div.ui-number{

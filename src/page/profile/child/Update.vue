@@ -5,8 +5,8 @@
 		</mt-header>
 		<div v-if="type == 1">
 			<div class="updeta-user-name ui-common-update">
-				<input type="text" v-model="username" placeholder="请输入用户名">
-				<img src="../../../assets/image/change-icon/e2_delete@2x.png" @click="clearUsername()">
+				<input type="text" v-model="username" placeholder="请输入昵称">
+				<img src="../../../assets/image/change-icon/e2_delete@2x.png" @click="clearUsername()" v-if="username.length > 0">
 			</div>
 			<div class="ui-save-btn">
 				<span @click="saveBtn()">保存</span>
@@ -51,6 +51,14 @@ export default {
 		...mapState({
 			user: state => state.auth.user
 		}),
+	},
+
+	watch: {
+		username: function (value) {
+			if (value.length > 25) {
+				this.username = value.substring(0, 25);
+			}
+		}
 	},
 
 	components: {},
@@ -101,19 +109,19 @@ export default {
 			 	let params = this.params;
 			 	params.nickname = this.username;
 			 	if (params.nickname.length <= 0) {
-			 		Toast('用户名不能为空');
+			 		Toast('请输入1-25个文字作为昵称');
 			 		return false;
 			 	}
 
 			 	if (params.nickname.length < 1 || params.nickname.length > 25) {
-			 		Toast('请输入1-25个字符');
+			 		Toast('请输入1-25个文字作为昵称');
 			 		return false;
 			 	}
 			 	userProfileUpdate(params.values, params.gender, params.nickname, params.avatar_url).then(res => {
 			 		if (res) {
-			 			Toast('保存成功');
+			 			Toast('修改昵称成功');
 			 			this.saveUser({'user': res.user});
-						// this.signin({'user': res.user});
+			 			this.$router.go(-1);
 					}
 				})
 			 },
@@ -153,6 +161,8 @@ export default {
 			 			this.signout();
 			 			this.$router.push({ name: 'signin', params: { isFromInfoEdit: true }});
 			 		}
+			 	}, (error) => {
+			 		Toast(error.errorMsg);
 			 	})
 			 }
 			}

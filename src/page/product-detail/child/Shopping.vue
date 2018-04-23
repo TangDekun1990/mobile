@@ -26,7 +26,7 @@
 				</div>
 			</div>
 
-			<div class="info-footer" v-on:click='addShoppingCart()'>加入购物车</div>
+			<div class="info-footer" v-on:click='addShoppingCart()'>确定</div>
 
 		</div>
 	</div>
@@ -137,7 +137,7 @@
 						// Toast(res.message);
 					}
 				},(error) => {
-					Toast(error.message);
+					Toast(error.errorMsg);
 					this.$parent.$emit('end-addcart-animation');
 				})
 			},

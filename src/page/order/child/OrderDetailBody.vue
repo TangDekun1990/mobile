@@ -53,21 +53,21 @@
         </a>
       </div>
       <!-- v-if="orderDetail.order.goods.length >= 3  -->
-      <div class="container" v-for="(item, index) in orderDetail.order.goods" v-bind:key="item.id">
+      <div class="containers" v-for="(item, index) in orderDetail.order.goods" v-bind:key="item.id" v-on:click="getOrderDetail(item.product.id)">
         
         <img class="photo" v-bind:src="item.product.photos[0].large">
         <div class="right-wrapper">
           <label class="title">{{item.product.name}}</label>
-          <label class="count">数量：{{item.total_amount}}</label>
           <div class="desc-wrapper">
-            <label class="price">￥{{utils.currencyPrice(item.product_price)}}</label>
+            <label class="price">AED {{utils.currencyPrice(item.product_price)}}</label>
+            <label class="count">x{{item.total_amount}}</label>
           </div>
         </div>
       </div>  
       <div class="detail">
         <div class="number">
           <label>订单编号：{{orderDetail.order.sn}} &nbsp;
-            <input type="submit" value=" 复制 " v-on:click="getCopy()"> 
+            <input type="submit" class="copyBut" :data-clipboard-text="orderDetail.order.sn" value=" 复制 " v-on:click="getCopy()"> 
           </label> 
           <p>下单时间：{{orderDetail.order.created_at | convertTime}}</p>
         </div>
@@ -149,6 +149,7 @@
   import Promos from '../../checkout/Promos'
   import { orderGet, orderReasonList, orderCancel, orderConfirm} from '../../../api/network/order' //订单详情 //获取退货原因 //取消订单
   import { Toast } from 'mint-ui';
+  import Clipboard from 'clipboard';  
   export default {
      mixins: [ Promos ],
     data() {
@@ -202,6 +203,7 @@
       complete(id, index) {
         this.popupVisible = false;
         this.getordersuccess(id, index);
+        this.$router.replace('/order')
       },
       // 去支付
       payment() {
@@ -292,12 +294,29 @@
       
       // 复制
       getCopy() {
+        var clipboard = new Clipboard('.copyBut')  
+        clipboard.on('success', e => {  
+          console.log('复制成功')  
+          // 释放内存  
+          clipboard.destroy()  
+        })  
+        clipboard.on('error', e => {  
+          // 不支持复制  
+          console.log('该浏览器不支持自动复制')  
+          // 释放内存  
+          clipboard.destroy()  
+        })  
         Toast({
           message: '复制成功',
-          iconClass: require('../../../assets/image/change-icon/e5_checkmark_toast@2x.png'),
-          duration: 3000
+          iconClass: 'mintui mintui-field-success',
+          duration: 2000
         });
       },
+
+      // 去商品详情
+      getOrderDetail(orderId) {
+        this.$router.push({name: 'detail', params:{id: orderId}})
+      }
     },
     computed: {
       getPromos: function () {      
@@ -347,17 +366,19 @@
       color:#fff;
     }
   }
-  .container {
+  .containers {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     align-items: stretch;
     background-color: #fff;
+    border-bottom: 1px solid #E8EAED;
   }
   .photo {
-    width: 70px;
-    height: 70px;
-    margin: 12px;
+    width: 80px;
+    height: 80px;
+    margin: 15px 10px 15px 15px;
+    border: 1px solid #E8EAED;
   }
   .right-wrapper {
     display: flex;
@@ -365,10 +386,11 @@
     justify-content: flex-start;
     align-items: stretch;
     padding:0px 15px 0px 0px;   
+    width:100%;
     overflow: hidden;
   }
   .title {
-    margin-top: 8px;
+    margin-top: 15px;
     color: #4E545D;
     font-size: 14px;  
     margin-right: 10px;  
@@ -389,8 +411,7 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    margin-top: 12px;
-    margin-right: 10px;
+    margin-top: 44px;
   }
   .price {
     color: #4E545D;
@@ -565,4 +586,18 @@
     }
   }
   
+</style>
+
+<!-- 字体图标样式覆盖 -->
+<style>
+  .mintui {
+    font-size:38px;
+  }
+  .mint-toast{
+    width: 150px;
+    height: 110px;
+  }  
+  .mint-toast-text{
+    font-size: 16px;
+  }
 </style>

@@ -40,6 +40,13 @@
 			this.saveCartState(false);
 		},
 
+		watch: {
+		    // '$route': function (route) {
+		    //    this.productId = route.params.id;
+		    //    this.getDetail();
+		    // }
+		},
+
 		computed: mapState({
 			isHideCart: state => state.detail.isHideCart,
 			isHideHeader: state => state.detail.isHideHeader

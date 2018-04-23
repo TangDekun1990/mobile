@@ -7,14 +7,16 @@
 		<v-goods-info></v-goods-info>
 		<!-- 促销信息 -->
 		<v-goods-promotions></v-goods-promotions>
+		<!-- 促销商品的活动结束时间 -->
+		<v-goods-time></v-goods-time>
 		<!-- 购买 -->
 		<v-goods-buy></v-goods-buy>
 		<!-- 联系客服-->
 		<v-goods-concat></v-goods-concat>
-		<!-- 点赞 -->
-		<v-goods-like></v-goods-like>
 		<!-- 评论 -->
 		<v-goods-review></v-goods-review>
+		<!-- 点赞 -->
+		<v-goods-like></v-goods-like>
 		<!-- 推荐商品  -->
 		<v-goods-recommend></v-goods-recommend>
 		<!-- 详情 -->
@@ -27,6 +29,7 @@
 	import detailInfo from './Detailinfo';
 	import promotions from './promotions';
 
+	import promotionTime from './Time';
 	import detailBuy from './Buy';
 	import detailConcat from './Concat';
 	import detailLike from './Like';
@@ -44,13 +47,13 @@
 				productId: this.$route.params.id ? this.$route.params.id : ''
 			}
 		},
-		created(){
-			// this.getDetail();
-		},
+		created(){},
+
 		components: {
 			'v-goods-swipe': goodsSwipe,
 			'v-goods-info': detailInfo,
 			'v-goods-promotions': promotions,
+			'v-goods-time': promotionTime,
 			'v-goods-buy': detailBuy,
 			'v-goods-concat': detailConcat,
 			'v-goods-like': detailLike,
