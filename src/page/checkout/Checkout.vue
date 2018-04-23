@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <mt-header class="header" title="确认订单">
+    <mt-header class="header" fixed title="确认订单">
       <header-item slot="left" v-bind:isBack=true v-on:onclick="leftClick">
       </header-item> 
       <header-item slot="right" titleColor="#F23030" title="联系客服" v-on:onclick="rightClick">
@@ -418,6 +418,7 @@ export default {
     @include header;
   }
   .body {
+    margin-top: 44px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;

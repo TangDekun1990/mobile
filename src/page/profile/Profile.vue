@@ -18,7 +18,7 @@
         <div class="info-item">积分记录</div>
       </div>
     </div>
-    <div class="order-header" @click="goOrder(10)">
+    <div class="order-header" @click="goOrder">
       <div class="order-header-item" id="order-item-left">
         <img class="order-header-icon" src="../../assets/image/change-icon/e0_order@2x.png" />
         <label class="item-title order-header-title">我的订单</label>
@@ -100,6 +100,7 @@ import InfoItem from "./child/InfoItem";
 import OrderItem from "./child/OrderItem";
 import { mapState } from "vuex";
 import { userProfileGet } from "../../api/network/user";
+import { ENUM } from '../../config/enum'
 export default {
   name: "profile",
    data() {
@@ -189,9 +190,8 @@ export default {
     goHelp() {
       this.$router.push("help");
     },
-    goOrder(id) {
-      let params = {'order': id};
-      this.$router.push({'name':'order', 'params':params});
+    goOrder() {      
+      this.$router.push({ name:'order', params: {'order': ENUM.ORDER_STATUS.ALL}});
     },
     
   },

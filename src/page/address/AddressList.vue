@@ -1,18 +1,20 @@
 <template>
   <div class="container">
-    <mt-header class="header" title="收货地址">
+    <mt-header class="header" fixed title="收货地址">
       <header-item slot="left" v-bind:isBack=true v-on:onclick="goBack">
       </header-item> 
       <header-item slot="right" title="管理" v-on:onclick="goManage">
       </header-item>    
     </mt-header>
-    <address-item 
-      v-for="item in items" 
-      :key="item.id" 
-      :item="item" 
-      :isSelected="isSelectedItem(item)" 
-      v-on:onclick="onclick(item)">
-    </address-item>
+    <div class="list">
+      <address-item 
+        v-for="item in items" 
+        :key="item.id" 
+        :item="item" 
+        :isSelected="isSelectedItem(item)" 
+        v-on:onclick="onclick(item)">
+      </address-item>
+    </div>
   </div>
 </template>
 
@@ -78,6 +80,14 @@ export default {
   }
   .header {
     @include header;
+    border-bottom: 1px solid #E8EAED;  
+  }
+  .list {
+    margin-top: 44px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
   }
 </style>
 

@@ -85,4 +85,12 @@ export default {
 	currencyPrice(price) {
 		return parseFloat(price).toFixed(2)
 	},
+	
+	isNumber(value) {
+		let reg = new RegExp('^[0-9]*$')
+		if (!reg.test(value)) {
+			return false
+		}
+		return true
+	}
 }

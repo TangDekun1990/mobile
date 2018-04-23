@@ -33,9 +33,9 @@ export default {
 	// 	this.getNumber();
 	// },
   methods: {
-    onclick() {
-      let params = {'order': this.id};
-      this.$router.push({'name': this.testAttr, 'params':params});
+    onclick() {      
+      // Code Review: 去掉testAttr
+      this.$router.push({name: this.testAttr, params: {order: this.id}});
     },
     // 获取订单数量
     // getNumber() {

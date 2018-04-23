@@ -1,12 +1,12 @@
 <template>
   <div class="container">
-    <mt-header class="header" :title="getTitle">
+    <mt-header class="header" fixed :title="getTitle">
       <header-item slot="left" v-bind:isBack=true v-on:onclick="goBack">
       </header-item>          
     </mt-header>
     <form-input-item 
       ref='name'
-      class="item" 
+      class="item section" 
       title="收件人姓名" 
       maxlength="15"
       :default="getName" 
@@ -179,6 +179,10 @@ export default {
         Toast('请填写手机号码');
         return;
       }
+      if (!this.utils.isNumber(mobile)) {
+        Toast('请填写正确格式的手机号码');
+        return;
+      }
       if (region === null || region === undefined) {
         Toast('请选择所在地区');
         return;
@@ -234,9 +238,12 @@ export default {
   .header {
     @include header;
     border-bottom: 1px solid $lineColor;
-  }
+  }  
   .item {
     height: 50px;
+  }
+  .section {
+    margin-top: 44px;
   }
   .button {
     @include button;

@@ -68,7 +68,7 @@ export default {
         case ENUM.CARDGROUP_LAYOUT.A2XXH: 
         {                
           columnCount = 2
-          ratio = 7.0 / 10.0
+          ratio = 5.0 / 7.0 // TODO:
         } 
         break; 
         case ENUM.CARDGROUP_LAYOUT.A3S: 

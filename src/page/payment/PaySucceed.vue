@@ -17,13 +17,16 @@
 <script>
 import { HeaderItem, Button } from '../../components/common'
 import { Header, MessageBox } from 'mint-ui'
+import { ENUM } from '../../config/enum'
 export default {
   methods: {
-    goBack() {
-      this.$router.go(-1) 
+    goBack() {      
+      this.$router.push({ name: 'order', params: { order: ENUM.ORDER_STATUS.PAID}});
     },
     goDetail() {
-      
+      let order = this.$route.params.order
+      let orderId = order ? order.id : null
+      this.$router.push({ name: 'orderDetail', params: {orderDetail: orderId, isFromPay: true}})      
     },
     goShopping() {
       this.$router.push('/home')

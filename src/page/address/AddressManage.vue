@@ -1,23 +1,25 @@
 <template>
   <div class="container">
-    <mt-header class="header" title="管理收货地址">
+    <mt-header class="header" fixed title="管理收货地址">
       <header-item slot="left" v-bind:isBack=true v-on:onclick="goBack">
       </header-item>          
     </mt-header>
-    <div class="empty-wrapper" v-if="isEmpty">
-      <img src="../../assets/image/change-icon/address_empty@2x.png">
-      <label>您还没有添加收货地址</label>
-    </div>
-    <manage-item 
-      v-for="item in items" 
-      :key="item.id" 
-      :item="item" 
-      :isDefault="isDefaultItem(item)" 
-      v-on:onDefault="onDefault(item)" 
-      v-on:onEdit="onEdit(item)" 
-      v-on:onDelete="onDelete(item)">
-    </manage-item>
-    <gk-button class="button" type="primary" v-on:click="addAddress">添加收货地址</gk-button>
+    <div class="list">
+      <div class="empty-wrapper" v-if="isEmpty">
+        <img src="../../assets/image/change-icon/address_empty@2x.png">
+        <label>您还没有添加收货地址</label>
+      </div>
+      <manage-item 
+        v-for="item in items" 
+        :key="item.id" 
+        :item="item" 
+        :isDefault="isDefaultItem(item)" 
+        v-on:onDefault="onDefault(item)" 
+        v-on:onEdit="onEdit(item)" 
+        v-on:onDelete="onDelete(item)">
+      </manage-item>
+      <gk-button class="button" type="primary" v-on:click="addAddress">添加收货地址</gk-button>
+    </div>    
   </div>
 </template>
 
@@ -125,6 +127,13 @@ export default {
     @include button;    
     margin-top: 40px; 
     margin-bottom: 10px;
+  }
+  .list {
+    margin-top: 44px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
   }
   .empty-wrapper {
     margin-top: 40px;
