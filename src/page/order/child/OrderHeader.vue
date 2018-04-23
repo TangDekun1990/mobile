@@ -2,7 +2,7 @@
 <template>
   <div class="container">
     <mt-header class="header" title="我的订单">
-      <header-item slot="left" v-bind:isBack=true v-on:onclick="goBack">
+      <header-item slot="left" v-bind:isBack=true v-on:onclick="goBack()">
       </header-item>    
     </mt-header> 
   </div>
@@ -15,7 +15,7 @@ import { Header } from 'mint-ui'
 export default { 
   methods: {  
     goBack() {
-      this.$router.go(-1) 
+      this.$router.push('/profile') 
     },
   }
 }

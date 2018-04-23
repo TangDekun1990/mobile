@@ -51,7 +51,8 @@
 						<!-- 已收货，待评价 -->
 						<div class="btn" v-if="item.status == 3" >
 							<button v-on:click="goComment(item)">评价晒单</button>
-							<button class="buttonright" v-on:click="goBuy()">再次购买</button>
+						
+							<button class="buttonright" v-on:click="goBuy(item.goods)">再次购买</button>
 						</div>
 						<!-- 已完成 -->
 						<div class="btn" v-if="item.status == 4" >
@@ -117,6 +118,11 @@ import OrderNav from './OrderNav';
     created() {
 		this.getUrlParams();
 		this.orderReasonList();
+	},
+	beforeRouteEnter(to, from, next) {
+		next(()=>{
+			window.location.reload()
+		})
 	},
 	methods: {
 
@@ -219,8 +225,8 @@ import OrderNav from './OrderNav';
 		},
 		
 		// 再次购买
-		goBuy() {
-			this.$router.push({ name:'cart'})
+		goBuy(goodsList) {
+			this.$router.push({ name:'cart', params: {goods: goodsList}})
 		},
 
 		// 晒单评价
@@ -374,7 +380,7 @@ import OrderNav from './OrderNav';
 				width:52px;
 				height:59px; 
 				box-sizing: border-box;
-				margin:	139px 161px 30px;
+				margin:	139px auto 30px;
 			}
 			p {
 				font-size:17px;

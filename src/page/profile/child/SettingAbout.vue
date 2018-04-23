@@ -21,10 +21,10 @@
           <span>公司简介</span> 
           <img src="../../../assets/image/change-icon/enter@2x.png" >
         </p>
-        <p>
+        <!-- <p>
           <span>关于我们</span> 
           <img src="../../../assets/image/change-icon/enter@2x.png" >
-        </p>
+        </p> -->
       </div>
       <div class="copy">
         <p>Copyright©2004-2017</p>
@@ -127,7 +127,6 @@ import { Actionsheet } from 'mint-ui'
           img {
             width:5px;
             height:10px; 
-
           }
         }
       }
