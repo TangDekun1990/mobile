@@ -13,10 +13,10 @@
 		<v-goods-buy></v-goods-buy>
 		<!-- 联系客服-->
 		<v-goods-concat></v-goods-concat>
-		<!-- 点赞 -->
-		<v-goods-like></v-goods-like>
 		<!-- 评论 -->
 		<v-goods-review></v-goods-review>
+		<!-- 点赞 -->
+		<v-goods-like></v-goods-like>
 		<!-- 推荐商品  -->
 		<v-goods-recommend></v-goods-recommend>
 		<!-- 详情 -->
@@ -47,9 +47,8 @@
 				productId: this.$route.params.id ? this.$route.params.id : ''
 			}
 		},
-		created(){
-			// this.getDetail();
-		},
+		created(){},
+
 		components: {
 			'v-goods-swipe': goodsSwipe,
 			'v-goods-info': detailInfo,
