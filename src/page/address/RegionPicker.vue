@@ -1,27 +1,23 @@
 <template>
-  <transition name="fade">
-    <div class="mask" v-show="currentValue" @click="onclickMask">
-      <div class="container" v-show="currentValue">
-      <mt-picker
-        ref="picker" 
-        class="picker" 
-        :slots="slots" 
-        valueKey="name" 
-        showToolbar 
-        :itemHeight="44"
-        @change="onValuesChange">
-      <div class="toolbar">
-        <button class="toolbar-item cancel-item" @click="cancel">取消</button>
-        <button class="toolbar-item confirm-item" @click="confirm">确定</button>
-      </div>
-    </mt-picker>
+  <mt-popup v-model="currentValue" position="bottom">
+    <mt-picker
+      ref="picker" 
+      class="picker" 
+      :slots="slots" 
+      valueKey="name" 
+      showToolbar 
+      :itemHeight="44"
+      @change="onValuesChange">
+    <div class="toolbar">
+      <button class="toolbar-item cancel-item" @click="cancel">取消</button>
+      <button class="toolbar-item confirm-item" @click="confirm">确定</button>
     </div>
-    </div>            
-  </transition>
+  </mt-picker>
+  </mt-popup>
 </template>
 
 <script>
-import { Picker } from 'mint-ui'
+import { Picker, Popup } from 'mint-ui'
 export default {
   name:'RegionPicker',
   props: {
@@ -78,63 +74,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .mask {
-    position: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    z-index: 50001;
-    background: rgba(0,0,0,.5);
-  }
-  .container {
-    position: fixed;
-    background-color: #e0e0e0;
-    width: 100%;
-    text-align: center;
-    bottom: 0;
-    left: 50%;
-    max-height: 100%;
-    overflow-y: auto;
-    transform: translate3d(-50%, 0, 0);
-    backface-visibility: hidden;
-    transition: transform .3s ease-out;
-  }
   .picker {
     background-color: #ffffff;
-  }
-  .modal-enter {
-    opacity: 1;
-  }
-  .modal-enter-active {
-    opacity: 0.3;
-  }
-  .modal-enter-to {
-    opacity: 0.6;
-  }
-  .modal-leave-active {
-    opacity: 0.6;
-  }
-  .modal-leave-to {
-    opacity: 0.6;
-  }
-  .fade-enter {
-    transform: translate3d(-50%, 100%, 0);
-  }
-  .fade-enter-active {
-    
-  }
-  .fade-enter-to {
-
-  }
-  .fade-leave {
-
-  }
-  .fade-leave-active {
-    transform: translate3d(-50%, 100%, 0);
-  }
-  .fade-leave-to {
-
   }
   .toolbar {
     height: 40px;

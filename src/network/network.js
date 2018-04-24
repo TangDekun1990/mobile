@@ -10,11 +10,24 @@ function toQueryString(obj) {
         var val = obj[key];
         if (Array.isArray(val)) {
             return val.sort().map(function (val2) {
-                return key + '=' + encodeURIComponent(val2);
+                return key + '=' + filterSpecialChars(encodeURIComponent(val2));
             }).join('&');
         }
-        return key + '=' + encodeURIComponent(val);
+        return key + '=' + filterSpecialChars(encodeURIComponent(val));
     }).join('&') : '';
+}
+
+function filterSpecialChars(str) {
+    if (str && str.length) {
+        // 处理特殊字符: ! ~ * ' ( ) 
+        str = str.replace(/\!/g, '%21')
+        str = str.replace(/\~/g, '%7e')
+        str = str.replace(/\*/g, '%2A')
+        str = str.replace(/\'/g, '%27')
+        str = str.replace(/\(/g, '%28')
+        str = str.replace(/\)/g, '%29')
+    }    
+    return str
 }
 
 function getErrorInfo(errorCode, errorMsg) {
@@ -35,12 +48,12 @@ axios.interceptors.request.use(config => {
                     delete params[key];
                 }
             }
-            // post_body: 客户端HTTP请求包体，如：a=1&b=2&c=3，其中key需要升序排列
-            let post_body = toQueryString(params);
-
+            // post_body: 客户端HTTP请求包体，如：a=1&b=2&c=3，其中key需要升序排列            
+            let post_body = toQueryString(params);       
+                 
             // timestamp: 客户端秒级时间戳
             let timestamp = Date.parse(new Date()) / 1000 + '';
-
+        
             // sign: HMAC-SHA256( timestamp + post_body, SIGN_KEY )
             let sign = CryptoJS.HmacSHA256(timestamp + post_body, SIGN_KEY);
 
@@ -68,7 +81,7 @@ axios.interceptors.request.use(config => {
             config.data = body;
             // TODO:
             if (process.env.NODE_ENV === 'development') {
-                config.params = params ? JSON.stringify(params) : ''
+                config.params = params ? JSON.stringify(params) : ''                
             }
         }
     }
@@ -93,7 +106,7 @@ axios.interceptors.response.use(response => {
                 }
                 if (process.env.NODE_ENV === 'development') {
                     console.log('====================================');
-                    console.log("request url is: ", response.config.url);
+                    console.log("request url is: ", response.config.url);                    
                     console.log("request params is: ", response.config.params);
                     console.log('response data is: ', response.data);
                 }
@@ -102,7 +115,8 @@ axios.interceptors.response.use(response => {
                 let errorMessage = response.data.message;
                 let errorCode = response.data.code;
                 if (response.data.error) {
-                	// return response.data;
+                    // return response.data;
+                    console.log("request url is: ", response.config.url);                    
                     console.log('网络错误, 错误代码:=' + errorCode + "错误信息:=" + errorMessage);
                     return Promise.reject({ 'errorCode': errorCode, 'errorMsg': errorMessage });
                 }

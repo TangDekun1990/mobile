@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <mt-header class="header" title="确认订单">
+    <mt-header class="header" fixed title="确认订单">
       <header-item slot="left" v-bind:isBack=true v-on:onclick="leftClick">
       </header-item> 
       <header-item slot="right" titleColor="#F23030" title="联系客服" v-on:onclick="rightClick">
@@ -201,13 +201,13 @@ export default {
       return this.getFormatPrice('product_price')
     },
     getOrderTaxPrice: function () {            
-      return this.getFormatPrice('tax')
+      return this.getFormatPrice('tax_price')
     },
     getOrderShippingPrice: function () {
       let priceStr = ''
       let price = this.getPriceByKey('shipping_price')
       if (price && price.length) {
-        priceStr = 'AED ' + this.toFixedPrice(price)
+        priceStr = 'AED ' + this.utils.currencyPrice(price)
       } else {
         priceStr = '免运费'
       }
@@ -244,13 +244,10 @@ export default {
     },    
     getOrderDiscountPrice(item) {
       return '-AED ' + (item.price ? item.price : 0)
-    },    
-    toFixedPrice(price) {
-      return parseFloat(price).toFixed(2)
     },
     getFormatPrice (key) {
       let price = this.getPriceByKey(key)
-      let priceStr = 'AED ' + (price ? this.toFixedPrice(price) : '')
+      let priceStr = 'AED ' + (price ? this.utils.currencyPrice(price) : '')
       return priceStr
     },
     goBack() {
@@ -421,6 +418,7 @@ export default {
     @include header;
   }
   .body {
+    margin-top: 44px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;

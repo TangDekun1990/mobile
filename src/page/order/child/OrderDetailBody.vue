@@ -59,7 +59,7 @@
         <div class="right-wrapper">
           <label class="title">{{item.product.name}}</label>
           <div class="desc-wrapper">
-            <label class="price">AED {{toFixedPrice(item.product_price)}}</label>
+            <label class="price">AED {{utils.currencyPrice(item.product_price)}}</label>
             <label class="count">x{{item.total_amount}}</label>
           </div>
         </div>
@@ -263,13 +263,9 @@
       getOrderDiscountPrice(item) {
         return '-AED ' + (item.price ? item.price : 0)
       }, 
-      // 金额处理
-      toFixedPrice(price) {
-        return parseFloat(price).toFixed(2)
-      },
       getFormatPrice (key) {
         let price = this.getPriceByKey(key)
-        let priceStr = 'AED ' + (price ? this.toFixedPrice(price) : '')
+        let priceStr = 'AED ' + (price ? this.utils.currencyPrice(price) : '')
         return priceStr
       },
       getPriceByKey(key) {
@@ -290,9 +286,9 @@
                   totalPrice += parseFloat(total_price[i].total_price) 
                 }
               }
-              return 'AED ' + this.toFixedPrice(totalPrice)
+              return 'AED ' + this.utils.currencyPrice(totalPrice)
           } else {
-              return 'AED ' + this.toFixedPrice(totalPrice);
+              return 'AED ' + this.utils.currencyPrice(totalPrice);
             }
       }, 
       
@@ -339,7 +335,7 @@
         let priceStr = ''
         let price = this.getPriceByKey('shipping')
         if (price) {
-          priceStr = 'AED ' + this.toFixedPrice(price.price)
+          priceStr = 'AED ' + this.utils.currencyPrice(price.price)
         } else {
           priceStr = '免运费'
         }

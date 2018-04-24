@@ -65,7 +65,7 @@ export default {
     justify-content: flex-start;
     align-items: center;
     background-color: #fff;
-    border-top: 1px solid #E8EAED;  
+    border-bottom: 1px solid #E8EAED;  
   }
   .left-wrapper {
     flex: 1;

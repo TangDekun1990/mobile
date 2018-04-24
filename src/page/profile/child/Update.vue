@@ -159,7 +159,7 @@ export default {
 			 	userPasswordUpdate(this.oldpass, this.newpass).then(res => {
 			 		if (res) {
 			 			this.signout();
-			 			this.$router.push({'name': 'signin'});
+			 			this.$router.push({ name: 'signin', params: { isFromInfoEdit: true }});
 			 		}
 			 	}, (error) => {
 			 		Toast(error.errorMsg);

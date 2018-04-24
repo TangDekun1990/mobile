@@ -44,6 +44,16 @@
 			})
 		},
 
+		mounted(){
+			// 计算内容高度
+		    this.$nextTick( () => {
+		    	this.target = document.querySelector('.ui-recommend-body');
+		    	let totalHeight = 45;
+				const target = this.target;
+		    	this.utils.fillTheScreen({target, totalHeight});
+		    });
+		},
+
 		methods: {
 			/*
 			 *  getCarNumber: 获取购物车数量
@@ -106,6 +116,28 @@
 	background-color: #ffffff;
 	.ui-commmon-header {
 		border-bottom: 1px solid #E8EAED;
+		background-color: #ffffff;
+		position: absolute;
+		top: 0px;
+		width: 100%;
+		padding: 0px;
+		img:first-child{
+			padding-left: 15px;
+		}
+		img.ui-cart {
+			/* padding-right: 15px; */
+		}
+		span.cart-number {
+			right: 15px;
+		}
+	}
+	.ui-recommend-body {
+		position: absolute;
+		top: 45px;
+		background-color: #ffffff;
+		width: 100%;
+		height: auto;
+		overflow: auto;
 	}
 	.recommend-no-more {
 		color: #7C7F88;

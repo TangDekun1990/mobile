@@ -1,17 +1,19 @@
 <template>
 	<div class="container">
-		<mt-header class="header" title="首页">
+		<mt-header class="header" fixed title="首页">
       <header-item slot="left" :icon="require('../../assets/image/change-icon/b0_scan@2x.png')" v-on:onclick="leftClick">
       </header-item> 
       <header-item slot="right" :icon="require('../../assets/image/change-icon/b0_message@2x.png')" v-on:onclick="rightClick">
       </header-item>        
     </mt-header>
-		<card-group 
-			class="section" 
-			v-for="(item, index) in getCardGroups" 
-			:key="index" 
-			:item="item" v-on:onClick="onClick">
-		</card-group>
+		<div class="list">
+			<card-group 
+				class="section" 
+				v-for="(item, index) in getCardGroups" 
+				:key="index" 
+				:item="item" v-on:onClick="onClick">
+			</card-group>
+		</div>	
 		<tab-bar></tab-bar>
 	</div>
 </template>
@@ -94,6 +96,13 @@
 	.header {
 		@include header;
 		border-bottom: 1px solid $lineColor;
+	}
+	.list {
+		margin-top: 44px;
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-start;
+		align-items: stretch;
 	}
 	.section {
 		margin-bottom: 10px;

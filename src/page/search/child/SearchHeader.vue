@@ -27,6 +27,8 @@
 				if (value.replace(/\s+/g,"").length <= 0) {
 					Toast("请输入您要搜索的关键字");
 					return false;
+				} else {
+					this.keywords = value;
 				}
 				if (value) {
 					this.currenKeywords.push(value);

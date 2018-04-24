@@ -13,13 +13,19 @@
 import { Header } from 'mint-ui'
 import { HeaderItem } from '../../components/common'
 import OrderDetailBody from '../order/child/OrderDetailBody'
+import { ENUM } from '../../config/enum'
 export default {
  components: {
    OrderDetailBody
  },
   methods: {
     goBack() {
-      this.$router.go(-1)
+      let isFromPay = this.$route.params.isFromPay
+      if (isFromPay) {
+        this.$router.push({ name: 'order', params: { order: ENUM.ORDER_STATUS.PAID}});
+      } else {
+        this.$router.go(-1)
+      }      
     },    
   },
 }

@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <mt-header class="header" title="登录">
+    <mt-header class="header" fixed title="登录">
       <header-item slot="left" v-bind:isBack=true v-on:onclick="goBack"></header-item>
       <header-item slot="right" title="快速注册" v-on:onclick="onSignup"></header-item>
     </mt-header>
@@ -63,19 +63,19 @@ export default {
       feature: state => state.config.feature,
     }),
     isShowWechat: function () {
-      if (this.feature['signin.qq']) {
+      if (this.feature && this.feature['signin.qq']) {
         return true
       }
       return false
     },
     isShowWeibo: function () {
-      if (this.feature['signin.weibo']) {
+      if (this.feature && this.feature['signin.weibo']) {
         return true
       }
       return false
     },
     isShowQQ: function () {
-      if (this.feature['signin.qq']) {
+      if (this.feature && this.feature['signin.qq']) {
         return true
       }
       return false
@@ -118,7 +118,7 @@ export default {
         (response) => {
           Indicator.close()
           this.saveToken({ 'token' : response.token, 'user': response.user })
-          this.goBack()
+          this.goHome()
         }, (error) => {
           Indicator.close()
           Toast(error.errorMsg)
@@ -126,7 +126,15 @@ export default {
       )
     },
     goBack() {
-      this.$router.go(-1);
+      let isFromInfoEdit = this.$route.params.isFromInfoEdit      
+      if (isFromInfoEdit) {
+        this.$router.push('home')
+      } else {
+        this.$router.go(-1)
+      }      
+    },
+    goHome() {
+      this.$router.push('/home')
     },
     onSignup() {
       this.$router.push({ name: 'signup', params: { mode: 'signup' } });
@@ -158,7 +166,7 @@ export default {
     align-items: stretch;
     background-color: $mainbgColor;
     .top-wrapper {
-      margin-top: 10px;
+      margin-top: 54px;
       .input-wrapper {
         display: flex;        
         align-content: center;

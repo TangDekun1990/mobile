@@ -34,6 +34,7 @@
 import { HeaderItem, Button } from '../../components/common'
 import { Header, MessageBox, Indicator, Toast } from 'mint-ui'
 import { paymentPay } from '../../api/network/payment'
+import { ENUM } from '../../config/enum'
 export default {
   props: {
     order: {
@@ -48,14 +49,10 @@ export default {
   },
   methods: {
     leftClick() {
-      MessageBox.confirm('商品一眨眼就没了 确定放弃支付吗？').then(action => {        
-        // this.goBack()
-        this.$router.replace('/order') 
+      MessageBox.confirm('商品一眨眼就没了 确定放弃支付吗？').then(action => { 
+        this.$router.push({ name: 'order', params: { order: ENUM.ORDER_STATUS.CREATED}});
       })
-    },  
-    goBack() {
-      this.$router.go(-1) 
-    }, 
+    },   
     pay() {
       Indicator.open()
       let order = this.$route.params.order

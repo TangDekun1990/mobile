@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <mt-header class="header" v-bind:title="title">
+    <mt-header class="header" fixed v-bind:title="title">
       <header-item slot="left" v-bind:isBack=true v-on:onclick="goBack">
       </header-item>    
     </mt-header>
@@ -104,6 +104,10 @@ export default {
       let username = this.username
       if (username.length === 0) {
         Toast('请输入手机号');
+        return;
+      }
+      if (!this.utils.isNumber(username)) {
+        Toast('请输入正确格式的手机号');
         return;
       }
       Indicator.open()
@@ -298,7 +302,7 @@ export default {
     @include header;
   }
   .top-wrapper { 
-    margin-top: 10px;      
+    margin-top: 54px;      
   }
   .bottom-wrapper { 
     margin-top: 10px;      
