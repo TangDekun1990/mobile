@@ -80,7 +80,10 @@ export default [
 			{
 				name: 'home',
 				path: '/home',
-				component: Home
+				component: Home,
+				meta: {
+					keepAlive: true
+				},
 			},
 			{
 				name: 'category',
