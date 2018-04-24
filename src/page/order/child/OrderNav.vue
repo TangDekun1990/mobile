@@ -52,7 +52,7 @@
 						<div class="btn" v-if="item.status == 3" >
 							<button v-on:click="goComment(item)">评价晒单</button>
 						
-							<button class="buttonright" v-on:click="goBuy(item.goods)">再次购买</button>
+							<button class="buttonright" v-on:click="goBuy(item.id)">再次购买</button>
 						</div>
 						<!-- 已完成 -->
 						<div class="btn" v-if="item.status == 4" >
@@ -84,7 +84,7 @@
 <script>
 // static 
 import { ORDERSTATUS, ORDERNAV } from '../static';
-import { orderList, orderCancel, orderReasonList, orderConfirm, shippingStatusGet} from '../../../api/network/order'; //订单列表  //取消订单 //获取退货原因 //确认收货 //查看物流
+import { orderList, orderCancel, orderReasonList, orderConfirm, orderRebuy} from '../../../api/network/order'; //订单列表  //取消订单 //获取退货原因 //确认收货 //再次购买
 import { Indicator, MessageBox, Popup  } from 'mint-ui';
 import OrderNav from './OrderNav';
   export default {
@@ -194,7 +194,9 @@ import OrderNav from './OrderNav';
 		},
 		complete(id, index) {
 			this.popupVisible = false;
+			alert(111111)
 			this.getordersuccess(id, index);
+			window.location.reload();
 		},
 		// 查看物流
 		track(id) {
@@ -224,9 +226,14 @@ import OrderNav from './OrderNav';
 			})
 		},
 		
-		// 再次购买
-		goBuy(goodsList) {
-			this.$router.push({ name:'cart', params: {goods: goodsList}})
+		// 获取再次购买数据
+		goBuy(id) {
+			orderRebuy(id).then( res => {
+				if(res) {
+					this.orderBuy = Object.assign([], this.orderBuy, res.order)
+				}
+			});
+			this.$router.push()
 		},
 
 		// 晒单评价
