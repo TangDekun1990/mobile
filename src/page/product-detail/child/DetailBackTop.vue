@@ -1,8 +1,8 @@
-<!-- BackTop.vue 回到顶部 -->
+<!-- DetailBackTop.vue -->
 <template>
-	<div class="ui-back-top">
-		<div class="back-top" v-if="!isTop">
-			<img src="../../assets/image/change-icon/top@2x.png" @click="goBackTop()">
+	<div class="detail-back-top ">
+		<div v-if="!isTop">
+			<img src="../../../assets/image/change-icon/top@2x.png" @click="goBackTop()">
 		</div>
 	</div>
 </template>
@@ -38,7 +38,7 @@
 			 *  goBackTop： 回到顶部
 			 */
 			goBackTop() {
-				console.log(this.target);
+				// console.log(this.target);
 				this.target.scrollTop = 0;
 				this.isTop = true;
 			}
@@ -46,5 +46,20 @@
 	}
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+.detail-back-top {
+	position: absolute;
+	bottom: 50px;
+	width: 50px;
+	height: 50px;
+	right: 10px;
+	div {
+		width: 100%;
+		height: 100%;
+		img {
+			width: 50px;
+			height: 50px;
+		}
+	}
+}
 </style>
