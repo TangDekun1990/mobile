@@ -46,7 +46,8 @@
 		computed: mapState({
 			//是否显示购物车浮层
 			isShowcartInfo: state => state.detail.isShowcartInfo,
-			detailInfo: state => state.detail.detailInfo
+			detailInfo: state => state.detail.detailInfo,
+			user: state => state.auth.user
 		}),
 
 		created(){
@@ -84,7 +85,11 @@
 
 			// 购物车
 			goCart() {
-				this.$router.push({'name':'cart'});
+				if (this.user) {
+					this.$router.push({'name':'cart', 'params': {type: 0}});
+				} else {
+					this.$router.push({'name': 'signin'});
+				}
 			}
 		}
 	}

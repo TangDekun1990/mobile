@@ -33,7 +33,8 @@
 		},
 
 		computed: mapState({
-			isSearch: state => state.product.isSearch
+			isSearch: state => state.product.isSearch,
+			user: state => state.auth.user
 		}),
 
 		watch: {
@@ -88,7 +89,11 @@
 			 *  goCart: 跳转到购物车列表
 			 */
 			goCart() {
-				this.$router.push({'name': 'cart', 'params': {type: 0}})
+				if (this.user) {
+					this.$router.push({'name': 'cart', 'params': {type: 0}});
+				} else {
+					this.$router.push({'name': 'signin'});
+				}
 			}
 		}
 	}
