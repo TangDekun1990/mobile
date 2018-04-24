@@ -11,7 +11,8 @@
 					<span>AED {{ detailInfo.price }}</span>
 				</div>
 			</div>
-			<div class="right" v-on:click="addShopping(true)" v-bind:class="{'disabled-cart': detailInfo.good_stock <= 0, 'active-cart': detailInfo.good_stock > 0}">加入购物车</div>
+			<div class="right active-cart" v-on:click="addShopping(true)" v-if='detailInfo.good_stock > 0'>加入购物车</div>
+			<div class="right disabled-cart" v-if='detailInfo.good_stock <= 0'>加入购物车</div>
 		</div>
 		<p class="good-stock-none" v-if='detailInfo.good_stock <= 0'>所选产品暂时无货，非常抱歉！</p>
 
