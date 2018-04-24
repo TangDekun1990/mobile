@@ -22,7 +22,7 @@
 		<mt-popup v-model="popupvisible" position="bottom">
 			<div class="detail-promotions">
 				<div class="header">
-					<h3>订单促销</h3>
+					<h3>促销信息</h3>
 					<img src="../../../assets/image/change-icon/close@2x.png" v-on:click="close()">
 				</div>
 				<div class="promotions-body">

@@ -2,7 +2,8 @@
 	<div class="cart-list-wrapper">
 		<div class="list" v-for="(item, index) in cartList">
 			<div class="list-checkbox">
-				<input type="checkbox" class='checkbox' :id='index' v-model="item.checked" @change="changeSingleStatu(item.checked, index)" :disabled="item.product.good_stock == 0">
+				<input type="checkbox" class='checkbox' :id='index' v-model="item.checked" @change="changeSingleStatu(item.checked, index)" :disabled="item.product.good_stock == 0" v-if="!isCheckedAll">
+				<input type="checkbox" class='checkbox' :id='index' v-model="item.checked" @change="changeSingleStatu(item.checked, index)" v-if="isCheckedAll">
 				<label :for="index"></label>
 			</div>
 			<div class="list-item" @click="goDetail(item.product.id)">
@@ -90,7 +91,7 @@ export default {
 		 addChecked(isSelectedall) {
 		 	let list = this.cartList;
 		 	for (let i = 0, len = list.length-1; i <= len; i++ ) {
-		 		if (list[i].product.good_stock == 0) {
+		 		if (list[i].product.good_stock == 0 && !this.isCheckedAll) {
 		 			list[i].checked = false;
 		 		} else {
 		 			list[i].checked = isSelectedall;

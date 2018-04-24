@@ -28,7 +28,7 @@
 			</div>
 		</div>
 		<!-- 回到顶部 -->
-		<v-back-top v-if="productList.length > 10"></v-back-top>
+		<v-back-top v-if="productList.length > 10" :target="target" ></v-back-top>
 
 	</div>
 </template>

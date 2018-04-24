@@ -19,6 +19,7 @@
 	import { recommendProductList } from '../../api/network/recommend';
 	import { cartQuantity } from '../../api/network/cart';
 	import productList from '../product/child/ProduceBody';
+	import { mapState, mapMutations } from 'vuex';
 	export default {
 		data() {
 			return {
@@ -43,6 +44,10 @@
 				this.getCarNumber();
 			})
 		},
+
+		computed: mapState({
+			user: state => state.auth.user
+		}),
 
 		mounted(){
 			// 计算内容高度
@@ -104,7 +109,11 @@
 			 *  goCart: 跳转到购物车
 			 */
 			goCart() {
-				this.$router.push({'name': 'cart', 'params': {type: 0}})
+				if (this.user) {
+					this.$router.push({'name': 'cart', 'params': {type: 0}});
+				} else {
+					this.$router.push({'name': 'signin'});
+				}
 			}
 
 		}

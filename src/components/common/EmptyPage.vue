@@ -1,7 +1,7 @@
 <template>
 	<div class="ui-empty-page">
-		<div>
-			<img v-bind:style="{'width': width + 'px', 'height': height +'px'}" src="../../assets/image/change-icon/e0_coupon@2x.png">
+		<div class="empty-page-image">
+			<img src="../../assets/image/change-icon/coupons_empty@2x.png">
 		</div>
 		<div>
 			<p>{{ title }}</p>
@@ -24,11 +24,11 @@
 			},
 			width: {
 				type: Number,
-				default: 62
+				default: 112
 			},
 			height: {
 				type: Number,
-				default: 51
+				default: 112
 			}
 		},
 
@@ -39,22 +39,21 @@
 	}
 </script>
 
-<style style="scss">
-.ui-empty-page{
-	/* height: 100%; */
-    padding-top: 50%;
-    text-align: center;
-    div {
-    	width: 100%;
-    	img {
-    		/* width: 62px;
-    		height: 51px; */
-    	}
-    	p {
-    		color: #7C7F88;
-			font-size:17px;
-			margin-top: 30px;
-    	}
-    }
-}
+<style style="scss" scoped>
+	.ui-empty-page{
+	    padding-top: 50%;
+	    text-align: center;
+	}
+	div.empty-page-image img{
+		width: 112px;
+		height: 112px;
+	}
+	p {
+    	font-size:17px;
+    	color:rgba(124,127,136,1);
+    	line-height:17px;
+    	padding: 0px;
+    	margin: 0px;
+    	margin-top: 20px;
+	}
 </style>
