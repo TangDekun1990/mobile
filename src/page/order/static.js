@@ -22,7 +22,7 @@ export const ORDERSTATUS = [
     'id': ENUM.ORDER_STATUS.DELIVERIED
   },
   {
-    'name': '发货中',
+    'name': '配送中',
     'id': ENUM.ORDER_STATUS.DELIVERING
   },
   {
@@ -63,18 +63,21 @@ export const IMAGE = [
     name: '好评',
     id: 0,
     img: require('../../assets/image/change-icon/e7_good_nor@2x.png'),
+    activeImg: require('../../assets/image/change-icon/e7_good_sel@2x.png'),
     isActive: true
   },
   {
     name: '中评',
     id: 1,
     img: require('../../assets/image/change-icon/e7_medium_nor@2x.png'),
+    activeImg: require('../../assets/image/change-icon/e7_medium_sel@2x.png'),
     isActive: false
   },
   {
     name: '差评',
     id: 2,
     img: require('../../assets/image/change-icon/e7_bad_nor@2x.png'),
+    activeImg: require('../../assets/image/change-icon/e7_bad_sel@2x.png'),
     isActive: false
   }
 ];
