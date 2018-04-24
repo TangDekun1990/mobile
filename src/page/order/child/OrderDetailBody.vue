@@ -594,14 +594,7 @@
 
 <!-- 字体图标样式覆盖 -->
 <style>
-  .mintui {
+  .mint-toast-icon{
     font-size:38px;
-  }
-  .mint-toast{
-    width: 150px;
-    height: 110px;
-  }  
-  .mint-toast-text{
-    font-size: 16px;
   }
 </style>
