@@ -56,11 +56,11 @@
 						</div>
 						<!-- 已完成 -->
 						<div class="btn" v-if="item.status == 4" >
-							<button class="buttonright" v-on:click="goBuy()">再次购买</button>
+							<button class="buttonright" v-on:click="goBuy(item.id)">再次购买</button>
 						</div>
 						<!-- 已取消 -->
 						<div class="btn" v-if="item.status == 5" >
-							<button class="buttonright" v-on:click="goBuy()">再次购买</button>
+							<button class="buttonright" v-on:click="goBuy(item.id)">再次购买</button>
 						</div>
 						<!-- 配货中 -->
 						<div class="btn" v-if="item.status == 6" >
@@ -194,9 +194,7 @@ import OrderNav from './OrderNav';
 		},
 		complete(id, index) {
 			this.popupVisible = false;
-			alert(111111)
 			this.getordersuccess(id, index);
-			window.location.reload();
 		},
 		// 查看物流
 		track(id) {
@@ -228,12 +226,15 @@ import OrderNav from './OrderNav';
 		
 		// 获取再次购买数据
 		goBuy(id) {
+			Indicator.open({
+				spinnerType: 'fading-circle'
+			});
 			orderRebuy(id).then( res => {
 				if(res) {
-					this.orderBuy = Object.assign([], this.orderBuy, res.order)
+					Indicator.close();
+					this.$router.push('/cart')
 				}
 			});
-			this.$router.push()
 		},
 
 		// 晒单评价
@@ -263,7 +264,10 @@ import OrderNav from './OrderNav';
 			this.reasonId = item.id;
 		}
 
-	}
+	
+	
+	},
+  
 }
 </script>
 
