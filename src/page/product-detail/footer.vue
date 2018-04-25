@@ -16,7 +16,7 @@
 		</div>
 		<p class="good-stock-none" v-if='detailInfo.good_stock <= 0'>所选产品暂时无货，非常抱歉！</p>
 
-		<shopping v-if='isShowcartInfo'></shopping>
+		<shopping v-if='isShowcartInfo' :isShowcartInfo="isShowcartInfo"></shopping>
 
 		<!-- 加入购物车显示动画 -->
 		<div class="ui-cart-animation" v-if='isAnimation'>

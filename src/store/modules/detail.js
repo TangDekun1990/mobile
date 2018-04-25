@@ -15,7 +15,12 @@ const state = {
 
 	isComment: false,
 
-	isShowDetail: false
+	isShowDetail: false,
+
+	chooseinfo: {
+		specification:[],
+		ids: []
+	}  //选择口味的信息
 }
 
 // mutations
@@ -52,6 +57,10 @@ const mutations = {
 
 	changeShowDetail(state, value) {
 		state.isShowDetail = value;
+	},
+
+	saveChooseInfo(state, info) {
+		state.chooseinfo = info;
 	}
 }
 
