@@ -28,6 +28,9 @@ import News from '../page/profile/News'
 import NewsOrderMessage from '../page/profile/child/NewsOrderMessage'
 import NewsNoticeMessage from '../page/profile/child/NewsNoticeMessage'
 
+// cardpage
+import CardPage from '../page/cardpage/CardPage'
+
 // address
 import AddressList from '../page/address/AddressList'
 import AddressManage from '../page/address/AddressManage'
@@ -196,7 +199,7 @@ export default [
 				meta: {
 					keepAlive: false,
 				},
-			},
+			},			
 			{
 				name: 'checkout',
 				path: '/checkout',
@@ -229,6 +232,11 @@ export default [
 				name: 'invoice',
 				path: '/checkout/invoice',
 				component: Invoice
+			},
+			{
+				name: 'cardpage',
+				path: '/cardpage',
+				component: CardPage
 			},
 			{
 				name: 'order',
