@@ -15,8 +15,16 @@
 					</span>
 					<span>数量：{{ numbers }}</span>
 				</div>
-
 				<img src="../../../assets/image/change-icon/close@2x.png" class="close" v-on:click='closeCartInfo(false)'>
+			</div>
+
+			<div class="goods-properties" v-if="detailInfo && detailInfo.properties && detailInfo.properties.length > 0" v-for="(item, index) in detailInfo.properties" :key="index">
+				<p>{{ item.name }}{{ids}}</p>
+				<div class="properties-list">
+					<span  v-for="(key, keyindex) in item.attrs" :key="keyindex" @click="setCurrentIndex(index, key.id)" v-bind:class="{'active-properties': item.currentIndex == key.id}">{{ key.attr_name }}</span>
+					<!-- <span class="disabled-properties">白色 (加￥498)</span>
+					<span class="active-properties">白色 (加￥498)</span> -->
+				</div>
 			</div>
 
 			<div class="info-body">
@@ -36,7 +44,7 @@
 	import { mapState, mapMutations } from 'vuex';
 	import { Toast } from 'mint-ui';
 
-	import { addShopCart } from '../../../api/network/cart';
+	import { cartAdd } from '../../../api/network/cart';
 
 	import { ENUM } from '../../../config/enum';
 
@@ -48,11 +56,16 @@
 				toastConfig: {
 					message: '商品达到每单限购数量',
 					position: 'middle'
-				}
+				},
+				ids: [],
+				proDisabled: {}
 			}
 		},
 
-		created(){},
+		created(){
+			this.buildProperties();
+			this.ids.length = this.detailInfo.properties.length;
+		},
 
 		computed: {
 			...mapState({
@@ -127,14 +140,15 @@
 			addShopCart() {
 				this.$parent.$emit('start-addcart-animation');
 				let params = {'product': this.productId, 'property': '', 'amount': this.numbers};
-				addShopCart(params).then(res => {
+				if (this.ids.length > 0) {
+					params.property = JSON.stringify(this.ids);
+				}
+				cartAdd(params.product, params.property, params.amount).then(res => {
 					if (res && res.code == ENUM.ERROR_CODE.OK) {
-						// this.$parent.$emit('start-addcart-animation');
 						this.saveNumber(this.numbers);
 						this.$parent.$emit('end-addcart-animation');
 					} else {
 						this.$parent.$emit('end-addcart-animation');
-						// Toast(res.message);
 					}
 				},(error) => {
 					Toast(error.errorMsg);
@@ -148,8 +162,83 @@
 				// if (e.keyCode === 13) {
 				// 	alert(this.numbers);
 				// }
-			}
+			},
 
+			/*
+			 * buildProperties: 构建多属性， 为每个规格添加当前点击的id值
+			 */
+			buildProperties() {
+				if (this.detailInfo && this.detailInfo.properties && this.detailInfo.properties.length > 0) {
+					let len = this.detailInfo.properties.length;
+					for (let i = 0; i <= len-1; i++) {
+						this.detailInfo.properties[i].currentIndex = '';
+						// 给每种规格下的属性添加 是否还有库存的字段
+						let attr = this.detailInfo.properties[i].attrs;
+						for (let j = 0, len = attr.length; j <= len -1; j++) {
+							attr[j].ishasstock = this.singleProperties(attr[j].id);
+						}
+					}
+					console.log(this.detailInfo.properties);
+				}
+			},
+
+			/*
+			 * setCurrentIndex: 设置当前选中的规格的id,
+			 * @parmas: index 当前规格的index
+			 * @parmas: keyid 当前选择的规格的index
+			 */
+			setCurrentIndex(index, keyid) {
+				this.detailInfo.properties[index].currentIndex = keyid;
+				this.detailInfo.properties = Object.assign([], this.detailInfo.properties);
+				this.ids[index] = keyid;
+				// let str = this.fromatArray('|', this.ids);
+				// this.proDisabled = this.isHasStock(str);
+			},
+
+			/*
+			 * fromatArray: 格式化数组
+			 */
+			fromatArray(delimiter, arrays) {
+				let data = '';
+				if (delimiter) {
+					data = arrays.join(delimiter);
+				}
+				return delimiter ? data : arrays;
+			},
+
+			/*
+			 * isHasStock: 是否还有库存, 组合促销
+			 */
+			isHasStock(id) {
+				let data = this.detailInfo.stock;
+				if (data.length > 0) {
+					for (let i = 0, len = data.length; i <= len -1; i++) {
+						if (data[i].goods_attr == id) {
+							return data[i];
+						}
+					}
+				}
+			},
+
+			/*
+			 * singleProperties: 单个属性
+			 */
+			singleProperties(id) {
+				let data = this.detailInfo.stock;
+				if (data.length > 0) {
+					for (let i = 0, len = data.length; i <= len -1; i++) {
+						if (data[i].goods_attr == id) {
+							if (data[i].stock_number > 0) {
+								return false;
+							} else {
+								return true;
+							}
+						} else {
+							return true;
+						}
+					}
+				}
+			}
 		}
 	}
 </script>
@@ -230,6 +319,41 @@
 					width: 13px;
 					height: 13px;
 					cursor: pointer;
+				}
+			}
+			div.goods-properties {
+				padding: 30px 15px 0px 15px;
+				p {
+					font-size:16px;
+					color:rgba(41,43,45,1);
+					line-height:16px;
+					margin: 0px;
+				}
+				div.properties-list{
+					span {
+						font-size:14px;
+						color:rgba(78,84,93,1);
+						line-height:14px;
+						display: inline-block;
+						padding: 7px 14px;
+						border: 1px solid #404245;
+						border-radius: 2px ;
+						cursor: pointer;
+						margin-top: 15px;
+						&:nth-child(even) {
+							margin-left: 15px;
+						}
+						&.active-properties{
+							background:rgba(239,51,56,1);
+							color:rgba(255,255,255,1);
+							border: 1px solid #EF3338;
+						}
+						&.disabled-properties {
+							color: #B1B5BB;
+							cursor: none;
+							border: 1px solid #A2A6AD;
+						}
+					}
 				}
 			}
 			.info-body {
