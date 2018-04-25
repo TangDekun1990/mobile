@@ -1,6 +1,6 @@
 <template>
 	<div class="container">
-		<mt-header class="header" fixed :title="getTitle">
+		<mt-header class="header" fixed v-bind:title="getTitle">
       <header-item slot="left" isBack v-on:onclick="leftClick">
       </header-item>               
     </mt-header>
@@ -30,11 +30,6 @@
 		components: {			
 			CardGroup
     },
-    computed: {
-      getTitle () {
-        return this.cardpage ? this.cardpage.title : ''
-      }
-    },
 		created: function () {
       Indicator.open()
       let name = this.$route.params.name
@@ -42,7 +37,14 @@
 				(response) => {
 					Indicator.close()
 					if (response && response.cardpage) {
-						this.cardpage = response.cardpage
+            this.cardpage = response.cardpage
+            // for (let i = 0; i < this.cardpage.groups.length; i++) {
+						// 	const element = this.cardpage.groups[i];
+						// 	let layout = element ? element.layout : null
+						// 	console.log('====================================');
+						// 	console.log('layout is :', layout);
+						// 	console.log('====================================');
+						// }
 					}
 				}, (error) => {
 					Indicator.close()
@@ -50,6 +52,9 @@
 				})
 		},
 		computed: {
+      getTitle () {
+        return this.cardpage ? this.cardpage.title : ''
+      },
 			getCardGroups: function () {
 				let groups = this.cardpage ? this.cardpage.groups : []
 				return groups
@@ -72,7 +77,6 @@
 		justify-content: flex-start;
 		align-items: stretch;
 		background-color: $mainbgColor;
-		margin-bottom: 50px;
 	}
 	.header {
 		@include header;
