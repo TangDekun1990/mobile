@@ -1,3 +1,4 @@
+import { ENUM } from '../../config/enum'
 export const openLink = (router, link) => {
   if (link && link.length) {
     // {Scheme}://{Action}/{Target}/{Method}/{Param}?{Key}={Value}
@@ -31,7 +32,7 @@ export const openLink = (router, link) => {
           params = { name: 'home' }
         } else if (where === 'cart') {
           // 我的购物车							
-          params = { name: 'cart', params: { type: 1 } }
+          params = { name: 'cart', params: { type: 0 } }
         } else if (where === 'search') {
           // 搜索界面
           params = { name: 'search' }
@@ -53,6 +54,7 @@ export const openLink = (router, link) => {
         } else if (where === 'product') {
           if (action === 'all') {
             // 商品列表 // TODO:
+            params = { name: 'product', params: { isFromHome: true } }
           } else {
             // 商品详情
             params = { name: 'detail', params: { id: action } }
@@ -74,7 +76,7 @@ export const openLink = (router, link) => {
         } else if (where === 'address') {
           if (action === 'all') {
             // 收货地址列表	
-            params = { name: 'addressList' }
+            params = { name: 'addressManage' }
           } else if (action === 'new') {
             // 新建收货地址（需要登录）
             params = { name: 'addressEdit', params: { mode: 'add', item: null } }
@@ -85,25 +87,25 @@ export const openLink = (router, link) => {
         } else if (where === 'order') {
           if (action === 'all') {
             // 全部订单（需要登录）
-            params = { name: 'order', params: { order: ENUM.ORDER_STATUS.ALL } }
+            params = { name: 'order', params: { order: ENUM.ORDER_STATUS.ALL, isFromHome: true } }
           } else if (action === 'created') {
             // 待付款订单（需要登录）
-            params = { name: 'order', params: { order: ENUM.ORDER_STATUS.CREATED } }
+            params = { name: 'order', params: { order: ENUM.ORDER_STATUS.CREATED, isFromHome: true } }
           } else if (action === 'paid') {
             // 待发货订单（需要登录）
-            params = { name: 'order', params: { order: ENUM.ORDER_STATUS.PAID } }
+            params = { name: 'order', params: { order: ENUM.ORDER_STATUS.PAID, isFromHome: true } }
           } else if (action === 'delivering') {
             // 发货中订单（需要登录）
-            params = { name: 'order', params: { order: ENUM.ORDER_STATUS.DELIVERING } }
+            params = { name: 'order', params: { order: ENUM.ORDER_STATUS.DELIVERING, isFromHome: true } }
           } else if (action === 'delivered') {
             // 待评价订单（需要登录）
-            params = { name: 'order', params: { order: ENUM.ORDER_STATUS.DELIVERIED } }
+            params = { name: 'order', params: { order: ENUM.ORDER_STATUS.DELIVERIED, isFromHome: true } }
           } else if (action === 'finished') {
             // 已完成订单（需要登录）
-            params = { name: 'order', params: { order: ENUM.ORDER_STATUS.ALL } }
+            params = { name: 'order', params: { order: ENUM.ORDER_STATUS.ALL, isFromHome: true } }
           } else if (action === 'cancelled') {
             // 已取消订单（需要登录）
-            params = { name: 'order', params: { order: ENUM.ORDER_STATUS.ALL } }
+            params = { name: 'order', params: { order: ENUM.ORDER_STATUS.ALL, isFromHome: true } }
           } else {
             // 订单详情（需要登录）
             params = { name: 'orderDetail', params: { orderDetail: action } }
@@ -132,8 +134,10 @@ export const openLink = (router, link) => {
           // 物流详情页面（需要登录）
         } else if (where === 'article') {
           // 文章列表页面（需要登录）
+          params = { name: 'Help' }
         } else if (where === 'invoice') {
           // 发票页面（需要登录）
+          params = { name: 'invoice', params: { title: '' } }
         }
       } else if (path === 'search') {
 

@@ -235,7 +235,7 @@ export default [
 			},
 			{
 				name: 'cardpage',
-				path: '/cardpage',
+				path: '/cardpage/:name',
 				component: CardPage
 			},
 			{

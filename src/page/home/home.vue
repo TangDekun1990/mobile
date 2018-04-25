@@ -42,13 +42,13 @@
 					Indicator.close()
 					if (response && response.cardpage) {
 						this.cardpage = response.cardpage
-						// for (let i = 0; i < this.cardpage.groups.length; i++) {
-						// 	const element = this.cardpage.groups[i];
-						// 	let layout = element ? element.layout : null
-						// 	console.log('====================================');
-						// 	console.log('layout is :', layout);
-						// 	console.log('====================================');
-						// }
+						for (let i = 0; i < this.cardpage.groups.length; i++) {
+							const element = this.cardpage.groups[i];
+							let layout = element ? element.layout : null
+							console.log('====================================');
+							console.log('layout is :', layout);
+							console.log('====================================');
+						}
 					}
 				}, (error) => {
 					Indicator.close()
