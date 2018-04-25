@@ -38,14 +38,7 @@ const router = new VueRouter({
 // 使用moment处理日期格式
 import Moment from 'moment'
 Vue.filter('convertTime', function (timeStr) {
-  return Moment(timeStr).format('YYYY-MM-DD hh:mm:ss')
-})
-
-// 处理商品名称
-Vue.filter('mySubstr',function(titleStr,num) {
-	if(titleStr.length <= num) return titleStr;
-	else
-		return titleStr.substr(0,num) + '...'
+  return Moment(timeStr).format('YYYY-MM-DD HH:mm:ss')
 })
 
 // router.beforeEach((to, from, next) => {

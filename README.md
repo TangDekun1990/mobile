@@ -112,6 +112,135 @@
 	})
 	```
 
+####vue文件结构
+
+###### template
+```
+<template>
+  <div class="container">
+    <mt-header class="header" title="我的优惠券">
+      <header-item slot="left" v-bind:isBack=true v-on:onclick="goBack">
+      </header-item>          
+    </mt-header>
+    <div class="tips-wrapper">
+      <label class="tips">可使用优惠券{{total}}张</label>
+    </div>    
+    <div class="list">
+      <coupon-item 
+        class="item" 
+        v-for="item in items" 
+        :key="item.id" 
+        :item="item" 
+        :isSelected="isSelected(item)"
+        v-on:onclick="onclick(item)">
+      </coupon-item>      
+    </div>       
+    <div class="submit" @click="unselect">
+      <label class="text">不使用优惠券</label>
+    </div>
+  </div>
+</template>
+```
+
+1.  组件元素之间没有空行
+2.  组件太长时，换行显示（换行缩进2个字符）
+
+###### script
+```
+<script>
+import CouponItem from './child/CouponItem'
+import { mapState, mapMutations, mapActions } from 'vuex'
+export default {
+  name: 'component-name',
+  components: { 
+    CouponItem,
+  },
+  mixins: [ ],        
+  directives: {    
+  },
+  props: {
+    mode: {
+      type: String,
+      default: null
+    }
+  },
+  data () {
+    return {
+      items: [],
+    }
+  },
+  created () {    
+  },
+  mounted () {    
+  },
+  computed: {
+    ...mapState({      
+    }), 
+    isEmpty () {
+      if (this.items && this.items.length === 0) {
+        return true
+      }
+      return false
+    }   
+  },
+  watch: {
+    value (val) {            
+    },
+    currentValue (val) {
+    }
+  },
+  methods: {
+    ...mapMutations({      
+    }),
+    ...mapActions({      
+    }),
+    goBack () {
+      this.$router.go(-1)
+    },     
+    onLeftClick () {      
+      this.goBack()
+    },   
+    onRightClick () {      
+    }
+  }
+}
+</script>
+```
+
+1.  name、components、props、data、created、mounted、computed、methods尽量按照顺序写；并且各元素之间无换行
+2. computed中多个计算属性之间无换行；类似的，methods中多个方法之间无换行，可适当添加注释
+
+###### style 
+```
+<style lang="scss" scoped>
+  .ui-concat-wrapper {
+	display: flex;
+	width: auto;
+	margin-top: 8px;
+	background-color: #ffffff;
+	padding: 15px;
+	justify-content: space-between;
+	align-content: center;
+	align-items: center;
+	p {
+	  font-size: 16px;
+	  font-family: PingFangSC-Regular;
+	  color: rgba(78,84,93,1);
+	  line-height: 20px;
+	}
+	img {
+	  width: 12px;
+	  height: 13px;
+	  cursor: pointer;
+	}	
+  }
+</style>
+```
+
+1. 类选择器后有1个空格
+2. 样式值前有1个空格
+3. 使用Sass写法
+
 ###TODO:
 ###技术栈
 * vuex - api template (Done)

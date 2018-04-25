@@ -1,10 +1,8 @@
 <template>
 	<div class="container">
-		<mt-header class="header" fixed title="首页">
-      <header-item slot="left" :icon="require('../../assets/image/change-icon/b0_scan@2x.png')" v-on:onclick="leftClick">
-      </header-item> 
-      <header-item slot="right" :icon="require('../../assets/image/change-icon/b0_message@2x.png')" v-on:onclick="rightClick">
-      </header-item>        
+		<mt-header class="header" fixed :title="getTitle">
+      <header-item slot="left" isBack v-on:onclick="leftClick">
+      </header-item>               
     </mt-header>
 		<div class="list">
 			<card-group 
@@ -13,42 +11,38 @@
 				:key="index" 
 				:item="item">
 			</card-group>
-		</div>	
-		<tab-bar></tab-bar>
+		</div>			
 	</div>
 </template>
 
 <script>
-	import tabBar from '../../components/common/Tabbar'
 	import { HeaderItem } from '../../components/common'
 	import { Header, Indicator, Toast } from 'mint-ui'
-	import { cardpageGet } from '../../api/network/cardpage'
+	import { cardpagePreview } from '../../api/network/cardpage'
 	import CardGroup from '../cardpage/group/CardGroup'
 	export default {
-		name: 'Home',
+    name: 'CardPage',
 		data() {
-			return {
+			return {        
 				cardpage: null
 			}
 		},
-		components: {
-			tabBar,
+		components: {			
 			CardGroup
-		},
+    },
+    computed: {
+      getTitle () {
+        return this.cardpage ? this.cardpage.title : ''
+      }
+    },
 		created: function () {
-			Indicator.open()
-			cardpageGet('index').then(
+      Indicator.open()
+      let name = this.$route.params.name
+			cardpagePreview(name).then(
 				(response) => {
 					Indicator.close()
 					if (response && response.cardpage) {
 						this.cardpage = response.cardpage
-						// for (let i = 0; i < this.cardpage.groups.length; i++) {
-						// 	const element = this.cardpage.groups[i];
-						// 	let layout = element ? element.layout : null
-						// 	console.log('====================================');
-						// 	console.log('layout is :', layout);
-						// 	console.log('====================================');
-						// }
 					}
 				}, (error) => {
 					Indicator.close()
@@ -63,10 +57,9 @@
 		},
 		methods: {
 			leftClick() {
-
+        this.$router.go(-1)
 			},
 			rightClick() {
-
 			},			
 		},
 	}

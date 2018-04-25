@@ -70,8 +70,13 @@
 			/*
 			 * goBack: 返回上一级
 			 */
-			goBack() {
-				this.$router.go(-1);
+			goBack() {	
+				let isFromHome = this.$route.params.isFromHome
+				if (isFromHome) {
+					this.$router.push({ name: 'home' })
+				}	else {
+					this.$router.go(-1);
+				}						
 			},
 
 			/*
