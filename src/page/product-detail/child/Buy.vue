@@ -2,13 +2,13 @@
 <template>
 	<div class="ui-buy-wrapper ui-detail-common" v-if="detailInfo">
 		<div class="buy-wrapper header" @click="changeCartState()" v-if="detailInfo.good_stock > 0">
-			<p v-if='number <= 0'>请选择购买数量分类</p>
-			<p v-if='number > 0'>已选数量{{number}}</p>
+			<p v-if='number <= 0 && chooseinfo.specification.length <= 0'>请选择购买数量分类</p>
+			<p v-if='number > 0 || chooseinfo.specification.length > 0'>已选{{chooseinfo.specification.join(',') }},<i v-if="number > 0">数量{{number}}</i></p>
 			<img src="../../../assets/image/change-icon/enter@2x.png">
 		</div>
 		<div class="buy-wrapper header isopacity" v-if="detailInfo.good_stock <= 0">
-			<p v-if='number <= 0'>请选择购买数量分类</p>
-			<p v-if='number > 0'>已选数量{{number}}</p>
+			<p v-if='number <= 0 && chooseinfo.specification.length < 0'>请选择购买数量分类</p>
+			<p v-if='number > 0 || chooseinfo.specification.length > 0'>已选{{chooseinfo.specification.join(',') }},数量{{number}}</p>
 			<img src="../../../assets/image/change-icon/enter@2x.png">
 		</div>
 	</div>
@@ -24,7 +24,8 @@
 		computed: {
 			...mapState({
 		      	number: state => state.detail.number,
-		      	detailInfo: state => state.detail.detailInfo
+		      	detailInfo: state => state.detail.detailInfo,
+		      	chooseinfo: state => state.detail.chooseinfo
 		    })
 		},
 
@@ -55,6 +56,10 @@
 				line-height:20px;
 				padding: 0px;
 				margin: 0px;
+				i {
+					font-weight: normal;
+					font-style: normal;
+				}
 			}
 			img {
 				width:5px;

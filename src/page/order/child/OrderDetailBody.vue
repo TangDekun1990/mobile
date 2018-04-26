@@ -34,7 +34,14 @@
 
       <div class="image" v-if="orderDetail.order.status == 3">
         <img src="../../../assets/image/change-icon/e5_evaluation@2x.png">
-        <span>已收货，待评价</span>
+        <span>待评价</span>
+      </div>
+      <div class="receipt" v-if="orderDetail.order.status == 3" v-on:click="goOrderrack(order.id)">
+        <label>
+          <img src="../../../assets/image/change-icon/icon_car@2x.png">
+          <span>感谢你在温超商城购物</span>
+        </label>
+        <img class="arrow" src="../../../assets/image/change-icon/enter@2x.png">
       </div>
 
       <div class="image" v-if="orderDetail.order.status == 4">
@@ -56,7 +63,7 @@
         <div>
           <img src="../../../assets/image/change-icon/e5_address@2x.png">
           <span>{{orderDetail.order.consignee.name}}</span>
-          <span>{{orderDetail.order.consignee.mobile}}</span> 
+          <span class="mobile">{{orderDetail.order.consignee.mobile}}</span> 
         </div>
         <p>{{orderDetail.order.consignee.address}}</p>
       </div>
@@ -104,7 +111,7 @@
         </checkout-desc>
         <checkout-desc class="desc-item" title="+运费" :subtitle="getOrderShippingPrice">
         </checkout-desc>
-        <checkout-desc class="desc-item" v-for="(item, index) in getPromos" :key="index" :title="getPromoTitle(item)" :subtitle="getOrderDiscountPrice(item)">
+        <checkout-desc class="desc-item" v-for="(item, index) in getPromos" :key="index" :title=" '-' + getPromoTitle(item)" :subtitle="getOrderDiscountPrice(item)">
         </checkout-desc>
         <label class="amount">实付款 : <span> {{ getOrderTotalPrice }}</span> </label>
       </div>
@@ -133,7 +140,7 @@
 				<button class="buttonbottom" v-on:click="confirm(orderDetail.order.id, index)">确认收货</button>
 			</div>
 
-      <!-- 已收货，待评价 -->
+      <!-- 待评价 -->
 			<div class="btn" v-if="orderDetail.order.status == 3" >
 				<button v-on:click="goComment(orderDetail.order.id)">评价晒单</button>
 				<button class="buttonbottom" v-on:click="goBuy()">再次购买</button>
@@ -280,7 +287,7 @@
         this.$router.push({ name: 'cart' })
       },
       getOrderDiscountPrice(item) {
-        return '-AED ' + (item.price ? item.price : 0)
+        return 'AED ' + (item.price ? item.price : 0)
       }, 
       getFormatPrice (key) {
         let price = this.getPriceByKey(key)
@@ -486,11 +493,10 @@
     margin-right: 10px;
   }
   .address {
-    height: 100px;
+    height: 87px;
     background-color: #fff;
     div {
-      padding: 15px 10px 10px;
-      
+      padding: 11px 10px 0px;  
     }
     img {
       height: 16px;
@@ -498,11 +504,20 @@
     span {
       color:#4E545D;
       font-size:16px;
+      &.mobile{
+        padding-left: 21px;
+      }
     }
     p {
-      padding: 10px 36px 14px 15px;
+      margin: 5px 18px 11px 32px;
       font-size: 14px;
       color:#7C7F88;
+
+      overflow:hidden; 
+      text-overflow:ellipsis;
+      display:-webkit-box; 
+      -webkit-box-orient:vertical;
+      -webkit-line-clamp:2; 
     }
   }
    
