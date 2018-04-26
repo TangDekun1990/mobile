@@ -175,7 +175,7 @@ export default {
 		.header-info {
 			width: 100%;
 			height: 170px;
-			background-image: url(../../assets/image/change-icon/e2_bg@2x.png);
+			background-image: url('../../assets/image/change-icon/e2_bg@2x.png');
 			background-size: cover;
 			color: #fff;
 			font-size: 18px;

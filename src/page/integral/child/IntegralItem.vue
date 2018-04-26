@@ -78,7 +78,7 @@ export default {
       width: 100px;
       height: 93px;
       float: left;
-      background-image: url(../../../assets/image/change-icon/e2_2bg@2x.png);
+      background-image: url('../../../assets/image/change-icon/e2_2bg@2x.png');
       background-size: 100px 93px;
       text-align: center;
       .number {
@@ -109,7 +109,7 @@ export default {
       left: 94px;
       height: 93px;
       right: 0;          
-      background: url(../../../assets/image/change-icon/e2_CombinedShape@2x.png) no-repeat;
+      background: url('../../../assets/image/change-icon/e2_CombinedShape@2x.png') no-repeat;
       background-size: 100% 93px;
       .title {
         font-size: 15px;
