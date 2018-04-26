@@ -7,7 +7,7 @@
     </mt-header>
     <!-- body -->
     <div class="order-message-body" v-for="(item, index) in orderMessage" v-on:click="getOrderDetail(item.id)">
-      <p>{{item.created_at | convertTime }}</p>
+      <p>{{item.created_at * 1000| convertTime }}</p>
       <div class="order-track">
         <span>{{item.title}}</span>
         <div class="order-status"> 
