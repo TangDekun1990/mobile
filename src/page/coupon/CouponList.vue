@@ -53,7 +53,7 @@ export default {
     	/*
 		 * getCouponList: 获取优惠券列表
 		 */
-		 getCouponList(ispush) {
+		getCouponList(ispush) {
 		 	let data = this.requestParams;
 		 	data.status = this.currentIndex;
 		 	couponList(data.page, data.per_page, data.status).then(res => {
