@@ -62,7 +62,7 @@
 
     </div>
     <info-item 
-      v-on:onclick="goFavourite"       
+      v-on:onclick="goFavourite()"       
       class="info-item-wrapper section-header" 
       :icon="require('../../assets/image/change-icon/e0_favorite@2x.png')"
       title="我的收藏">
@@ -176,13 +176,13 @@ export default {
       this.$router.push("setting");
     },
     goNews() {
-      this.$router.push('news')
+      this.$router.push('news');
     },
     goFavourite() {
-      // TODO:      
+      this.$router.push('collection');     
     },
     goAddress() {      
-      this.$router.push('addressManage')
+      this.$router.push('addressManage');
     },
     goCoupon() {
       this.$router.push({ name: "couponList" });

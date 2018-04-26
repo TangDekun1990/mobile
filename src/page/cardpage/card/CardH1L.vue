@@ -32,11 +32,9 @@ export default {
     justify-content: flex-start;
     align-items: stretch;
     background-color: $cardbgColor;
-    // border: 4px solid lightblue;
     .photo {
       margin: 5px;
-      height: auto;
-      // border: 2px solid lightblue; 
+      height: auto; 
     }
     .right-wrapper {
       flex: 1;

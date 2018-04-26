@@ -27,6 +27,11 @@ import HelpUrl from '../page/profile/child/HelpUrl'
 import News from '../page/profile/News'
 import NewsOrderMessage from '../page/profile/child/NewsOrderMessage'
 import NewsNoticeMessage from '../page/profile/child/NewsNoticeMessage'
+import NoticeMessageInfo from '../page/profile/child/NoticeMessageInfo'
+import Collection from '../page/profile/Collection'
+
+// cardpage
+import CardPage from '../page/cardpage/CardPage'
 
 // address
 import AddressList from '../page/address/AddressList'
@@ -80,7 +85,10 @@ export default [
 			{
 				name: 'home',
 				path: '/home',
-				component: Home
+				component: Home,
+				meta: {
+					keepAlive: true
+				},
 			},
 			{
 				name: 'category',
@@ -161,6 +169,16 @@ export default [
 				component: NewsNoticeMessage
 			},
 			{
+				name: 'NoticeMessageInfo',
+				path: '/noticeMessageInfo',
+				component: NoticeMessageInfo
+			},
+			{
+				name: 'Collection',
+				path: '/collection',
+				component: Collection
+			},
+			{
 				name: 'addressList',
 				path: '/addressList',
 				component: AddressList
@@ -193,7 +211,7 @@ export default [
 				meta: {
 					keepAlive: false,
 				},
-			},
+			},			
 			{
 				name: 'checkout',
 				path: '/checkout',
@@ -228,6 +246,11 @@ export default [
 				component: Invoice
 			},
 			{
+				name: 'cardpage',
+				path: '/cardpage/:name',
+				component: CardPage
+			},
+			{
 				name: 'order',
 				path: '/order/:order?',
 				component: Order
@@ -259,7 +282,7 @@ export default [
 			},
 			{
 				name: 'detail',
-				path: '/detial/:id?',
+				path: '/detial/:id?/:productId?',
 				component: Detail
 			},
 			{

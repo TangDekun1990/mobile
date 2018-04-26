@@ -11,8 +11,7 @@ import CardV3B from './CardV3B'
 import CardV3T from './CardV3T'
 import CardV4B from './CardV4B'
 import CardV4T from './CardV4T'
-import CardV5B from './CardV5B'
-import CardV5T from './CardV5T'
+import CardV5 from './CardV5'
 
 import CardZ1 from './CardZ1'
 import CardZ2 from './CardZ2'
@@ -32,8 +31,7 @@ Vue.component(CardV3B.name, CardV3B)
 Vue.component(CardV3T.name, CardV3T)
 Vue.component(CardV4B.name, CardV4B)
 Vue.component(CardV4T.name, CardV4T)
-Vue.component(CardV5B.name, CardV5B)
-Vue.component(CardV5T.name, CardV5T)
+Vue.component(CardV5.name, CardV5)
 
 Vue.component(CardZ1.name, CardZ1)
 Vue.component(CardZ2.name, CardZ2)
@@ -53,8 +51,7 @@ module.export = {
   CardV3T,
   CardV4B,
   CardV4T,
-  CardV5B,
-  CardV5T,
+  CardV5,
   CardZ1,
   CardZ2,
   CardZ2L,

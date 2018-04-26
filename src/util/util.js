@@ -14,6 +14,9 @@ export default {
 	        window.event.returnValue = false;//IE
 	    }
 	},
+	/*
+	 *  arrayFilter: 数组去重
+	 */
 	arrayFilter(array) {
 		let newAray = [];
 		for (let i = 0, len = array.length-1; i <= len; i++) {
@@ -49,7 +52,7 @@ export default {
 		}
 		return str;
 	},
-	
+
 	/*
 		date 日期
 		fmt 显示的格式
@@ -85,7 +88,7 @@ export default {
 	currencyPrice(price) {
 		return parseFloat(price).toFixed(2)
 	},
-	
+
 	isNumber(value) {
 		let reg = new RegExp('^[0-9]*$')
 		if (!reg.test(value)) {

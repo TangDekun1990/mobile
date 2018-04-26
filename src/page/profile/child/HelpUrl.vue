@@ -17,20 +17,24 @@
       </div>
     </div>
     <mt-popup v-model="popupVisible" position="bottom" class="mint-popup">
-        <div class="share">
-          <p>分享到</p>
-          <div class="image">
-            <label v-on:click="goWachat()">
-              <img src="../../../assets/image/change-icon/c7_commodity_list_2@2x.png"> 
-              <p>微信</p>
-            </label>
-            <label>
-              <img src="../../../assets/image/change-icon/c7_commodity_list_3@2x.png"> 
-              <p>QQ</p>
-            </label>
-          </div>
-          <p class="cancel" v-on:click="cancelInfo()">取消</p>
-        </div>     
+      <div class="share">
+            <h4>分享到</h4>
+            <div class="image">
+              <label v-on:click="goWachat()">
+                <img src="../../../assets/image/change-icon/c7_commodity_list_2@2x.png"> 
+                <p>微信</p>
+              </label>
+              <label>
+                <img src="../../../assets/image/change-icon/c7_commodity_list_1@2x.png"> 
+                <p>微博</p>
+              </label>
+              <label>
+                <img src="../../../assets/image/change-icon/c7_commodity_list_3@2x.png"> 
+                <p>QQ</p>
+              </label>
+            </div>
+            <p class="cancel" v-on:click="cancelInfo()">取消</p>
+          </div>     
        </mt-popup>
     <webview :url.asyc="getUrl">
     </webview>
@@ -108,29 +112,43 @@ export default {
        
     }
     .share {
-      width:100%;
-      height:236px;
-      background:rgba(240,242,245,1);
-      p {
-        text-align: center;
-        padding-top: 15px;
-        font-size: 16px; 
-      }
-      .image {
-        display: flex;
-        justify-content:space-around;
-        align-items: center;
-        padding-bottom:20px;
-        img {
-          width:60px;
-          height:60px;
+        width:100%;
+        height:230px;
+        background-color:#F6F6F6;
+        h4 {
+          text-align: center;
+          padding-top: 24px;
+          padding-bottom: 27px;
+          font-size: 19px; 
+          color:#7C7F88;
+        }
+        .image {
+          display: flex;
+          justify-content:space-around;
+          align-items: center;
+          img {
+            width:60px;
+            height:60px;
+            padding-bottom: 12px;
+          }
+          p {
+            text-align: center;
+            font-size: 14px;
+            color:#8F8E94;
+          }
+        }
+        .cancel {
+          background-color: #fff;
+          text-align: center;
+          height:44px;
+          line-height:44px;
+          position: absolute;
+          width: 100%;
+          bottom: 0;
+          color:#4E545D;
+          font-size:17px;
         }
       }
-      .cancel {
-        background-color: #fff;
-        padding-bottom:16px;
-      }
-    }
   }
   
 </style>
