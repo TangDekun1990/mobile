@@ -30,6 +30,9 @@ import NewsNoticeMessage from '../page/profile/child/NewsNoticeMessage'
 import NoticeMessageInfo from '../page/profile/child/NoticeMessageInfo'
 import Collection from '../page/profile/Collection'
 
+// cardpage
+import CardPage from '../page/cardpage/CardPage'
+
 // address
 import AddressList from '../page/address/AddressList'
 import AddressManage from '../page/address/AddressManage'
@@ -82,7 +85,10 @@ export default [
 			{
 				name: 'home',
 				path: '/home',
-				component: Home
+				component: Home,
+				meta: {
+					keepAlive: true
+				},
 			},
 			{
 				name: 'category',
@@ -205,7 +211,7 @@ export default [
 				meta: {
 					keepAlive: false,
 				},
-			},
+			},			
 			{
 				name: 'checkout',
 				path: '/checkout',
@@ -238,6 +244,11 @@ export default [
 				name: 'invoice',
 				path: '/checkout/invoice',
 				component: Invoice
+			},
+			{
+				name: 'cardpage',
+				path: '/cardpage/:name',
+				component: CardPage
 			},
 			{
 				name: 'order',

@@ -284,7 +284,7 @@
 
       // 再次购买
       goBuy() {
-        this.$router.push({ name:'cart'})
+        this.$router.push({ name: 'cart' })
       },
       getOrderDiscountPrice(item) {
         return 'AED ' + (item.price ? item.price : 0)
