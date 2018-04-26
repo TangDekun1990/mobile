@@ -18,10 +18,8 @@
           <span>{{item.product.name }}</span>
           <ul>
             <li class="good" v-for="(image, indexs) in item.IMAGE"  v-on:click="changeImage(image, indexs)"> 
-              <!-- <img src="../../../assets/image/change-icon/e7_good_nor@2x.png" v-if="!image.isActive">
-              <img src="../../../assets/image/change-icon/e7_good_sel@2x.png" v-if="image.isActive"> -->
               <img :src="image.img" v-if="!image.isActive">
-              <img :src="image.img" v-if="image.isActive">
+              <img :src="image.activeImg" v-if="image.isActive">
               <label>{{image.name}}</label>
             </li>
           </ul>
@@ -77,7 +75,7 @@ export default {
 
     buildData() {
      let data = this.commentinfo.goods;
-     for(let i = 0; i <=data.length-1; i++ ) {
+     for(let i = 0; i <= data.length-1; i++ ) {
        data[i].IMAGE = this.IMAGE;
      }
      this.commentinfo.goods = Object.assign([], data);

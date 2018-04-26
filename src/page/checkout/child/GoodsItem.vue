@@ -46,7 +46,7 @@ export default {
     },
     getPrice: function () {
       let price = this.getItemByKey('price')
-      return (price ? this.toFixedPrice(price) : '')
+      return (price ? this.utils.currencyPrice(price) : '')
     },
   },
   methods: {
@@ -57,10 +57,7 @@ export default {
         desc = item.product[key]
       }
       return desc
-    },
-    toFixedPrice(price) {
-      return parseFloat(price).toFixed(2)
-    },
+    },    
   }
 }
 </script>

@@ -51,15 +51,16 @@
 						<!-- 已收货，待评价 -->
 						<div class="btn" v-if="item.status == 3" >
 							<button v-on:click="goComment(item)">评价晒单</button>
-							<button class="buttonright" v-on:click="goBuy()">再次购买</button>
+						
+							<button class="buttonright" v-on:click="goBuy(item.id)">再次购买</button>
 						</div>
 						<!-- 已完成 -->
 						<div class="btn" v-if="item.status == 4" >
-							<button class="buttonright" v-on:click="goBuy()">再次购买</button>
+							<button class="buttonright" v-on:click="goBuy(item.id)">再次购买</button>
 						</div>
 						<!-- 已取消 -->
 						<div class="btn" v-if="item.status == 5" >
-							<button class="buttonright" v-on:click="goBuy()">再次购买</button>
+							<button class="buttonright" v-on:click="goBuy(item.id)">再次购买</button>
 						</div>
 						<!-- 配货中 -->
 						<div class="btn" v-if="item.status == 6" >
@@ -83,7 +84,7 @@
 <script>
 // static 
 import { ORDERSTATUS, ORDERNAV } from '../static';
-import { orderList, orderCancel, orderReasonList, orderConfirm, shippingStatusGet} from '../../../api/network/order'; //订单列表  //取消订单 //获取退货原因 //确认收货 //查看物流
+import { orderList, orderCancel, orderReasonList, orderConfirm, orderRebuy} from '../../../api/network/order'; //订单列表  //取消订单 //获取退货原因 //确认收货 //再次购买
 import { Indicator, MessageBox, Popup  } from 'mint-ui';
 import OrderNav from './OrderNav';
   export default {
@@ -117,6 +118,11 @@ import OrderNav from './OrderNav';
     created() {
 		this.getUrlParams();
 		this.orderReasonList();
+	},
+	beforeRouteEnter(to, from, next) {
+		next(()=>{
+			window.location.reload()
+		})
 	},
 	methods: {
 
@@ -218,9 +224,17 @@ import OrderNav from './OrderNav';
 			})
 		},
 		
-		// 再次购买
-		goBuy() {
-			this.$router.push({ name:'cart'})
+		// 获取再次购买数据
+		goBuy(id) {
+			Indicator.open({
+				spinnerType: 'fading-circle'
+			});
+			orderRebuy(id).then( res => {
+				if(res) {
+					Indicator.close();
+					this.$router.push('/cart')
+				}
+			});
 		},
 
 		// 晒单评价
@@ -250,7 +264,10 @@ import OrderNav from './OrderNav';
 			this.reasonId = item.id;
 		}
 
-	}
+	
+	
+	},
+  
 }
 </script>
 
@@ -374,7 +391,7 @@ import OrderNav from './OrderNav';
 				width:52px;
 				height:59px; 
 				box-sizing: border-box;
-				margin:	139px 161px 30px;
+				margin:	139px auto 30px;
 			}
 			p {
 				font-size:17px;

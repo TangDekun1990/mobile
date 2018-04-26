@@ -1,9 +1,11 @@
 <template>
 	<div class="ui-product">
-		<!-- 商品头部 -->
-		<product-header ref='header' :value="params.keyword"></product-header>
-		<!-- 商品筛选 -->
-		<product-filter ref='filter'></product-filter>
+		<div class="product-header">
+			<!-- 商品头部 -->
+			<product-header ref='header' :value="params.keyword"></product-header>
+			<!-- 商品筛选 -->
+			<product-filter ref='filter'></product-filter>
+		</div>
 		<!-- 商品列表 -->
 		<div class="product-body"
 			v-bind:class="{'hide-product-list': isShowProductModel, 'show-product-list': !isShowProductModel}"
@@ -26,7 +28,7 @@
 			</div>
 		</div>
 		<!-- 回到顶部 -->
-		<v-back-top v-if="productList.length > 10"></v-back-top>
+		<v-back-top v-if="productList.length > 10" :target="target" ></v-back-top>
 
 	</div>
 </template>
@@ -88,6 +90,16 @@
 			this.$on('get-cart-quantity', () => {
 				this.$refs.header.getCarNumber();
 			})
+		},
+
+		mounted(){
+			// 计算内容高度
+		    this.$nextTick( () => {
+		    	this.target = document.querySelector('.product-body');
+		    	let totalHeight = 98;
+				const target = this.target;
+		    	this.utils.fillTheScreen({target, totalHeight});
+		    });
 		},
 
 		methods: {
@@ -198,7 +210,19 @@
 	.ui-product {
 		width: auto;
 		background-color: #ffffff;
+		.product-header {
+			background-color: #ffffff;
+			position: absolute;
+			top: 0px;
+			width: 100%;
+		}
 		div.product-body{
+			position: absolute;
+			top: 98px;
+			background-color: #ffffff;
+			width: 100%;
+			height: auto;
+			overflow: auto;
 			.loading-wrapper {
 				text-align: center;
 				margin-top: 24px;

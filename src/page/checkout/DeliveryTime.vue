@@ -1,46 +1,43 @@
 <template>
-  <transition name="fade">
-    <div class="mask" v-show="currentValue">
-      <div v-show="currentValue" class="content-wrapper">
-        <div class="title-wrapper">
-          <label class="title">送货时间</label>
-          <div class="close-wrapper" @click="onClose">
-            <img class="close" src="../../assets/image/change-icon/close@2x.png">
-          </div>        
-        </div>
-        <div class="list-wrapper">
-          <div class="list leftList">
-            <div 
-              class="item-wrapper" 
-              v-bind:class="{ itemSelected: isSelectedDate(item), itemNormal: !isSelectedDate(item) }" 
-              v-for="(item, index) in items" 
-              :key=index @click="onClickDate(item)">
-              <label 
-                class="date" 
-                v-bind:class="{ dateSelected: isSelectedDate(item), dateNormal: !isSelectedDate(item) }">
-                {{item.date}}
-              </label>            
-            </div>
-          </div>
-          <div class="list rightList">
-            <div class="item-wrapper" v-for="(item, index) in timeItems" :key=index @click="onClickTime(item)">
-              <label class="time" v-bind:class="{ timeSelected: isSelectedTime(item), timeNormal: !isSelectedTime(item) }">{{item}}</label>  
-              <img v-if="isSelectedTime(item)" class="indicator" src="../../assets/image/change-icon/d1-yes@2x.png">          
-            </div>
-          </div>
+  <mt-popup v-model="visiable" position="bottom">
+    <div class="title-wrapper">
+      <label class="title">送货时间</label>
+      <div class="close-wrapper" @click="onClose">
+        <img class="close" src="../../assets/image/change-icon/close@2x.png">
+      </div>        
+    </div>
+    <div class="list-wrapper">
+      <div class="list leftList">
+        <div 
+          class="item-wrapper" 
+          v-bind:class="{ itemSelected: isSelectedDate(item), itemNormal: !isSelectedDate(item) }" 
+          v-for="(item, index) in items" 
+          :key=index @click="onClickDate(item)">
+          <label 
+            class="date" 
+            v-bind:class="{ dateSelected: isSelectedDate(item), dateNormal: !isSelectedDate(item) }">
+            {{item.date}}
+          </label>            
         </div>
       </div>
-    </div>    
-  </transition>
+      <div class="list rightList">
+        <div class="item-wrapper" v-for="(item, index) in timeItems" :key=index @click="onClickTime(item)">
+          <label class="time" v-bind:class="{ timeSelected: isSelectedTime(item), timeNormal: !isSelectedTime(item) }">{{item}}</label>  
+          <img v-if="isSelectedTime(item)" class="indicator" src="../../assets/image/change-icon/d1-yes@2x.png">          
+        </div>
+      </div>
+    </div>
+  </mt-popup>
 </template>
 
 <script>
 import { mapState, mapMutations, mapGetters } from 'vuex'
+import { Popup } from 'mint-ui'
 export default {
   name: 'DeliveryTime',
   data() {
     return {
-      currentValue: false,
+      visiable: false,
     };
   },
   computed: {
@@ -77,66 +74,22 @@ export default {
     onClickTime(item) {
       this.selectDeliveryTime(item)
       this.$emit('onClickTime', item)
+      this.close()
     },
     onClose() {
       this.close()
     },
     open() {
-      this.currentValue = true
+      this.visiable = true
     },
     close() {
-      this.currentValue = false
+      this.visiable = false
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-  .mask {
-    position: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    z-index: 50001;
-    background: rgba(0,0,0,.5);
-  }
-  .fade-enter {
-    transform: translate3d(-50%, -100%, 0);
-  }
-  .fade-enter-active {
-    
-  }
-  .fade-enter-to {
-
-  }
-  .fade-leave {
-
-  }
-  .fade-leave-active {
-    transform: translate3d(-50%, 100%, 0);
-  }
-  .fade-leave-to {
-
-  }
-  .content-wrapper {
-    position: fixed;
-    background-color: #fff;
-    width: 100%;
-    height: 350px;
-    text-align: center;
-    bottom: 0;
-    left: 50%;
-    max-height: 100%;
-    overflow-y: auto;
-    transform: translate3d(-50%, 0, 0);
-    backface-visibility: hidden;
-    transition: transform .3s ease-out;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: stretch;
-  }
   .title-wrapper {
     height: 48px;
     display: flex;

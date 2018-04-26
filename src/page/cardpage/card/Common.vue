@@ -1,5 +1,5 @@
 <script>
-import Bus from '../bus'
+import { openLink } from '../deeplink'
 export default {  
   props: {
     item: {
@@ -45,10 +45,9 @@ export default {
       } 
       return ''     
     },
-
-    onClick() {
-      Bus.$emit('onClick', this.item)
-    },
+    onClick() {      
+      openLink(this.$router, this.item.link)
+    },    
   },
 }
 </script>

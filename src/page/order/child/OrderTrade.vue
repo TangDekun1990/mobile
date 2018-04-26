@@ -3,12 +3,12 @@
   <div class="container">
     <!-- header -->
     <mt-header class="header" title="交易成功">
-      <header-item slot="left" v-bind:isBack=true v-on:onclick="goBack">
+      <header-item slot="left" v-bind:isBack=true v-on:onclick="goBack()">
       </header-item>    
     </mt-header> 
     <!-- body -->
     <div class="order-trade-body">
-      <img src="../../../assets/image/change-icon/successful_deal_empty@2x.png">
+      <img src="../../../assets/image/change-icon/deal_suc@2x.png">
 			<p>交易成功，卖家将受到您的货款！</p>
 			<div>
         <button v-on:click="goOrderComment()">立即评价</button>
@@ -25,7 +25,7 @@ import { Header } from 'mint-ui'
 export default { 
   methods: {  
     goBack() {
-      this.$router.go(-1); 
+      this.$router.push({name: 'order'}); 
     },
     goOrderDetail() {
       this.$router.push('OrderDetail');

@@ -14,11 +14,16 @@
 				isTop: false
 			}
 		},
+
+		props: {
+			target: {}
+		},
+
 		created() {
 			// this.srollertop = document.documentElement.scrollTop || document.body.scrollTop;
 			var that = this;
-			document.addEventListener('scroll', (event) => {
-	        	if (document.documentElement.scrollTop ||  document.body.scrollTop >= 100) {
+			this.target.addEventListener('scroll', (event) => {
+	        	if (this.target.scrollTop ||  this.target.scrollTop >= 100) {
 	        		that.isTop = false;
 	        	} else {
 	        		that.isTop = true;
@@ -33,8 +38,8 @@
 			 *  goBackTop： 回到顶部
 			 */
 			goBackTop() {
-				document.documentElement.scrollTop = 0;
-				document.body.scrollTop = 0;
+				console.log(this.target);
+				this.target.scrollTop = 0;
 				this.isTop = true;
 			}
 		}

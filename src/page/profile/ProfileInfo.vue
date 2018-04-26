@@ -10,7 +10,7 @@
 			<div class="ui-update-name">
 				<div class="common-update-avatar" @click="goStatus(1)">
 					<span>修改昵称</span>
-					<span class="info">{{username}}</span>
+					<span class="info update-user-name">{{username}}</span>
 				</div>
 			</div>
 			<!-- 修改性别 -->
@@ -195,16 +195,21 @@ export default {
 		height: 50px;
 		padding-right: 11px;
 		border-bottom: 1px solid #E8EAED;
-
-
-		span {
-			color: #4E545D;
-			font-size:15px;
-			&.info {
-				color: #7C7F88;
-				font-size: 12px;
-			}
+	}
+	span {
+		color: #4E545D;
+		font-size:15px;
+		&.info {
+			color: #7C7F88;
+			font-size: 12px;
 		}
+	}
+	span.update-user-name {
+		flex-basis: 70%;
+	    overflow: hidden;
+	    text-overflow: ellipsis;
+	    white-space: nowrap;
+	    text-align: right;
 	}
 }
 </style>

@@ -33,7 +33,8 @@
 		},
 
 		computed: mapState({
-			isSearch: state => state.product.isSearch
+			isSearch: state => state.product.isSearch,
+			user: state => state.auth.user
 		}),
 
 		watch: {
@@ -69,8 +70,13 @@
 			/*
 			 * goBack: 返回上一级
 			 */
-			goBack() {
-				this.$router.go(-1);
+			goBack() {	
+				let isFromHome = this.$route.params.isFromHome
+				if (isFromHome) {
+					this.$router.push({ name: 'home' })
+				}	else {
+					this.$router.go(-1);
+				}						
 			},
 
 			/*
@@ -88,7 +94,11 @@
 			 *  goCart: 跳转到购物车列表
 			 */
 			goCart() {
-				this.$router.push({'name': 'cart', 'params': {type: 0}})
+				if (this.user) {
+					this.$router.push({'name': 'cart', 'params': {type: 0}});
+				} else {
+					this.$router.push({'name': 'signin'});
+				}
 			}
 		}
 	}

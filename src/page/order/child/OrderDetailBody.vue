@@ -12,15 +12,36 @@
         <img src="../../../assets/image/change-icon/e5_box_white@2x.png">
         <span>待发货</span>
       </div>
+      <div class="receipt" v-if="orderDetail.order.status == 1 " v-on:click="goOrderrack(order.id)">
+        <label>
+          <img src="../../../assets/image/change-icon/e0_delivery@2x.png">
+          <span>订单创建完毕，等待仓库发货</span>
+        </label>
+        <img class="arrow" src="../../../assets/image/change-icon/enter@2x.png">
+      </div>
 
       <div class="image" v-if="orderDetail.order.status == 2">
-        <img src="../../../assets/image/change-icon/icon_car_white@2x.png">
-        <span>发货中</span>
+        <img src="../../../assets/image/change-icon/e5_box_white@2x.png">
+        <span>配送中</span>
+      </div>
+      <div class="receipt" v-if="orderDetail.order.status == 2" v-on:click="goOrderrack(order.id)">
+        <label>
+          <img src="../../../assets/image/change-icon/icon_car@2x.png">
+          <span>您的订单已拣货完毕，并打包成功</span>
+        </label>
+        <img class="arrow" src="../../../assets/image/change-icon/enter@2x.png">
       </div>
 
       <div class="image" v-if="orderDetail.order.status == 3">
         <img src="../../../assets/image/change-icon/e5_evaluation@2x.png">
-        <span>已收货，待评价</span>
+        <span>待评价</span>
+      </div>
+      <div class="receipt" v-if="orderDetail.order.status == 3" v-on:click="goOrderrack(order.id)">
+        <label>
+          <img src="../../../assets/image/change-icon/icon_car@2x.png">
+          <span>感谢你在温超商城购物</span>
+        </label>
+        <img class="arrow" src="../../../assets/image/change-icon/enter@2x.png">
       </div>
 
       <div class="image" v-if="orderDetail.order.status == 4">
@@ -42,7 +63,7 @@
         <div>
           <img src="../../../assets/image/change-icon/e5_address@2x.png">
           <span>{{orderDetail.order.consignee.name}}</span>
-          <span>{{orderDetail.order.consignee.mobile}}</span> 
+          <span class="mobile">{{orderDetail.order.consignee.mobile}}</span> 
         </div>
         <p>{{orderDetail.order.consignee.address}}</p>
       </div>
@@ -52,24 +73,28 @@
           <img src="../../../assets/image/change-icon/e5_service@2x.png">
         </a>
       </div>
-      <!-- v-if="orderDetail.order.goods.length >= 3  -->
-      <div class="container" v-for="(item, index) in orderDetail.order.goods" v-bind:key="item.id">
-        
+
+      <div class="containers" v-for="(item, index) in orderDetail.order.goods" v-bind:key="item.id" v-on:click="getOrderDetail(item.product.id)" v-if="index <= orderIndex">
         <img class="photo" v-bind:src="item.product.photos[0].large">
         <div class="right-wrapper">
           <label class="title">{{item.product.name}}</label>
-          <label class="count">数量：{{item.total_amount}}</label>
           <div class="desc-wrapper">
-            <label class="price">￥{{toFixedPrice(item.product_price)}}</label>
+            <label class="price">AED {{utils.currencyPrice(item.product_price)}}</label>
+            <label class="count">x{{item.total_amount}}</label>
           </div>
         </div>
       </div>  
+
+      <div class="onClick" v-if="orderDetail.order.goods.length > 3 && !isShow ">
+          <p v-on:click="getNumber()">还有 {{orderDetail.order.goods.length - 3}} 件</p>
+      </div>
+
       <div class="detail">
         <div class="number">
           <label>订单编号：{{orderDetail.order.sn}} &nbsp;
-            <input type="submit" value=" 复制 " v-on:click="getCopy()"> 
+            <input type="submit" class="copyBut" :data-clipboard-text="orderDetail.order.sn" value=" 复制 " v-on:click="getCopy()"> 
           </label> 
-          <p>下单时间：{{orderDetail.order.created_at | convertTime}}</p>
+          <p>下单时间：{{orderDetail.order.created_at * 1000 | convertTime}}</p>
         </div>
       <div class="pay">
           <p>支付方式：货到付款</p>
@@ -86,7 +111,7 @@
         </checkout-desc>
         <checkout-desc class="desc-item" title="+运费" :subtitle="getOrderShippingPrice">
         </checkout-desc>
-        <checkout-desc class="desc-item" v-for="(item, index) in getPromos" :key="index" :title="getPromoTitle(item)" :subtitle="getOrderDiscountPrice(item)">
+        <checkout-desc class="desc-item" v-for="(item, index) in getPromos" :key="index" :title=" '-' + getPromoTitle(item)" :subtitle="getOrderDiscountPrice(item)">
         </checkout-desc>
         <label class="amount">实付款 : <span> {{ getOrderTotalPrice }}</span> </label>
       </div>
@@ -112,11 +137,10 @@
 
       <!-- 发货中按钮 -->
 			<div class="btn"  v-if="orderDetail.order.status == 2">
-			  <button v-on:click="track(orderDetail.order.id)">查看物流</button>
-					<button class="buttonbottom" v-on:click="confirm(orderDetail.order.id,index)">确认收货</button>
+				<button class="buttonbottom" v-on:click="confirm(orderDetail.order.id, index)">确认收货</button>
 			</div>
 
-      <!-- 已收货，待评价 -->
+      <!-- 待评价 -->
 			<div class="btn" v-if="orderDetail.order.status == 3" >
 				<button v-on:click="goComment(orderDetail.order.id)">评价晒单</button>
 				<button class="buttonbottom" v-on:click="goBuy()">再次购买</button>
@@ -149,6 +173,7 @@
   import Promos from '../../checkout/Promos'
   import { orderGet, orderReasonList, orderCancel, orderConfirm} from '../../../api/network/order' //订单详情 //获取退货原因 //取消订单
   import { Toast } from 'mint-ui';
+  import Clipboard from 'clipboard';  
   export default {
      mixins: [ Promos ],
     data() {
@@ -164,6 +189,8 @@
         index:'',
         order: {},
         total_price: [],
+        orderIndex: 2,
+        isShow: false
       }
     },
      props: {
@@ -202,6 +229,7 @@
       complete(id, index) {
         this.popupVisible = false;
         this.getordersuccess(id, index);
+        this.$router.replace('/order');
       },
       // 去支付
       payment() {
@@ -236,8 +264,8 @@
       // 确认收货
       confirm(id,index) {
         MessageBox.confirm('是否确认收货？', '确认收货').then(action => {        
-        this.$router.push('/OrderTrade');
         this.orderConfirms(id,index);
+        window.location.reload();
         });
       },
       // 获取确认收货数据
@@ -256,18 +284,14 @@
 
       // 再次购买
       goBuy() {
-        this.$router.push({ name:'cart'})
+        this.$router.push({ name: 'cart' })
       },
       getOrderDiscountPrice(item) {
-        return '-AED ' + (item.price ? item.price : 0)
+        return 'AED ' + (item.price ? item.price : 0)
       }, 
-      // 金额处理
-      toFixedPrice(price) {
-        return parseFloat(price).toFixed(2)
-      },
       getFormatPrice (key) {
         let price = this.getPriceByKey(key)
-        let priceStr = 'AED ' + (price ? this.toFixedPrice(price) : '')
+        let priceStr = 'AED ' + (price ? this.utils.currencyPrice(price) : '')
         return priceStr
       },
       getPriceByKey(key) {
@@ -288,20 +312,46 @@
                   totalPrice += parseFloat(total_price[i].total_price) 
                 }
               }
-              return 'AED ' + this.toFixedPrice(totalPrice)
+              return 'AED ' + this.utils.currencyPrice(totalPrice)
           } else {
-              return 'AED ' + this.toFixedPrice(totalPrice);
+              return 'AED ' + this.utils.currencyPrice(totalPrice);
             }
       }, 
       
       // 复制
       getCopy() {
+        var clipboard = new Clipboard('.copyBut')  
+        clipboard.on('success', e => {  
+          console.log('复制成功')  
+          // 释放内存  
+          clipboard.destroy()  
+        })  
+        clipboard.on('error', e => {  
+          // 不支持复制  
+          console.log('该浏览器不支持自动复制')  
+          // 释放内存  
+          clipboard.destroy()  
+        })  
         Toast({
           message: '复制成功',
-          iconClass: require('../../../assets/image/change-icon/e5_checkmark_toast@2x.png'),
-          duration: 3000
+          iconClass: 'mintui mintui-field-success',
+          duration: 2000
         });
       },
+
+      // 去商品详情
+      getOrderDetail(orderId) {
+        this.$router.push({name: 'detail', params:{id: orderId}})
+      },
+      // 点击展示所有商品
+      getNumber(){
+        this.orderIndex = this.orderDetail.order.goods.length - 1;
+        this.isShow = true;
+      },
+      // 从订单详情去订单跟踪页面
+      goOrderrack(id) {
+        this.$router.push({name: 'orderTrack', params: {orderTrack: id}})
+      }
     },
     computed: {
       getPromos: function () {      
@@ -320,7 +370,7 @@
         let priceStr = ''
         let price = this.getPriceByKey('shipping')
         if (price) {
-          priceStr = 'AED ' + this.toFixedPrice(price.price)
+          priceStr = 'AED ' + this.utils.currencyPrice(price.price)
         } else {
           priceStr = '免运费'
         }
@@ -342,7 +392,7 @@
     display: flex;
     justify-content:flex-start;
     align-items:center;
-     img {
+    img {
       height: 18px;
       padding: 0px 12px;
     }
@@ -351,17 +401,53 @@
       color:#fff;
     }
   }
-  .container {
+  .receipt {
+    display: flex;
+    justify-content:space-between;
+    align-items:center;
+    height:44px;
+    background-color: #fff;
+    margin-bottom:8px;
+    label {
+      display: flex;
+      align-items: center;
+    }
+    img {
+      height: 16px;
+      margin: 0px 15px 0px 10px;
+    }
+    .arrow {
+      width:5px;
+      height:10px;
+    }
+    span {
+      font-size: 14px;
+      color:#4E545D;
+    }
+  }
+  .containers {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     align-items: stretch;
     background-color: #fff;
+    border-bottom: 1px solid #E8EAED;
+  }
+  .onClick {
+    height: 44px;
+    line-height: 44px;
+    text-align: center;
+    background-color: #fff;
+    p {
+      font-size:14px;
+      color:#4E545D;
+    }
   }
   .photo {
-    width: 70px;
-    height: 70px;
-    margin: 12px;
+    width: 80px;
+    height: 80px;
+    margin: 15px 10px 15px 15px;
+    border: 1px solid #E8EAED;
   }
   .right-wrapper {
     display: flex;
@@ -369,10 +455,11 @@
     justify-content: flex-start;
     align-items: stretch;
     padding:0px 15px 0px 0px;   
+    width:100%;
     overflow: hidden;
   }
   .title {
-    margin-top: 8px;
+    margin-top: 15px;
     color: #4E545D;
     font-size: 14px;  
     margin-right: 10px;  
@@ -393,8 +480,7 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    margin-top: 12px;
-    margin-right: 10px;
+    margin-top: 44px;
   }
   .price {
     color: #4E545D;
@@ -407,11 +493,10 @@
     margin-right: 10px;
   }
   .address {
-    height: 100px;
+    height: 87px;
     background-color: #fff;
     div {
-      padding: 15px 10px 10px;
-      
+      padding: 11px 10px 0px;  
     }
     img {
       height: 16px;
@@ -419,11 +504,20 @@
     span {
       color:#4E545D;
       font-size:16px;
+      &.mobile{
+        padding-left: 21px;
+      }
     }
     p {
-      padding: 10px 36px 14px 15px;
+      margin: 5px 18px 11px 32px;
       font-size: 14px;
       color:#7C7F88;
+
+      overflow:hidden; 
+      text-overflow:ellipsis;
+      display:-webkit-box; 
+      -webkit-box-orient:vertical;
+      -webkit-line-clamp:2; 
     }
   }
    
@@ -569,4 +663,11 @@
     }
   }
   
+</style>
+
+<!-- 字体图标样式覆盖 -->
+<style>
+  .mint-toast-icon{
+    font-size:38px;
+  }
 </style>

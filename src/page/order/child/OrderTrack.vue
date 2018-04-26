@@ -8,19 +8,20 @@
         <p class="number">订单编号：{{trackList.code}}</p>
         <p class="source">承运来源：{{trackList.vendor_name}}</p>
     </div>
+
     <div class="logistics">
-      <div class="pic">
-        <img class="imgone" src="../../../assets/image/change-icon/e5_dot_red@2x.png">
-        <img class="imgtwo" src="../../../assets/image/change-icon/e5_dot@2x.png">
-        <img class="imgthree" src="../../../assets/image/change-icon/e5_dot@2x.png">
-      </div>
-      <div class="info">
-        <div class="match" v-for="(item,index) in trackList.status" v-bind:key="item.id">
-          <label>{{item.content}}</label> <br>
-          <span>{{item.datetime | convertTime}}</span>
+        <div class="info">
+          <div class="match" v-for="(item,index) in trackList.status" v-bind:key="item.id" v-bind:class="{'line': index == trackList.status.length-1}">
+            <img class="imgone" src="../../../assets/image/change-icon/e5_dot_red@2x.png" v-if="index == 0">
+            <img class="imgthree" src="../../../assets/image/change-icon/e5_dot@2x.png" v-if="index != 0">
+            <div>
+                <p>{{item.content}}</p>
+                <span>{{item.datetime * 1000 | convertTime}}</span>
+            </div>
+          </div>
         </div>
-      </div>
     </div>
+
   </div>
 </template>
 
@@ -46,7 +47,6 @@ export default {
     getShippingStatusGet(id) {
       shippingStatusGet(id).then( res => {
         if(res) {
-          this.shippingList = Object.assign([],this.shippingList, res.order);
           this.trackList = res;
         }
       })
@@ -84,56 +84,58 @@ export default {
       }
     }
     .logistics {
-      height:265px; 
+      height:auto; 
+      width: auto;
       background:rgba(255,255,255,1);
-      box-shadow: 0px 0.5px 0px 0px rgba(232,234,237,1), 0px -0.5px 0px 0px rgba(232,234,237,1);
+      border-bottom: 1px solid rgba(232,234,237,1);
+      padding: 15px;
       margin-top: 10px;
-      display:flex;
-      flex-direction:row;
-     .pic {
-       float: left;
-      //  width:1px;
-      //  height:190px; 
-      //  background:rgba(197,203,209,1);
-      //  border-radius: 3px;
-       margin: 24px;
-        img  {
-        width:11px; 
-        height:11px;
-        
-        .imgone {
-          
-        } 
-        .imgtwo {
-          padding-top:20px;
-        }
-        }
-        .imgthree {
-          width:7px;
-          height:7px; 
-        }
-      }
       .info {
-        float:right;
-        // width:95%;
-        padding-left:9px;
+        width:auto;
+        padding-left:20px;
         .match {
-          label {
-            font-size:14px;
-            font-family:'PingFangSC-Regular';
-            color:rgba(78,84,93,1);
-            line-height:20px;
-            padding:15px 15px 5px 0px;
-            display: inline-block;
+          width: auto;
+          position: relative;
+          &.line{
+            div {
+              margin-bottom: 15px; 
+              padding-bottom:0px;
+              border-left:none;
+              span {
+                border-bottom:none;
+              }
+            }
           }
-        span {
-          height:20px; 
-          font-size:13px;
-          font-family:'PingFangSC-Regular';
-          color:rgba(175,176,179,1);
-          line-height:20px;
-          padding: 0px 0px 15px 0px;
-        }
+          img {
+            width: 11px;
+            height: 11px;
+            position: absolute;
+            top: 0px;
+            left: -4.5px;
+          }
+          div {
+            padding-left: 25px;
+            border-left: 1px solid #C5CBD1;
+            padding-bottom: 15px;
+            p {
+              width: 100%;
+              font-size:14px;
+              color:#4E545D;
+              line-height:20px;
+              margin: 0px;
+              padding: 0px;
+            }
+            span {
+              height:20px; 
+              font-size:13px;
+              color:rgba(175,176,179,1);
+              line-height:20px;
+              padding: 5px 0px;
+              display: block;
+              border-bottom: 1px solid #E8EAED;
+              width: 100%;
+            }
+          }
       }
       .bale {
         height:75px; 

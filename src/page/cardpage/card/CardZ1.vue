@@ -15,7 +15,7 @@ export default {
       return {
         width: this.photoWidth + 'px',
         height: this.photoHeight + 'px',
-        'border-radius': this.photoWidth / 2.0 + 'px'
+        // 'border-radius': this.photoWidth / 2.0 + 'px'
       }
     }
   },
@@ -23,7 +23,7 @@ export default {
     this.$nextTick(() => {
       let height = this.$el.clientHeight
       let titleHeight = this.$refs.title.clientHeight
-      this.photoHeight = height - 5 * 3 - titleHeight
+      this.photoHeight = height - 5 * 2 - 10 - titleHeight
       this.photoWidth = this.photoHeight
     })
   },
@@ -38,20 +38,20 @@ export default {
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    background-color: $cardbgColor;     
+    background-color: $cardbgColor;  
   }
   .title {
     font-size: $h5;
     color: $titleTextColor; 
-    margin-top: 5;   
+    margin-top: 5px;   
     margin-left: 2px;
     margin-right: 2px;
-    margin-bottom: 5px;
+    // margin-bottom: 5px;
     text-align: center;
     @include limit-line(1);
   }
   .photo {
-    margin-top: 5px;
+    margin-top: 8px;
   }
 </style>
 

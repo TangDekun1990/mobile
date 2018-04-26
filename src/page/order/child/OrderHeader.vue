@@ -15,7 +15,12 @@ import { Header } from 'mint-ui'
 export default { 
   methods: {  
     goBack() {
-      this.$router.go(-1) 
+      let isFromHome = this.$route.params.isFromHome
+      if (isFromHome) {
+        this.$router.go(-1)
+      } else {
+        this.$router.push('/profile') 
+      }      
     },
   }
 }

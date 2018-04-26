@@ -12,7 +12,7 @@
     <div class="about-body">
       <div class="logoimg">
         <img class="logo" src="../../../assets/image/change-icon/logo_wenchao@2x.png">
-        <p>For iPhone V6.1.0</p>
+        <p> V6.1.0 </p>
         <img class="code" src="../../../assets/image/change-icon/img_qrcode@2x.png">
         <p>扫描二维码，您的朋友也可以下载温超客户端！</p>
       </div>
@@ -21,30 +21,34 @@
           <span>公司简介</span> 
           <img src="../../../assets/image/change-icon/enter@2x.png" >
         </p>
-        <p>
+        <!-- <p>
           <span>关于我们</span> 
           <img src="../../../assets/image/change-icon/enter@2x.png" >
-        </p>
+        </p> -->
       </div>
       <div class="copy">
         <p>Copyright©2004-2017</p>
         <p>温超wenchao.ae版权所有</p>
       </div>
         <mt-popup v-model="popupVisible" position="bottom" class="mint-popup">
-        <div class="share">
-          <p>分享到</p>
-          <div class="image">
-            <label v-on:click="goWachat()">
-              <img src="../../../assets/image/change-icon/c7_commodity_list_2@2x.png"> 
-              <p>微信</p>
-            </label>
-            <label>
-              <img src="../../../assets/image/change-icon/c7_commodity_list_3@2x.png"> 
-              <p>QQ</p>
-            </label>
-          </div>
-          <p class="cancel" v-on:click="cancelInfo()">取消</p>
-        </div>     
+          <div class="share">
+            <h3>分享到</h3>
+            <div class="image">
+              <label v-on:click="goWachat()">
+                <img src="../../../assets/image/change-icon/c7_commodity_list_2@2x.png"> 
+                <p>微信</p>
+              </label>
+              <label>
+                <img src="../../../assets/image/change-icon/c7_commodity_list_1@2x.png"> 
+                <p>微博</p>
+              </label>
+              <label>
+                <img src="../../../assets/image/change-icon/c7_commodity_list_3@2x.png"> 
+                <p>QQ</p>
+              </label>
+            </div>
+            <p class="cancel" v-on:click="cancelInfo()">取消</p>
+          </div>     
        </mt-popup>
     </div>
   </div>
@@ -95,14 +99,14 @@ import { Actionsheet } from 'mint-ui'
           margin-top: 14px;
         }
         .code {
-          width: 150px;
-          height: 150px;
-          // padding:12px; 
+          width: 105px;
+          height: 105px;
+          margin-top: 12px;
+          margin-bottom: 10px;
         }
         p {
           height:17px; 
           font-size:12px;
-          font-family:'PingFangSC-Regular';
           color:rgba(124,127,136,1);
           line-height:17px;
         }
@@ -110,31 +114,33 @@ import { Actionsheet } from 'mint-ui'
       .introduce {
         padding-top:30px;
         p {
-          height:40px;
+          height:44px;
           background-color: #fff;
           padding:0px 15px;
           display: flex;
           justify-content: space-between;
           align-items: center;
-          border-bottom:1px solid #E8EAED;
           span {
            height:20px; 
            font-size:14px;
-           font-family:'PingFangSC-Regular';
            color:rgba(78,84,93,1);
            line-height:20px;
           }
           img {
             width:5px;
             height:10px; 
-
           }
         }
       }
       .copy {
-        padding:207px 0px 25px 0px;
+        position: absolute;
+        bottom: 25px;
+        left: 0;
+        right: 0;
         p {
           text-align: center;
+          color:#7C7F88;
+          font-size:12px;
         }
       }
       .mint-popup {
@@ -142,26 +148,40 @@ import { Actionsheet } from 'mint-ui'
       }
       .share {
         width:100%;
-        height:200px;
-        background:rgba(240,242,245,1);
-        p {
+        height:230px;
+        background-color:#F6F6F6;
+        h3 {
           text-align: center;
-          padding-top: 15px;
-          font-size: 16px; 
+          padding-top: 24px;
+          padding-bottom: 27px;
+          font-size: 19px; 
+          color:#7C7F88;
         }
         .image {
           display: flex;
           justify-content:space-around;
           align-items: center;
-          padding-bottom:20px;
           img {
             width:60px;
             height:60px;
+            padding-bottom: 12px;
+          }
+          p {
+            text-align: center;
+            font-size: 14px;
+            color:#8F8E94;
           }
         }
         .cancel {
           background-color: #fff;
-          padding-bottom:8px;
+          text-align: center;
+          height:44px;
+          line-height:44px;
+          position: absolute;
+          width: 100%;
+          bottom: 0;
+          color:#4E545D;
+          font-size:17px;
         }
       }
     }

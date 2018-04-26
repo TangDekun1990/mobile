@@ -27,6 +27,11 @@ import HelpUrl from '../page/profile/child/HelpUrl'
 import News from '../page/profile/News'
 import NewsOrderMessage from '../page/profile/child/NewsOrderMessage'
 import NewsNoticeMessage from '../page/profile/child/NewsNoticeMessage'
+import NoticeMessageInfo from '../page/profile/child/NoticeMessageInfo'
+import Collection from '../page/profile/Collection'
+
+// cardpage
+import CardPage from '../page/cardpage/CardPage'
 
 // address
 import AddressList from '../page/address/AddressList'
@@ -61,6 +66,7 @@ import OrderSubmit from '../page/order/child/OrderSubmit'
 
 // 商品详情
 import Detail from '../page/product-detail/index'
+import redetail from '../page/product-detail/redetail'
 
 // 购物车
 import Cart from '../page/cart/cart'
@@ -83,7 +89,10 @@ export default [
 			{
 				name: 'home',
 				path: '/home',
-				component: Home
+				component: Home,
+				meta: {
+					keepAlive: true
+				},
 			},
 			{
 				name: 'category',
@@ -164,6 +173,16 @@ export default [
 				component: NewsNoticeMessage
 			},
 			{
+				name: 'NoticeMessageInfo',
+				path: '/noticeMessageInfo',
+				component: NoticeMessageInfo
+			},
+			{
+				name: 'Collection',
+				path: '/collection',
+				component: Collection
+			},
+			{
 				name: 'addressList',
 				path: '/addressList',
 				component: AddressList
@@ -173,7 +192,7 @@ export default [
 				path: '/addressManage',
 				component: AddressManage,
 				meta: {
-					keepAlive: true,
+					keepAlive: false,
 				},
 			},
 			{
@@ -181,7 +200,7 @@ export default [
 				path: '/addressManage/addressEdit',
 				component: AddressEdit,
 				meta: {
-					keepAlive: true,
+					keepAlive: false,
 				},
 			},
 			{
@@ -194,15 +213,15 @@ export default [
 				path: '/checkout/couponUsable',
 				component: CouponUsable,
 				meta: {
-					keepAlive: true,
+					keepAlive: false,
 				},
-			},
+			},			
 			{
 				name: 'checkout',
 				path: '/checkout',
 				component: Checkout,
 				meta: {
-					keepAlive: true,
+					keepAlive: false,
 				},
 			},
 			{
@@ -229,6 +248,11 @@ export default [
 				name: 'invoice',
 				path: '/checkout/invoice',
 				component: Invoice
+			},
+			{
+				name: 'cardpage',
+				path: '/cardpage/:name',
+				component: CardPage
 			},
 			{
 				name: 'order',
@@ -262,7 +286,7 @@ export default [
 			},
 			{
 				name: 'detail',
-				path: '/detial/:id?',
+				path: '/detial/:id?/:productId?',
 				component: Detail
 			},
 			{
@@ -292,6 +316,11 @@ export default [
 				name: 'integralRule',
 				path: '/integralRule',
 				component: IntegralRule
+			},
+			{
+				name: 'redetail',
+				path: '/redetail/:id?',
+				component: redetail
 			}
 		]
 	}

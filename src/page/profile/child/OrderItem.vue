@@ -3,7 +3,7 @@
     <img class="order-item-icon" v-bind:src="icon"/>
     <label class="item-title order-item-title">{{title}}</label>
     <span class="number" v-if="quantity <= 100">{{ quantity }}</span>
-		<span class="number" v-if="quantity >= 100 ">99+</span>
+		<!-- <span class="number" v-if="quantity >= 100 ">99+</span> -->
   </div>
 </template>
 
@@ -12,7 +12,7 @@ import { orderList } from '../../../api/network/order';
 export default {
   data() {
     return {
-      quantity: 0 , //相关订单数量
+      quantity: 0, //相关订单数量
     }
   },
   props: {
@@ -33,18 +33,18 @@ export default {
 	// 	this.getNumber();
 	// },
   methods: {
-    onclick() {
-      let params = {'order': this.id};
-      this.$router.push({'name': this.testAttr, 'params':params});
+    onclick() {      
+      // Code Review: 去掉testAttr
+      this.$router.push({name: this.testAttr, params: {order: this.id}});
     },
     // 获取订单数量
-    // getNumber() {
-		// 	orderList().then(res => {
-		// 		if (res) {
-		// 			this.quantity = res;
-		// 		}
-		// 	})
-		// },    
+    getNumber() {
+			orderList().then(res => {
+				if (res) {
+					this.quantity = res;
+				}
+			})
+		},    
   }
 }
 </script>

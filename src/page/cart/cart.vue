@@ -1,7 +1,7 @@
 <template>
 	<div class="ui-cart-wrapper">
 		<!-- header -->
-		<v-cart-header ref="header" :issShowTabbar="type"></v-cart-header>
+		<v-cart-header ref="header" :issShowTabbar="type" :isEmpty="isEmpty"></v-cart-header>
 		<div v-if='!isEmpty'>
 			<!-- list -->
 			<v-cart-list ref='list' :issShowTabbar="type" :isCheckedAll="isFinish"></v-cart-list>
@@ -9,14 +9,17 @@
 			<v-cart-promos ref='promos' :issShowTabbar="type" :isCheckedAll="isFinish" :isshowpromos="isshowpromos"></v-cart-promos>
 			<!-- footer -->
 			<v-cart-footer :issShowTabbar="type" :isCheckedAll="isFinish" :isStatus="isStatus"></v-cart-footer>
-			<!-- 底部tabbar -->
-			<v-cart-tabBar v-if='type'></v-cart-tabBar>
 		</div>
+
 		<div v-if='isEmpty' class="empty-cart">
 			<img src="../../assets/image/tabbar-icon/tabbar_cart_nor@2x.png">
 			<p>您的购物车还是空的</p>
-			<span>随便逛逛</span>
+			<span @click="goHome()">随便逛逛</span>
 		</div>
+
+		<!-- 底部tabbar -->
+		<v-cart-tabBar v-if='type'></v-cart-tabBar>
+
 	</div>
 </template>
 
@@ -159,6 +162,13 @@
 				}else {
 					this.isEmpty = true;
 				}
+			},
+
+			/*
+			 * goHome: 跳转到首页
+			 */
+			goHome() {
+				this.$router.push({'name': 'home'});
 			}
 		}
 	}

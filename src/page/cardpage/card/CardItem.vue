@@ -9,8 +9,7 @@
   <card-v3-t v-else-if="isCardV3T" :item="item"></card-v3-t>
   <card-v4-b v-else-if="isCardV4B" :item="item"></card-v4-b>
   <card-v4-t v-else-if="isCardV4T" :item="item"></card-v4-t>
-  <card-v5-b v-else-if="isCardV5B" :item="item"></card-v5-b>
-  <card-v5-t v-else-if="isCardV5T" :item="item"></card-v5-t>
+  <card-v5 v-else-if="isCardV5" :item="item"></card-v5>  
   <card-z1 v-else-if="isCardZ1" :item="item"></card-z1>
   <card-z2 v-else-if="isCardZ2" :item="item"></card-z2>
   <card-z2-l v-else-if="isCardZ2L" :item="item"></card-z2-l>
@@ -31,8 +30,7 @@ import {
   CardV3T,
   CardV4B,
   CardV4T,
-  CardV5B,
-  CardV5T,
+  CardV5,
   CardZ1,
   CardZ2,
   CardZ2L,
@@ -79,11 +77,8 @@ export default {
     isCardV4T: function () {
       return this.isCardItemByStyle(ENUM.CARD_STYLE.V4T)
     },
-    isCardV5B: function () {
-      return this.isCardItemByStyle(ENUM.CARD_STYLE.V5B)
-    },
-    isCardV5T: function () {
-      return this.isCardItemByStyle(ENUM.CARD_STYLE.V5T)
+    isCardV5: function () {
+      return this.isCardItemByStyle(ENUM.CARD_STYLE.V5B) || this.isCardItemByStyle(ENUM.CARD_STYLE.V5T)
     },
     isCardZ1: function () {
       return this.isCardItemByStyle(ENUM.CARD_STYLE.Z1)

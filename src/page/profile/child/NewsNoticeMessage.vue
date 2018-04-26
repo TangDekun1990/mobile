@@ -6,8 +6,8 @@
       </header-item>    
     </mt-header>
     <!-- body -->
-    <div class="notice-message-body" v-for="(item, index) in NoticeMessage">
-      <p>{{item.created_at | convertTime }}</p>
+    <div class="notice-message-body" v-for="(item, index) in NoticeMessage" v-on:click="goNotice(item.link)">
+      <p>{{item.created_at * 1000 | convertTime }}</p>
       <div class="notice-track">
         <span>{{item.title}}</span>
         <div class="notice-status"> 
@@ -38,13 +38,19 @@ export default {
     goBack() {
       this.$router.go(-1) 
     },
+    // 获取通知消息数据
     getmessageSystemList() {
       messageSystemList(1, 10).then( res => {
         if(res) {
           this.NoticeMessage = res.messages;
         }
       })
-    }
+    },
+    // 去到通知消息详情页面
+    goNotice(link) {
+      this.$router.push({ name: 'NoticeMessageInfo', params: {'link': link}})
+      // window.location.href = link;
+    }  
   }
 }
 </script>
@@ -65,6 +71,7 @@ export default {
         margin-top:20px;
         margin-bottom:10px;
         font-size:12px;
+        color: #7C7F88;
       }
       .notice-track {
         height:96px; 

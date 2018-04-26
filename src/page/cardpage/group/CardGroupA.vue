@@ -1,7 +1,6 @@
 <template>
   <div class="group-a-container">
     <card-item 
-      class="item" 
       v-bind:style="getItemStyle" 
       v-for="(item, index) in getItems" 
       :key="index" 
@@ -68,7 +67,7 @@ export default {
         case ENUM.CARDGROUP_LAYOUT.A2XXH: 
         {                
           columnCount = 2
-          ratio = 7.0 / 10.0
+          ratio = 5.0 / 7.0 // TODO:
         } 
         break; 
         case ENUM.CARDGROUP_LAYOUT.A3S: 
@@ -154,10 +153,21 @@ export default {
       let seperatorWidth = (columnCount - 0) * 1 // 分割线宽度
       itemWidth = (width - seperatorWidth) / columnCount  
       itemHeight = itemWidth / ratio
-      return {
-        width: itemWidth + 'px',
-        height: itemHeight + 'px'
-      }
+      if (layout === ENUM.CARDGROUP_LAYOUT.A1H || 
+          layout === ENUM.CARDGROUP_LAYOUT.A1S || 
+          layout === ENUM.CARDGROUP_LAYOUT.N1) {
+        return {
+          'width': itemWidth + 'px',
+          'height': itemHeight + 'px'          
+        }
+      } else {
+        return {
+          'width': itemWidth + 'px',
+          'height': itemHeight + 'px',
+          'border-right': '1px solid #E8EAED',     
+          'border-bottom': '1px solid #E8EAED'
+        }
+      }      
     },
   },
   methods: {    
@@ -173,11 +183,6 @@ export default {
     align-items: stretch;
     flex-wrap: wrap;
     background-color: $cardbgColor;     
-  }
-  .item {
-    border-right: 1px solid $lineColor;
-    // border-top: 1px solid  $lineColor; 
-    border-bottom: 1px solid $lineColor; 
   }
 </style>
 

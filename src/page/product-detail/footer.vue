@@ -11,11 +11,12 @@
 					<span>AED {{ detailInfo.price }}</span>
 				</div>
 			</div>
-			<div class="right" v-on:click="addShopping(true)" v-bind:class="{'disabled-cart': detailInfo.good_stock <= 0, 'active-cart': detailInfo.good_stock > 0}">加入购物车</div>
+			<div class="right active-cart" v-on:click="addShopping(true)" v-if='detailInfo.good_stock > 0'>加入购物车</div>
+			<div class="right disabled-cart" v-if='detailInfo.good_stock <= 0'>加入购物车</div>
 		</div>
 		<p class="good-stock-none" v-if='detailInfo.good_stock <= 0'>所选产品暂时无货，非常抱歉！</p>
 
-		<shopping v-if='isShowcartInfo'></shopping>
+		<shopping v-if='isShowcartInfo' :isShowcartInfo="isShowcartInfo"></shopping>
 
 		<!-- 加入购物车显示动画 -->
 		<div class="ui-cart-animation" v-if='isAnimation'>
@@ -45,7 +46,8 @@
 		computed: mapState({
 			//是否显示购物车浮层
 			isShowcartInfo: state => state.detail.isShowcartInfo,
-			detailInfo: state => state.detail.detailInfo
+			detailInfo: state => state.detail.detailInfo,
+			user: state => state.auth.user
 		}),
 
 		created(){
@@ -83,7 +85,11 @@
 
 			// 购物车
 			goCart() {
-				this.$router.push({'name':'cart'});
+				if (this.user) {
+					this.$router.push({'name':'cart', 'params': {type: 0}});
+				} else {
+					this.$router.push({'name': 'signin'});
+				}
 			}
 		}
 	}
