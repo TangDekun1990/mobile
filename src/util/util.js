@@ -89,11 +89,48 @@ export default {
 		return parseFloat(price).toFixed(2)
 	},
 
+	/**
+	 * value 要判断的参数值
+	 * 是否是数值
+	 */
 	isNumber(value) {
 		let reg = new RegExp('^[0-9]*$')
 		if (!reg.test(value)) {
 			return false
 		}
 		return true
+	},
+
+	/**
+	 * beginAt 开始时间（时间戳）
+	 * endAt 结束时间（时间戳）
+	 */
+	activityStatus (beginAt, endAt) {
+		let status = -1 // (0: 未开始；1: 进行中；2: 已过期)
+		let timestamp = Date.parse(new Date()) / 1000
+		debugger
+		if (beginAt > timestamp) {
+			status = 0
+		} else if (timestamp > beginAt && timestamp < endAt) {
+			status = 1
+		} else if (timestamp > endAt) {
+			status = 2
+		}
+		return status
+	},
+
+	/**
+	 * interval 时间间隔（单位为s）
+	 * 把秒数换为*天*时*分*秒的时间格式
+	 */
+	formatTimeInterval (interval) {
+		let format = null
+		let day = parseInt(interval / 60.0 / 60.0 / 24.0)
+		let hour = parseInt(interval / 60 / 60 % 24)
+		let minute = parseInt(interval / 60 % 60)
+		let second = interval % 60
+		debugger
+		format = day + ' 天 ' + hour + ' 时 ' + minute + ' 分 ' + second + ' 秒'
+		return format
 	}
 }

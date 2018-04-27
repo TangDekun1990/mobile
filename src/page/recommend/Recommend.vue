@@ -154,7 +154,7 @@
 		padding: 0px;
 		margin: 0px;
 		text-align: center;
-    	padding: 10px 0px;
+    padding: 10px 0px;
 	}
 }
 </style>
