@@ -20,11 +20,11 @@
 <script>
 import { HeaderItem } from '../../../components/common'
 import { Header } from 'mint-ui'
-
+import { ENUM } from '../../../config/enum'
 export default { 
   methods: {  
     goBack() {
-      this.$router.go(-1); 
+      this.$router.push({ name: 'order', params: { order: ENUM.ORDER_STATUS.DELIVERIED }});
     },
     goOrder() {
       this.$router.push('home');

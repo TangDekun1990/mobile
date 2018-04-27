@@ -7,14 +7,14 @@ export const ORDERSTATUS = [
   },
   {
     'name': '配货中',
-    'id': ENUM.ORDER_STATUS.DISTRIBUTIONALL
+    'id': ENUM.ORDER_STATUS.DISTRIBUTION
   },
   {
     'name': '已取消',
     'id': ENUM.ORDER_STATUS.CANCELLED
   },
   {
-    'name': '已完成', //require('../../assets/image/change-icon/e3_seal@2x.png')
+    'name': '已完成',
     'id': ENUM.ORDER_STATUS.FINISHED
   },
   {
@@ -61,21 +61,21 @@ export const ORDERNAV = [
 export const IMAGE = [
   {
     name: '好评',
-    id: 0,
+    id: 3,
     img: require('../../assets/image/change-icon/e7_good_nor@2x.png'),
     activeImg: require('../../assets/image/change-icon/e7_good_sel@2x.png'),
     isActive: true
   },
   {
     name: '中评',
-    id: 1,
+    id: 2,
     img: require('../../assets/image/change-icon/e7_medium_nor@2x.png'),
     activeImg: require('../../assets/image/change-icon/e7_medium_sel@2x.png'),
     isActive: false
   },
   {
     name: '差评',
-    id: 2,
+    id: 1,
     img: require('../../assets/image/change-icon/e7_bad_nor@2x.png'),
     activeImg: require('../../assets/image/change-icon/e7_bad_sel@2x.png'),
     isActive: false

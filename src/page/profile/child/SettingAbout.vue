@@ -5,8 +5,8 @@
     <mt-header class="header" title="关于我们">
       <header-item slot="left" v-bind:isBack=true v-on:onclick="goBack">
       </header-item>     
-      <header-item slot="right" :icon="require('../../../assets/image/change-icon/b0_share@2x.png')" v-on:onclick="share()">
-      </header-item>  
+      <!-- <header-item slot="right" :icon="require('../../../assets/image/change-icon/b0_share@2x.png')" v-on:onclick="share()">
+      </header-item>   -->
     </mt-header>
     <!-- body -->
     <div class="about-body">
@@ -17,7 +17,7 @@
         <p>扫描二维码，您的朋友也可以下载温超客户端！</p>
       </div>
       <div class="introduce">
-        <p>
+        <p v-on:click="goIntroduce()">
           <span>公司简介</span> 
           <img src="../../../assets/image/change-icon/enter@2x.png" >
         </p>
@@ -66,14 +66,21 @@ import { Actionsheet } from 'mint-ui'
       goBack() {
         this.$router.go(-1) 
       },
+
       share() {
         this.popupVisible = true;
       },
+      // 取消分享
       cancelInfo() {
         this.popupVisible = false;
       },
+      // 分享到微信
       goWachat() {
         this.$router.push('home');
+      },
+      // 去公司简介页面
+      goIntroduce(url) {
+        this.$router.push({name: 'SettingIntroduce', params: {url: 'http://www.wenchao.ae/article-bangzhuzhongxin_wenchaojituan-102.html'}});
       }
     }
   }

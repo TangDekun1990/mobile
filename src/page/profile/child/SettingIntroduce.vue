@@ -1,7 +1,7 @@
 <template>
-  <div class="containers">
+  <div class="container">
     <!-- header -->
-    <mt-header class="header" :title="getTitle">
+    <mt-header class="header" title="公司简介">
       <header-item slot="left" v-bind:isBack=true v-on:onclick="goBack()"></header-item>  
       <!-- <mt-button slot="right" icon="more" v-on:click="getShow()"></mt-button>    -->
     </mt-header>
@@ -18,49 +18,44 @@
     </div>
     <mt-popup v-model="popupVisible" position="bottom" class="mint-popup">
       <div class="share">
-            <h3>分享到</h3>
-            <div class="image">
-              <label v-on:click="goWachat()">
-                <img src="../../../assets/image/change-icon/c7_commodity_list_2@2x.png"> 
-                <p>微信</p>
-              </label>
-              <label>
-                <img src="../../../assets/image/change-icon/c7_commodity_list_1@2x.png"> 
-                <p>微博</p>
-              </label>
-              <label>
-                <img src="../../../assets/image/change-icon/c7_commodity_list_3@2x.png"> 
-                <p>QQ</p>
-              </label>
-            </div>
-            <p class="cancel" v-on:click="cancelInfo()">取消</p>
-          </div>     
-       </mt-popup>
+          <h3>分享到</h3>
+          <div class="image">
+            <label v-on:click="goWachat()">
+              <img src="../../../assets/image/change-icon/c7_commodity_list_2@2x.png"> 
+              <p>微信</p>
+            </label>
+            <label>
+              <img src="../../../assets/image/change-icon/c7_commodity_list_1@2x.png"> 
+              <p>微博</p>
+            </label>
+            <label>
+              <img src="../../../assets/image/change-icon/c7_commodity_list_3@2x.png"> 
+              <p>QQ</p>
+            </label>
+          </div>
+        <p class="cancel" v-on:click="cancelInfo()">取消</p>
+      </div>     
+    </mt-popup>
     <webview :url.asyc="getUrl">
     </webview>
   </div>
 </template>
 
 <script>
-import { HeaderItem, Webview } from '../../../components/common'
-import { Header } from 'mint-ui'
-import { articleList } from '../../../api/network/article'; //文章列表
+import { Webview } from '../../../components/common'
 export default {
   data() {
     return {
-       isShow:false,
-       popupVisible: false,
-       articleData:{},
-       getUrl: this.$route.query.url ? this.$route.query.url :''
+      isShow:false,
+      popupVisible: false,
     }
   },
   computed: {
-    getTitle: function() {
-      let title = this.$route.query.title;
-      return title
-    }
-  },
-
+    getUrl: function () {
+      let url = this.$route.params.url;
+      return url 
+    },
+  },  
   methods: {   
     goBack() {
       this.$router.go(-1) 
@@ -69,13 +64,13 @@ export default {
     getShow() {
       this.isShow = !this.isShow               
     },
+     // 刷新页面
+    getRefresh() {
+      console.log('点击了');
+    },
     // 分享
     getShare() {
       this.popupVisible = true;
-    },
-    // 刷新页面
-    getRefresh() {
-      window.location.reload();   
     },
     // 分享到微信
     goWachat() {
@@ -85,23 +80,13 @@ export default {
     cancelInfo() {
       this.popupVisible = false;
     },
-    // 获取文章列表数据
-    getArticleList() {
-      articleList(0, 1, 10).then( res => {
-        if(res) {
-        this.articleData = Object.assign({}, res.articles[0]);
-        // debugger;
-        this.getUrl = this.articleData.url;
-        console.log(this.getUrl);
-        }
-      })
-    },
-  }
+  }  
 }
+  
 </script>
 
 <style lang="scss" scoped>
-  .containers {
+  .container {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -180,7 +165,6 @@ export default {
         margin: 0px;
       }
     }
-  }
-  
+  }   
 </style>
 

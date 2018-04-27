@@ -9,7 +9,7 @@
     <div class="help-body">
       <help-item v-for="(item, index) in articleData" v-bind:key="item.id" v-on:onclick="getHelpInfo(item.url, item.title)"
         class="section-footer" 
-        :icon="require('../../assets/image/change-icon/b10_order@2x.png')" 
+        :icon="require('../../assets/image/change-icon/e9_doc.png')" 
         :title="item.title"
         :url="item.url">
       </help-item>
@@ -48,8 +48,7 @@ export default {
       })
     },
     getHelpInfo(url, title) {
-      this.$router.push({ name: 'HelpUrl', params: {'url': url,'title': title}})
-      // window.location.href = url;
+      this.$router.push({ name: 'HelpUrl', query: {'url': url,'title': title}})
     }
   }
 }
