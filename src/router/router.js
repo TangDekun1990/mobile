@@ -76,7 +76,7 @@ import Recommend from '../page/recommend/Recommend'
 
 //
 import updateinfo from '../page/profile/child/Update'
-
+// /:category?/:brand?/:shop?/:keywords?/
 export default [
 	{
 		path: '/',
@@ -101,7 +101,7 @@ export default [
 			},
 			{
 				name: 'product',
-				path: '/product/:category?/:brand?/:shop?/:keywords?/',
+				path: '/product',
 				component: Product,
 				meta: {
 					keepAlive: false
@@ -215,7 +215,7 @@ export default [
 				meta: {
 					keepAlive: false,
 				},
-			},			
+			},
 			{
 				name: 'checkout',
 				path: '/checkout',
