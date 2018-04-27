@@ -15,7 +15,7 @@
       </div>       
       <div class="info-wrapper">
         <div class="info-item">0积分</div>
-        <div class="info-item">积分记录</div>
+        <div class="info-item" @click="goIntegral">积分记录</div>
       </div>
     </div>
     <div class="order-header" @click="goOrder">
@@ -164,6 +164,9 @@ export default {
   methods: {
     showLogin() {
       this.$router.push("/signin");
+    },
+    goIntegral() {
+      this.$router.push("/integralList");
     },
     goProfileInfo() {
       if (this.isOnline) {

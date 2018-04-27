@@ -46,7 +46,7 @@ export default {
 		},
 		goProduct(id) {
 			let params = {'category': id};
-			this.$router.push({'name':'product', 'params':params});
+			this.$router.push({'name':'product', 'query': params});
 		}
 	}
 }

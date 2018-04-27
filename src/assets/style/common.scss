@@ -351,3 +351,14 @@ span.cart-number {
     	}
 	}
 }
+
+// 提示框样式
+.confirm-button-red {
+	background:rgba(242,48,48,1);
+	color: #fff;	
+}
+
+.confirm-button-red:hover {
+	background:rgba(242,48,48,0.8);
+	color: #fff;	
+}

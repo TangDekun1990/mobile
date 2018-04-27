@@ -18,6 +18,7 @@ import CardZ2 from './CardZ2'
 import CardZ2L from './CardZ2L'
 import CardZ2P from './CardZ2P'
 import CardZ3 from './CardZ3'
+import CardZ3S from './CardZ3S'
 import CardZ4 from './CardZ4'
 
 Vue.component(CardH1L.name, CardH1L)
@@ -38,6 +39,7 @@ Vue.component(CardZ2.name, CardZ2)
 Vue.component(CardZ2L.name, CardZ2L)
 Vue.component(CardZ2P.name, CardZ2P)
 Vue.component(CardZ3.name, CardZ3)
+Vue.component(CardZ3S.name, CardZ3S)
 Vue.component(CardZ4.name, CardZ4)
 
 module.export = {
@@ -57,6 +59,7 @@ module.export = {
   CardZ2L,
   CardZ2P,
   CardZ3,
+  CardZ3S,
   CardZ4,
 }
 

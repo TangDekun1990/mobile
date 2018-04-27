@@ -39,9 +39,13 @@ import AddressList from '../page/address/AddressList'
 import AddressManage from '../page/address/AddressManage'
 import AddressEdit from '../page/address/AddressEdit'
 
-// coupon
+// integral
 import CouponList from '../page/coupon/CouponList'
 import CouponUsable from '../page/coupon/CouponUsable'
+
+// integral
+import IntegralList from '../page/integral/IntegralList'
+import IntegralRule from '../page/integral/child/IntegralRule'
 
 // checkout
 import Checkout from '../page/checkout/Checkout'
@@ -73,7 +77,7 @@ import Recommend from '../page/recommend/Recommend'
 
 //
 import updateinfo from '../page/profile/child/Update'
-
+// /:category?/:brand?/:shop?/:keywords?/
 export default [
 	{
 		path: '/',
@@ -98,7 +102,7 @@ export default [
 			},
 			{
 				name: 'product',
-				path: '/product/:category?/:brand?/:shop?/:keywords?/',
+				path: '/product',
 				component: Product,
 				meta: {
 					keepAlive: false
@@ -217,7 +221,7 @@ export default [
 				meta: {
 					keepAlive: false,
 				},
-			},			
+			},
 			{
 				name: 'checkout',
 				path: '/checkout',
@@ -308,6 +312,16 @@ export default [
 				name: 'updateinfo',
 				path: '/updateinfo/:type',
 				component: updateinfo
+			},
+			{
+				name: 'integralList',
+				path: '/integralList',
+				component: IntegralList
+			},
+			{
+				name: 'integralRule',
+				path: '/integralRule',
+				component: IntegralRule
 			},
 			{
 				name: 'redetail',

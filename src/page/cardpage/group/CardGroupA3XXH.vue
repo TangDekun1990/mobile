@@ -1,12 +1,11 @@
 <template>
-  <div class="group-c2-container">
+  <div class="group-a3xxh-container">    
     <card-item 
-      class="item" 
       v-bind:style="getItemStyle" 
       v-for="(item, index) in getItems" 
       :key="index" 
       :item="item">
-    </card-item>     
+    </card-item> 
   </div>
 </template>
 
@@ -15,51 +14,55 @@ import CardItem from '../card/CardItem'
 import { ENUM } from '../../../config/enum'
 import Common from './Common'
 export default {
-  name: 'CardGroupC2',
+  name: 'CardGroupA3XXH',
   mixins: [ Common ],
   components: {
     CardItem,
   },
   computed: {
-    getItems: function () {
-      let items = []
-      let cards = this.item ? this.item.cards : []
-      for (let index = 0; index < cards.length; index++) {
-        const card = cards[index]
-        if ((card.title && card.title.length) || 
-        (card.photo && card.photo.thumb && card.photo.thumb.length)) {
-          items.push(card)
-        }
-      }      
-      return items
-    }, 
     getItemStyle: function () {
       const { width, height } = window.screen
       let itemWidth = 0
       let itemHeight = 0
-      let columnCount = 4 // 每行的列数；默认只有一列
+      let columnCount = 1 // 每行的列数；默认只有一列
       let ratio = 1 // 每个item的宽高比
       
-      let seperatorWidth = 0 // 分割线宽度
+      columnCount = 3
+      ratio = 2.0 / 3.0
+
+      let seperatorWidth = (columnCount - 0) * 1 // 分割线宽度
       itemWidth = (width - seperatorWidth) / columnCount  
       itemHeight = itemWidth / ratio
+      console.log('====================================');
+      console.log(itemWidth, itemHeight);
+      console.log('====================================');
       return {
-        width: itemWidth + 'px',
-        height: itemHeight + 'px'
-      }
+        'width': itemWidth + 'px',
+        'height': itemHeight + 'px',
+        'border-right': '1px solid #E8EAED',               
+      }     
     },
+  },
+  methods: {    
   }
 }
 </script>
 
 <style lang="scss" scoped>
-  .group-c2-container {
+  .group-a3xxh-container {    
+    width: 100%;
+    // height: 186px;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     align-items: stretch;
-    flex-wrap: wrap;
-    background-color: $cardbgColor;
+    background-color: $cardbgColor;  
+    overflow: auto;   
+    // white-space: nowrap;
+  }
+  .item {
+    width: 124px;
+    height: 186px;
   }
 </style>
 

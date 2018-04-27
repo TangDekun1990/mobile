@@ -29,7 +29,6 @@
 		</div>
 		<!-- 回到顶部 -->
 		<v-back-top v-if="productList.length > 10" :target="target" ></v-back-top>
-
 	</div>
 </template>
 
@@ -55,20 +54,21 @@
 		data(){
 			return {
 				params: {
-					'brand': this.$route.params.brand ? this.$route.params.brand : '',
-					'category': this.$route.params.category ? this.$route.params.category : '',
-					'shop': this.$route.params.shop ? this.$route.params.shop : '',
+					'brand': this.$route.query.brand ? this.$route.query.brand : '',
+					'category': this.$route.query.category ? this.$route.query.category : '',
+					'shop': this.$route.query.shop ? this.$route.query.shop : '',
 					'sort_key': 0,
 					'sort_value': 2,
 					'page': 0,
 					'per_page': 10,
-					'keyword': this.$route.params.keywords ? this.$route.params.keywords : ''
+					'keyword': this.$route.query.keywords ? this.$route.query.keywords : ''
 				},
 				productList: [],  //商品列表
 				loading: false,  //是否加载更多
 				isMore: true  //是否有更多
 			}
 		},
+
 
 		computed: mapState({
 			isShowProductModel: state => state.product.isShowProductModel
@@ -136,11 +136,11 @@
 			 *  @param: keywords
 			 */
 			getUrlParams() {
-				console.log(this.$route.params);
-				// this.params.brand = this.$route.params.brand ? this.$route.params.brand : '';
-				// this.params.category = this.$route.params.category ? this.$route.params.category : '';
-				// this.params.shop = this.$route.params.shop ? this.$route.params.shop : '';
-				// this.params.keyword = this.$route.params.keywords ? this.$route.params.keywords : '';
+				console.log(this.$route.query);
+				// this.params.brand = this.$route.query.brand ? this.$route.query.brand : '';
+				// this.params.category = this.$route.query.category ? this.$route.query.category : '';
+				// this.params.shop = this.$route.query.shop ? this.$route.query.shop : '';
+				// this.params.keyword = this.$route.query.keywords ? this.$route.query.keywords : '';
 			},
 
 			/*
