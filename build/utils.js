@@ -88,7 +88,11 @@ function generateSassResourceLoader() {
 		}
 	];
 	if (options.extract) {
-		return ExtractTextPlugin.extract({use: loaders, fallback: 'vue-style-loader'})
+		return ExtractTextPlugin.extract({
+			use: loaders, 
+			publicPath: '../../',    	
+			fallback: 'vue-style-loader'
+		})
 	} else {
 		return ['vue-style-loader'].concat(loaders)
 	}

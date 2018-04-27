@@ -110,6 +110,7 @@ export default {
 				}
 			},error => {
 				this.loading = false;
+				this.isMore = false;
 			});
 		},
 		// 获取可兑换列表
@@ -123,6 +124,7 @@ export default {
 				}
 			},error => {
 				this.loading = false;
+				this.isMore = false;
 			});
 		},
 		// 解释
@@ -175,7 +177,7 @@ export default {
 		.header-info {
 			width: 100%;
 			height: 170px;
-			background-image: url('../../assets/image/change-icon/e2_bg@2x.png');
+			background: url('../../assets/image/change-icon/e2_bg@2x.png') no-repeat;
 			background-size: cover;
 			color: #fff;
 			font-size: 18px;
