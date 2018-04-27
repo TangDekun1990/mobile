@@ -14,11 +14,11 @@ export const ORDERSTATUS = [
     'id': ENUM.ORDER_STATUS.CANCELLED
   },
   {
-    'name': '已完成',
+    'name': '已完成', //require('../../assets/image/change-icon/e3_seal@2x.png')
     'id': ENUM.ORDER_STATUS.FINISHED
   },
   {
-    'name': '已收货，待评价',
+    'name': '待评价',
     'id': ENUM.ORDER_STATUS.DELIVERIED
   },
   {

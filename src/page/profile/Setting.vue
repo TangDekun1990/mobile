@@ -12,10 +12,10 @@
           <span>展示高清图片</span>
           <mt-switch v-model="value"></mt-switch>
         </li>
-        <li>
+        <!-- <li>
           <span>接收消息通知</span>
           <mt-switch v-model="index"></mt-switch>
-        </li>
+        </li> -->
         <li v-on:click="about()">
           <span>关于我们</span>
           <img src="../../assets/image/change-icon/enter@2x.png" >
@@ -33,8 +33,7 @@ import { Header, MessageBox, Switch } from 'mint-ui'
 export default {
   data() {
     return {
-      value:false,
-      index:false
+      value:true,
     }
   },
   computed: {
@@ -71,6 +70,7 @@ export default {
     background-color: #fff;
     .header {
       @include header;
+      border-bottom: 1px solid #E8EAED;
     }
     .button {
       @include button;    
@@ -115,4 +115,10 @@ export default {
 
 </style>
 
+<style>
+.mint-switch-input:checked + .mint-switch-core {
+  border-color: red;
+    background-color: red;
+}
+</style>
 

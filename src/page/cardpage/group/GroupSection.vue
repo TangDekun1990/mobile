@@ -34,7 +34,7 @@ export default {
     background-color: #fff;
   }
   .title {
-    font-size: 14px;
+    font-size: $h2;
     color: #4E545D;
   }
   .indicator {

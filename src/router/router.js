@@ -27,6 +27,8 @@ import HelpUrl from '../page/profile/child/HelpUrl'
 import News from '../page/profile/News'
 import NewsOrderMessage from '../page/profile/child/NewsOrderMessage'
 import NewsNoticeMessage from '../page/profile/child/NewsNoticeMessage'
+import NoticeMessageInfo from '../page/profile/child/NoticeMessageInfo'
+import Collection from '../page/profile/Collection'
 
 // cardpage
 import CardPage from '../page/cardpage/CardPage'
@@ -36,9 +38,13 @@ import AddressList from '../page/address/AddressList'
 import AddressManage from '../page/address/AddressManage'
 import AddressEdit from '../page/address/AddressEdit'
 
-// coupon
+// integral
 import CouponList from '../page/coupon/CouponList'
 import CouponUsable from '../page/coupon/CouponUsable'
+
+// integral
+import IntegralList from '../page/integral/IntegralList'
+import IntegralRule from '../page/integral/child/IntegralRule'
 
 // checkout
 import Checkout from '../page/checkout/Checkout'
@@ -167,6 +173,16 @@ export default [
 				component: NewsNoticeMessage
 			},
 			{
+				name: 'NoticeMessageInfo',
+				path: '/noticeMessageInfo',
+				component: NoticeMessageInfo
+			},
+			{
+				name: 'Collection',
+				path: '/collection',
+				component: Collection
+			},
+			{
 				name: 'addressList',
 				path: '/addressList',
 				component: AddressList
@@ -270,7 +286,7 @@ export default [
 			},
 			{
 				name: 'detail',
-				path: '/detial/:id?',
+				path: '/detial/:id?/:productId?',
 				component: Detail
 			},
 			{
@@ -290,6 +306,16 @@ export default [
 				name: 'updateinfo',
 				path: '/updateinfo/:type',
 				component: updateinfo
+			},
+			{
+				name: 'integralList',
+				path: '/integralList',
+				component: IntegralList
+			},
+			{
+				name: 'integralRule',
+				path: '/integralRule',
+				component: IntegralRule
 			},
 			{
 				name: 'redetail',

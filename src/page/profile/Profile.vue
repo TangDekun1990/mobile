@@ -15,7 +15,7 @@
       </div>       
       <div class="info-wrapper">
         <div class="info-item">0积分</div>
-        <div class="info-item">积分记录</div>
+        <div class="info-item" @click="goIntegral">积分记录</div>
       </div>
     </div>
     <div class="order-header" @click="goOrder">
@@ -62,7 +62,7 @@
 
     </div>
     <info-item 
-      v-on:onclick="goFavourite"       
+      v-on:onclick="goFavourite()"       
       class="info-item-wrapper section-header" 
       :icon="require('../../assets/image/change-icon/e0_favorite@2x.png')"
       title="我的收藏">
@@ -165,6 +165,9 @@ export default {
     showLogin() {
       this.$router.push("/signin");
     },
+    goIntegral() {
+      this.$router.push("/integralList");
+    },
     goProfileInfo() {
       if (this.isOnline) {
         this.$router.push("/profileInfo");
@@ -176,13 +179,13 @@ export default {
       this.$router.push("setting");
     },
     goNews() {
-      this.$router.push('news')
+      this.$router.push('news');
     },
     goFavourite() {
-      // TODO:      
+      this.$router.push('collection');     
     },
     goAddress() {      
-      this.$router.push('addressManage')
+      this.$router.push('addressManage');
     },
     goCoupon() {
       this.$router.push({ name: "couponList" });
