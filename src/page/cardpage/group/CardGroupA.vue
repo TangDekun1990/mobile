@@ -91,7 +91,7 @@ export default {
         case ENUM.CARDGROUP_LAYOUT.A3XXH: 
         {                       
           columnCount = 3
-          ratio = 7.0 / 10.0
+          ratio = 2.0 / 3.0
         } 
         break; 
         case ENUM.CARDGROUP_LAYOUT.A4H: 

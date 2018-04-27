@@ -45,8 +45,7 @@ export default {
     color: $titleTextColor; 
     margin-top: 5px;   
     margin-left: 2px;
-    margin-right: 2px;
-    // margin-bottom: 5px;
+    margin-right: 2px; 
     text-align: center;
     @include limit-line(1);
   }
