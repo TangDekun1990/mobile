@@ -48,7 +48,7 @@
 
 <script>
 
-import  HeaderItem  from '../../components/common'
+import HeaderItem  from '../../components/common'
 import IntegralItem from './child/IntegralItem'
 import IntegralRecord from './child/IntegralRecord'
 import { scoreInfo, scoreRecord, scoreExchageList, scoreExchage } from '../../api/network/score'

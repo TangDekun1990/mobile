@@ -8,6 +8,7 @@
   <card-group-b4 v-else-if="isCardGroup('B4')" :item="item"></card-group-b4> 
   <card-group-c1 v-else-if="isCardGroup('C1')" :item="item"></card-group-c1>
   <card-group-c2 v-else-if="isCardGroup('C2')" :item="item"></card-group-c2>
+  <card-group-c3 v-else-if="isCardGroup('C3')" :item="item"></card-group-c3>
   <card-group-c4 v-else-if="isCardGroupC4C5" :item="item"></card-group-c4> 
   <card-group-n v-else-if="isCardGroup('N')" :item="item"></card-group-n>
 </template>
@@ -24,6 +25,7 @@ import {
   CardGroupB4, 
   CardGroupC1,
   CardGroupC2,
+  CardGroupC3,  
   CardGroupC4,
   CardGroupN, 
 } from '../../cardpage/group'
