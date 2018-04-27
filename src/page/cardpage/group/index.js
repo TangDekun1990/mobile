@@ -9,6 +9,7 @@ import CardGroupB3 from './CardGroupB3'
 import CardGroupB4 from './CardGroupB4'
 import CardGroupC1 from './CardGroupC1'
 import CardGroupC2 from './CardGroupC2'
+import CardGroupC3 from './CardGroupC3'
 import CardGroupC4 from './CardGroupC4'
 import CardGroupN from './CardGroupN'
 
@@ -21,6 +22,7 @@ Vue.component(CardGroupB3.name, CardGroupB3)
 Vue.component(CardGroupB4.name, CardGroupB4)
 Vue.component(CardGroupC1.name, CardGroupC1)
 Vue.component(CardGroupC2.name, CardGroupC2)
+Vue.component(CardGroupC3.name, CardGroupC3)
 Vue.component(CardGroupC4.name, CardGroupC4)
 Vue.component(CardGroupN.name, CardGroupN)
 
@@ -34,6 +36,7 @@ module.export = {
   CardGroupB4,
   CardGroupC1,
   CardGroupC2,
+  CardGroupC3,
   CardGroupC4,
   CardGroupN,  
 }
