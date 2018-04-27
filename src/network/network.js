@@ -112,6 +112,7 @@ axios.interceptors.response.use(response => {
                 }
                 return response.data;
             } else if (response.data && response) {
+
                 let errorMessage = response.data.message;
                 let errorCode = response.data.code;
                 if (response.data.error) {
@@ -160,9 +161,9 @@ export function fetchEndpoint(reqUrl, type = 'POST', data = {}) {
             method: type,
             url: reqUrl,
             data: data
-        }).then(res => {
+        }).then(res => {            
             resolve(res)
-        }, error => {
+        }, error => {            
             reject(error);
         })
     })
