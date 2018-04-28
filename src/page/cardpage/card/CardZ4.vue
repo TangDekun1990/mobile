@@ -51,8 +51,7 @@ export default {
     this.getTips()
   },
   methods: { 
-    getTips() {   
-      debugger   
+    getTips() {     
       let startAt = this.item ? this.item.start_at : null
       let endAt = this.item ? this.item.end_at : null
       console.log('====================================');

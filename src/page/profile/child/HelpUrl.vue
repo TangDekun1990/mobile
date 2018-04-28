@@ -90,9 +90,7 @@ export default {
       articleList(0, 1, 10).then( res => {
         if(res) {
         this.articleData = Object.assign({}, res.articles[0]);
-        // debugger;
         this.getUrl = this.articleData.url;
-        console.log(this.getUrl);
         }
       })
     },

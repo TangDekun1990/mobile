@@ -54,8 +54,7 @@
 		           // console.log(minute);
 		        this.getTimeRange(hour, minute, month, data);
 			},
-			getTimeRange(hour, minute, month, data) {
-				// debugger;
+			getTimeRange(hour, minute, month, data) 
 				if ( (hour > 0 && hour <= 9) &&  (minute >= 0 && minute <= 30)){
 					this.orderTime = '9:30';
 					this.arrivalsTitle = '当天';

@@ -108,7 +108,6 @@ export default {
 	activityStatus (beginAt, endAt) {
 		let status = -1 // (0: 未开始；1: 进行中；2: 已过期)
 		let timestamp = Date.parse(new Date()) / 1000
-		debugger
 		if (beginAt > timestamp) {
 			status = 0
 		} else if (timestamp > beginAt && timestamp < endAt) {
@@ -129,7 +128,6 @@ export default {
 		let hour = parseInt(interval / 60 / 60 % 24)
 		let minute = parseInt(interval / 60 % 60)
 		let second = interval % 60
-		debugger
 		format = day + ' 天 ' + hour + ' 时 ' + minute + ' 分 ' + second + ' 秒'
 		return format
 	}

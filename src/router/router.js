@@ -282,7 +282,7 @@ export default [
 			},
 			{
 				name: 'orderComment',
-				path: '/orderComment',
+				path: '/orderComment/:orderComment?',
 				component: OrderComment
 			},
 			{

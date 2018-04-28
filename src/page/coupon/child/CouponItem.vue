@@ -72,8 +72,7 @@ export default {
     },
     getStatus: function () {
       let status = ''
-      let item = this.item
-      debugger
+      let item = this.item 
       if (item) {
         switch (item.status) {
           case ENUM.COUPON_STATUS.AVAILABLE:

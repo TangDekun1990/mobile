@@ -222,7 +222,6 @@ export default {
 		 *  @param： index 当前减少的index
 		 */
 		 reduceNumber(id, amount, index) {
-		 	debugger;
 		 	if (amount > 1) {
 		 		amount--;
 		 		this.updateCartQuantity(id, amount, index);

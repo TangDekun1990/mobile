@@ -290,9 +290,8 @@
         })
       },
       // 晒单评价
-      goComment(id) {
-        let params = {'order': id};
-        this.$router.push({ name: 'orderComment', params:params});
+      goComment(data) {
+        this.$router.push({ name: 'orderComment', params:{'order': data}});
       },
 
       
