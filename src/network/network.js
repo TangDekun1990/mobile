@@ -104,12 +104,12 @@ axios.interceptors.response.use(response => {
                         response.data[key] = json[key];
                     }
                 }
-                if (process.env.NODE_ENV === 'development') {
+                // if (process.env.NODE_ENV === 'development') {
                     console.log('====================================');
                     console.log("request url is: ", response.config.url);                    
                     console.log("request params is: ", response.config.params);
                     console.log('response data is: ', response.data);
-                }
+                // }
                 return response.data;
             } else if (response.data && response) {
 
