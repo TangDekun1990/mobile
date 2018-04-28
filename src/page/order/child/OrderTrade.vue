@@ -33,7 +33,6 @@ export default {
     },
     // 去评价订单
     goOrderComment() {
-      debugger;
       this.$router.push({ name: 'orderComment', params: {'order': this.$route.query.item}});
     }
   }

@@ -13,7 +13,7 @@
         </div>
         <div class="flex-right">
           <h3>订单消息</h3>
-          <span>订单已签收！您购买的2016年文艺小白鞋夏季新款...</span>
+          <span>{{orderMessage.content}}</span>
         </div>
       </div>
       <div class="newslist" v-on:click="getNoticeMessage()">
@@ -22,7 +22,7 @@
         </div>
         <div class="flex-right">
           <h3>通知消息</h3>
-          <span>今日店铺有新品上架哦！</span>
+          <span>{{NoticeMessage.content}}</span>
         </div>
       </div>
       <div class="newslist" v-on:click="getServiceMessage()">
@@ -32,6 +32,7 @@
         <div class="flex-right">
           <h3>客服消息</h3>
           <span>在线客服咨询时间为08:00-22:00 </span>
+          <img src="../../assets/image/change-icon/b0_indicator_active@2x.png">
         </div>
       </div>
     </div>
@@ -39,17 +40,48 @@
 </template>
 
 <script>
+import {messageOrderList, messageSystemList } from '../../api/network/message' // 订单消息 //通知消息
   export default {
+    data() {
+    return {
+      NoticeMessage: [],
+      orderMessage: [],
+    }
+  },
+    created() {
+      this.getmessageSystemList();
+      this.getmessageOrderList();
+    },
     methods: {
       goBack() {
         this.$router.go(-1) 
       },
+      // 订单消息
       getOrderMessage() {
         this.$router.push('newsOrderMessage')
       },
+      // 获取订单消息列表数据
+      getmessageOrderList() {
+        messageOrderList(1, 10).then( res => {
+          if(res) {
+            this.orderMessage = res.messages[0];
+          }
+        })
+      },
+      // 通知消息
       getNoticeMessage() {
         this.$router.push('newsNoticeMessage')
       },
+
+      // 获取通知消息数据
+      getmessageSystemList() {
+        messageSystemList(1, 10).then( res => {
+          if(res) {
+            this.NoticeMessage = res.messages[0];
+          }
+        })
+      },
+      // 客服消息
       getServiceMessage() {
         console.log('客服消息')
       }
@@ -74,7 +106,7 @@
         width: auto;
         align-items: center;
         justify-content: space-between;
-        padding: 15px;
+        padding: 15px 19px 15px 15px;
         position: relative;
         border-bottom:1px solid #E8EAED;
         height: 80px;
@@ -88,6 +120,7 @@
         }
         .flex-right {
           width:100%;
+          overflow: hidden;
           h3 {
             font-size:14px;
             color: #4E545D;
@@ -96,6 +129,17 @@
           span {
             font-size: 12px;
             color: #7C7F88;
+            overflow: hidden;
+            text-overflow: ellipsis;   
+            white-space: nowrap;
+            display: block;
+          }
+          img{
+            width: 6px;
+            height: 6px;
+            position: absolute;
+            right: 19px;
+            top: 50%;
           }
         }
       }

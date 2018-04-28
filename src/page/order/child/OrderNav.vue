@@ -178,12 +178,12 @@ import OrderNav from './OrderNav';
 			} else {
 				this.loading = true;
 			}
-				Indicator.close();
 		},
 
 		// 取消订单
 		cancel() {
 			this.popupVisible = true;
+			this.stop();
 		},
 		cancelInfo() {
 			this.popupVisible = false;
@@ -192,6 +192,21 @@ import OrderNav from './OrderNav';
 			this.popupVisible = false;
 			this.getordersuccess(id, index);
 		},
+
+		/***滑动限制***/
+    stop(){
+      var mo=function(e){e.preventDefault();};
+      document.body.style.overflow='hidden';
+      document.addEventListener("touchmove",mo,false);//禁止页面滑动
+    },
+    /***取消滑动限制
+    move(){
+      var mo=function(e){e.preventDefault();};
+      document.body.style.overflow='';//出现滚动条
+      document.removeEventListener("touchmove",mo,false);
+		},
+		***/
+		
 		// 查看物流
 		track(id) {
 			this.$router.push({ name: 'orderTrack', params: {orderTrack: id}});
@@ -206,7 +221,6 @@ import OrderNav from './OrderNav';
 		},
 		// 确认收货
 		confirm(item, index) {
-			console.log(item);
 			MessageBox.confirm('是否确认收货？', '确认收货').then(action => {        
 			this.$router.push({name:'orderTrade', query: {'item': item}});
 			this.orderConfirms(item.id, index);	

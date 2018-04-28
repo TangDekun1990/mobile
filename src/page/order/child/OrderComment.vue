@@ -18,7 +18,6 @@
           <span>{{item.product.name }}</span>
           <ul>
             <li class="good" v-for="(image, indexs) in item.IMAGE" v-on:click="changeImage(item, image.id, index)"> 
-               <!-- {{item.currentIndex != image.id}} -->
               <img :src="image.img" v-if="item.currentIndex != image.id">
               <img :src="image.activeImg" v-if="item.currentIndex == image.id">
               <label>{{image.name}}</label>
@@ -53,7 +52,6 @@ export default {
       this.$router.go(-1);
     },
     submit() {
-      debugger;
       let id = this.$route.params.order.id ? this.$route.params.order.id : "";
       this.getComment(id);
     },
