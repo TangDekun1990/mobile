@@ -92,13 +92,6 @@ export default {
         height: height + 'px'
       }
     },
-    getColumnItemStyle: function () {
-      const { width, height } = this.getColumnItemSize      
-      return {
-        width: width + 'px',
-        height: height + 'px'
-      }
-    },
     getColumnSubItemStyle: function () {
       const { width, height } = this.getColumnSubItemSize      
       return {
@@ -113,18 +106,18 @@ export default {
         height: height
       }
     },
-    getColumnItemSize: function () {
-      const { width, height } = this.getContainerSize
-      return {
-        width: height * 0.5 * (9.0 / 4.0) - 2,
-        height: height * 0.5 - 1
-      }
-    },
     getColumnSubItemSize: function () {
       const { width, height } = this.getColumnItemSize
       return {
         width: (width - 1) * 0.5,
         height: height
+      }
+    },
+    getColumnItemSize: function () {
+      const { width, height } = this.getContainerSize
+      return {
+        width: height * 0.5 * (9.0 / 4.0) - 2,
+        height: height * 0.5 - 1
       }
     },
     getContainerStyle: function() {

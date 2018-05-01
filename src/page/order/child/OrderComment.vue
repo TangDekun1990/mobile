@@ -85,8 +85,7 @@ export default {
     },
 
     buildData() {
-     let data = this.commentinfo ? this.commentinfo.goods : [];
-     debugger
+     let data = this.commentinfo ? this.commentinfo.goods : [];     
      for(let i = 0; i <= data.length-1; i++ ) {
        data[i].IMAGE = this.IMAGE;
        data[i].content = '';

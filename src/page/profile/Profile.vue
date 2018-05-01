@@ -14,7 +14,7 @@
       <label class="nickname" @click="goProfileInfo">{{nickname}}</label>
       </div>       
       <div class="info-wrapper">
-        <div class="info-item">0积分</div>
+        <div class="info-item">{{getScore}}积分</div>
         <div class="info-item" @click="goIntegral">积分记录</div>
       </div>
     </div>
@@ -59,37 +59,38 @@
         :icon="require('../../assets/image/change-icon/e0_evaluate@2x.png')"
         title="待评价">
       </order-item>
-
     </div>
-    <info-item 
-      v-on:onclick="goFavourite()"       
-      class="info-item-wrapper section-header" 
-      :icon="require('../../assets/image/change-icon/e0_favorite@2x.png')"
-      title="我的收藏">
-    </info-item>
-    <info-item
-      v-on:onclick="goAddress"       
-      class="info-item-wrapper" 
-      :icon="require('../../assets/image/change-icon/e0_address@2x.png')"
-      title="管理收货地址">
-    </info-item>
-    <info-item 
-      v-on:onclick="goCoupon"
-      class="info-item-wrapper section-footer" 
-      :icon="require('../../assets/image/change-icon/e0_coupon@2x.png')" 
-      title="我的优惠券">
-    </info-item>
-    <info-item 
-      v-on:onclick="goHelp()"
-      class="info-item-wrapper section-header" 
-      :icon="require('../../assets/image/change-icon/e0_clause@2x.png')" 
-      title="使用帮助">
-    </info-item>
-    <info-item 
-      class="info-item-wrapper section-footer" 
-      :icon="require('../../assets/image/change-icon/e0_phone@2x.png')" 
-      title="客服电话">
-    </info-item>
+    <div class="bottom-wrapper">
+      <info-item 
+        v-on:onclick="goFavourite()"       
+        class="info-item-wrapper section-header" 
+        :icon="require('../../assets/image/change-icon/e0_favorite@2x.png')"
+        title="我的收藏">
+      </info-item>
+      <info-item
+        v-on:onclick="goAddress"       
+        class="info-item-wrapper" 
+        :icon="require('../../assets/image/change-icon/e0_address@2x.png')"
+        title="管理收货地址">
+      </info-item>
+      <info-item 
+        v-on:onclick="goCoupon"
+        class="info-item-wrapper section-footer" 
+        :icon="require('../../assets/image/change-icon/e0_coupon@2x.png')" 
+        title="我的优惠券">
+      </info-item>
+      <info-item 
+        v-on:onclick="goHelp()"
+        class="info-item-wrapper section-header" 
+        :icon="require('../../assets/image/change-icon/e0_clause@2x.png')" 
+        title="使用帮助">
+      </info-item>
+      <info-item 
+        class="info-item-wrapper section-footer" 
+        :icon="require('../../assets/image/change-icon/e0_phone@2x.png')" 
+        title="客服电话">
+      </info-item>
+    </div>    
     <tabbar></tabbar>
   </div>
 </template>
@@ -100,13 +101,14 @@ import InfoItem from "./child/InfoItem";
 import OrderItem from "./child/OrderItem";
 import { mapState } from "vuex";
 import { userProfileGet } from "../../api/network/user";
+import { scoreGet } from '../../api/network/score'
 import { ENUM } from '../../config/enum'
 export default {
   name: "profile",
    data() {
     return {
-      orderAll:1,
-      
+      orderAll: 1,
+      score: 0
     };
   },
   components: {
@@ -117,6 +119,11 @@ export default {
   created: function() {
     if (this.isOnline) {
       userProfileGet().then(response => {}, error => {});
+      scoreGet().then(
+        response => {
+          this.score = response.score
+        }, error => {          
+        });
     };     
   },
   computed: {
@@ -124,7 +131,7 @@ export default {
       isOnline: state => state.auth.isOnline,
       user: state => state.auth.user
     }),
-    nickname: function() {
+    nickname () {
       let title = "登录/注册";
       if (this.isOnline) {
         if (this.user &&
@@ -139,7 +146,7 @@ export default {
       }
       return title;      
     },
-    getAvatarUrl: function() {
+    getAvatarUrl () {
       let url = null
       if (this.isOnline) {
         if (this.user &&
@@ -159,6 +166,13 @@ export default {
         url = require('../../assets/image/change-icon/img_avatar@2x.png')
       }
       return url
+    },
+    getScore () {
+      let score = '0'
+      if (this.isOnline) {
+        score = this.score
+      }       
+      return score 
     }
   },
   methods: {
@@ -203,15 +217,11 @@ export default {
 
 <style lang="scss" scoped>
 .container {
-  position: absolute;
-  width: 100%;
-  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: stretch;
   background-color: $mainbgColor;
-  margin-bottom: 50px;
   .top-wrapper {
     display: flex;
     flex-direction: column;
@@ -343,6 +353,13 @@ export default {
   }
   .order-item {
     flex: 1;
+  }
+  .bottom-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    margin-bottom: 60px;
   }
   .info-item-wrapper {
     height: 44px;

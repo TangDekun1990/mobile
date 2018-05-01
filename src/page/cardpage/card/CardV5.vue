@@ -6,28 +6,28 @@
         <img v-if="isShowSellOutIcon" class="sell-out" v-bind:style="getSellOutStyle" src="../../../assets/image/change-icon/b0-out@2x.png" />
         <span v-if="isShowPromoIcon" class="promos">促销</span>
       </div>    
-      <div class="content-wrapper" @click="addToCart">
+      <div class="content-wrapper">
         <label class="title" style="-webkit-box-orient:vertical">{{getTitle}}</label>
         <div class="bottom-wrapper">
           <div class="desc-wrapper">
             <label class="subtitle" style="-webkit-box-orient:vertical">{{getSubtitle}}</label>
             <label class="desc" style="-webkit-box-orient:vertical">{{getDesc}}</label>
           </div>
-          <div class="icon-wrapper" v-if="isProductItem()">
+          <div class="icon-wrapper" v-if="isProductItem()" @click.stop="addToCart">
             <img src="../../../assets/image/change-icon/cart@2x.png">
           </div>
         </div> 
       </div>
     </div>
     <div v-else>
-      <div class="content-wrapper" @click="addToCart">
+      <div class="content-wrapper">
         <label class="title" style="-webkit-box-orient:vertical">{{getTitle}}</label>
         <div class="bottom-wrapper">
           <div class="desc-wrapper">
             <label class="subtitle" style="-webkit-box-orient:vertical">{{getSubtitle}}</label>
             <label class="desc" style="-webkit-box-orient:vertical">{{getDesc}}</label>
           </div>
-          <div class="icon-wrapper" v-if="isProductItem()">
+          <div class="icon-wrapper" v-if="isProductItem()" @click.stop="addToCart">
             <img src="../../../assets/image/change-icon/cart@2x.png">
           </div>
         </div> 
@@ -44,6 +44,8 @@
 <script>
 import Common from './Common'
 import PhotoV from './PhotoV'
+import { Indicator, Toast } from 'mint-ui'
+import { cartAdd } from '../../../api/network/cart'
 export default {
   name: 'CardV5',
   mixins: [ Common, PhotoV ],  
@@ -120,10 +122,36 @@ export default {
       }
       return false
     },
-    addToCart () {
-      console.log('====================================');
-      console.log('addToCart ');
-      console.log('====================================');
+    addToCart () {      
+      let product = this.item.product
+      let productId = product.id
+      let property = ''
+      let amount = '1'
+      if (product.stock && product.stock.length) {
+        for (const stock in product.stock) {
+          if (stock.is_default) {            
+            if (stock.stock_number && parseInt(stock.stock_number) > 0) {
+              property = stock.id
+            } else {
+              Toast('库存不足')
+              return;
+            }
+          }
+        }
+      } else {
+        if (!(product.good_stock && parseInt(product.good_stock) > 0)) {
+          Toast('库存不足')
+          return;
+        }
+      }
+      Indicator.open()
+      cartAdd(productId, property, amount).then(
+        (response) => {
+          Indicator.close()
+        }, (error) => {
+          Indicator.close()
+          Toast(error.errorMsg)
+        })
     }, 
   },
 }

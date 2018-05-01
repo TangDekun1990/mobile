@@ -12,7 +12,7 @@
 
 <script>
 
-import { scoreInfo} from '../../../api/network/score'
+import { scoreGet } from '../../../api/network/score'
 export default {
   methods: {
     goBack() {
@@ -25,7 +25,7 @@ export default {
   	}
   },
   created() {
-  	scoreInfo().then(res => {
+  	scoreGet().then(res => {
   		if ( res ) {
   			this.scoreInfo = res;
   		}

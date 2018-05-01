@@ -1,7 +1,6 @@
 <template>
   <card-group-a3-x-x-h v-if="isCardGroup('A3XXH')" :item="item"></card-group-a3-x-x-h>
   <card-group-a v-else-if="isCardGroup('A')" :item="item"></card-group-a>
-  <!-- <card-group-b v-else-if="isCardGroupB" :item="item"></card-group-b> -->
   <card-group-b1 v-else-if="isCardGroupB1B5" :item="item"></card-group-b1> 
   <card-group-b2 v-else-if="isCardGroup('B2')" :item="item"></card-group-b2> 
   <card-group-b3 v-else-if="isCardGroup('B3')" :item="item"></card-group-b3> 

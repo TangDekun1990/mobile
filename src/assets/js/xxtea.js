@@ -2,27 +2,123 @@
 |                                                          |
 | xxtea.js                                                 |
 |                                                          |
-| XXTEA encryption algorithm library for Node.js.          |
+| XXTEA encryption algorithm library for JavaScript.       |
 |                                                          |
 | Encryption Algorithm Authors:                            |
 |      David J. Wheeler                                    |
 |      Roger M. Needham                                    |
 |                                                          |
 | Code Author: Ma Bingyao <mabingyao@gmail.com>            |
-| LastModified: Feb 16, 2016                               |
+| LastModified: Feb 21, 2016                               |
 |                                                          |
 \**********************************************************/
 
-/*jshint node:true, eqeqeq:true */
-'use strict';
+function btoa(str) {
+    var base64EncodeChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'.split('');
+    var buf, i, j, len, r, l, c;
+    i = j = 0;
+    len = str.length;
+    r = len % 3;
+    len = len - r;
+    l = (len / 3) << 2;
+    if (r > 0) {
+        l += 4;
+    }
+    buf = new Array(l);
 
-// [ReactNative] Buffer 使用base64 http://www.jianshu.com/p/7c3a559c3b27
-// https://github.com/feross/buffer
-var Buffer = require('buffer/').Buffer;
+    while (i < len) {
+        c = str.charCodeAt(i++) << 16 |
+            str.charCodeAt(i++) << 8 |
+            str.charCodeAt(i++);
+        buf[j++] = base64EncodeChars[c >> 18] +
+            base64EncodeChars[c >> 12 & 0x3f] +
+            base64EncodeChars[c >> 6 & 0x3f] +
+            base64EncodeChars[c & 0x3f];
+    }
+    if (r == 1) {
+        c = str.charCodeAt(i++);
+        buf[j++] = base64EncodeChars[c >> 2] +
+            base64EncodeChars[(c & 0x03) << 4] +
+            "==";
+    }
+    else if (r == 2) {
+        c = str.charCodeAt(i++) << 8 |
+            str.charCodeAt(i++);
+        buf[j++] = base64EncodeChars[c >> 10] +
+            base64EncodeChars[c >> 4 & 0x3f] +
+            base64EncodeChars[(c & 0x0f) << 2] +
+            "=";
+    }
+    return buf.join('');
+}
 
-var delta = 0x9E3779B9;
+function atob(str) {
+    var base64DecodeChars = [
+        -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+        -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+        -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 62, -1, -1, -1, 63,
+        52, 53, 54, 55, 56, 57, 58, 59, 60, 61, -1, -1, -1, -1, -1, -1,
+        -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14,
+        15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, -1, -1, -1, -1, -1,
+        -1, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40,
+        41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, -1, -1, -1, -1, -1
+    ];
+    var c1, c2, c3, c4;
+    var i, j, len, r, l, out;
 
-function toUint8Array(v, includeLength) {
+    len = str.length;
+    if (len % 4 !== 0) {
+        return '';
+    }
+    if (/[^ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789\+\/\=]/.test(str)) {
+        return '';
+    }
+    if (str.charAt(len - 2) == '=') {
+        r = 1;
+    }
+    else if (str.charAt(len - 1) == '=') {
+        r = 2;
+    }
+    else {
+        r = 0;
+    }
+    l = len;
+    if (r > 0) {
+        l -= 4;
+    }
+    l = (l >> 2) * 3 + r;
+    out = new Array(l);
+
+    i = j = 0;
+    while (i < len) {
+        // c1
+        c1 = base64DecodeChars[str.charCodeAt(i++)];
+        if (c1 == -1) break;
+
+        // c2
+        c2 = base64DecodeChars[str.charCodeAt(i++)];
+        if (c2 == -1) break;
+
+        out[j++] = String.fromCharCode((c1 << 2) | ((c2 & 0x30) >> 4));
+
+        // c3
+        c3 = base64DecodeChars[str.charCodeAt(i++)];
+        if (c3 == -1) break;
+
+        out[j++] = String.fromCharCode(((c2 & 0x0f) << 4) | ((c3 & 0x3c) >> 2));
+
+        // c4
+        c4 = base64DecodeChars[str.charCodeAt(i++)];
+        if (c4 == -1) break;
+
+        out[j++] = String.fromCharCode(((c3 & 0x03) << 6) | c4);
+    }
+    return out.join('');
+}
+
+var DELTA = 0x9E3779B9;
+
+function toBinaryString(v, includeLength) {
     var length = v.length;
     var n = length << 2;
     if (includeLength) {
@@ -33,31 +129,43 @@ function toUint8Array(v, includeLength) {
         }
         n = m;
     }
-    var bytes = new Uint8Array(n);
-    for (var i = 0; i < n; ++i) {
-        bytes[i] = v[i >> 2] >> ((i & 3) << 3);
+    for (var i = 0; i < length; i++) {
+        v[i] = String.fromCharCode(
+            v[i] & 0xFF,
+            v[i] >>> 8 & 0xFF,
+            v[i] >>> 16 & 0xFF,
+            v[i] >>> 24 & 0xFF
+        );
     }
-    return bytes;
+    var result = v.join('');
+    if (includeLength) {
+        return result.substring(0, n);
+    }
+    return result;
 }
 
-function toUint32Array(bytes, includeLength) {
-    var length = bytes.length;
+function toUint32Array(bs, includeLength) {
+    var length = bs.length;
     var n = length >> 2;
     if ((length & 3) !== 0) {
         ++n;
     }
     var v;
     if (includeLength) {
-        v = new Uint32Array(n + 1);
+        v = new Array(n + 1);
         v[n] = length;
     }
     else {
-        v = new Uint32Array(n);
+        v = new Array(n);
     }
     for (var i = 0; i < length; ++i) {
-        v[i >> 2] |= bytes[i] << ((i & 3) << 3);
+        v[i >> 2] |= bs.charCodeAt(i) << ((i & 3) << 3);
     }
     return v;
+}
+
+function int32(i) {
+    return i & 0xFFFFFFFF;
 }
 
 function mx(sum, y, z, p, e, k) {
@@ -65,11 +173,7 @@ function mx(sum, y, z, p, e, k) {
 }
 
 function fixk(k) {
-    if (k.length < 16) {
-        var key = new Uint8Array(16);
-        key.set(k);
-        k = key;
-    }
+    if (k.length < 4) k.length = 4;
     return k;
 }
 
@@ -79,15 +183,15 @@ function encryptUint32Array(v, k) {
     var y, z, sum, e, p, q;
     z = v[n];
     sum = 0;
-    for (q = Math.floor(6 + 52/length) | 0; q > 0; --q) {
-        sum += delta;
+    for (q = Math.floor(6 + 52 / length) | 0; q > 0; --q) {
+        sum = int32(sum + DELTA);
         e = sum >>> 2 & 3;
         for (p = 0; p < n; ++p) {
             y = v[p + 1];
-            z = v[p] += mx(sum, y, z, p, e, k);
+            z = v[p] = int32(v[p] + mx(sum, y, z, p, e, k));
         }
         y = v[0];
-        z = v[n] += mx(sum, y, z, p, e, k);
+        z = v[n] = int32(v[n] + mx(sum, y, z, n, e, k));
     }
     return v;
 }
@@ -97,232 +201,241 @@ function decryptUint32Array(v, k) {
     var n = length - 1;
     var y, z, sum, e, p, q;
     y = v[0];
-    q = Math.floor(6 + 52/length);
-    for (sum = q * delta; sum !== 0; sum -= delta) {
+    q = Math.floor(6 + 52 / length);
+    for (sum = int32(q * DELTA); sum !== 0; sum = int32(sum - DELTA)) {
         e = sum >>> 2 & 3;
         for (p = n; p > 0; --p) {
             z = v[p - 1];
-            y = v[p] -= mx(sum, y, z, p, e, k);
+            y = v[p] = int32(v[p] - mx(sum, y, z, p, e, k));
         }
         z = v[n];
-        y = v[0] -= mx(sum, y, z, p, e, k);
+        y = v[0] = int32(v[0] - mx(sum, y, z, 0, e, k));
     }
     return v;
 }
 
-function toBytes(str) {
+function utf8Encode(str) {
+    if (/^[\x00-\x7f]*$/.test(str)) {
+        return str;
+    }
+    var buf = [];
     var n = str.length;
-    // A single code unit uses at most 3 bytes.
-    // Two code units at most 4.
-    var bytes = new Uint8Array(n * 3);
-    var length = 0;
-    for (var i = 0; i < n; i++) {
+    for (var i = 0, j = 0; i < n; ++i, ++j) {
         var codeUnit = str.charCodeAt(i);
         if (codeUnit < 0x80) {
-            bytes[length++] = codeUnit;
+            buf[j] = str.charAt(i);
         }
         else if (codeUnit < 0x800) {
-            bytes[length++] = 0xC0 | (codeUnit >> 6);
-            bytes[length++] = 0x80 | (codeUnit & 0x3F);
+            buf[j] = String.fromCharCode(0xC0 | (codeUnit >> 6),
+                0x80 | (codeUnit & 0x3F));
         }
         else if (codeUnit < 0xD800 || codeUnit > 0xDFFF) {
-            bytes[length++] = 0xE0 | (codeUnit >> 12);
-            bytes[length++] = 0x80 | ((codeUnit >> 6) & 0x3F);
-            bytes[length++] = 0x80 | (codeUnit & 0x3F);
+            buf[j] = String.fromCharCode(0xE0 | (codeUnit >> 12),
+                0x80 | ((codeUnit >> 6) & 0x3F),
+                0x80 | (codeUnit & 0x3F));
         }
         else {
             if (i + 1 < n) {
                 var nextCodeUnit = str.charCodeAt(i + 1);
                 if (codeUnit < 0xDC00 && 0xDC00 <= nextCodeUnit && nextCodeUnit <= 0xDFFF) {
                     var rune = (((codeUnit & 0x03FF) << 10) | (nextCodeUnit & 0x03FF)) + 0x010000;
-                    bytes[length++] = 0xF0 | (rune >> 18);
-                    bytes[length++] = 0x80 | ((rune >> 12) & 0x3F);
-                    bytes[length++] = 0x80 | ((rune >> 6) & 0x3F);
-                    bytes[length++] = 0x80 | (rune & 0x3F);
-                    i++;
+                    buf[j] = String.fromCharCode(0xF0 | ((rune >> 18) & 0x3F),
+                        0x80 | ((rune >> 12) & 0x3F),
+                        0x80 | ((rune >> 6) & 0x3F),
+                        0x80 | (rune & 0x3F));
+                    ++i;
                     continue;
                 }
             }
             throw new Error('Malformed string');
         }
     }
-    return bytes.subarray(0, length);
+    return buf.join('');
 }
 
-function toShortString(bytes, n) {
-    var charCodes = new Uint16Array(n);
+function utf8DecodeShortString(bs, n) {
+    var charCodes = new Array(n);
     var i = 0, off = 0;
-    for (var len = bytes.length; i < n && off < len; i++) {
-        var unit = bytes[off++];
+    for (var len = bs.length; i < n && off < len; i++) {
+        var unit = bs.charCodeAt(off++);
         switch (unit >> 4) {
-        case 0:
-        case 1:
-        case 2:
-        case 3:
-        case 4:
-        case 5:
-        case 6:
-        case 7:
-            charCodes[i] = unit;
-            break;
-        case 12:
-        case 13:
-            if (off < len) {
-                charCodes[i] = ((unit & 0x1F) << 6) |
-                                (bytes[off++] & 0x3F);
-            }
-            else {
-                throw new Error('Unfinished UTF-8 octet sequence');
-            }
-            break;
-        case 14:
-            if (off + 1 < len) {
-                charCodes[i] = ((unit & 0x0F) << 12) |
-                               ((bytes[off++] & 0x3F) << 6) |
-                               (bytes[off++] & 0x3F);
-            }
-            else {
-                throw new Error('Unfinished UTF-8 octet sequence');
-            }
-            break;
-        case 15:
-            if (off + 2 < len) {
-                var rune = (((unit & 0x07) << 18) |
-                            ((bytes[off++] & 0x3F) << 12) |
-                            ((bytes[off++] & 0x3F) << 6) |
-                            (bytes[off++] & 0x3F)) - 0x10000;
-                if (0 <= rune && rune <= 0xFFFFF) {
-                    charCodes[i++] = (((rune >> 10) & 0x03FF) | 0xD800);
-                    charCodes[i] = ((rune & 0x03FF) | 0xDC00);
+            case 0:
+            case 1:
+            case 2:
+            case 3:
+            case 4:
+            case 5:
+            case 6:
+            case 7:
+                charCodes[i] = unit;
+                break;
+            case 12:
+            case 13:
+                if (off < len) {
+                    charCodes[i] = ((unit & 0x1F) << 6) |
+                        (bs.charCodeAt(off++) & 0x3F);
                 }
                 else {
-                    throw new Error('Character outside valid Unicode range: 0x' + rune.toString(16));
+                    throw new Error('Unfinished UTF-8 octet sequence');
                 }
-            }
-            else {
-                throw new Error('Unfinished UTF-8 octet sequence');
-            }
-            break;
-        default:
-            throw new Error('Bad UTF-8 encoding 0x' + unit.toString(16));
+                break;
+            case 14:
+                if (off + 1 < len) {
+                    charCodes[i] = ((unit & 0x0F) << 12) |
+                        ((bs.charCodeAt(off++) & 0x3F) << 6) |
+                        (bs.charCodeAt(off++) & 0x3F);
+                }
+                else {
+                    throw new Error('Unfinished UTF-8 octet sequence');
+                }
+                break;
+            case 15:
+                if (off + 2 < len) {
+                    var rune = (((unit & 0x07) << 18) |
+                        ((bs.charCodeAt(off++) & 0x3F) << 12) |
+                        ((bs.charCodeAt(off++) & 0x3F) << 6) |
+                        (bs.charCodeAt(off++) & 0x3F)) - 0x10000;
+                    if (0 <= rune && rune <= 0xFFFFF) {
+                        charCodes[i++] = (((rune >> 10) & 0x03FF) | 0xD800);
+                        charCodes[i] = ((rune & 0x03FF) | 0xDC00);
+                    }
+                    else {
+                        throw new Error('Character outside valid Unicode range: 0x' + rune.toString(16));
+                    }
+                }
+                else {
+                    throw new Error('Unfinished UTF-8 octet sequence');
+                }
+                break;
+            default:
+                throw new Error('Bad UTF-8 encoding 0x' + unit.toString(16));
         }
     }
     if (i < n) {
-        charCodes = charCodes.subarray(0, i);
+        charCodes.length = i;
     }
     return String.fromCharCode.apply(String, charCodes);
 }
 
-function toLongString(bytes, n) {
+function utf8DecodeLongString(bs, n) {
     var buf = [];
-    var charCodes = new Uint16Array(0xFFFF);
+    var charCodes = new Array(0xFFFF);
     var i = 0, off = 0;
-    for (var len = bytes.length; i < n && off < len; i++) {
-        var unit = bytes[off++];
+    for (var len = bs.length; i < n && off < len; i++) {
+        var unit = bs.charCodeAt(off++);
         switch (unit >> 4) {
-        case 0:
-        case 1:
-        case 2:
-        case 3:
-        case 4:
-        case 5:
-        case 6:
-        case 7:
-            charCodes[i] = unit;
-            break;
-        case 12:
-        case 13:
-            if (off < len) {
-                charCodes[i] = ((unit & 0x1F) << 6) |
-                                (bytes[off++] & 0x3F);
-            }
-            else {
-                throw new Error('Unfinished UTF-8 octet sequence');
-            }
-            break;
-        case 14:
-            if (off + 1 < len) {
-                charCodes[i] = ((unit & 0x0F) << 12) |
-                               ((bytes[off++] & 0x3F) << 6) |
-                               (bytes[off++] & 0x3F);
-            }
-            else {
-                throw new Error('Unfinished UTF-8 octet sequence');
-            }
-            break;
-        case 15:
-            if (off + 2 < len) {
-                var rune = (((unit & 0x07) << 18) |
-                            ((bytes[off++] & 0x3F) << 12) |
-                            ((bytes[off++] & 0x3F) << 6) |
-                            (bytes[off++] & 0x3F)) - 0x10000;
-                if (0 <= rune && rune <= 0xFFFFF) {
-                    charCodes[i++] = (((rune >> 10) & 0x03FF) | 0xD800);
-                    charCodes[i] = ((rune & 0x03FF) | 0xDC00);
+            case 0:
+            case 1:
+            case 2:
+            case 3:
+            case 4:
+            case 5:
+            case 6:
+            case 7:
+                charCodes[i] = unit;
+                break;
+            case 12:
+            case 13:
+                if (off < len) {
+                    charCodes[i] = ((unit & 0x1F) << 6) |
+                        (bs.charCodeAt(off++) & 0x3F);
                 }
                 else {
-                    throw new Error('Character outside valid Unicode range: 0x' + rune.toString(16));
+                    throw new Error('Unfinished UTF-8 octet sequence');
                 }
-            }
-            else {
-                throw new Error('Unfinished UTF-8 octet sequence');
-            }
-            break;
-        default:
-            throw new Error('Bad UTF-8 encoding 0x' + unit.toString(16));
+                break;
+            case 14:
+                if (off + 1 < len) {
+                    charCodes[i] = ((unit & 0x0F) << 12) |
+                        ((bs.charCodeAt(off++) & 0x3F) << 6) |
+                        (bs.charCodeAt(off++) & 0x3F);
+                }
+                else {
+                    throw new Error('Unfinished UTF-8 octet sequence');
+                }
+                break;
+            case 15:
+                if (off + 2 < len) {
+                    var rune = (((unit & 0x07) << 18) |
+                        ((bs.charCodeAt(off++) & 0x3F) << 12) |
+                        ((bs.charCodeAt(off++) & 0x3F) << 6) |
+                        (bs.charCodeAt(off++) & 0x3F)) - 0x10000;
+                    if (0 <= rune && rune <= 0xFFFFF) {
+                        charCodes[i++] = (((rune >> 10) & 0x03FF) | 0xD800);
+                        charCodes[i] = ((rune & 0x03FF) | 0xDC00);
+                    }
+                    else {
+                        throw new Error('Character outside valid Unicode range: 0x' + rune.toString(16));
+                    }
+                }
+                else {
+                    throw new Error('Unfinished UTF-8 octet sequence');
+                }
+                break;
+            default:
+                throw new Error('Bad UTF-8 encoding 0x' + unit.toString(16));
         }
         if (i >= 65534) {
             var size = i + 1;
-            buf.push(String.fromCharCode.apply(String, charCodes.subarray(0, size)));
+            charCodes.length = size;
+            buf[buf.length] = String.fromCharCode.apply(String, charCodes);
             n -= size;
             i = -1;
         }
     }
     if (i > 0) {
-        buf.push(String.fromCharCode.apply(String, charCodes.subarray(0, i)));
+        charCodes.length = i;
+        buf[buf.length] = String.fromCharCode.apply(String, charCodes);
     }
     return buf.join('');
 }
 
-function toString(bytes) {
-    var n = bytes.length;
+// n is UTF16 length
+function utf8Decode(bs, n) {
+    if (n === undefined || n === null || (n < 0)) n = bs.length;
     if (n === 0) return '';
+    if (/^[\x00-\x7f]*$/.test(bs) || !(/^[\x00-\xff]*$/.test(bs))) {
+        if (n === bs.length) return bs;
+        return bs.substr(0, n);
+    }
     return ((n < 100000) ?
-            toShortString(bytes, n) :
-            toLongString(bytes, n));
+        utf8DecodeShortString(bs, n) :
+        utf8DecodeLongString(bs, n));
 }
 
 function encrypt(data, key) {
-    if (typeof data === 'string') data = toBytes(data);
-    if (typeof key === 'string') key = toBytes(key);
     if (data === undefined || data === null || data.length === 0) {
         return data;
     }
-    return toUint8Array(encryptUint32Array(toUint32Array(data, true), toUint32Array(fixk(key), false)), false);
+    data = utf8Encode(data);
+    key = utf8Encode(key);
+    return toBinaryString(encryptUint32Array(toUint32Array(data, true), fixk(toUint32Array(key, false))), false);
 }
 
-function encryptToString(data, key) {
-    return new Buffer(encrypt(data, key)).toString('base64');
+function encryptToBase64(data, key) {
+    return btoa(encrypt(data, key));
 }
 
 function decrypt(data, key) {
-    if (typeof data === 'string') data = new Buffer(data, 'base64');
-    if (typeof key === 'string') key = toBytes(key);
     if (data === undefined || data === null || data.length === 0) {
         return data;
     }
-    return toUint8Array(decryptUint32Array(toUint32Array(data, false), toUint32Array(fixk(key), false)), true);
+    key = utf8Encode(key);
+    return utf8Decode(toBinaryString(decryptUint32Array(toUint32Array(data, false), fixk(toUint32Array(key, false))), true));
 }
 
-function decryptToString(data, key) {
-    return toString(decrypt(data, key));
+function decryptFromBase64(data, key) {
+    if (data === undefined || data === null || data.length === 0) {
+        return data;
+    }
+    return decrypt(atob(data), key);
 }
 
 export default Object.create(null, {
-    toBytes: { value: toBytes },
-    toString: { value: toString },
+    utf8Encode: { value: utf8Encode },
+    utf8Decode: { value: utf8Decode },
     encrypt: { value: encrypt },
-    encryptToString: { value: encryptToString },
+    encryptToBase64: { value: encryptToBase64 },
     decrypt: { value: decrypt },
-    decryptToString: { value: decryptToString }
+    decryptFromBase64: { value: decryptFromBase64 }
 });

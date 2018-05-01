@@ -98,19 +98,19 @@ export default {
         width: height * (3.0 / 4.0),
         height: height
       }
-    },
-    getColumnItemSize: function () {
-      const { width, height } = this.getContainerSize
-      return {
-        width: height * 0.5 * (9.0 / 4.0) - 1,
-        height: height * 0.5
-      }
-    },
+    },    
     getColumnSubItemSize: function () {
       const { width, height } = this.getColumnItemSize
       return {
         width: (width - 1) * 0.5,
         height: height
+      }
+    },
+    getColumnItemSize: function () {
+      const { width, height } = this.getContainerSize
+      return {
+        width: height * 0.5 * (9.0 / 4.0) - 2,
+        height: height * 0.5 - 1
       }
     },
     getContainerStyle: function() {
