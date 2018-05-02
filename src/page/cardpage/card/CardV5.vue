@@ -1,6 +1,6 @@
 <template>
   <div class="card-v5b-container" @click="onClick"> 
-    <div v-if="isTop">
+    <div v-if="isTop" class="v5-content-wrapper">
       <div class="photo-wrapper" v-bind:style="getPhotoStyle">
         <img class="photo" v-bind:style="getPhotoStyle" :src="getPhotoUrl" />
         <img v-if="isShowSellOutIcon" class="sell-out" v-bind:style="getSellOutStyle" src="../../../assets/image/change-icon/b0-out@2x.png" />
@@ -19,7 +19,7 @@
         </div> 
       </div>
     </div>
-    <div v-else>
+    <div v-else class="v5-content-wrapper">
       <div class="content-wrapper">
         <label class="title" style="-webkit-box-orient:vertical">{{getTitle}}</label>
         <div class="bottom-wrapper">
@@ -161,100 +161,107 @@ export default {
   .card-v5b-container {
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: flex-start;
     align-items: stretch;
     background-color: $cardbgColor;
-    .photo-wrapper {
-      margin-top: 5px;
-      margin-left: 5px;
-      margin-right: 5px;
-      position: relative;   
-    }
-    .photo { 
-      width: auto;
-    }
-    .sell-out { 
-      position: absolute;
-      width: 60px;
-      height: 60px;
-      padding: 0px;
-      top: 10px;
-      left: 10px;
-    }
-    .promos {
-			position: absolute;
-			background: url('../../../assets/image/change-icon/label@2x.png') no-repeat;
-			width: 36px;
-			height: 19px;
-			color: #FFFFFF;
-			font-size: 10px;
-			top: 0px;
-			left: 0px;
-			background-size: cover;
-			font-weight: 100;
-			line-height: 19px;
-			text-align: left;
-      padding-left: 5px;
-		}
-    .content-wrapper {
+    .v5-content-wrapper {
       flex: 1;
       display: flex;
       flex-direction: column;
-      justify-content: flex-start;
+      justify-content: space-around;
       align-items: stretch;
-      .title {
-        font-size: $h5;
-        color: $titleTextColor;
+      .photo-wrapper {
         margin-top: 5px;
-        margin-left: 9px;
-        margin-right: 9px;
-        @include limit-line(1); 
+        margin-left: 5px;
+        margin-right: 5px;
+        position: relative;   
       }
-      .bottom-wrapper {
-        flex: 1;
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-start;
-        align-items: stretch;     
+      .photo { 
+        width: auto;
       }
-      .desc-wrapper {
+      .sell-out { 
+        position: absolute;
+        width: 60px;
+        height: 60px;
+        padding: 0px;
+        top: 10px;
+        left: 10px;
+      }
+      .promos {
+        position: absolute;
+        background: url('../../../assets/image/change-icon/label@2x.png') no-repeat;
+        width: 36px;
+        height: 19px;
+        color: #FFFFFF;
+        font-size: 10px;
+        top: 0px;
+        left: 0px;
+        background-size: cover;
+        font-weight: 100;
+        line-height: 19px;
+        text-align: left;
+        padding-left: 5px;
+      }
+      .content-wrapper {
         flex: 1;
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
         align-items: stretch;
-        .subtitle {
-          font-size: $h4;
-          color: $primaryColor;
-          margin-top: 10px;
+        .title {
+          font-size: $h5;
+          color: $titleTextColor;
+          margin-top: 5px;
           margin-left: 9px;
-          margin-right: 0px;
-          text-align: left;
-          @include limit-line(1);
+          margin-right: 9px;
+          @include limit-line(1); 
         }
-        .desc {
-          font-size: $h6;
-          color: $descTextColor;
-          margin-left: 9px;
-          margin-right: 0px;
-          text-align: left;
-          @include limit-line(1);
-          text-decoration: line-through;
+        .bottom-wrapper {
+          flex: 1;
+          display: flex;
+          flex-direction: row;
+          justify-content: flex-start;
+          align-items: stretch;     
+        }
+        .desc-wrapper {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-start;
+          align-items: stretch;
+          .subtitle {
+            font-size: $h4;
+            color: $primaryColor;
+            margin-top: 10px;
+            margin-left: 9px;
+            margin-right: 0px;
+            text-align: left;
+            @include limit-line(1);
+          }
+          .desc {
+            font-size: $h6;
+            color: $descTextColor;
+            margin-left: 9px;
+            margin-right: 0px;
+            text-align: left;
+            @include limit-line(1);
+            text-decoration: line-through;
+          }
+        }
+        .icon-wrapper {
+          width: 40px;
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-end;
+          align-items: center;
+          img {
+            width: 24px;
+            height: 24px;
+            margin-bottom: 6px;
+          }
         }
       }
-      .icon-wrapper {
-        width: 40px;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-end;
-        align-items: center;
-        img {
-          width: 24px;
-          height: 24px;
-          margin-bottom: 6px;
-        }
-      }
-    }        
+    }            
   }   
 </style>
 

@@ -184,7 +184,7 @@ export default [
 				component: NoticeMessageInfo
 			},
 			{
-				name: 'Collection',
+				name: 'collection',
 				path: '/collection',
 				component: Collection
 			},

@@ -39,7 +39,9 @@ export default {
       return {
         'width': itemWidth + 'px',
         'height': itemHeight + 'px',
-        'border-right': '1px solid #E8EAED',               
+        'border-right': '1px solid #E8EAED',
+        'flex-shrink': '0',
+        'flex-basis': itemWidth + 'px',              
       }     
     },
   },
@@ -49,16 +51,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .group-a3xxh-container {    
-    width: 100%;
-    // height: 186px;
+  .group-a3xxh-container {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     align-items: stretch;
     background-color: $cardbgColor;  
-    overflow: auto;   
-    // white-space: nowrap;
+    overflow: auto;
   }
   .item {
     width: 124px;

@@ -1,11 +1,5 @@
 <template>
 	<div class="container">
-		<mt-header class="header" fixed title="首页">
-      <header-item slot="left" :icon="require('../../assets/image/change-icon/b0_scan@2x.png')" v-on:onclick="leftClick">
-      </header-item> 
-      <header-item slot="right" :icon="require('../../assets/image/change-icon/b0_message@2x.png')" v-on:onclick="rightClick">
-      </header-item>        
-    </mt-header>
 		<div class="list">
 			<card-group 
 				class="section" 
@@ -14,6 +8,7 @@
 				:item="item">
 			</card-group>
 		</div>	
+		<home-header class="header"></home-header>
 		<tab-bar></tab-bar>
 	</div>
 </template>
@@ -24,6 +19,7 @@
 	import { Header, Indicator, Toast } from 'mint-ui'
 	import { cardpageGet } from '../../api/network/cardpage'
 	import CardGroup from '../cardpage/group/CardGroup'
+	import HomeHeader from './child/HomeHeader';
 	export default {
 		name: 'Home',
 		data() {
@@ -33,7 +29,8 @@
 		},
 		components: {
 			tabBar,
-			CardGroup
+			CardGroup,
+			HomeHeader,
 		},
 		created: function () {
 			Indicator.open()
@@ -45,9 +42,9 @@
 						for (let i = 0; i < this.cardpage.groups.length; i++) {
 							const element = this.cardpage.groups[i];
 							let layout = element ? element.layout : null
-							console.log('====================================');
-							console.log('layout is :', layout);
-							console.log('====================================');
+							// console.log('====================================');
+							// console.log('layout is :', layout);
+							// console.log('====================================');
 						}
 					}
 				}, (error) => {
@@ -61,13 +58,7 @@
 				return groups
 			}
 		},
-		methods: {
-			leftClick() {
-
-			},
-			rightClick() {
-
-			},			
+		methods: {						
 		},
 	}
 </script>
@@ -81,7 +72,11 @@
 		background-color: $mainbgColor;
 	}
 	.header {
-		@include header;
+		background-color: #ffffff;
+		position: fixed;
+		top: 0px;
+		left: 0px;
+		right: 0px;
 		border-bottom: 1px solid $lineColor;
 	}
 	.list {

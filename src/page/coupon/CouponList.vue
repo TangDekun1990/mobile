@@ -32,12 +32,13 @@ export default {
 			requestParams: {'page': 0, 'per_page': 10, 'status': 0},  //获取优惠券列表的接口
 			loading: false,  //是否加载更多
 			isMore: true,  //是否有更多
-			currentIndex: 0,  //当前的tab
+			currentIndex: this.$route.params.index,  //当前的tab
 			icon: '../../assets/image/change-icon/e0_coupon@2x.png'
 		}
 	},
 
 	created() {
+		// CODE REVIEW
 		this.$on('redener-coupon-list', (data) => {
 			if (data) {
 				this.currentIndex = data.id;
