@@ -16,7 +16,10 @@
 		<div v-infinite-scroll="getMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
 			<div class="order-body" v-if="orderList.length > 0 ">
 				<div class="list" v-for="(item, index) in orderList">
-					<h3 class="title">{{ getOrderStatusBy(item.status) }}</h3>
+					<h3 class="title" v-if="item.status != 4">{{ getOrderStatusBy(item.status) }}</h3>
+					<h3 v-if="item.status == 4"> 
+						<img src="../../../assets/image/change-icon/e3_seal@2x.png">
+					</h3>
 					<div class="order-image" v-if="item.goods.length > 0"  @click="goOrderDetail(item.id)">
 						<img v-bind:src="image.product.photos[0].large" v-for="image in item.goods" v-if="image.product.photos.length > 0">
 					</div>
@@ -46,12 +49,11 @@
 						<!-- 发货中 -->
 						<div class="btn"  v-if="item.status == 2">
 							<button v-on:click="track(item.id)">查看物流</button>
-							<button class="buttonright" v-on:click="confirm(item.id,index)">确认收货</button>
+							<button class="buttonright" v-on:click="confirm(item,index)">确认收货</button>
 						</div>
-						<!-- 已收货，待评价 -->
+						<!-- 待评价 -->
 						<div class="btn" v-if="item.status == 3" >
 							<button v-on:click="goComment(item)">评价晒单</button>
-						
 							<button class="buttonright" v-on:click="goBuy(item.id)">再次购买</button>
 						</div>
 						<!-- 已完成 -->
@@ -65,7 +67,7 @@
 						<!-- 配货中 -->
 						<div class="btn" v-if="item.status == 6" >
 							<button v-on:click="track(item.id)">查看物流</button>
-							<button class="buttonright" v-on:click="confirm(item.id,index)">确认收货</button>
+							<button class="buttonright" v-on:click="confirm(item,index)">确认收货</button>
 						</div>
 					</div>
 				</div>
@@ -116,16 +118,10 @@ import OrderNav from './OrderNav';
 			}
     },
     created() {
-		this.getUrlParams();
-		this.orderReasonList();
-	},
-	beforeRouteEnter(to, from, next) {
-		next(()=>{
-			window.location.reload()
-		})
-	},
+			this.getUrlParams();
+			this.orderReasonList();
+		},
 	methods: {
-
 		getUrlParams() {
 			let urlparams = this.$route.params;
 			if(urlparams.order) {
@@ -141,7 +137,6 @@ import OrderNav from './OrderNav';
 			this.currentNAVId = item.id;
 			this.orderList = [];
 			this.orderListParams.page = 1;
-			// this.loading = false;
 			this.getOrderList();
 		},
 
@@ -188,6 +183,7 @@ import OrderNav from './OrderNav';
 		// 取消订单
 		cancel() {
 			this.popupVisible = true;
+			this.stop();
 		},
 		cancelInfo() {
 			this.popupVisible = false;
@@ -196,6 +192,21 @@ import OrderNav from './OrderNav';
 			this.popupVisible = false;
 			this.getordersuccess(id, index);
 		},
+
+		/***滑动限制***/
+    stop(){
+      var mo=function(e){e.preventDefault();};
+      document.body.style.overflow='hidden';
+      document.addEventListener("touchmove",mo,false);//禁止页面滑动
+    },
+    /***取消滑动限制
+    move(){
+      var mo=function(e){e.preventDefault();};
+      document.body.style.overflow='';//出现滚动条
+      document.removeEventListener("touchmove",mo,false);
+		},
+		***/
+		
 		// 查看物流
 		track(id) {
 			this.$router.push({ name: 'orderTrack', params: {orderTrack: id}});
@@ -209,10 +220,10 @@ import OrderNav from './OrderNav';
 			this.$router.push('/home');
 		},
 		// 确认收货
-		confirm(id,index) {
+		confirm(item, index) {
 			MessageBox.confirm('是否确认收货？', '确认收货').then(action => {        
-			 this.$router.push('/OrderTrade');
-			 this.orderConfirms(id,index);
+			this.$router.push({name:'orderTrade', query: {'item': item}});
+			this.orderConfirms(item.id, index);	
 			});
 		},
 		// 获取确认收货数据
@@ -263,11 +274,7 @@ import OrderNav from './OrderNav';
 		getReasonItem(item) {
 			this.reasonId = item.id;
 		}
-
-	
-	
 	},
-  
 }
 </script>
 
@@ -320,6 +327,10 @@ import OrderNav from './OrderNav';
 				background:rgba(255,255,255,1);
 				box-shadow: 0px 0.5px 0px 0px rgba(232,234,237,1);
 				padding: 0px 15px 0px 10px;
+				img {
+					width:76px;
+					height:60px;	
+				}
 			}
 			.order-image {
 				height:91px; 

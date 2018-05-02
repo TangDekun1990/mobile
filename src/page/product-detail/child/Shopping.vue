@@ -233,7 +233,6 @@
 						let attr = this.detailInfo.properties[i].attrs;
 						//  循环每每种规格下的属性
 						for (let j = 0, len = attr.length; j <= len -1; j++) {
-							// debugger;
 							if (this.ids.length > 0) {
 								// 数据回填
 								for (let x = 0; x <= this.ids.length-1; x++) {
@@ -280,7 +279,6 @@
 			 getIds() {
 			 	let data = this.detailInfo.properties;
 			 	for (let i = 0, len = data.length-1; i <= len; i++) {
-					// debugger;
 					this.ids[i] = data[i].currentIndex;
 					//  info
 					for (let j = 0; j <= data[i].attrs.length -1; j++) {

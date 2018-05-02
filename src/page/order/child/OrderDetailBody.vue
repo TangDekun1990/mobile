@@ -15,7 +15,7 @@
       <div class="receipt" v-if="orderDetail.order.status == 1 " v-on:click="goOrderrack(order.id)">
         <label>
           <img src="../../../assets/image/change-icon/e0_delivery@2x.png">
-          <span>订单创建完毕，等待仓库发货</span>
+          <span>{{trackList[0].content}}</span>
         </label>
         <img class="arrow" src="../../../assets/image/change-icon/enter@2x.png">
       </div>
@@ -27,7 +27,7 @@
       <div class="receipt" v-if="orderDetail.order.status == 2" v-on:click="goOrderrack(order.id)">
         <label>
           <img src="../../../assets/image/change-icon/icon_car@2x.png">
-          <span>您的订单已拣货完毕，并打包成功</span>
+          <span>{{trackList[0].content}}</span>
         </label>
         <img class="arrow" src="../../../assets/image/change-icon/enter@2x.png">
       </div>
@@ -39,7 +39,7 @@
       <div class="receipt" v-if="orderDetail.order.status == 3" v-on:click="goOrderrack(order.id)">
         <label>
           <img src="../../../assets/image/change-icon/icon_car@2x.png">
-          <span>感谢你在温超商城购物</span>
+          <span>{{trackList[0].content}}</span>
         </label>
         <img class="arrow" src="../../../assets/image/change-icon/enter@2x.png">
       </div>
@@ -68,10 +68,8 @@
         <p>{{orderDetail.order.consignee.address}}</p>
       </div>
       <div class="contact">
-        <a href="">
           <span>联系客服</span>
           <img src="../../../assets/image/change-icon/e5_service@2x.png">
-        </a>
       </div>
 
       <div class="containers" v-for="(item, index) in orderDetail.order.goods" v-bind:key="item.id" v-on:click="getOrderDetail(item.product.id)" v-if="index <= orderIndex">
@@ -129,7 +127,7 @@
 							</div>
 						</div>
 					</mt-popup>
-          <button class="buttonbottom" v-on:click="payment"> 去支付 </button>
+          <button class="buttonbottom" v-on:click="payment()"> 去支付 </button>
       </div>
 
       <!-- 待发货按钮 -->
@@ -142,24 +140,24 @@
 
       <!-- 待评价 -->
 			<div class="btn" v-if="orderDetail.order.status == 3" >
-				<button v-on:click="goComment(orderDetail.order.id)">评价晒单</button>
-				<button class="buttonbottom" v-on:click="goBuy()">再次购买</button>
+				<button v-on:click="goComment(orderDetail.order)">评价晒单</button>
+				<button class="buttonbottom" v-on:click="goBuy(orderDetail.order.id)">再次购买</button>
 			</div>
 
 			<!-- 已完成 -->
 			<div class="btn" v-if="orderDetail.order.status == 4" >
-				<button class="buttonbottom" v-on:click="goBuy()">再次购买</button>
+				<button class="buttonbottom" v-on:click="goBuy(orderDetail.order.id)">再次购买</button>
 			</div>
 
 			<!-- 已取消 -->
 			<div class="btn" v-if="orderDetail.order.status == 5" >
-				<button class="buttonbottom" v-on:click="goBuy()">再次购买</button>
+				<button class="buttonbottom" v-on:click="goBuy(orderDetail.order.id)">再次购买</button>
 			</div>
 
 			<!-- 配货中 -->
 			<div class="btn" v-if="orderDetail.order.status == 6" >
-				<button v-on:click="track(item.id)">查看物流</button>
-				<button class="buttonbottom" v-on:click="confirm(item.id,index)">确认收货</button>
+				<button v-on:click="track(orderDetail.order.id)">查看物流</button>
+				<button class="buttonbottom" v-on:click="confirm(orderDetail.order.id,index)">确认收货</button>
 			</div>
     </div>  
   </div>
@@ -171,7 +169,8 @@
   import { Indicator, MessageBox, Popup  } from 'mint-ui';
   import CheckoutDesc from './CheckoutDesc'
   import Promos from '../../checkout/Promos'
-  import { orderGet, orderReasonList, orderCancel, orderConfirm} from '../../../api/network/order' //订单详情 //获取退货原因 //取消订单
+  import { orderGet, orderReasonList, orderCancel, orderConfirm, orderRebuy } from '../../../api/network/order' //订单详情 //获取退货原因 //取消订单 //再次购买 
+  import { shippingStatusGet } from '../../../api/network/shipping' //订单跟踪
   import { Toast } from 'mint-ui';
   import Clipboard from 'clipboard';  
   export default {
@@ -190,7 +189,8 @@
         order: {},
         total_price: [],
         orderIndex: 2,
-        isShow: false
+        isShow: false,
+        trackList:[],
       }
     },
      props: {
@@ -207,6 +207,7 @@
       let id = this.$route.params.orderDetail ?  this.$route.params.orderDetail : '';
       this.orderInfo(id);
       this.orderReasonList();
+      this.getShippingStatusGet(id);
     },
     methods: {
       // 获取订单详情数据
@@ -229,7 +230,8 @@
       complete(id, index) {
         this.popupVisible = false;
         this.getordersuccess(id, index);
-        this.$router.replace('/order');
+        // this.$router.replace({ name: 'order' });
+        window.location.reload()
       },
       // 去支付
       payment() {
@@ -261,6 +263,15 @@
       track(id) {
         this.$router.push({ name: 'orderTrack', params: {orderTrack: id}});
       },
+
+      // 获取物流状态数据
+      getShippingStatusGet(id) {
+        shippingStatusGet(id).then( res => {
+          if(res) {
+            this.trackList = res.status;
+          }
+        }); 
+      },
       // 确认收货
       confirm(id,index) {
         MessageBox.confirm('是否确认收货？', '确认收货').then(action => {        
@@ -277,14 +288,22 @@
         })
       },
       // 晒单评价
-      goComment(id) {
-        let params = {'order': id};
-        this.$router.push({ name: 'orderComment', params:params});
+      goComment(data) {
+        this.$router.push({ name: 'orderComment', params:{'order': data}});
       },
 
-      // 再次购买
-      goBuy() {
-        this.$router.push({ name: 'cart' })
+      
+      // 获取再次购买数据
+      goBuy(id) {
+        Indicator.open({
+          spinnerType: 'fading-circle'
+        });
+        orderRebuy(id).then( res => {
+          if(res) {
+            Indicator.close();
+            this.$router.push('/cart')
+          }
+        });
       },
       getOrderDiscountPrice(item) {
         return 'AED ' + (item.price ? item.price : 0)
@@ -405,7 +424,8 @@
     display: flex;
     justify-content:space-between;
     align-items:center;
-    height:44px;
+    height:auto;
+    padding: 13px;
     background-color: #fff;
     margin-bottom:8px;
     label {
@@ -532,7 +552,8 @@
     padding: 0 13px;
     span {
       font-size: 12px;
-      color:#4E545D
+      color:#4E545D;
+      padding-right: 6px;
     }
     img {
       width: 12px;
@@ -669,5 +690,8 @@
 <style>
   .mint-toast-icon{
     font-size:38px;
+  }
+  button {
+    padding:0;
   }
 </style>

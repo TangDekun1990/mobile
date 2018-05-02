@@ -24,7 +24,7 @@
 <script>
 import { HeaderItem } from '../../../components/common'
 import { Header } from 'mint-ui'
-import { messageSystemList } from '../../../api/network/message'
+import { messageSystemList } from '../../../api/network/message' //通知消息
 export default { 
   data() {
     return {
@@ -49,7 +49,6 @@ export default {
     // 去到通知消息详情页面
     goNotice(link) {
       this.$router.push({ name: 'NoticeMessageInfo', params: {'link': link}})
-      // window.location.href = link;
     }  
   }
 }

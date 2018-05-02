@@ -21,17 +21,19 @@
 <script>
 import { HeaderItem } from '../../../components/common'
 import { Header } from 'mint-ui'
-
-export default { 
+import { ENUM } from '../../../config/enum'
+export default {    
   methods: {  
     goBack() {
-      this.$router.push({name: 'order'}); 
+      this.$router.push({ name: 'order', params: { order: ENUM.ORDER_STATUS.DELIVERIED }});
     },
+    // 去订单详情
     goOrderDetail() {
-      this.$router.push('OrderDetail');
+      this.$router.push({ name: 'orderDetail',params: {'orderDetail':this.$route.query.item.id}}) 
     },
+    // 去评价订单
     goOrderComment() {
-      this.$router.push('OrderComment');
+      this.$router.push({ name: 'orderComment', params: {'order': this.$route.query.item}});
     }
   }
 }

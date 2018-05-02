@@ -79,7 +79,6 @@
 		justify-content: flex-start;
 		align-items: stretch;
 		background-color: $mainbgColor;
-		margin-bottom: 50px;
 	}
 	.header {
 		@include header;
@@ -87,6 +86,7 @@
 	}
 	.list {
 		margin-top: 44px;
+		margin-bottom: 50px;
 		display: flex;
 		flex-direction: column;
 		justify-content: flex-start;

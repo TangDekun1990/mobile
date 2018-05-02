@@ -22,6 +22,7 @@ import Profile from '../page/profile/Profile'
 import ProfileInfo from '../page/profile/ProfileInfo'
 import Setting from '../page/profile/Setting'
 import SettingAbout from '../page/profile/child/SettingAbout'
+import SettingIntroduce from '../page/profile/child/SettingIntroduce'
 import Help from '../page/profile/Help'
 import HelpUrl from '../page/profile/child/HelpUrl'
 import News from '../page/profile/News'
@@ -141,6 +142,11 @@ export default [
 				name: 'SettingAbout',
 				path: '/SettingAbout',
 				component: SettingAbout
+			},
+			{
+				name: 'SettingIntroduce',
+				path: '/settingIntroduce',
+				component: SettingIntroduce
 			},
 			{
 				name: 'profileInfo',

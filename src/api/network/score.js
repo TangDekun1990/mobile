@@ -1,7 +1,7 @@
 import { fetchEndpoint } from '../../network/network';
 
 // 积分信息
-export const scoreInfo =
+export const scoreGet =
 () =>
 fetchEndpoint(
   '/v2/ecapi.score.get',
@@ -11,7 +11,7 @@ fetchEndpoint(
 )
 
 // 积分记录
-export const scoreRecord =
+export const scoreExchangeCouponRecordList =
 (page, per_page) =>
 fetchEndpoint(
   '/v2/ecapi.score.exchange.coupon.record.list',
@@ -23,7 +23,7 @@ fetchEndpoint(
 )
 
 // 积分记录
-export const scoreExchageList =
+export const scoreExchangeCouponList =
 (page, per_page) =>
 fetchEndpoint(
   '/v2/ecapi.score.exchange.coupon.list',
@@ -35,7 +35,7 @@ fetchEndpoint(
 )
 
 // 积分兑换
-export const scoreExchage =
+export const scoreExchangeCoupon =
 (id) =>
 fetchEndpoint(
   '/v2/ecapi.score.exchange.coupon',

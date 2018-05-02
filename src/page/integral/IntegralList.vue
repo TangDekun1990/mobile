@@ -51,7 +51,7 @@
 import HeaderItem  from '../../components/common'
 import IntegralItem from './child/IntegralItem'
 import IntegralRecord from './child/IntegralRecord'
-import { scoreInfo, scoreRecord, scoreExchageList, scoreExchage } from '../../api/network/score'
+import * as api from '../../api/network/score'
 import { MessageBox, Toast } from 'mint-ui'
 
 export default {
@@ -76,7 +76,7 @@ export default {
 	},
 	methods: {
 		touchExchange(item) {
-			scoreExchage(item.id).then(res => {
+			api.scoreExchangeCoupon(item.id).then(res => {
 				if ( res ) {					
 				}
 			}, error => {								
@@ -93,7 +93,7 @@ export default {
 			this.$router.push("/integralRule");
 		},		
 		getIntegralInfo() {
-			scoreInfo().then(res => {
+			api.scoreGet().then(res => {
 				if ( res ) {
 					this.scoreInfo = res;
 				}
@@ -102,7 +102,7 @@ export default {
 		// 获取兑换记录列表
 		getScoreList() {
 			let data = this.requestParams;
-			scoreRecord(data.page, data.per_page).then(res => {
+			api.scoreExchangeCouponRecordList(data.page, data.per_page).then(res => {
 				this.loading = false;
 				if ( res ) {
 					this.recordList = this.recordList.concat(res.exchange_record);
@@ -116,7 +116,7 @@ export default {
 		// 获取可兑换列表
 		getScoreChageList() {
 			let data = this.requestParams;
-			scoreExchageList(data.page, data.per_page).then(res => {
+			api.scoreExchangeCouponList(data.page, data.per_page).then(res => {
 				this.loading = false;
 				if ( res ) {
 					this.exchangeList = this.exchangeList.concat(res.exchange);

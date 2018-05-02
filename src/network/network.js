@@ -72,8 +72,9 @@ axios.interceptors.request.use(config => {
 
             let encry_post_body = '';
             let body = null;
-            if (post_body && post_body.length) {
-                encry_post_body = XXTEA.encryptToString(post_body, ENCRYPT_KEY);
+            if (post_body && post_body.length) {                
+                encry_post_body = XXTEA.encryptToBase64(post_body, ENCRYPT_KEY);
+
                 body = toQueryString({ x: encry_post_body });
                 body = body.replace(/\+/g, '%2B');
             }
@@ -95,8 +96,8 @@ axios.interceptors.response.use(response => {
     if (response) {
         let isAPIRequest = response.config.url.indexOf(apiBaseUrl) == 0 ? true : false;
         if (isAPIRequest) {
-            if (response.data && response.data.data) {
-                var raw = XXTEA.decryptToString(response.data.data, ENCRYPT_KEY);
+            if (response.data && response.data.data) {                
+                var raw = XXTEA.decryptFromBase64(response.data.data, ENCRYPT_KEY);                
                 var json = JSON.parse(raw);
                 if (json) {
                     delete response.data.data;
@@ -117,14 +118,12 @@ axios.interceptors.response.use(response => {
                 let errorCode = response.data.code;
                 if (response.data.error) {
                     // return response.data;
-                    console.log("request url is: ", response.config.url);                    
-                    console.log('网络错误, 错误代码:=' + errorCode + "错误信息:=" + errorMessage);
+                    if (process.env.NODE_ENV === 'development') {
+                        console.log("request url is: ", response.config.url);
+                        console.log('网络错误, 错误代码:=' + errorCode + "错误信息:=" + errorMessage);
+                    }                    
                     return Promise.reject({ 'errorCode': errorCode, 'errorMsg': errorMessage });
-                }
-                    // if (process.env.NODE_ENV === 'development') {
-                    //     console.log('网络错误, 错误代码:=' + errorCode + "错误信息:=" + errorMessage);
-                    // }
-                    // return Promise.reject({ 'errorCode': errorCode, 'errorMsg': errorMessage });
+                }                    
             }
         } else {
             console.log("请求地址错误!");
