@@ -66,7 +66,10 @@
 			},
 
 			openZhiManager() {
-				// zhiManager.expand();
+				// zhiManager.on("load", function() {
+				// 	// zhiManager.initBtnDOM();
+				// 	zhiManager.expand();
+				// });
 			}
 		},
 

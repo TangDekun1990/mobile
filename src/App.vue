@@ -18,8 +18,6 @@ export default {
 	components: {
 	},
 	created: function() {
-		//初始化智齿咨询组件实例
-		// this.zhiManager = (getzhiSDKInstance());
 		// console.log('App route is', this.$router)
 	},
 	methods: {
