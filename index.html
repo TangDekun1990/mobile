@@ -14,6 +14,18 @@
   <body>
     <div id="app"></div>
     <!-- built files will be auto injected -->
-    <script src="https://www.sobot.com/chat/frame/js/entrance.js?sysNum=5b696ae2d5394f06b558e64ebbaf3be7" class="zhiCustomBtn" id="zhichiScript" data-args="manual=true"></script>
+    <script src="https://www.sobot.com/chat/frame/js/entrance.js?sysNum=5b696ae2d5394f06b558e64ebbaf3be7" class="zhiCustomBtns" id="zhichiScript" data-args="manual=true"></script>
+    <script>
+    	//再调用load方法
+		var zhiManager = (getzhiSDKInstance());
+		zhiManager.on("load", function() {
+			console.log(zhiManager);
+			// zhiManager.collapse();
+			// zhiManager.initBtnDOM();
+			zhiManager.set('customBtn', 'true');
+			zhiManager.set('lazyFlag', true);
+	    	zhiManager.set('robotHelloWord', '您好! 我是机器人小超， 有什么吩咐您请说哦！');
+		});
+    </script>
   </body>
 </html>

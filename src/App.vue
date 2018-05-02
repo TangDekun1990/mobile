@@ -10,10 +10,17 @@
 <script>
 export default {
 	name: 'app',
+	data(){
+		return{
+			zhiManager: ''
+		}
+	},
 	components: {
 	},
 	created: function() {
-		console.log('App route is', this.$router)
+		//初始化智齿咨询组件实例
+		// this.zhiManager = (getzhiSDKInstance());
+		// console.log('App route is', this.$router)
 	},
 	methods: {
 		goBack () {
