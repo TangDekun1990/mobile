@@ -51,13 +51,9 @@ export default {
     this.getTips()
   },
   methods: { 
-    getTips() {   
-      debugger   
+    getTips() {     
       let startAt = this.item ? this.item.start_at : null
-      let endAt = this.item ? this.item.end_at : null
-      console.log('====================================');
-      console.log('(startAt, endAt)',startAt, endAt);
-      console.log('====================================');
+      let endAt = this.item ? this.item.end_at : null      
       if (startAt && endAt) {
         switch (this.utils.activityStatus(startAt, endAt)) {
           case 0: // 未开始

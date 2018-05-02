@@ -68,10 +68,8 @@
         <p>{{orderDetail.order.consignee.address}}</p>
       </div>
       <div class="contact">
-        <a href="">
           <span>联系客服</span>
           <img src="../../../assets/image/change-icon/e5_service@2x.png">
-        </a>
       </div>
 
       <div class="containers" v-for="(item, index) in orderDetail.order.goods" v-bind:key="item.id" v-on:click="getOrderDetail(item.product.id)" v-if="index <= orderIndex">
@@ -290,9 +288,8 @@
         })
       },
       // 晒单评价
-      goComment(id) {
-        let params = {'order': id};
-        this.$router.push({ name: 'orderComment', params:params});
+      goComment(data) {
+        this.$router.push({ name: 'orderComment', params:{'order': data}});
       },
 
       
@@ -555,7 +552,8 @@
     padding: 0 13px;
     span {
       font-size: 12px;
-      color:#4E545D
+      color:#4E545D;
+      padding-right: 6px;
     }
     img {
       width: 12px;
@@ -692,5 +690,8 @@
 <style>
   .mint-toast-icon{
     font-size:38px;
+  }
+  button {
+    padding:0;
   }
 </style>

@@ -18,7 +18,6 @@
           <span>{{item.product.name }}</span>
           <ul>
             <li class="good" v-for="(image, indexs) in item.IMAGE" v-on:click="changeImage(item, image.id, index)"> 
-               <!-- {{item.currentIndex != image.id}} -->
               <img :src="image.img" v-if="item.currentIndex != image.id">
               <img :src="image.activeImg" v-if="item.currentIndex == image.id">
               <label>{{image.name}}</label>
@@ -41,7 +40,7 @@ import { IMAGE } from "../static";
 export default {
   data() {
     return {
-      commentinfo: this.$route.params.order ? this.$route.params.order : "",
+      commentinfo: this.$route.params.order ? this.$route.params.order : null,
       IMAGE: IMAGE
     };
   },
@@ -60,7 +59,7 @@ export default {
     // 获取评价晒单数据
     getComment(id) {
       let data = this.getCommentData();
-      if(data.length > 0) {
+      if(data && data.length > 0) {
         data = JSON.stringify(data);
       } else {
         Toast('请评价商品');
@@ -86,13 +85,13 @@ export default {
     },
 
     buildData() {
-     let data = this.commentinfo.goods;
+     let data = this.commentinfo ? this.commentinfo.goods : [];     
      for(let i = 0; i <= data.length-1; i++ ) {
        data[i].IMAGE = this.IMAGE;
        data[i].content = '';
        data[i].currentIndex = 3;
      }
-     this.commentinfo.goods = Object.assign([], data);
+    //  this.commentinfo.goods = Object.assign([], data);
     },
 
     changeImage(item, imageid, index) {

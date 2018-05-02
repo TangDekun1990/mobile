@@ -56,7 +56,6 @@ export default {
       console.log('====================================');
       console.log('hasChildItems');
       console.log('====================================');
-      debugger
       if (item && item.children && item.children.length) {
         return true
       }

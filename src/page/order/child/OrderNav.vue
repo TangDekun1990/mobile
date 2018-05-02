@@ -49,7 +49,7 @@
 						<!-- 发货中 -->
 						<div class="btn"  v-if="item.status == 2">
 							<button v-on:click="track(item.id)">查看物流</button>
-							<button class="buttonright" v-on:click="confirm(item.id,index)">确认收货</button>
+							<button class="buttonright" v-on:click="confirm(item,index)">确认收货</button>
 						</div>
 						<!-- 待评价 -->
 						<div class="btn" v-if="item.status == 3" >
@@ -67,7 +67,7 @@
 						<!-- 配货中 -->
 						<div class="btn" v-if="item.status == 6" >
 							<button v-on:click="track(item.id)">查看物流</button>
-							<button class="buttonright" v-on:click="confirm(item.id,index)">确认收货</button>
+							<button class="buttonright" v-on:click="confirm(item,index)">确认收货</button>
 						</div>
 					</div>
 				</div>
@@ -121,11 +121,6 @@ import OrderNav from './OrderNav';
 			this.getUrlParams();
 			this.orderReasonList();
 		},
-	// beforeRouteEnter(to, from, next) {
-	// 	next(()=>{
-	// 		window.location.reload()
-	// 	})
-	// },
 	methods: {
 		getUrlParams() {
 			let urlparams = this.$route.params;
@@ -188,6 +183,7 @@ import OrderNav from './OrderNav';
 		// 取消订单
 		cancel() {
 			this.popupVisible = true;
+			this.stop();
 		},
 		cancelInfo() {
 			this.popupVisible = false;
@@ -196,6 +192,21 @@ import OrderNav from './OrderNav';
 			this.popupVisible = false;
 			this.getordersuccess(id, index);
 		},
+
+		/***滑动限制***/
+    stop(){
+      var mo=function(e){e.preventDefault();};
+      document.body.style.overflow='hidden';
+      document.addEventListener("touchmove",mo,false);//禁止页面滑动
+    },
+    /***取消滑动限制
+    move(){
+      var mo=function(e){e.preventDefault();};
+      document.body.style.overflow='';//出现滚动条
+      document.removeEventListener("touchmove",mo,false);
+		},
+		***/
+		
 		// 查看物流
 		track(id) {
 			this.$router.push({ name: 'orderTrack', params: {orderTrack: id}});
@@ -209,10 +220,10 @@ import OrderNav from './OrderNav';
 			this.$router.push('/home');
 		},
 		// 确认收货
-		confirm(id,index) {
+		confirm(item, index) {
 			MessageBox.confirm('是否确认收货？', '确认收货').then(action => {        
-			 this.$router.push({name:'orderTrade', query: {'id': id}});
-			 this.orderConfirms(id,index);
+			this.$router.push({name:'orderTrade', query: {'item': item}});
+			this.orderConfirms(item.id, index);	
 			});
 		},
 		// 获取确认收货数据

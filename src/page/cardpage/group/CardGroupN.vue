@@ -60,7 +60,7 @@ export default {
         }
           break;
       }    
-      let seperatorWidth = 0 // 分割线宽度(无分割线)
+      let seperatorWidth = 1 // 分割线宽度(无分割线)
       itemWidth = (width - seperatorWidth) / columnCount  
       itemHeight = itemWidth / ratio
       return {

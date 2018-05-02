@@ -6,7 +6,7 @@
       </header-item>    
     </mt-header>
     <!-- body -->
-    <div class="order-message-body" v-for="(item, index) in orderMessage" v-on:click="getOrderDetail(item.id)">
+    <div class="order-message-body" v-for="(item, index) in orderMessage" v-on:click="getOrderDetail(item.link)">
       <p>{{item.created_at * 1000| convertTime }}</p>
       <div class="order-track">
         <span>{{item.title}}</span>
@@ -28,6 +28,7 @@
 import { HeaderItem } from '../../../components/common'
 import { Header } from 'mint-ui'
 import { messageOrderList } from '../../../api/network/message' //订单消息列表
+import { openLink } from '../../cardpage/deeplink'
 export default { 
   data() {
     return {
@@ -49,8 +50,9 @@ export default {
         }
       })
     },
-    getOrderDetail(id){
-      this.$router.push({name: 'orderDetail',params: {orderDetail: id}})
+    // 从订单消息页面去订单详情页
+    getOrderDetail(link){
+       openLink(this.$router, link)
     }
   }
 }
