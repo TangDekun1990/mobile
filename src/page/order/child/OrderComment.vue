@@ -77,7 +77,7 @@ export default {
       let dataArray = [];
       for(let i = 0; i <= data.length-1; i++) {
         if(data[i].currentIndex !== 0 ) {
-          let obj = {'goods': data[i].id, 'grade': data[i].currentIndex, 'content': data[i].content};
+          let obj = {'goods': data[i].product.id, 'grade': data[i].currentIndex, 'content': data[i].content};
           dataArray.push(obj);
         }
       }
@@ -91,7 +91,6 @@ export default {
        data[i].content = '';
        data[i].currentIndex = 3;
      }
-    //  this.commentinfo.goods = Object.assign([], data);
     },
 
     changeImage(item, imageid, index) {
@@ -169,6 +168,8 @@ export default {
         background: rgba(247, 249, 250, 1);
         border: 1px solid #f7f9fa;
         box-sizing: border-box;
+        padding: 10px 0px 0px 10px;
+        font-size: 14px;
       }
     }
   }

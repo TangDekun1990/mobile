@@ -27,7 +27,6 @@
         <label class="order-subtitle">查看全部订单</label>
         <img class="indicator" src="../../assets/image/change-icon/enter@2x.png" />
       </div>
-      <!-- <div class="order-header-line"></div> -->
     </div>
     <div class="order-wrapper" > 
       <order-item 
@@ -36,6 +35,7 @@
         id='0'
         :icon="require('../../assets/image/change-icon/e0_payment@2x.png')"
         title="待付款"
+        :orderNumber = 'orderCount.created'
         >
       </order-item> 
       <order-item 
@@ -43,21 +43,27 @@
         testAttr = 'order'
         id='1'
         :icon="require('../../assets/image/change-icon/e0_delivery@2x.png')"
-        title="待发货">
+        title="待发货"
+        :orderNumber = 'orderCount.paid'
+        >
       </order-item>
       <order-item 
         class="order-item" 
         testAttr = 'order'
         id='2'
         :icon="require('../../assets/image/change-icon/e0_receiving@2x.png')"
-        title="待收货">
+        title="待收货"
+        :orderNumber = 'orderCount.delivering'
+        >
       </order-item>
       <order-item
         class="order-item" 
         testAttr = 'order'
         id='3'
         :icon="require('../../assets/image/change-icon/e0_evaluate@2x.png')"
-        title="待评价">
+        title="待评价"
+        :orderNumber = 'orderCount.deliveried'
+        >
       </order-item>
     </div>
     <div class="bottom-wrapper">
@@ -103,12 +109,14 @@ import { mapState } from "vuex";
 import { userProfileGet } from "../../api/network/user";
 import { scoreGet } from '../../api/network/score'
 import { ENUM } from '../../config/enum'
+import { orderSubtotal } from '../../api/network/order'
 export default {
   name: "profile",
    data() {
     return {
       orderAll: 1,
-      score: 0
+      score: 0,
+      orderCount: {},
     };
   },
   components: {
@@ -124,7 +132,8 @@ export default {
           this.score = response.score
         }, error => {          
         });
-    };     
+    };   
+    this.getOrderSubtotal();  
   },
   computed: {
     ...mapState({
@@ -176,6 +185,14 @@ export default {
     }
   },
   methods: {
+    // 获取订单不同状态的数量统计
+    getOrderSubtotal() {
+      orderSubtotal().then(res=> {
+        if(res) {
+          this.orderCount = res.subtotal;
+        }
+      })
+    },
     showLogin() {
       this.$router.push("/signin");
     },

@@ -28,6 +28,7 @@ import HelpUrl from '../page/profile/child/HelpUrl'
 import News from '../page/profile/News'
 import NewsOrderMessage from '../page/profile/child/NewsOrderMessage'
 import NewsNoticeMessage from '../page/profile/child/NewsNoticeMessage'
+import NewsServiceMessage from '../page/profile/child/NewsServiceMessage'
 import NoticeMessageInfo from '../page/profile/child/NoticeMessageInfo'
 import Collection from '../page/profile/Collection'
 
@@ -182,6 +183,11 @@ export default [
 				name: 'NoticeMessageInfo',
 				path: '/noticeMessageInfo',
 				component: NoticeMessageInfo
+			},
+			{
+				name: 'NewsServiceMessage',
+				path: '/newsServiceMessage',
+				component: NewsServiceMessage
 			},
 			{
 				name: 'Collection',
