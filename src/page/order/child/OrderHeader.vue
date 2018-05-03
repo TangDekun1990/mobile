@@ -2,7 +2,7 @@
 <template>
   <div class="container">
     <mt-header class="header" title="我的订单">
-      <header-item slot="left" v-bind:isBack=true v-on:onclick="goBack">
+      <header-item slot="left" v-bind:isBack = true  v-on:onclick="goBack">
       </header-item>    
     </mt-header> 
   </div>
@@ -35,8 +35,15 @@ export default {
   }
   .header {
     @include header;
+    border-bottom: 1px solid #E8EAED;
   }
 </style>
+<style>
+  .icon {
+    vertical-align: middle;
+  }
+</style>
+
 
 
 

@@ -2,19 +2,14 @@
   <div v-on:click="onclick()">
     <img class="order-item-icon" v-bind:src="icon"/>
     <label class="item-title order-item-title">{{title}}</label>
-    <span class="number" v-if="quantity <= 100">{{ quantity }}</span>
-		<!-- <span class="number" v-if="quantity >= 100 ">99+</span> -->
+    <span class="number" v-if="orderNumber < 100 ">{{ orderNumber }}</span>
+		<span class="number" v-if="orderNumber >= 100 ">99+</span>
   </div>
 </template>
 
 <script>
-import { orderList } from '../../../api/network/order';
+import { orderList, orderSubtotal } from '../../../api/network/order';
 export default {
-  data() {
-    return {
-      quantity: 0, //相关订单数量
-    }
-  },
   props: {
     icon: {
       type: String,
@@ -27,24 +22,16 @@ export default {
     },
     id: {
       default: 0
-    }
+    },
+    orderNumber: {
+      type: Number,
+    },
   },
-  // created(){
-	// 	this.getNumber();
-	// },
   methods: {
     onclick() {      
       // Code Review: 去掉testAttr
       this.$router.push({name: this.testAttr, params: {order: this.id}});
     },
-    // 获取订单数量
-    getNumber() {
-			orderList().then(res => {
-				if (res) {
-					this.quantity = res;
-				}
-			})
-		},    
   }
 }
 </script>
@@ -76,7 +63,7 @@ export default {
     margin-left: 17px;
     background: RGBA(239, 51, 56, 1);
     border-radius: 20px;
-    font-size: 10px;
+    font-size: 12px;
     text-align: center;
     color: RGBA(255, 255, 255, 1);
     font-weight: normal;

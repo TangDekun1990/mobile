@@ -55,8 +55,15 @@
       </div>
 
       <div class="image" v-if="orderDetail.order.status == 6">
-        <img src="../../../assets/image/change-icon/e5_evaluation@2x.png">
+        <img src="../../../assets/image/change-icon/e5_box_white@2x.png">
         <span>配货中</span>
+      </div>
+      <div class="receipt" v-if="orderDetail.order.status == 6 " v-on:click="goOrderrack(order.id)">
+        <label>
+          <img src="../../../assets/image/change-icon/e0_delivery@2x.png">
+          <span>{{trackList[0].content}}</span>
+        </label>
+        <img class="arrow" src="../../../assets/image/change-icon/enter@2x.png">
       </div>
 
       <div class="address">
@@ -131,7 +138,7 @@
       </div>
 
       <!-- 待发货按钮 -->
-      <div class="btn" v-if="orderDetail.order.status == 1 ?'':checkState"></div>
+      <div class="btn" v-if="orderDetail.order.status == 1 ? '':checkState" v-bind:class="{'ship': orderDetail.order.status == 1}"></div>
 
       <!-- 发货中按钮 -->
 			<div class="btn"  v-if="orderDetail.order.status == 2">
@@ -156,7 +163,6 @@
 
 			<!-- 配货中 -->
 			<div class="btn" v-if="orderDetail.order.status == 6" >
-				<button v-on:click="track(orderDetail.order.id)">查看物流</button>
 				<button class="buttonbottom" v-on:click="confirm(orderDetail.order.id,index)">确认收货</button>
 			</div>
     </div>  
@@ -404,6 +410,8 @@
 	 	height: 100%;
 		position: absolute;
 		width: 100%;
+    margin-top: 44px;
+    margin-bottom: 54px;
   }
   .image{
     background-image:url('../../../assets/image/change-icon/bg_order@2x.png');
@@ -482,7 +490,6 @@
     margin-top: 15px;
     color: #4E545D;
     font-size: 14px;  
-    margin-right: 10px;  
 
     overflow: hidden;
     text-overflow:ellipsis;
@@ -575,6 +582,7 @@
       border-bottom: 1px solid $lineColor;
       p {
         padding-top: 6px;
+        font-size: 14px;
       }
       input {
         color:#7C7F88;
@@ -590,6 +598,7 @@
       }
      .givetime {
        padding: 18px 15px 14px;
+       font-size: 14px;
        :last-child {
         padding-top: 6px;
       }
@@ -608,6 +617,7 @@
     align-items: stretch;
     padding-top: 12px;
     box-sizing: border-box;
+    margin-bottom:26px;
     .desc-item {  
       flex:1;
     }
@@ -627,12 +637,14 @@
       }
     }
   }
-  
   .btn {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 100%;
     height: 54px;
     display: flex;
     justify-content:flex-end;
-    margin-top: 10px;
     background-color: #fff;
     align-items:center;
     button {
@@ -683,6 +695,11 @@
       }
     }
   }
+  .ship {
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+  }
+  
   
 </style>
 

@@ -292,6 +292,7 @@ import OrderNav from './OrderNav';
 			align-items: center;
 			height: 100%;
 			background:rgba(255,255,255,1);
+			border-bottom: 1px solid #E8EAED;
 			li {
 				font-size:14px;
 				font-family:'PingFangSC-Regular';

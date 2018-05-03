@@ -11,8 +11,9 @@
 					<div class="ui-image">
 						<img :src="item.product.photos[0].thumb" v-if='item.product.photos.length > 0'>
 						<img src="../../../assets/image/change-icon/default_image_02@2x.png" v-if='item.product.photos.length <= 0'>
-						<span v-if="item.product.good_stock == 0 ">已售罄</span>
-						<span v-if="item.product.good_stock > 0 && item.product.good_stock <= 10">仅剩{{ item.product.good_stock }}件</span>
+						<span v-if="item.product.good_stock == 0 " class='stock-info'>已售罄</span>
+						<span v-if="item.product.good_stock > 0 && item.product.good_stock <= 10" class='stock-info'>仅剩{{ item.product.good_stock }}件</span>
+						<span class="promos" v-if="item.product.activity && item.product.activity.display_time">促销</span>
 					</div>
 					<div class="list-info">
 						<h3 v-bind:class="{'disabled-list': item.product.good_stock == 0}"> {{ item.product.name}}</h3>
@@ -344,7 +345,22 @@ export default {
 						border: 1px solid #E8EAED;
 						border-radius: 3px;
 					}
-					span {
+					span.promos {
+						position: absolute;
+						background: url('../../../assets/image/change-icon/label@2x.png') no-repeat;
+						width: 36px;
+						height: 19px;
+						color: #FFFFFF;
+						font-size: 10px;
+						top: 0px;
+						left: 0px;
+						background-size: cover;
+						font-weight: 100;
+						line-height: 19px;
+						text-align: left;
+						padding-left: 5px;
+					}
+					span.stock-info{
 						position: absolute;
 						height:20px;
 						background:rgba(243,244,245,1);

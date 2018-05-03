@@ -2,13 +2,13 @@
 <template>
 	<div class="ui-buy-wrapper ui-detail-common" v-if="detailInfo">
 		<div class="buy-wrapper header" @click="changeCartState()" v-if="detailInfo.good_stock > 0">
-			<p v-if='number <= 0 && chooseinfo.specification.length <= 0'>请选择购买数量分类</p>
-			<p v-if='number > 0 || chooseinfo.specification.length > 0'>已选{{chooseinfo.specification.join(',') }},<i v-if="number > 0">数量{{number}}</i></p>
+			<p v-if='number <= 0'>请选择购买{{chooseinfo.specification.join(',')}}数量分类</p>
+			<p v-if='number > 0'>已选{{chooseinfo.specification.join(',') }},<i v-if="number > 0">数量{{number}}</i></p>
 			<img src="../../../assets/image/change-icon/enter@2x.png">
 		</div>
 		<div class="buy-wrapper header isopacity" v-if="detailInfo.good_stock <= 0">
-			<p v-if='number <= 0 && chooseinfo.specification.length < 0'>请选择购买数量分类</p>
-			<p v-if='number > 0 || chooseinfo.specification.length > 0'>已选{{chooseinfo.specification.join(',') }},数量{{number}}</p>
+			<p v-if='number <= 0'>请选择购买{{chooseinfo.specification.join(',')}}数量分类</p>
+			<p v-if='number > 0'>已选{{chooseinfo.specification.join(',') }},数量{{number}}</p>
 			<img src="../../../assets/image/change-icon/enter@2x.png">
 		</div>
 	</div>
@@ -29,15 +29,35 @@
 		    })
 		},
 
+		created() {},
+
+		watch: {
+			detailInfo: function(value) {
+				this.setSpecification();
+			}
+		},
+
 		methods: {
 			...mapMutations({
 				saveCartState: 'saveCartState',
-				setIsHideCommodity: 'setIsHideCommodity'
+				setIsHideCommodity: 'setIsHideCommodity',
+				saveChooseInfo: 'saveChooseInfo'
 			}),
 
 			changeCartState() {
 				this.saveCartState(true);
 				this.setIsHideCommodity(true);
+			},
+
+			setSpecification() {
+				if (this.detailInfo && this.detailInfo.properties) {
+					let data = this.detailInfo.properties;
+					let arrays = [];
+					for (let i = 0; i <= data.length -1; i++) {
+						arrays.push(data[i].name);
+					}
+					this.saveChooseInfo({'specification': arrays, 'ids': []});
+				}
 			}
 		}
 	}
