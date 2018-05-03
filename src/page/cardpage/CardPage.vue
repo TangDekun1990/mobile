@@ -2,7 +2,12 @@
 	<div class="container">
 		<mt-header class="header" fixed v-bind:title="getTitle">
       <header-item slot="left" isBack v-on:onclick="leftClick">
-      </header-item>               
+      </header-item> 
+			<div slot="right" class="right-item">
+				<img src="../../assets/image/change-icon/b2_cart@2x.png" class="ui-cart" v-on:click='rightClick'>
+				<span class="cart-number" v-if="count > 0 && count <= 100">{{ count }}</span>
+				<span class="cart-number" v-if="count >= 100 ">99+</span>
+			</div>              
     </mt-header>
 		<div class="list">
 			<card-group 
@@ -20,11 +25,13 @@
 	import { Header, Indicator, Toast } from 'mint-ui'
 	import { cardpagePreview } from '../../api/network/cardpage'
 	import CardGroup from '../cardpage/group/CardGroup'
+	import { mapState } from 'vuex'
 	export default {
     name: 'CardPage',
 		data() {
 			return {        
-				cardpage: null
+				cardpage: null,
+				count: 10,
 			}
 		},
 		components: {			
@@ -52,6 +59,9 @@
 				})
 		},
 		computed: {
+			...mapState({
+				isOnline: state => state.auth.isOnline
+			}),
       getTitle () {
         return this.cardpage ? this.cardpage.title : ''
       },
@@ -64,8 +74,13 @@
 			leftClick() {
         this.$router.go(-1)
 			},
-			rightClick() {
-			},			
+			rightClick () {
+				if (this.isOnline) {
+					this.$router.push({ name: 'cart', params: { type: 0 } })
+				} else {
+					this.$router.push({ name: 'signin' })
+				}
+			}			
 		},
 	}
 </script>
@@ -91,5 +106,27 @@
 	}
 	.section {
 		margin-bottom: 10px;
+	}
+	.right-item {
+		position: relative;
+		display: flex;
+		width: auto;
+		height: auto;
+		padding: 6px;
+		flex-direction: row;
+		justify-content: flex-end;
+		align-items: center;
+	}
+	.ui-cart {
+		width: 22px;
+		height: 20px;
+	}
+	.cart-number {
+		position: absolute;
+		top: -1px;
+		right: -5px;
+		width: 18px;
+		height: 14px;
+		line-height: 14px;
 	}
 </style>

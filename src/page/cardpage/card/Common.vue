@@ -45,8 +45,7 @@ export default {
       } 
       return ''     
     },
-    onClick() {   
-      debugger;   
+    onClick() {         
       openLink(this.$router, this.item.link)
     },    
   },
