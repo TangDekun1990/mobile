@@ -6,6 +6,11 @@ export const openLink = (router, link) => {
     // deeplink://goto/index
     console.log('====================================');
     console.log('link is ', link)
+    debugger
+    if (window.wenchao.checkInApp()) {      
+      window.wenchao.openLink(link)
+      return
+    }
     let items = link.split('://')
     let schema = items[0]
     
