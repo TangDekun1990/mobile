@@ -267,7 +267,7 @@
 			 */
 			 setCurrentIndex(index, keyid, item) {
 			 	this.info = [];
-			 	// this.getCurrentStock(keyid);
+			 	this.getCurrentStock(index, keyid);
 			 	this.detailInfo.properties[index].currentIndex = keyid;
 			 	this.detailInfo.properties = Object.assign([], this.detailInfo.properties);
 			 	this.getIds();
@@ -277,25 +277,26 @@
 			  * getCurrentStock: 获取当前
 			  */
 			getCurrentStock(index, currentid) {
-				let data = this.detailInfo.stock;
-			 	if (data.length > 0) {
-			 		let indexArray = [];
-			 		for (let i = 0, len = data.length; i <= len -1; i++) {
-			 			if (data[i].goods_attr.indexOf(''+currentid+'') >= 0) {
-			 				let properties = this.detailInfo.properties;
-			 				for (let x = 0; x <= properties.length-1; x++) {
-			 					let attrs = properties[x].attrs;
-			 					for (let a = 0; a <= attrs.length-1; a++) {
-			 						if (data[i].stock_number > 0) {
-		 								attrs[a].ishasstock = true;
-		 							} else {
-		 								attrs[a].ishasstock = false;
-		 							}
-			 					}
-			 				}
-			 			}
-			 		}
-			 	}
+				let properties = this.detailInfo.properties;
+				for (let i = 0; i <= properties.length-1; i++) {
+					if (i != index) {
+						let attrs = properties[i].attrs;
+						for (let j = 0; j <= attrs.length-1; j++) {
+							let combination = this.fromatArray('|', [currentid, attrs[j].id]);
+							// 循环库存
+							let stock = this.detailInfo.stock;
+							for (let s = 0; s<= stock.length-1; s++) {
+								if (stock[s].goods_attr.indexOf(combination) >= 0) {
+									if (stock[s].stock_number > 0) {
+										attrs[j].ishasstock = true;
+									} else {
+										attrs[j].ishasstock = false;
+									}
+								}
+							}
+						}
+					}
+				}
 			},
 
 			/*
