@@ -266,12 +266,37 @@
 			 * @parmas: keyid 当前选择的规格的index
 			 */
 			 setCurrentIndex(index, keyid, item) {
-			 	// item.isactive = !item.isactive;
 			 	this.info = [];
+			 	// this.getCurrentStock(keyid);
 			 	this.detailInfo.properties[index].currentIndex = keyid;
 			 	this.detailInfo.properties = Object.assign([], this.detailInfo.properties);
 			 	this.getIds();
 			 },
+
+			 /*
+			  * getCurrentStock: 获取当前
+			  */
+			getCurrentStock(index, currentid) {
+				let data = this.detailInfo.stock;
+			 	if (data.length > 0) {
+			 		let indexArray = [];
+			 		for (let i = 0, len = data.length; i <= len -1; i++) {
+			 			if (data[i].goods_attr.indexOf(''+currentid+'') >= 0) {
+			 				let properties = this.detailInfo.properties;
+			 				for (let x = 0; x <= properties.length-1; x++) {
+			 					let attrs = properties[x].attrs;
+			 					for (let a = 0; a <= attrs.length-1; a++) {
+			 						if (data[i].stock_number > 0) {
+		 								attrs[a].ishasstock = true;
+		 							} else {
+		 								attrs[a].ishasstock = false;
+		 							}
+			 					}
+			 				}
+			 			}
+			 		}
+			 	}
+			},
 
 			/*
 			 * getIds: 获取选中的id

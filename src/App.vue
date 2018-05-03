@@ -10,16 +10,41 @@
 <script>
 export default {
 	name: 'app',
+
 	data(){
 		return{
 			zhiManager: ''
 		}
 	},
-	components: {
-	},
+
+	components: {},
+
 	created: function() {
-		// console.log('App route is', this.$router)
+		/*
+		 * detectBack： 监听浏览器返回事件
+		 */
+		// var detectBack = {
+	 //        initialize: function() {
+	 //            //监听hashchange事件
+	 //            window.addEventListener('hashchange', function() {
+	 //            	console.log('eufgeuf');
+	 //                //为当前导航页附加一个tag
+	 //                this.history.replaceState('hasHash', '', '');
+	 //            }, false);
+
+	 //            window.addEventListener('popstate', function(e) {
+	 //            	console.log('111');
+	 //                if (e.state) {
+	 //                    //侦测是用户触发的后退操作, dosomething
+	 //                    //这里刷新当前url
+	 //                    this.location.reload();
+	 //                }
+	 //            }, false);
+	 //        }
+  //   	};
+  //   	detectBack.initialize();
 	},
+
 	methods: {
 		goBack () {
 			window.history.length > 1
