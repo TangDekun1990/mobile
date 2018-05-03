@@ -35,6 +35,7 @@
 <script>
 	import { mapState, mapMutations } from 'vuex';
 
+	// CODE REVIEW 'produce 改为 product'
 	import productHeader from './child/ProduceHeader';
 	import productBody from './child/ProduceBody';
 	import productFilter from './child/ProductFilter';

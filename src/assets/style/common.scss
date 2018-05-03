@@ -324,7 +324,7 @@ span.cart-number {
 	background-color: #fff;
 	height: 50px;
 	padding-right: 11px;
-	border-bottom: 1px solid #E8EAED;
+	border-bottom: 0.5px solid #E8EAED;
 }
 
 //  更新用户资料 右侧弹出
@@ -355,10 +355,14 @@ span.cart-number {
 // 提示框样式
 .confirm-button-red {
 	background:rgba(242,48,48,1);
-	color: #fff;	
+	color: #fff;
 }
 
 .confirm-button-red:hover {
 	background:rgba(242,48,48,0.8);
-	color: #fff;	
+	color: #fff;
+}
+
+.mint-actionsheet-list .mint-actionsheet-listitem {
+	border-bottom: 0.5px solid RGBA(0, 0, 0, 0.05);
 }

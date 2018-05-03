@@ -169,45 +169,48 @@ export default {
 		}
 		</script>
 
-		<style lang='scss' scoped>
-		.header {
-			@include header;
+<style lang='scss' scoped>
+.header {
+	border-bottom: 1px solid #E8EAED;
+	@include header;
+}
+.ui-popup-right {
+	background-color: #fff;
+}
+.updeta-user-name {
+	position: relative;
+	padding: 0px 15px 0px 20px;
+	input {
+		border: 0px;
+		/* padding-right: 20px; */
+	}
+	img{
+		position: absolute;
+		top: 17px;
+		right: 15px;
+		width: 16px;
+		height: 16px;
+		cursor: pointer;
+	}
+}
+.ui-save-btn {
+	padding: 36px 38px;
+	span {
+		display: block;
+		width: 100%;
+		height:40px;
+		background:rgba(252,46,57,1);
+		border-radius: 2px;
+		border: 0px;
+		font-size:16px;
+		color:rgba(255,255,255,1);
+		text-align: center;
+		cursor: pointer;
+		line-height: 40px;
+		&:focus {
+			outline: none;
+			outline-offset: 0px;
 		}
-		.ui-popup-right {
-			background-color: #fff;
-		}
-		.updeta-user-name {
-			position: relative;
-			input {
-				border: 0px;
-			}
-			img{
-				position: absolute;
-				top: 17px;
-				right: 5px;
-				width: 16px;
-				height: 16px;
-				cursor: pointer;
-			}
-		}
-		.ui-save-btn {
-			padding: 36px 38px;
-			span {
-				display: block;
-				width: 100%;
-				height:40px;
-				background:rgba(252,46,57,1);
-				border-radius: 2px;
-				border: 0px;
-				font-size:16px;
-				color:rgba(255,255,255,1);
-				text-align: center;
-				cursor: pointer;
-				line-height: 40px;
-				&:focus {
-					outline: none;
-					outline-offset: 0px;
-				}
-			}
-		}
-		</style>
+	}
+}
+</style>

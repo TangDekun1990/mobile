@@ -177,6 +177,7 @@ export default {
 	align-items: stretch;
 }
 .header {
+	border-bottom: 1px solid #E8EAED;
 	@include header;
 }
 
@@ -210,6 +211,9 @@ export default {
 	    text-overflow: ellipsis;
 	    white-space: nowrap;
 	    text-align: right;
+	}
+	.ui-update-pass .common-update-avatar {
+		border-bottom: 0px;
 	}
 }
 </style>

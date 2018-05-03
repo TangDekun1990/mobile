@@ -1,4 +1,5 @@
 import { ENUM } from '../../config/enum'
+import store from "../../store/index";
 export const openLink = (router, link) => {
   if (link && link.length) {
     // {Scheme}://{Action}/{Target}/{Method}/{Param}?{Key}={Value}
@@ -25,7 +26,20 @@ export const openLink = (router, link) => {
       console.log('link is ', link)
       console.log('(path, where, action, query)', path, where, action, query);
       console.log('====================================');
+      let queryParams = new Object()
+      if (query && query.length) {
+        let queryParts = query.split('&')
+        for (let i = 0; i < queryParts.length; i++) {
+          const element = queryParts[i];
+          let valueParts = element.split('=')
+          let key = valueParts[0]
+          let value = decodeURIComponent(valueParts[1])          
+          queryParams[key] = value
+        }
+      }
+        
       let params = null
+      let showAuth = false
       if (path === 'goto') {
         if (where === 'index') {
           // 商城首页
@@ -53,7 +67,7 @@ export const openLink = (router, link) => {
           // 组合促销列表 // TODO:								
         } else if (where === 'product') {
           if (action === 'all') {
-            // 商品列表 // TODO:
+            // 商品列表 
             params = { name: 'product', params: { isFromHome: true } }
           } else {
             // 商品详情
@@ -71,20 +85,25 @@ export const openLink = (router, link) => {
           // 卡片页详情 
           params = { name: 'cardpage', params: { name: action } }								
         } else if (where === 'profile') {
-          // 个人资料
+          // 个人资料（需要登录）
+          showAuth = true
           params = { name: 'profileInfo' }
         } else if (where === 'address') {
           if (action === 'all') {
-            // 收货地址列表	
+            // 收货地址列表	（需要登录）
+            showAuth = true
             params = { name: 'addressManage' }
           } else if (action === 'new') {
             // 新建收货地址（需要登录）
+            showAuth = true
             params = { name: 'addressEdit', params: { mode: 'add', item: null } }
           } else {
             // 编辑收货地址（需要登录）// TODO: address item
+            showAuth = true
             params = { name: 'addressEdit', params: { mode: 'edit', item: action } }
           }          
         } else if (where === 'order') {
+          showAuth = true
           if (action === 'all') {
             // 全部订单（需要登录）
             params = { name: 'order', params: { order: ENUM.ORDER_STATUS.ALL, isFromHome: true } }
@@ -113,40 +132,77 @@ export const openLink = (router, link) => {
         } else if (where === 'favorite') {
           if (action === 'product') {
             // 我的商品收藏（需要登录）
+            showAuth = true
+            params = { name: 'collection' }
           }          
         } else if (where === 'message') {
+          // 消息列表（需要登录）
           if (action === 'all') {
-            // 消息列表（需要登录）
-          }          
-        } else if (where === 'orderMessage/all') {
+            showAuth = true  
+            params = { name: 'newsNoticeMessage' }
+          } else {
+            // 无法打开页面
+          }         
+        } else if (where === 'orderMessage') {
           if (action === 'all') {
             // 订单消息列表（需要登录）
-          }           
+            showAuth = true
+            params = { name: 'NewsOrderMessage' }
+          } else {
+            // 无法打开页面
+          }          
         } else if (where === 'coupon') {
+          showAuth = true
           if (action === 'available') {
             // 未使用优惠券列表（需要登录）
+            params = { name: 'couponList', params: { index: 0 } }
           } else if (action === 'expired') {
             // 已过期优惠券列表（需要登录）
+            params = { name: 'couponList', params: { index: 1 } }
           } else if (action === 'used') {
             // 已使用优惠券列表（需要登录）
+            params = { name: 'couponList', params: { index: 2 } }
           }          
         } else if (where === 'shipping') {          
           // 物流详情页面（需要登录）
+          showAuth = true
+          params = { name: 'orderTrack', params: { orderTrack: id } }
         } else if (where === 'article') {
           // 文章列表页面（需要登录）
+          showAuth = true
           params = { name: 'Help' }
         } else if (where === 'invoice') {
           // 发票页面（需要登录）
+          showAuth = true
           params = { name: 'invoice', params: { title: '' } }
         }
       } else if (path === 'search') {
-
+        if (where === 'product') {
+          let k = queryParams['k']
+          params = { name: 'product', query: { 'keywords': k } }
+        }
       } else if (path === 'preview') {
-
+        if (where === 'site') {
+          // 预览站点（踢回首页，退出登陆）// TODO:
+        } else if (where === 'theme') {
+          // 预览主题（踢回首页，刷新界面）// TODO:
+        } else if (where === 'page') {
+          // 预览页面 // TODO:
+          let name = queryParams['name']
+          params = { name: 'cardpage', params: { name: name } }								
+        }
       }
-      if (params) {        
-        router.push(params)
-      }
+      if (store.getters.isOnline) {   
+        if (params) {
+          router.push(params)
+        }     
+      } else {
+        if (showAuth) {
+          router.push({ name: 'signin' })
+        } else {
+          router.push(params)
+        } 
+      }           
     }
   }
 }
