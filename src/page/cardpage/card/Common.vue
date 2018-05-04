@@ -47,14 +47,16 @@ export default {
     },
     onClick() {  
       let link = this.item.link
+      let isInApp = false
       bridge.checkInApp(function(isInApp) {
-        if (isInApp) {
-          alert(link)
-          bridge.openLink(link)
-        } else {
-          openLink(this.$router, link)
-        }
+        isInApp = isInApp        
       })             
+      if (isInApp) {
+        alert(link)
+        bridge.openLink(link)
+      } else {
+        openLink(this.$router, link)
+      }
     },    
   },
 }
