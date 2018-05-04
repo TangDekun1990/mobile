@@ -45,8 +45,15 @@ export default {
       } 
       return ''     
     },
-    onClick() {         
-      openLink(this.$router, this.item.link)
+    onClick() {  
+      bridge.checkInApp((isInApp) => {
+        if (isInApp) {
+          alert(link)
+          bridge.openLink(link)
+        } else {
+          openLink(this.$router, this.item.link)
+        }
+      })             
     },    
   },
 }
