@@ -2,7 +2,7 @@
   <div class="container">
     <!-- header -->
     <mt-header class="header" title="消息中心">
-      <header-item slot="left" v-bind:isBack=true v-on:onclick="goBack()">
+      <header-item slot="left" v-bind:isBack = true v-on:onclick="goBack()">
       </header-item>    
     </mt-header>
     <!-- body -->
@@ -32,7 +32,7 @@
         <div class="flex-right">
           <h3>客服消息</h3>
           <span>在线客服咨询时间为08:00-22:00 </span>
-          <img src="../../assets/image/change-icon/b0_indicator_active@2x.png">
+          <img src="../../assets/image/change-icon/b0_indicator_active@2x.png" v-show="isShow">
         </div>
       </div>
     </div>
@@ -40,12 +40,13 @@
 </template>
 
 <script>
-import {messageOrderList, messageSystemList } from '../../api/network/message' // 订单消息 //通知消息
+import {messageOrderList, messageSystemList } from '../../api/network/message' // 订单消息 //通知消息 
   export default {
     data() {
     return {
       NoticeMessage: [],
       orderMessage: [],
+      isShow: true
     }
   },
     created() {
@@ -83,7 +84,8 @@ import {messageOrderList, messageSystemList } from '../../api/network/message' /
       },
       // 客服消息
       getServiceMessage() {
-        console.log('客服消息')
+        this.$router.push('newsServiceMessage')
+        
       }
     }
   }

@@ -1,0 +1,99 @@
+<template>
+  <div class="container">
+     <!-- header -->
+    <mt-header class="header" title="客服消息">
+      <header-item slot="left" v-bind:isBack=true v-on:onclick="goBack">
+      </header-item>    
+    </mt-header>
+    <!-- body -->
+    <div class="service-Message-body" v-on:click="goService()">
+        <img class="photo" src="../../../assets/image/change-icon/avatar_service.png">
+        <div class="right-wrapper">
+          <div>
+            <span class="title">温超客服</span>
+            <p class="message-number">
+              <span>6</span> 
+            </p>
+          </div>
+          <p class="content">您好，我是温超机器人，请问有什么可以帮您？请...</p>
+        </div>
+      </div> 
+  </div>
+</template>
+
+<script>
+  export default {
+    methods: {
+      goBack() {
+        this.$router.go(-1);
+      },
+      goService() {
+        console.log('温超客服')
+      }
+    }
+  }
+</script>
+
+<style lang="scss" scoped>
+  .container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    .header {
+      @include header;
+      border-bottom: 1px solid #E8EAED;
+    }
+    .service-Message-body {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: stretch;
+      background-color: #fff;
+      border-bottom: 1px solid #E8EAED;
+      .photo {
+        width:50px;
+        height:50px; 
+        padding:15px;
+      }
+      .right-wrapper {
+        padding:15px 19px 15px 0px;
+        overflow: hidden;
+        >div {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          .title {
+            color: #4E545D;
+            font-size: 14px;
+          }
+          .message-number {
+            display: block;
+            top: 5px;
+            right: 20px;
+            width: 16px;
+            height: 16px;
+            background-color: #F33C3C;
+            line-height: 16px;
+            text-align: center;
+            border-radius: 30px ;
+            span {
+              font-size: 12px;
+              color:#fff;
+            }
+          }
+        }
+        .content {
+          color: #7C7F88;
+          font-size: 12px;
+          margin-top:10px;
+
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+      }
+    }
+  }
+</style>
+
