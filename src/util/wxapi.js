@@ -35,7 +35,7 @@ const wxApi = {
 	* [wxRegister 微信Api初始化]
 	* @param  {Function} callback [ready回调函数]
 	*/
-	wxRegister(config, callback) {
+	wxRegister(config, title, callback) {
 		wx.config({
 				debug: true, // 开启调试模式
 				appId: config.app_id, // 必填，公众号的唯一标识
@@ -51,7 +51,8 @@ const wxApi = {
 		});
 		wx.ready(function(){
 			wx.onMenuShareAppMessage({
-				title: 'ue峰峰' // 分享标题
+				title: title ,// 分享标题
+				imgUrl: '../assets/image/change-icon/b6_Drop_down_bg2@2x.png', // 分享图标
 			});
 		});
 		wx.error( res => {
@@ -83,7 +84,7 @@ const wxApi = {
 
 	/**
 	* [ShareTimeline 微信分享给朋友]
-	* @param {[type]} opstion [分享信息]
+	* @param {[type]} option [分享信息]
 	* @param {[type]} success [成功回调]
 	* @param {[type]} error   [失败回调]
 	*/

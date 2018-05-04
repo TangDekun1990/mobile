@@ -63,7 +63,7 @@ export default {
   },
 
   created() {
-    this.wxApi.getConfigRes();
+    this.wxApi.getConfigRes({'title': getTitle});
   },
 
   methods: {   
@@ -84,13 +84,7 @@ export default {
     },
     // 分享到微信
     goWachat() {
-      // this.getConfigGet();
-      // this.wxApi.getConfigRes();
-      // let option = {
-      //   'title': '购物流程',
-      //   'link': 'https://www.baidu.com/'
-      // };
-      // this.wxApi.ShareAppMessage(option);
+
     },
     // 取消分享
     cancelInfo() {

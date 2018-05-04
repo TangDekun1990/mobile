@@ -5,12 +5,7 @@ export const openLink = (router, link) => {
     // {Scheme}://{Action}/{Target}/{Method}/{Param}?{Key}={Value}
     // deeplink://goto/index
     console.log('====================================');
-    console.log('link is ', link)
-    debugger
-    if (window.wenchao.checkInApp()) {      
-      window.wenchao.openLink(link)
-      return
-    }
+    console.log('link is ', link)        
     let items = link.split('://')
     let schema = items[0]
     

@@ -45,8 +45,13 @@ export default {
       } 
       return ''     
     },
-    onClick() {         
-      openLink(this.$router, this.item.link)
+    onClick() {  
+      let link = this.item.link
+      if (window.WebViewJavascriptBridge && window.WebViewJavascriptBridge.isInApp()) {
+        bridge.openLink(link)
+      } else {
+        openLink(this.$router, link)
+      }                   
     },    
   },
 }
