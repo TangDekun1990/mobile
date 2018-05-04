@@ -52,7 +52,7 @@ const wxApi = {
 		wx.ready(function(){
 			wx.onMenuShareAppMessage({
 				title: title ,// 分享标题
-				imgUrl: '../assets/image/change-icon/address_empty@2x.png', // 分享图标
+				imgUrl: require('../assets/image/change-icon/address_empty@2x.png'), // 分享图标
 			});
 		});
 		wx.error( res => {
