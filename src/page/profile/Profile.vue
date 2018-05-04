@@ -9,10 +9,10 @@
       </div>
       <div class="top-info-wrapper">
         <div class="avatar-wrapper" @click="goProfileInfo">
-        <img class="avatar" :src="getAvatarUrl" />        
+        <img class="avatar" :src="getAvatarUrl" />
       </div>
       <label class="nickname" @click="goProfileInfo">{{nickname}}</label>
-      </div>       
+      </div>
       <div class="info-wrapper">
         <div class="info-item">{{getScore}}积分</div>
         <div class="info-item" @click="goIntegral">积分记录</div>
@@ -23,23 +23,23 @@
         <img class="order-header-icon" src="../../assets/image/change-icon/e0_order@2x.png" />
         <label class="item-title order-header-title">我的订单</label>
       </div>
-      <div class="order-header-item" id="order-item-right">        
+      <div class="order-header-item" id="order-item-right">
         <label class="order-subtitle">查看全部订单</label>
         <img class="indicator" src="../../assets/image/change-icon/enter@2x.png" />
       </div>
     </div>
-    <div class="order-wrapper" > 
-      <order-item 
-        class="order-item" 
+    <div class="order-wrapper" >
+      <order-item
+        class="order-item"
         testAttr = 'order'
         id='0'
         :icon="require('../../assets/image/change-icon/e0_payment@2x.png')"
         title="待付款"
         :orderNumber = 'orderCount.created'
         >
-      </order-item> 
-      <order-item 
-        class="order-item" 
+      </order-item>
+      <order-item
+        class="order-item"
         testAttr = 'order'
         id='1'
         :icon="require('../../assets/image/change-icon/e0_delivery@2x.png')"
@@ -47,8 +47,8 @@
         :orderNumber = 'orderCount.paid'
         >
       </order-item>
-      <order-item 
-        class="order-item" 
+      <order-item
+        class="order-item"
         testAttr = 'order'
         id='2'
         :icon="require('../../assets/image/change-icon/e0_receiving@2x.png')"
@@ -57,7 +57,7 @@
         >
       </order-item>
       <order-item
-        class="order-item" 
+        class="order-item"
         testAttr = 'order'
         id='3'
         :icon="require('../../assets/image/change-icon/e0_evaluate@2x.png')"
@@ -67,36 +67,36 @@
       </order-item>
     </div>
     <div class="bottom-wrapper">
-      <info-item 
-        v-on:onclick="goFavourite()"       
-        class="info-item-wrapper section-header" 
+      <info-item
+        v-on:onclick="goFavourite()"
+        class="info-item-wrapper section-header"
         :icon="require('../../assets/image/change-icon/e0_favorite@2x.png')"
         title="我的收藏">
       </info-item>
       <info-item
-        v-on:onclick="goAddress"       
-        class="info-item-wrapper" 
+        v-on:onclick="goAddress"
+        class="info-item-wrapper"
         :icon="require('../../assets/image/change-icon/e0_address@2x.png')"
         title="管理收货地址">
       </info-item>
-      <info-item 
+      <info-item
         v-on:onclick="goCoupon"
-        class="info-item-wrapper section-footer" 
-        :icon="require('../../assets/image/change-icon/e0_coupon@2x.png')" 
+        class="info-item-wrapper section-footer"
+        :icon="require('../../assets/image/change-icon/e0_coupon@2x.png')"
         title="我的优惠券">
       </info-item>
-      <info-item 
+      <info-item
         v-on:onclick="goHelp()"
-        class="info-item-wrapper section-header" 
-        :icon="require('../../assets/image/change-icon/e0_clause@2x.png')" 
+        class="info-item-wrapper section-header"
+        :icon="require('../../assets/image/change-icon/e0_clause@2x.png')"
         title="使用帮助">
       </info-item>
-      <info-item 
-        class="info-item-wrapper section-footer" 
-        :icon="require('../../assets/image/change-icon/e0_phone@2x.png')" 
+      <info-item
+        class="info-item-wrapper section-footer"
+        :icon="require('../../assets/image/change-icon/e0_phone@2x.png')"
         title="客服电话">
       </info-item>
-    </div>    
+    </div>
     <tabbar></tabbar>
   </div>
 </template>
@@ -130,10 +130,10 @@ export default {
       scoreGet().then(
         response => {
           this.score = response.score
-        }, error => {          
+        }, error => {
         });
-    };   
-    this.getOrderSubtotal();  
+    };
+    this.getOrderSubtotal();
   },
   computed: {
     ...mapState({
@@ -153,7 +153,7 @@ export default {
             }
         }
       }
-      return title;      
+      return title;
     },
     getAvatarUrl () {
       let url = null
@@ -167,9 +167,9 @@ export default {
               url = avatar.large
             } else if (avatar.thumb && avatar.thumb) {
               url = avatar.thumb
-            } 
+            }
           }
-        }                        
+        }
       }
       if (url === null) {
         url = require('../../assets/image/change-icon/img_avatar@2x.png')
@@ -180,8 +180,8 @@ export default {
       let score = '0'
       if (this.isOnline) {
         score = this.score
-      }       
-      return score 
+      }
+      return score
     }
   },
   methods: {
@@ -213,21 +213,21 @@ export default {
       this.$router.push('news');
     },
     goFavourite() {
-      this.$router.push('collection');     
+      this.$router.push('collection');
     },
-    goAddress() {      
+    goAddress() {
       this.$router.push('addressManage');
     },
     goCoupon() {
-      this.$router.push({ name: 'couponList', params: { index: 0 }});
+      this.$router.push({ name: 'couponList', 'query': { index: 0 }});
     },
     goHelp() {
       this.$router.push("help");
     },
-    goOrder() {      
+    goOrder() {
       this.$router.push({ name:'order', params: {'order': ENUM.ORDER_STATUS.ALL}});
     },
-    
+
   },
 };
 </script>

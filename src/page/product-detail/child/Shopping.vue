@@ -9,9 +9,9 @@
 					<img src="../../../assets/image/change-icon/default_image_02@2x.png" class="info-image" v-if=' !detailInfo.photos  || detailInfo.photos.length <= 0'>
 					<img v-bind:src="detailInfo.photos[0].thumb" class="info-image" v-if='detailInfo.photos && detailInfo.photos.length > 0'>
 					<div>
-						<span v-if="!detailInfo.properties">AED {{ detailInfo.current_price }}</span>
-						<span v-if="detailInfo.properties && ids.length == detailInfo.properties.length">AED {{ utils.currencyPrice(propertiPrice) }}</span>
-						<span v-if="detailInfo.properties && ids.length != detailInfo.properties.length">AED {{detailInfo.current_price}}</span>
+						<span v-if="detailInfo.properties.length <= 0">AED {{ detailInfo.current_price }}</span>
+						<span v-if="detailInfo.properties.length > 0 && ids.length == detailInfo.properties.length">AED {{ utils.currencyPrice(propertiPrice) }}</span>
+						<span v-if="detailInfo.properties.length > 0 && ids.length != detailInfo.properties.length">AED {{detailInfo.current_price}}</span>
 						<span>
 							<img src="../../../assets/image/change-icon/b2_tag@2x.png" v-if='detailInfo.activity'>
 							<span v-if='detailInfo.activity'>{{detailInfo.activity.name}}</span>
