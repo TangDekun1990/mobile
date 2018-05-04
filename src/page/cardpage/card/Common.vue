@@ -46,12 +46,13 @@ export default {
       return ''     
     },
     onClick() {  
+      let link = this.item.link
       bridge.checkInApp(function(isInApp) {
         if (isInApp) {
           alert(link)
           bridge.openLink(link)
         } else {
-          openLink(this.$router, this.item.link)
+          openLink(this.$router, link)
         }
       })             
     },    
