@@ -63,7 +63,8 @@ export default {
   },
 
   created() {
-    this.wxApi.getConfigRes({'title': getTitle});
+    let title = this.$route.query.title;
+    this.wxApi.getConfigRes(title);
   },
 
   methods: {   
