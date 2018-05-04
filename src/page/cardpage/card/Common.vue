@@ -46,7 +46,7 @@ export default {
       return ''     
     },
     onClick() {  
-      bridge.checkInApp((isInApp) => {
+      bridge.checkInApp(function(isInApp) {
         if (isInApp) {
           alert(link)
           bridge.openLink(link)
