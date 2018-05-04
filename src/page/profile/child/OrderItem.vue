@@ -2,13 +2,14 @@
   <div v-on:click="onclick()">
     <img class="order-item-icon" v-bind:src="icon"/>
     <label class="item-title order-item-title">{{title}}</label>
-    <span class="number" v-if="orderNumber < 100 ">{{ orderNumber }}</span>
-		<span class="number" v-if="orderNumber >= 100 ">99+</span>
+    <span class="number" v-if="orderNumber == 0 ? '': orderNumber && isEmpty == false ? '': orderNumber">{{ orderNumber }}</span>
   </div>
 </template>
 
 <script>
 import { orderList, orderSubtotal } from '../../../api/network/order';
+import { mapState, mapMutations } from 'vuex';
+
 export default {
   props: {
     icon: {
@@ -25,13 +26,34 @@ export default {
     },
     orderNumber: {
       type: Number,
+      default: 0
     },
+  },
+  data() {
+    return {
+      isEmpty: false
+    }
+  },
+  computed: mapState({
+			height: state => state.cart.height,  
+			user: state => state.auth.user
+		}),
+  created() {
+    this.isSignin();
   },
   methods: {
     onclick() {      
       // Code Review: 去掉testAttr
       this.$router.push({name: this.testAttr, params: {order: this.id}});
     },
+    // 是否登录
+    isSignin() {
+				if (this.user) {
+					this.isEmpty = true;
+				}else {
+					this.isEmpty = false;
+				}
+			},
   }
 }
 </script>

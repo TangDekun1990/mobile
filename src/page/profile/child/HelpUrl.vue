@@ -3,7 +3,7 @@
     <!-- header -->
     <mt-header class="header" :title="getTitle">
       <header-item slot="left" v-bind:isBack=true v-on:onclick="goBack()"></header-item>  
-      <!-- <mt-button slot="right" icon="more" v-on:click="getShow()"></mt-button>    -->
+      <mt-button slot="right" icon="more" v-on:click="getShow()"></mt-button>   
     </mt-header>
     <!-- body -->
     <div class="bullet" v-show="isShow" v-on:click="getShow()">
@@ -45,6 +45,7 @@
 import { HeaderItem, Webview } from '../../../components/common'
 import { Header } from 'mint-ui'
 import { articleList } from '../../../api/network/article'; //文章列表
+import { configGet } from '../../../api/network/config'
 export default {
   data() {
     return {
@@ -59,6 +60,10 @@ export default {
       let title = this.$route.query.title;
       return title
     }
+  },
+
+  created() {
+    this.wxApi.getConfigRes();
   },
 
   methods: {   
@@ -79,7 +84,13 @@ export default {
     },
     // 分享到微信
     goWachat() {
-      this.$router.push('home');
+      // this.getConfigGet();
+      // this.wxApi.getConfigRes();
+      // let option = {
+      //   'title': '购物流程',
+      //   'link': 'https://www.baidu.com/'
+      // };
+      // this.wxApi.ShareAppMessage(option);
     },
     // 取消分享
     cancelInfo() {
@@ -94,6 +105,14 @@ export default {
         }
       })
     },
+    // 微信分享
+    getConfigGet() {
+      configGet().then(res => {
+        if(res) {
+          this.configGet = Object.assign([], this.configGet);
+        }
+      })
+    }
   }
 }
 </script>
