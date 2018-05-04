@@ -16,7 +16,7 @@ const wxApi = {
 	/*
 	* getConfigRes： 获取config1微信配置
 	*/
-	getConfigRes() {
+	getConfigRes(title) {
 		let that = this;
 		configGet().then(res => {
 			if(res) {
@@ -27,7 +27,7 @@ const wxApi = {
 						wechatConfig = configs[key];
 					}
 				}
-				that.wxRegister(wechatConfig);
+				that.wxRegister(wechatConfig, title);
 			}
 		})
 	},
