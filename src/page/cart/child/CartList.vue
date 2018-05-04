@@ -429,7 +429,7 @@ export default {
 					}
 					h3.property-info{
 						font-size: 12px;
-    					color: RGBA(78, 84, 93, 1);
+    					color: #7C7F88;
 					}
 					div.info-price {
 						width: 100%;
