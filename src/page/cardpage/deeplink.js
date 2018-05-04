@@ -4,10 +4,23 @@ export const openLink = (router, link) => {
   if (link && link.length) {
     // {Scheme}://{Action}/{Target}/{Method}/{Param}?{Key}={Value}
     // deeplink://goto/index
+    console.log('====================================');
+    console.log('link is ', link)        
     let items = link.split('://')
     let schema = items[0]
+    
+    let params = null
+    let showAuth = false
     if (schema === 'http' || schema === 'https') {
-
+      // TODO:
+      if (link.indexOf('/cardpage/') >= 0) {
+        let parts = link.split('/cardpage/')
+        let action = parts[1]
+        params = { name: 'cardpage', params: { name: action } }								
+      } else {
+        // TODO: 跨域问题
+        params = { name: 'HelpUrl', query: { 'url': link, 'title': '' } }
+      }      
     } else if (schema === 'deeplink') {
       let prefix = schema + '://'
       let suffix = link.replace(prefix, '')
@@ -21,9 +34,7 @@ export const openLink = (router, link) => {
       let routeParams = route.split('/')
       let path = routeParams[0]
       let where = routeParams.length > 1 ? routeParams[1] : null
-      let action = routeParams.length > 2 ? routeParams[2] : null
-      console.log('====================================');
-      console.log('link is ', link)
+      let action = routeParams.length > 2 ? routeParams[2] : null      
       console.log('(path, where, action, query)', path, where, action, query);
       console.log('====================================');
       let queryParams = new Object()
@@ -37,9 +48,7 @@ export const openLink = (router, link) => {
           queryParams[key] = value
         }
       }
-        
-      let params = null
-      let showAuth = false
+              
       if (path === 'goto') {
         if (where === 'index') {
           // 商城首页
@@ -191,18 +200,18 @@ export const openLink = (router, link) => {
           let name = queryParams['name']
           params = { name: 'cardpage', params: { name: name } }								
         }
+      }                 
+    }
+    if (store.getters.isOnline) {
+      if (params) {
+        router.push(params)
       }
-      if (store.getters.isOnline) {   
-        if (params) {
-          router.push(params)
-        }     
+    } else {
+      if (showAuth) {
+        router.push({ name: 'signin' })
       } else {
-        if (showAuth) {
-          router.push({ name: 'signin' })
-        } else {
-          router.push(params)
-        } 
-      }           
+        router.push(params)
+      }
     }
   }
 }

@@ -17,6 +17,7 @@
 					</div>
 					<div class="list-info">
 						<h3 v-bind:class="{'disabled-list': item.product.good_stock == 0}"> {{ item.product.name}}</h3>
+						<h3 class="property-info">{{ item.property}}</h3>
 						<div class="info-price">
 							<p v-bind:class="{'disabled-list': item.product.good_stock == 0}">AED {{ item.product.current_price }}</p>
 							<div class="ui-number">
@@ -37,6 +38,8 @@ import { Indicator } from 'mint-ui';
 import { Toast } from 'mint-ui';
 import { orderPrice } from '../../../api/network/order';
 import { cartGet, cartDelete, cartUpdate} from '../../../api/network/cart'
+import { productValidate } from '../../../api/network/product'
+
 export default {
 	data() {
 		return {
@@ -125,7 +128,11 @@ export default {
 		 	this.promosIds = [];
 		 	for (let i = 0, len = data.length; i <= len-1; i++) {
 		 		if (data[i].checked) {
-		 			this.orderprice.push({'goods_id': data[i].product.id, 'property': [], 'num': data[i].amount});
+		 			let obj = {'goods_id': data[i].product.id, 'property': [], 'num': data[i].amount};
+		 			if (data[i].attrs) {
+		 				obj.property = data[i].attrs.split(',');
+		 			}
+		 			this.orderprice.push(obj);
 		 			this.promosIds.push(data[i].id);
 		 			this.total_amount += data[i].amount;
 		 		}
@@ -273,6 +280,34 @@ export default {
 		 */
 		goDetail(id) {
 		  this.$router.push({'name': 'detail', 'params': {'id': id}});
+		},
+
+		/*
+		 *productValidate: 结算时判断
+		 */
+		productValidate() {
+			let data = this.cartList;
+			let validate = [];
+			for (let i = 0; i <= data.length-1; i++) {
+				let obj = {'product_id': data[i].product.id, 'property': [], 'product_number': data[i].amount};
+				if (data[i].attrs) {
+					obj.property = data[i].attrs.split(',');
+				}
+				if (data[i].checked) {
+		 			validate.push(obj);
+		 		}
+			}
+			if (validate.length > 0) {
+				productValidate(JSON.stringify(validate)).then( res => {
+					if (res) {
+						if (res.is_valid) {
+							this.$router.push('/checkout')
+						}
+					}
+				}, error => {
+					Toast(error.errorMsg)
+				});
+			}
 		}
 	}
 }
@@ -391,6 +426,10 @@ export default {
 						&.disabled-list {
 							color: #A4AAB3;
 						}
+					}
+					h3.property-info{
+						font-size: 12px;
+    					color: RGBA(78, 84, 93, 1);
 					}
 					div.info-price {
 						width: 100%;

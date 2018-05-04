@@ -45,6 +45,7 @@
 			justify-content: space-around;
 			align-content: center;
 			align-items: center;
+			border-bottom: 0.5px solid RGBA(232, 234, 237, 1);
 			li {
 				height: -webkit-fill-available;
 				padding: 0px 10px;

@@ -20,6 +20,7 @@ export default {
 	components: {},
 
 	created: function() {
+		window.location.href = 'wenchao://'
 		/*
 		 * detectBack： 监听浏览器返回事件
 		 */
@@ -42,7 +43,7 @@ export default {
 	 //            }, false);
 	 //        }
   //   	};
-  //   	detectBack.initialize();
+	//   	detectBack.initialize();
 	},
 
 	methods: {
