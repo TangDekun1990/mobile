@@ -221,7 +221,7 @@
 
           openLink: function (link, callback) {
             if (window.WebViewJavascriptBridge) {
-              window.WebViewJavascriptBridge.callHandler('openLink', link, callback)
+              window.WebViewJavascriptBridge.callHandler('openLink', { link: link }, callback)
             } else {
               // 非APP内
               Linker.open(link);

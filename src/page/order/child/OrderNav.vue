@@ -77,7 +77,7 @@
 				<p>你的订单为空</p>
 				<button class="button" v-on:click="goVisit()">
 					<label>随便逛逛</label>
-					</button>
+				</button>
 			</div>
 		</div>
 	</div>

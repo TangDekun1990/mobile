@@ -7,26 +7,35 @@
     </mt-header>
     <!-- body --> 
     <mt-cell-swipe v-for="(item, index) in collectionList" v-bind:key="item.id" :right="rightbottom(item.id)" >  
-      <div class="collection-body" v-on:click="goOrderDetail(item.id, item.shop)" >
+      <div class="collection-body" v-on:click="goOrderDetail(item.id, item.shop)" v-if="collectionList.length > 0">
         <div class="image">
-          <img :src="item.photos[0].large ">
-          <p>仅剩{{item.good_stock}}件</p>
+          <img src="../../assets/image/change-icon/default_image_02@2x.png" v-if='item.photos <= 0'>
+          <img v-bind:src="item.photos[0].thumb" v-if='item.photos.length > 0' data-src='../../../assets/image/change-icon/default_image_02@2x.png'>
+          <p v-if="item.god_stock == 0">已售罄</p>
+          <p v-if="item.good_stock > 0 && item.good_stock <= 10">仅剩{{item.good_stock}}件</p>
         </div>
         <div class="orderInfo">
           <p class="title">{{item.name}}</p>
           <p class="content">{{item.desc}}</p>
           <div class="price">
             <span class="now">AED{{item.current_price}}</span>
-            <del class="old">AED{{item.price}}</del>
+            <del class="old">AED{{utils.currencyPrice(item.price)}}</del>
           </div>
           <div class="other">
-            <input type="submit" :value="item.self_employed == 1? '自营':'不自营'">
+            <span v-if="item.self_employed" class="self-support">自营</span>
             <span>评论：{{item.comment_count}}</span>
             <span>收藏：{{item.collector.length}}</span>
           </div>
         </div>
       </div>
     </mt-cell-swipe>  
+    <div v-if="collectionList.length <= 0" class="order-air">
+        <img src="../../assets/image/change-icon/favorite_empty@2x.png">
+				<p>您暂时还未收藏过任何商品</p>
+				<button class="button" v-on:click="goVisit()">
+					<label>随便逛逛</label>
+				</button>
+      </div>
   </div>  
 
 </template>
@@ -56,7 +65,6 @@ import { productLikedList, productUnlike } from '../../api/network/product' //�
               showCancelButton: true,
             }).then(actiob =>{
               this.getCancelCollection(productId);
-              
             })
           }  
         ];  
@@ -85,7 +93,11 @@ import { productLikedList, productUnlike } from '../../api/network/product' //�
             this.orderCollection();
           }
         })
-      }
+      },
+      // 随便逛逛
+      goVisit() {
+        this.$router.push('/home');
+      },
     }
   }
 </script>
@@ -106,15 +118,16 @@ import { productLikedList, productUnlike } from '../../api/network/product' //�
       align-items: center;
       background-color:#FFF;
       border-bottom:1px solid #E8EAED;
-      padding-bottom:11px;
+      padding: 11px 22px 11px 10px;
       .image {
         width:110px;
         height:110px;
-        padding: 11px 14px 10px 10px;
+        margin: 0px 14px 0px 0px;
         box-sizing: border-box;
         img {
-          width:88px;
-          height:88px;
+          width:83px;
+          height:83px;
+          padding:14px 14px 0px 14px;
         }
         p {
           text-align: center;
@@ -124,8 +137,6 @@ import { productLikedList, productUnlike } from '../../api/network/product' //�
         }
       }
       .orderInfo {
-        padding: 11px 22px 0px 0px;
-        overflow: hidden;
         .title {
           color:#4E545D;
           font-size: 16px;
@@ -134,10 +145,21 @@ import { productLikedList, productUnlike } from '../../api/network/product' //�
         .content {
           color:#55595F;
           font-size:12px;
-          padding-bottom: 9px;
+          margin-bottom: 9px;
+          height: 12px;
+
+          display:-moz-box;
+          display:-webkit-box;
+          display:box;
+
+          -webkit-line-clamp: 1;
+          -moz-line-clamp: 1;
+
+          -moz-box-orient:vertical;
+          -webkit-box-orient:vertical;
+          box-orient:vertical;
+
           overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
         }
         .price {
           padding-bottom:10px;
@@ -152,21 +174,58 @@ import { productLikedList, productUnlike } from '../../api/network/product' //�
           }
         }
         .other {
-          input {
-            color:#F34444;
-            font-size:10px;
-            border:1px solid #F34444;
-            background-color: #fff;
-            
-          }
+          display: flex;
+          align-items: center;
           span {
             color:#7C7F88;
             font-size:12px;
             padding-left:7px;
+            &.self-support {
+              font-size: 10px;
+              color: #F34444;
+              padding: 3px;
+              border: 1px solid #F34444;
+              border-radius: 2px;
+            }
           }
         }
       }
     }
+    .order-air {
+			width:100%;
+			vertical-align: middle;
+      text-align: center;
+			img {
+				width:102px;
+				height:102px; 
+				box-sizing: border-box;
+				margin:	96px auto 20px;
+			}
+			p {
+				font-size:17px;
+				color:rgba(124,127,136,1);
+				line-height:17px;
+				text-align: center;
+				margin: 0 auto;
+			}
+			.button {
+				width:200px;
+				height:44px; 
+				background:rgba(252,46,57,1);
+				border-radius: 2px ; 
+				padding:14px 68px;
+				margin: 28px auto;
+				border:none;
+			}
+			label {
+				font-size:16px;
+				color:#fff;
+				display:inline-block;
+				vertical-align: middle;
+				height:16px;
+				line-height: 16px;
+			}
+	  }
   }  
 </style>
 
@@ -179,5 +238,7 @@ import { productLikedList, productUnlike } from '../../api/network/product' //�
   font-size:14px;
   box-sizing: border-box;
 }
-
+ .mint-cell-wrapper {
+   padding: 0px;
+ }
 </style>

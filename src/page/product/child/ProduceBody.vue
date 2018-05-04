@@ -171,7 +171,7 @@ export default{
 				font-family: 'PingFangSC';
 
 				display:-moz-box;
-			    display:-webkit-box;
+			  display:-webkit-box;
 			    display:box;
 
 				-webkit-line-clamp: 2;
