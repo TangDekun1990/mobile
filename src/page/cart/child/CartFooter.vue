@@ -71,11 +71,7 @@
 			 *  checkout: 结算
 			 */
 			checkout() {
-				if (this.total_price < 30) {
-					Toast('30元起送');
-					return;
-				}
-				this.$router.push('/checkout')
+				this.$parent.$emit('product-validate');
 			}
 		}
 	}

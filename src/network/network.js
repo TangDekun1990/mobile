@@ -19,14 +19,14 @@ function toQueryString(obj) {
 
 function filterSpecialChars(str) {
     if (str && str.length) {
-        // 处理特殊字符: ! ~ * ' ( ) 
+        // 处理特殊字符: ! ~ * ' ( )
         str = str.replace(/\!/g, '%21')
         str = str.replace(/\~/g, '%7e')
         str = str.replace(/\*/g, '%2A')
         str = str.replace(/\'/g, '%27')
         str = str.replace(/\(/g, '%28')
         str = str.replace(/\)/g, '%29')
-    }    
+    }
     return str
 }
 
@@ -48,12 +48,12 @@ axios.interceptors.request.use(config => {
                     delete params[key];
                 }
             }
-            // post_body: 客户端HTTP请求包体，如：a=1&b=2&c=3，其中key需要升序排列            
-            let post_body = toQueryString(params);       
-                 
+            // post_body: 客户端HTTP请求包体，如：a=1&b=2&c=3，其中key需要升序排列
+            let post_body = toQueryString(params);
+
             // timestamp: 客户端秒级时间戳
             let timestamp = Date.parse(new Date()) / 1000 + '';
-        
+
             // sign: HMAC-SHA256( timestamp + post_body, SIGN_KEY )
             let sign = CryptoJS.HmacSHA256(timestamp + post_body, SIGN_KEY);
 
@@ -72,7 +72,7 @@ axios.interceptors.request.use(config => {
 
             let encry_post_body = '';
             let body = null;
-            if (post_body && post_body.length) {                
+            if (post_body && post_body.length) {
                 encry_post_body = XXTEA.encryptToBase64(post_body, ENCRYPT_KEY);
 
                 body = toQueryString({ x: encry_post_body });
@@ -82,7 +82,7 @@ axios.interceptors.request.use(config => {
             config.data = body;
             // TODO:
             if (process.env.NODE_ENV === 'development') {
-                config.params = params ? JSON.stringify(params) : ''                
+                config.params = params ? JSON.stringify(params) : ''
             }
         }
     }
@@ -96,8 +96,8 @@ axios.interceptors.response.use(response => {
     if (response) {
         let isAPIRequest = response.config.url.indexOf(apiBaseUrl) == 0 ? true : false;
         if (isAPIRequest) {
-            if (response.data && response.data.data) {                
-                var raw = XXTEA.decryptFromBase64(response.data.data, ENCRYPT_KEY);                
+            if (response.data && response.data.data) {
+                var raw = XXTEA.decryptFromBase64(response.data.data, ENCRYPT_KEY);
                 var json = JSON.parse(raw);
                 if (json) {
                     delete response.data.data;
@@ -107,7 +107,7 @@ axios.interceptors.response.use(response => {
                 }
                 if (process.env.NODE_ENV === 'development') {
                     console.log('====================================');
-                    console.log("request url is: ", response.config.url);                    
+                    console.log("request url is: ", response.config.url);
                     console.log("request params is: ", response.config.params);
                     console.log('response data is: ', response.data);
                 }
@@ -121,9 +121,9 @@ axios.interceptors.response.use(response => {
                     if (process.env.NODE_ENV === 'development') {
                         console.log("request url is: ", response.config.url);
                         console.log('网络错误, 错误代码:=' + errorCode + "错误信息:=" + errorMessage);
-                    }                    
+                    }
                     return Promise.reject({ 'errorCode': errorCode, 'errorMsg': errorMessage });
-                }                    
+                }
             }
         } else {
             console.log("请求地址错误!");
@@ -160,9 +160,9 @@ export function fetchEndpoint(reqUrl, type = 'POST', data = {}) {
             method: type,
             url: reqUrl,
             data: data
-        }).then(res => {            
+        }).then(res => {
             resolve(res)
-        }, error => {            
+        }, error => {
             reject(error);
         })
     })

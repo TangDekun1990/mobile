@@ -9,7 +9,9 @@
 					<img src="../../../assets/image/change-icon/default_image_02@2x.png" class="info-image" v-if=' !detailInfo.photos  || detailInfo.photos.length <= 0'>
 					<img v-bind:src="detailInfo.photos[0].thumb" class="info-image" v-if='detailInfo.photos && detailInfo.photos.length > 0'>
 					<div>
-						<span>AED {{ detailInfo.current_price }}</span>
+						<span v-if="!detailInfo.properties">AED {{ detailInfo.current_price }}</span>
+						<span v-if="detailInfo.properties && ids.length == detailInfo.properties.length">AED {{ utils.currencyPrice(propertiPrice) }}</span>
+						<span v-if="detailInfo.properties && ids.length != detailInfo.properties.length">AED {{detailInfo.current_price}}</span>
 						<span>
 							<img src="../../../assets/image/change-icon/b2_tag@2x.png" v-if='detailInfo.activity'>
 							<span v-if='detailInfo.activity'>{{detailInfo.activity.name}}</span>
@@ -67,7 +69,9 @@
 				position: 'middle'
 			},
 			ids: [],
-			info: []
+			info: [],
+			propertiPrice: 0,
+			earlier: {}
 		}
 	},
 
@@ -229,10 +233,13 @@
 			 		// 循环 this.detailInfo.properties
 			 		for (let i = 0; i <= len-1; i++) {
 			 			this.detailInfo.properties[i].currentIndex = '';
+			 			this.detailInfo.properties[i].iselected = false;
 						// 给每种规格下的属性添加 是否还有库存的字段
 						let attr = this.detailInfo.properties[i].attrs;
 						//  循环每每种规格下的属性
 						for (let j = 0, len = attr.length; j <= len -1; j++) {
+							attr[j].selected = false;
+							attr[j].count = 0;
 							if (this.ids.length > 0) {
 								// 数据回填
 								for (let x = 0; x <= this.ids.length-1; x++) {
@@ -267,35 +274,90 @@
 			 */
 			 setCurrentIndex(index, keyid, item) {
 			 	this.info = [];
-			 	this.getCurrentStock(index, keyid);
-			 	this.detailInfo.properties[index].currentIndex = keyid;
-			 	this.detailInfo.properties = Object.assign([], this.detailInfo.properties);
+			 	this.ids = [];
+			 	// 再次点击取消选中状态
+			 	this.cancalSelectedStatus(index, keyid, item);
+			 	// 获取当前点击的id
 			 	this.getIds();
+			 	// 点击规格，判断关联属性是否有库存
+			 	let newDatas = this.getNewDataById(index, keyid);
+			 	this.getCurrentStock(index, keyid, newDatas);
+
+			 	this.detailInfo.properties = Object.assign([], this.detailInfo.properties);
 			 },
 
-			 /*
-			  * getCurrentStock: 获取当前
-			  */
-			getCurrentStock(index, currentid) {
+			/*
+			 * cancalSelectedStatus: 再次点击取消选中状态
+			 */
+			cancalSelectedStatus(index, keyid, item) {
+				if (this.earlier) {
+					if (this.earlier.id == item.id) {
+						this.detailInfo.properties[index].currentIndex = this.detailInfo.properties[index].currentIndex ? '' : keyid;
+					} else {
+						this.detailInfo.properties[index].currentIndex = keyid;
+					}
+				} else {
+					this.detailInfo.properties[index].currentIndex = keyid;
+				}
+				this.earlier = Object.assign({}, item);
+			},
+
+			/*
+			 * getNewDataById: 根据id获取数据
+			 */
+			getNewDataById(index, currentid) {
+				let data = this.detailInfo.stock,
+					newData = [];
+				for (let i = 0; i <= data.length-1; i++) {
+					this.setPriceByProperty(data[i]);
+					let goods_attr = data[i].goods_attr.split('|');
+					for (let j = 0; j <= goods_attr.length-1; j++) {
+						if (goods_attr[j] == currentid && j == index) {
+							newData.push(data[i]);
+						}
+					}
+				}
+				return newData;
+			},
+
+			/*
+			 * getCurrentStock: 获取当前
+			 */
+			getCurrentStock(index, currentid, newDatas) {
 				let properties = this.detailInfo.properties;
 				for (let i = 0; i <= properties.length-1; i++) {
 					if (i != index) {
+						//  循环每个属性下的规格
 						let attrs = properties[i].attrs;
 						for (let j = 0; j <= attrs.length-1; j++) {
-							let combination = this.fromatArray('|', [currentid, attrs[j].id]);
-							// 循环库存
-							let stock = this.detailInfo.stock;
-							for (let s = 0; s<= stock.length-1; s++) {
-								if (stock[s].goods_attr.indexOf(combination) >= 0) {
-									if (stock[s].stock_number > 0) {
-										attrs[j].ishasstock = true;
-									} else {
-										attrs[j].ishasstock = false;
-									}
+							// 循环 库存
+							let count = 0;
+							for (let n = 0; n <= newDatas.length-1; n++) {
+								if (newDatas[n].goods_attr.indexOf(''+attrs[j].id+'') >= 0 ) {
+									count += newDatas[n].stock_number;
 								}
+							}
+							if ( count > 0) {
+								attrs[j].ishasstock = true;
+							} else {
+								attrs[j].ishasstock = false;
 							}
 						}
 					}
+				}
+				this.detailInfo.properties = Object.assign([], this.detailInfo.properties);
+			},
+
+			/*
+			 * setPriceByProperty: 根据当前选择的规格获取价格
+			 */
+			setPriceByProperty(item) {
+				if (this.ids.length != this.detailInfo.properties.length) {
+					return;
+				}
+				let fromatIds = this.fromatArray('|', this.ids);
+				if (item && item.goods_attr.indexOf(fromatIds) >= 0) {
+					this.propertiPrice = item.goods_attr_price;
 				}
 			},
 
@@ -305,8 +367,9 @@
 			 getIds() {
 			 	let data = this.detailInfo.properties;
 			 	for (let i = 0, len = data.length-1; i <= len; i++) {
-					this.ids[i] = data[i].currentIndex;
-					//  info
+			 		if (data[i].currentIndex) {
+			 			this.ids[i] = data[i].currentIndex;
+			 		}
 					for (let j = 0; j <= data[i].attrs.length -1; j++) {
 						if (data[i].attrs[j].id == data[i].currentIndex) {
 							this.info.push(data[i].attrs[j].attr_name);
