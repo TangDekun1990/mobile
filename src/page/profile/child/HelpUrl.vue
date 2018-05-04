@@ -64,6 +64,7 @@ export default {
 
   created() {
     let title = this.$route.query.title;
+    let imgUrl = '/static/favicon.ico';
     this.wxApi.getConfigRes(title);
   },
 
