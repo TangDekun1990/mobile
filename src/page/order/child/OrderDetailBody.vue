@@ -1,7 +1,7 @@
 <!-- OrderDetailBody.vue -->
 <template>
   <div>
-    <div class="order-body" v-if="orderDetail && orderDetail.order">
+    <div class="order-body" v-if="orderDetail && orderDetail.order" v-bind:class="{'ship': orderDetail.order.status == 1}">
 
       <div class="image" v-if="orderDetail.order.status == 0">
         <img src="../../../assets/image/change-icon/e5_clock@2x.png">
@@ -80,7 +80,8 @@
       </div>
 
       <div class="containers" v-for="(item, index) in orderDetail.order.goods" v-bind:key="item.id" v-on:click="getOrderDetail(item.product.id)" v-if="index <= orderIndex">
-        <img class="photo" v-bind:src="item.product.photos[0].large">
+        <img class="photo" src="../../../assets/image/change-icon/default_image_02@2x.png" v-if='item.product.photos <= 0'>
+        <img class="photo" v-bind:src="item.product.photos[0].thumb" v-if='item.product.photos.length > 0' data-src='../../../assets/image/change-icon/default_image_02@2x.png' >
         <div class="right-wrapper">
           <label class="title">{{item.product.name}}</label>
           <div class="desc-wrapper">
@@ -109,7 +110,7 @@
           <p> 配送时间：{{orderDetail.order.delivery_time}}</p>
         </div>
       </div>
-      <div class="desc section-header section-footer">
+      <div class="desc section-header section-footer" v-bind:class="{'ship': orderDetail.order.status == 1}">
         <checkout-desc class="desc-item" title="商品总额" :subtitle="getOrderProductPrice">
         </checkout-desc>
         <checkout-desc class="desc-item" title="+税额" :subtitle="getOrderTaxPrice">
@@ -138,7 +139,7 @@
       </div>
 
       <!-- 待发货按钮 -->
-      <div class="btn" v-if="orderDetail.order.status == 1 ? '':checkState" v-bind:class="{'ship': orderDetail.order.status == 1}"></div>
+      <div class="btn" v-if="orderDetail.order.status == 1 ? '':checkState"></div>
 
       <!-- 发货中按钮 -->
 			<div class="btn"  v-if="orderDetail.order.status == 2">
@@ -170,7 +171,6 @@
 </template>
 <script>
   import { ORDERSTATUS, ORDERNAV } from '../static';
-  import OrderItem from './OrderItem';
   import OrderPrice from './OrderPrice';
   import { Indicator, MessageBox, Popup  } from 'mint-ui';
   import CheckoutDesc from './CheckoutDesc'
@@ -205,7 +205,6 @@
       }
     },
     components: {
-      OrderItem,
       OrderPrice,
       CheckoutDesc,
     },
@@ -697,7 +696,6 @@
   }
   .ship {
     margin-bottom: 0px;
-    padding-bottom: 0px;
   }
   
   

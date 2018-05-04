@@ -12,6 +12,7 @@ import App from './App.vue'
 import routes from './router/router'
 import { ROUTERMODE } from './config/env'
 import utils from './util/util'
+import wxApi from './util/wxapi'
 import './assets/style/reset.scss'
 import './assets/style/common.scss'
 
@@ -57,6 +58,7 @@ Vue.use(VueResource)
 Vue.use(VueAwesomeSwiper)
 Vue.use(qiniu)
 Vue.prototype.utils = utils;
+Vue.prototype.wxApi = wxApi;
 
 new Vue({
 	router,

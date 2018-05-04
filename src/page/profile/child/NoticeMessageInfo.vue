@@ -3,9 +3,9 @@
     <!-- header -->
     <div class="header">
       <img src="../../../assets/image/change-icon/back@2x.png" class="back" @click="goBack()">
-      <img src="../../../assets/image/change-icon/b2_cart@2x.png" class="cart" v-on:click='goCart()'>       
-      <span class="cart-number" v-if="quantity <= 100">{{ quantity }}</span>
-			<span class="cart-number" v-if="quantity >= 100 ">99+</span>
+      <!-- <img src="../../../assets/image/change-icon/b2_cart@2x.png" class="cart" v-on:click='goCart()'>        -->
+      <!-- <span class="cart-number" v-if="quantity <= 100">{{ quantity }}</span>
+			<span class="cart-number" v-if="quantity >= 100 ">99+</span> -->
     </div>
 
     <webview :url.asyc="getLink">
