@@ -1,10 +1,12 @@
 <template>
 	<div class="container">
-		<mt-header class="header" title="我的优惠券">
-			<header-item slot="left" v-bind:isBack=true v-on:onclick="goBack">
-			</header-item>
-		</mt-header>
-		<v-coupon-tab></v-coupon-tab>
+		<div class="container-header">
+			<mt-header class="header" title="我的优惠券">
+				<header-item slot="left" v-bind:isBack=true v-on:onclick="goBack">
+				</header-item>
+			</mt-header>
+			<v-coupon-tab></v-coupon-tab>
+		</div>
 		<div class="list" v-infinite-scroll="getMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
 			<coupon-item
 			class="item"
@@ -32,7 +34,7 @@ export default {
 			requestParams: {'page': 0, 'per_page': 10, 'status': 0},  //获取优惠券列表的接口
 			loading: false,  //是否加载更多
 			isMore: true,  //是否有更多
-			currentIndex: this.$route.params.index,  //当前的tab
+			currentIndex: this.$route.query.index,  //当前的tab
 			icon: '../../assets/image/change-icon/e0_coupon@2x.png'
 		}
 	},
@@ -41,10 +43,21 @@ export default {
 		// CODE REVIEW
 		this.$on('redener-coupon-list', (data) => {
 			if (data) {
+				this.requestParams.page = 1;
 				this.currentIndex = data.id;
 				this.getCouponList(false);
 			}
 		})
+	},
+
+	mounted(){
+		// 计算内容高度
+	    this.$nextTick( () => {
+	    	this.target = document.querySelector('.list');
+	    	let totalHeight = 100;
+			const target = this.target;
+	    	this.utils.fillTheScreen({target, totalHeight});
+	    })
 	},
 
 	methods: {
@@ -91,21 +104,36 @@ export default {
 }
 </script>
 
-	<style lang="scss" scoped>
-	.container {
-		display: flex;
-		flex-direction: column;
-		justify-content: flex-start;
-		align-items: stretch;
-		background-color: $mainbgColor;
-		height: 100%;
+<style lang="scss" scoped>
+.container {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: stretch;
+	background-color: $mainbgColor;
+	height: 100%;
+	.container-header {
+		position: fixed;
+		top: 0px;
+		width: 100%;
+		height: 100px;
 	}
-	.header {
-		@include header;
+	.list {
+		position: absolute;
+	    top: 100px;
+	    width: 100%;
+	    overflow-y: auto;
+	    div.container {
+	    	height: auto;
+	    }
 	}
+}
+.header {
+	@include header;
+}
 
-	.item {
-		// height: 125px;
-	}
+.item {
+	// height: 125px;
+}
 </style>
 
