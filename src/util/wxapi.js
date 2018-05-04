@@ -16,7 +16,7 @@ const wxApi = {
 	/*
 	* getConfigRes： 获取config1微信配置
 	*/
-	getConfigRes(title) {
+	getConfigRes(title, imgUrl) {
 		let that = this;
 		configGet().then(res => {
 			if(res) {
@@ -27,7 +27,7 @@ const wxApi = {
 						wechatConfig = configs[key];
 					}
 				}
-				that.wxRegister(wechatConfig, title);
+				that.wxRegister(wechatConfig, title, imgUrl);
 			}
 		})
 	},
@@ -35,7 +35,7 @@ const wxApi = {
 	* [wxRegister 微信Api初始化]
 	* @param  {Function} callback [ready回调函数]
 	*/
-	wxRegister(config, title, callback) {
+	wxRegister(config, title, imgUrl, callback) {
 		wx.config({
 				debug: true, // 开启调试模式
 				appId: config.app_id, // 必填，公众号的唯一标识
@@ -52,7 +52,7 @@ const wxApi = {
 		wx.ready(function(){
 			wx.onMenuShareAppMessage({
 				title: title ,// 分享标题
-				imgUrl: require('../assets/image/change-icon/address_empty@2x.png'), // 分享图标
+				imgUrl: imgUrl // 分享图标
 			});
 		});
 		wx.error( res => {
