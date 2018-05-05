@@ -39,14 +39,14 @@ export default {
 	},
 	mounted () {
 		if (window.WebViewJavascriptBridge && window.WebViewJavascriptBridge.isInApp()) {
-			 let token = bridge.getToken()
-			//  token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1aWQiOjExMjg4LCJleHAiOjE1MjgwODEwNjMsInBsYXRmb3JtIjoiaW9zIn0.B4xDj3-j9f4z6rURc5Zs9aAWIjr4FWCPJK2Iq70vmSY'
-			 console.log('====================================');
-			 console.log('token is ', token);
-			 console.log('====================================');			 
-			 if (token && token.length) {				 
-				 this.saveToken({ 'token': token })
-			 }
+			 let token = bridge.getToken(function(responseData) {
+				 console.log('====================================');
+				console.log('responseData is ', responseData);
+				console.log('====================================');	 
+				 if (responseData && responseData.length) {
+					 this.saveToken({ 'token': responseData })
+				 }
+			  })
 		}
 		console.log('====================================');
 		console.log('getToken...');
