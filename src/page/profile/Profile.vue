@@ -14,8 +14,8 @@
       <label class="nickname" @click="goProfileInfo">{{nickname}}</label>
       </div>
       <div class="info-wrapper">
-        <div class="info-item">{{getScore}}积分</div>
-        <div class="info-item" @click="goIntegral">积分记录</div>
+        <div class="info-item" @click="goScoreList">{{getScore}}积分</div>
+        <div class="info-item" @click="goRecordList">积分记录</div>
       </div>
     </div>
     <div class="order-header" @click="goOrder">
@@ -204,8 +204,11 @@ export default {
     showLogin() {
       this.$router.push({ name: 'signin' });
     },
-    goIntegral() {
-      this.$router.push("/integralList");
+    goScoreList() {
+      this.$router.push({ name: 'scoreList', query: { index: 0 } });
+    },
+    goRecordList() {
+      this.$router.push({ name: 'scoreList', query: { index: 1 } });
     },
     goProfileInfo() {
       if (this.isOnline) {

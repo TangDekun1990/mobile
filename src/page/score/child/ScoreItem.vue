@@ -2,7 +2,7 @@
   <div class="container">
     <div class="price">            
       <div class="number">
-        <span>¥</span>{{item.price}}
+        <span>AED</span>{{item.price}}
       </div> 
       <div class="bottom">
         {{item.score_number}}积分

@@ -20,6 +20,18 @@ export default {
     CardItem,
   },
   computed: {
+    getItems: function () {
+      let items = []
+      let cards = this.item ? this.item.cards : []
+      for (let index = 0; index < cards.length; index++) {
+        const card = cards[index]
+        if ((card.title && card.title.length) || 
+        (card.photo && card.photo.thumb && card.photo.thumb.length)) {
+          items.push(card)
+        }
+      }      
+      return items
+    },
     getItemStyle: function () {
       const { width, height } = window.screen
       let itemWidth = 0
