@@ -47,10 +47,7 @@ export default {
 					 this.saveToken({ 'token': token })
 				 }
 			})
-		}
-		console.log('====================================');
-		console.log('getToken...');
-		console.log('====================================');
+		}		
 	},
 	methods: {
 		...mapMutations({

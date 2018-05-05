@@ -105,7 +105,7 @@
 import Tabbar from "../../components/common/Tabbar";
 import InfoItem from "./child/InfoItem";
 import OrderItem from "./child/OrderItem";
-import { mapState } from "vuex";
+import { mapState, mapMutations } from "vuex";
 import { userProfileGet } from "../../api/network/user";
 import { scoreGet } from '../../api/network/score'
 import { ENUM } from '../../config/enum'
@@ -126,7 +126,12 @@ export default {
   },
   created: function() {
     if (this.isOnline) {
-      userProfileGet().then(response => {}, error => {});
+      userProfileGet().then(response => {
+        if (response && response.user) {
+          this.saveUser(response) 
+        }        
+      }, error => {        
+      });
       scoreGet().then(
         response => {
           this.score = response.score
@@ -185,6 +190,9 @@ export default {
     }
   },
   methods: {
+    ...mapMutations({
+      saveUser: 'saveUser'
+    }),
     // 获取订单不同状态的数量统计
     getOrderSubtotal() {
       orderSubtotal().then(res=> {

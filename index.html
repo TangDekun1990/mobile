@@ -53,6 +53,15 @@
           return false;
         }
 
+        function isWeixin() {
+          var ua = navigator.userAgent.toLowerCase();
+          if (ua.match(/MicroMessenger/i) == "micromessenger") {
+            return true;
+          } else {
+            return false;
+          }
+        }
+
         function isInApp() {
           var ua = navigator.userAgent.toLowerCase();
           //alert(ua);
@@ -186,6 +195,7 @@
           isInApp: isInApp,
           isIphone: isIphone,
           isAndroid: isAndroid,
+          isWeixin: isWeixin,
           init: init,
           send: send,
           registerHandler: registerHandler,
