@@ -13,7 +13,7 @@
             <label class="subtitle" style="-webkit-box-orient:vertical">{{getSubtitle}}</label>
             <label class="desc" style="-webkit-box-orient:vertical">{{getDesc}}</label>
           </div>
-          <div class="icon-wrapper" v-if="isProductItem()" @click.stop="addToCart">
+          <div class="icon-wrapper" v-if="isProductItem()" @click.stop="onClickCart">
             <img src="../../../assets/image/change-icon/cart@2x.png">
           </div>
         </div> 
@@ -27,7 +27,7 @@
             <label class="subtitle" style="-webkit-box-orient:vertical">{{getSubtitle}}</label>
             <label class="desc" style="-webkit-box-orient:vertical">{{getDesc}}</label>
           </div>
-          <div class="icon-wrapper" v-if="isProductItem()" @click.stop="addToCart">
+          <div class="icon-wrapper" v-if="isProductItem()" @click.stop="onClickCart">
             <img src="../../../assets/image/change-icon/cart@2x.png">
           </div>
         </div> 
