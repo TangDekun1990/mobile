@@ -127,6 +127,9 @@ export default {
       return false
     },
     onClickCart () {
+      console.log('====================================');
+      console.log('isOnline...');
+      console.log('====================================');
       if (this.isOnline) {
          this.addToCart()
       } else {        

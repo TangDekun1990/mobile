@@ -20,10 +20,16 @@ export default {
 		window.location.href = 'wenchao://'
 		if (window.WebViewJavascriptBridge && window.WebViewJavascriptBridge.isInApp()) {
 			 let token = bridge.getToken()
-			 if (token && token.length) {
+			 console.log('====================================');
+			 console.log('token is ', token);
+			 console.log('====================================');
+			 if (token && token.length) {				 
 				 this.saveToken({ 'token': token })
 			 }
 		}
+		console.log('====================================');
+		console.log('getToken...');
+		console.log('====================================');
 		/*
 		 * detectBack： 监听浏览器返回事件
 		 */
