@@ -32,8 +32,8 @@
 
 <style lang="scss" scoped>
 	.ui-coupon-wrapper {
-		height: 50px;
-		line-height: 50px;
+		height: 44px;
+		line-height: 44px;
 		background:rgba(255,255,255,1);
 		border-top: 1px solid #E8EAED;
 		ul {

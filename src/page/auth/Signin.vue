@@ -49,6 +49,7 @@ import { HeaderItem, Button } from '../../components/common';
 import * as authBase from '../../api/network/auth-base'
 import { Indicator, Toast, Header } from 'mint-ui'
 import { mapMutations, mapActions, mapState } from 'vuex'
+import { authSocial } from '../../api/network/auth-social'
 export default {
   name: 'Signin',
   data() {
@@ -143,7 +144,15 @@ export default {
       this.$router.push({ name: 'signup', params: { mode: 'retrieve' } });
     },
     onWechat() {
-
+      this.getAuthSocial();
+    },
+    // 获取第三方授权登录数据
+    getAuthSocial() {
+      authSocial().then(res => {
+        if(res) {
+          this.authSocial = Object.assign([], this.authSocial);
+        }
+      })
     },
     onWeibo() {
       
