@@ -11,25 +11,8 @@
 import { mapMutations } from 'vuex'
 export default {
 	name: 'app',
-	methods: {
-		...mapMutations({
-			saveToken: 'saveToken'
-		})
-	},
 	created: function() {
-		window.location.href = 'wenchao://'
-		if (window.WebViewJavascriptBridge && window.WebViewJavascriptBridge.isInApp()) {
-			 let token = bridge.getToken()
-			 console.log('====================================');
-			 console.log('token is ', token);
-			 console.log('====================================');
-			 if (token && token.length) {				 
-				 this.saveToken({ 'token': token })
-			 }
-		}
-		console.log('====================================');
-		console.log('getToken...');
-		console.log('====================================');
+		window.location.href = 'wenchao://'		
 		/*
 		 * detectBack： 监听浏览器返回事件
 		 */
@@ -54,7 +37,25 @@ export default {
   //   	};
 	//   	detectBack.initialize();
 	},
+	mounted () {
+		if (window.WebViewJavascriptBridge && window.WebViewJavascriptBridge.isInApp()) {
+			 let token = bridge.getToken()
+			//  token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1aWQiOjExMjg4LCJleHAiOjE1MjgwODEwNjMsInBsYXRmb3JtIjoiaW9zIn0.B4xDj3-j9f4z6rURc5Zs9aAWIjr4FWCPJK2Iq70vmSY'
+			 console.log('====================================');
+			 console.log('token is ', token);
+			 console.log('====================================');			 
+			 if (token && token.length) {				 
+				 this.saveToken({ 'token': token })
+			 }
+		}
+		console.log('====================================');
+		console.log('getToken...');
+		console.log('====================================');
+	},
 	methods: {
+		...mapMutations({
+			saveToken: 'saveToken'
+		}),
 		goBack () {
 			window.history.length > 1
 			? this.$router.go(-1)
