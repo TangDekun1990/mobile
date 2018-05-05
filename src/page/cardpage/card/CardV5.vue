@@ -46,10 +46,14 @@ import Common from './Common'
 import PhotoV from './PhotoV'
 import { Indicator, Toast } from 'mint-ui'
 import { cartAdd } from '../../../api/network/cart'
+import { mapState } from 'vuex'
 export default {
   name: 'CardV5',
   mixins: [ Common, PhotoV ],  
   computed: { 
+    ...mapState({
+      isOnline: state => state.auth.isOnline,
+    }),
     isTop () {
       return this.isCardStyle('B')
     },
@@ -121,6 +125,18 @@ export default {
         return true
       }
       return false
+    },
+    onClickCart () {
+      if (this.isOnline) {
+         this.addToCart()
+      } else {        
+        // 未登录时，判断是App内打开还是App外打开
+        if (window.WebViewJavascriptBridge && window.WebViewJavascriptBridge.isInApp()) {
+          bridge.doLogin()
+		    } else {
+          this.$router.push({ name: 'signin' });
+        }
+      }       
     },
     addToCart () {      
       let product = this.item.product

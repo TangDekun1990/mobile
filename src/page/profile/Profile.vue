@@ -194,7 +194,7 @@ export default {
       })
     },
     showLogin() {
-      this.$router.push("/signin");
+      this.$router.push({ name: 'signin' });
     },
     goIntegral() {
       this.$router.push("/integralList");
@@ -207,7 +207,7 @@ export default {
       }
     },
     goSetting() {
-      this.$router.push("setting");
+      this.$router.push({ name: 'setting' });
     },
     goNews() {
       this.$router.push('news');
@@ -226,8 +226,7 @@ export default {
     },
     goOrder() {      
       this.$router.push({ name:'order', params: {'order': ENUM.ORDER_STATUS.ALL}});
-    },
-    
+    }, 
   },
 };
 </script>

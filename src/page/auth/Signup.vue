@@ -184,7 +184,7 @@ export default {
       Indicator.open()
       authMobile.authMobileSignup(this.username, this.code, this.password).then(
         (response) => {
-          this.saveToken({ 'token' : response.token, 'user': response.user })
+          this.saveToken({ 'token': response.token, 'user': response.user })
           Indicator.close()
           this.goProfile()
         }, (error) => {

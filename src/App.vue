@@ -8,19 +8,22 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
 export default {
 	name: 'app',
-
-	data(){
-		return{
-			zhiManager: ''
-		}
+	methods: {
+		...mapMutations({
+			saveToken: 'saveToken'
+		})
 	},
-
-	components: {},
-
 	created: function() {
 		window.location.href = 'wenchao://'
+		if (window.WebViewJavascriptBridge && window.WebViewJavascriptBridge.isInApp()) {
+			 let token = bridge.getToken()
+			 if (token && token.length) {
+				 this.saveToken({ 'token': token })
+			 }
+		}
 		/*
 		 * detectBack： 监听浏览器返回事件
 		 */
@@ -45,7 +48,6 @@ export default {
   //   	};
 	//   	detectBack.initialize();
 	},
-
 	methods: {
 		goBack () {
 			window.history.length > 1
