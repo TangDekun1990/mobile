@@ -59,10 +59,13 @@ axios.interceptors.request.use(config => {
 
             // xSign格式: sign,timestamp
             let xSign = sign + ',' + timestamp;
-            let token = null;
+            let token = null;            
             if (store.getters.isOnline && store.getters.token) {
                 token = store.getters.token;
             }
+            console.log('====================================');
+            console.log('store.getters.token is ', token);
+            console.log('====================================');
             config.headers['X-ECAPI-Authorization'] = store.state.auth.token;
             config.headers['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
             config.headers['X-ECAPI-Sign'] = xSign;
@@ -81,9 +84,13 @@ axios.interceptors.request.use(config => {
             config.data = {};
             config.data = body;
             // TODO:
-            if (process.env.NODE_ENV === 'development') {
+            // if (process.env.NODE_ENV === 'development') {
                 config.params = params ? JSON.stringify(params) : ''
-            }
+            // }
+            console.log('====================================');
+            console.log('request params is ', config.params);
+            console.log('request encry data is ', body)
+            console.log('====================================');
         }
     }
     return config
@@ -105,12 +112,12 @@ axios.interceptors.response.use(response => {
                         response.data[key] = json[key];
                     }
                 }
-                if (process.env.NODE_ENV === 'development') {
+                // if (process.env.NODE_ENV === 'development') {
                     console.log('====================================');
                     console.log("request url is: ", response.config.url);
                     console.log("request params is: ", response.config.params);
                     console.log('response data is: ', response.data);
-                }
+                // }
                 return response.data;
             } else if (response.data && response) {
 
