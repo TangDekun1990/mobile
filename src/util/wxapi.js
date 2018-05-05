@@ -19,11 +19,11 @@ const wxApi = {
 	getConfigRes(title, imgUrl) {
 		let that = this;
 		configGet().then(res => {
-			if(res) {
+			if (res) {
 				let configs = res.config,
-						wechatConfig = {};
+					wechatConfig = {};
 				for (const key in configs) {
-					if(key == 'wechat.web') {
+					if (key == 'wechat.web') {
 						wechatConfig = configs[key];
 					}
 				}
@@ -37,25 +37,25 @@ const wxApi = {
 	*/
 	wxRegister(config, title, imgUrl, callback) {
 		wx.config({
-				debug: true, // 开启调试模式
-				appId: config.app_id, // 必填，公众号的唯一标识
-				timestamp: config.timestamp, // 必填，生成签名的时间戳
-				nonceStr: config.nonceStr, // 必填，生成签名的随机串
-				signature: config.signature, // 必填，签名，见附录1
-				jsApiList: [
-					'onMenuShareTimeline', // 获取“分享到朋友圈”按钮点击状态及自定义分享内容接口
-					'onMenuShareAppMessage', // 获取“分享给朋友”按钮点击状态及自定义分享内容接口
-					'onMenuShareQQ', // 获取“分享到QQ”按钮点击状态及自定义分享内容接口
-					'onMenuShareWeibo' // 获取“分享到微博”按钮点击状态及自定义分享内容接口
-				] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+			debug: true, // 开启调试模式
+			appId: config.app_id, // 必填，公众号的唯一标识
+			timestamp: config.timestamp, // 必填，生成签名的时间戳
+			nonceStr: config.nonceStr, // 必填，生成签名的随机串
+			signature: config.signature, // 必填，签名，见附录1
+			jsApiList: [
+				'onMenuShareTimeline', // 获取“分享到朋友圈”按钮点击状态及自定义分享内容接口
+				'onMenuShareAppMessage', // 获取“分享给朋友”按钮点击状态及自定义分享内容接口
+				'onMenuShareQQ', // 获取“分享到QQ”按钮点击状态及自定义分享内容接口
+				'onMenuShareWeibo' // 获取“分享到微博”按钮点击状态及自定义分享内容接口
+			] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
 		});
-		wx.ready(function(){
+		wx.ready(function () {
 			wx.onMenuShareAppMessage({
-				title: title ,// 分享标题
+				title: title,// 分享标题
 				imgUrl: imgUrl // 分享图标
 			});
 		});
-		wx.error( res => {
+		wx.error(res => {
 			console.log('error');
 		})
 	},
