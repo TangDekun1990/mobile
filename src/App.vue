@@ -49,16 +49,26 @@ export default {
 		}
 	},
 	mounted () {
-		if (window.WebViewJavascriptBridge && window.WebViewJavascriptBridge.isInApp()) {
-			 let token = bridge.getToken((token) => {
-				 console.log('====================================');
-				 console.log('token is ', token);
-				 console.log('====================================');	 
-				 if (token && token.length) {
-					 this.saveToken({ 'token': token })
-				 } else {
-					 this.clearToken()
-				 }
+		if (window.WebViewJavascriptBridge && window.WebViewJavascriptBridge.isInApp()) {			
+			// 加载页面时获取token			
+			wenchaoApp.getToken((token) => {
+				console.log('====================================');
+			  console.log('get token is ', token);
+		  	console.log('====================================');	 
+				if (token && token.length) {
+					this.saveToken({ 'token': token })
+				} else {
+					this.clearToken()
+				}
+			})
+			// native登录成功后，重新获取token
+			wenchaoApp.onLogin((token) => {
+				console.log('====================================');
+				console.log('onLogin token is ', token);
+				console.log('====================================');
+				if (token && token.length) {
+					this.saveToken({ 'token': token })
+				}
 			})
 		}		
 	},

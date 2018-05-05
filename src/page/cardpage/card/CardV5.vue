@@ -135,7 +135,7 @@ export default {
       } else {        
         // 未登录时，判断是App内打开还是App外打开
         if (window.WebViewJavascriptBridge && window.WebViewJavascriptBridge.isInApp()) {
-          bridge.doLogin()
+          wenchaoApp.doLogin()
 		    } else {
           this.$router.push({ name: 'signin' });
         }
@@ -167,6 +167,9 @@ export default {
       cartAdd(productId, property, amount).then(
         (response) => {
           Indicator.close()
+          if (window.WebViewJavascriptBridge && window.WebViewJavascriptBridge.isInApp()) {
+            wenchaoApp.addCartSucceed()
+          }
         }, (error) => {
           Indicator.close()
           Toast(error.errorMsg)

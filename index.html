@@ -224,13 +224,13 @@
         connectWebViewJavascriptBridge(function (bridge) {
           bridge.init();
         });
-
-        var bridge = {
+          
+        var wenchaoApp = {
 
           // callHander
 
           openLink: function (link, callback) {
-            if (window.WebViewJavascriptBridge) {
+            if (window.WebViewJavascriptwenchaoApp {
               window.WebViewJavascriptBridge.callHandler('openLink', { link: link }, callback)
             } else {
               // 非APP内
@@ -250,14 +250,17 @@
             window.WebViewJavascriptBridge.callHandler('getToken', { needResult: 1 }, callback);
           },
 
+          addCartSucceed: function () {
+            window.WebViewJavascriptBridge.callHandler('addCartSucceed', { needResult: 1 });
+          },  
+          
           // registerHandler
-
-          onAddCartSucceed: function (callback) {
-            window.WebViewJavascriptBridge.registerHandler('onAddCartSucceed', callback);
+          onLogin: function (callback) {
+            window.WebViewJavascriptBridge.registerHandler('onLogin', callback);
           },
         };
 
-        window.bridge = bridge;
+        window.wenchaoApp = wenchaoApp;
     </script>
     <script src="https://www.sobot.com/chat/frame/js/entrance.js?sysNum=5b696ae2d5394f06b558e64ebbaf3be7" class="zhiCustomBtns" id="zhichiScript" data-args="manual=true"></script>
     <script>
