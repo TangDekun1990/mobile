@@ -37,6 +37,17 @@ export default {
   //   	};
 	//   	detectBack.initialize();
 	},
+	methods: {
+		...mapMutations({
+			saveToken: 'saveToken',
+			clearToken: 'clearToken'
+		}),
+		goBack () {
+			window.history.length > 1
+			? this.$router.go(-1)
+			: this.$router.push('/')
+		}
+	},
 	mounted () {
 		if (window.WebViewJavascriptBridge && window.WebViewJavascriptBridge.isInApp()) {
 			 let token = bridge.getToken((token) => {
@@ -45,20 +56,12 @@ export default {
 				 console.log('====================================');	 
 				 if (token && token.length) {
 					 this.saveToken({ 'token': token })
+				 } else {
+					 this.clearToken()
 				 }
 			})
 		}		
 	},
-	methods: {
-		...mapMutations({
-			saveToken: 'saveToken'
-		}),
-		goBack () {
-			window.history.length > 1
-			? this.$router.go(-1)
-			: this.$router.push('/')
-		}
-	}
 }
 </script>
 
