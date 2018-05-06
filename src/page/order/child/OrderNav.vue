@@ -21,7 +21,8 @@
 						<img src="../../../assets/image/change-icon/e3_seal@2x.png">
 					</h3>
 					<div class="order-image" v-if="item.goods.length > 0"  @click="goOrderDetail(item.id)">
-						<img v-bind:src="image.product.photos[0].large" v-for="image in item.goods" v-if="image.product.photos.length > 0">
+						<img v-bind:src="image.product.photos[0].thumb" v-for="image in item.goods" v-if='image.product.photos.length > 0' data-src='../../../assets/image/change-icon/default_image_02@2x.png'>
+						<img src="../../../assets/image/change-icon/default_image_02@2x.png" v-for="image in item.goods" v-if='image.product.photos.length <= 0'>
 					</div>
 					<div class="price">(共计{{item.goods.length}}件商品) 合计 : AED <i>{{item.total}}</i><i class="freight">(含运费:AED{{ item.shipping.price }})</i>
 					</div>

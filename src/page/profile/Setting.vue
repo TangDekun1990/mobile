@@ -33,17 +33,17 @@ import { Header, MessageBox, Switch } from 'mint-ui'
 export default {
   data() {
     return {
-      value:true,
+      value:true, 
     }
   },
   computed: {
     ...mapState({
-      isOnline: state => state.auth.isOnline
+      isOnline: state => state.auth.isOnline,
     }),
   },
   methods: {  
     ...mapMutations({
-      clearToken: 'signout'
+      clearToken: 'signout',
     }),  
     goBack() {
       this.$router.go(-1) 
@@ -56,7 +56,7 @@ export default {
     },
     about() {
       this.$router.push('/SettingAbout');
-    }
+    },
   }
 }
 </script>
