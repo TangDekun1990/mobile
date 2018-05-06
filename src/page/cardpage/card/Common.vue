@@ -48,7 +48,7 @@ export default {
     onClick() {  
       let link = this.item.link
       if (window.WebViewJavascriptBridge && window.WebViewJavascriptBridge.isInApp()) {
-        bridge.openLink(link)
+        wenchaoApp.openLink(link)
       } else {
         openLink(this.$router, link)
       }                   

@@ -9,7 +9,7 @@
         <label class="title">配送费：</label>
         <label class="price">AED {{getPrice}}</label>
       </div>
-      <p class="desc">{{item.desc}}</p>
+      <p class="desc">{{getDesc}}</p>
     </div>            
   </div>
 </template>
@@ -43,14 +43,9 @@ export default {
       let price = this.item ? this.item.fee : null
       return (price ? this.utils.currencyPrice(price) : '')
     },
-    // getDesc: function () {
-    //   let data = ''
-    //   let desc = this.item.desc
-    //   if (desc && desc.length) {
-    //     data = desc.split('/n').join('</br>')
-    //   }
-    //   return data
-    // }
+    getDesc: function () {      
+      return this.item ? this.item.desc : ''      
+    }
   }, 
   methods: {
     onclick() {
@@ -75,7 +70,7 @@ export default {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    align-items: flex-start;
+    align-items: stre;
   } 
   .right-wrapper {
     flex: 1;
@@ -116,6 +111,7 @@ export default {
     margin-top: 30px;
     margin-right: 10px;
     margin-bottom: 20px;
+    white-space: pre-wrap;
   }  
 </style>
 

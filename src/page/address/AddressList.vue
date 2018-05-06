@@ -80,7 +80,7 @@ export default {
   }
   .header {
     @include header;
-    border-bottom: 1px solid #E8EAED;  
+    border-bottom: 1px solid $lineColor;  
   }
   .list {
     margin-top: 44px;

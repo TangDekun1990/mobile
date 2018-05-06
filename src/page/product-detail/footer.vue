@@ -47,7 +47,7 @@
 			//是否显示购物车浮层
 			isShowcartInfo: state => state.detail.isShowcartInfo,
 			detailInfo: state => state.detail.detailInfo,
-			user: state => state.auth.user
+			isOnline: state => state.auth.isOnline
 		}),
 
 		created(){
@@ -85,7 +85,7 @@
 
 			// 购物车
 			goCart() {
-				if (this.user) {
+				if (this.isOnline) {
 					this.$router.push({'name':'cart', 'params': {type: 0}});
 				} else {
 					this.$router.push({'name': 'signin'});

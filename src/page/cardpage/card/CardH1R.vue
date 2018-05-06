@@ -62,6 +62,7 @@ export default {
         color: $subtitleTextColor;
         text-align: left;
         margin-top: 6px;
+        margin-left: 9px;
         margin-right: 5px;
         @include limit-line(1)
       }

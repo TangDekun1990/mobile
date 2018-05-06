@@ -1,5 +1,5 @@
 <template>
-  <div class="container">    
+  <div class="comment-container">    
     <label class="title">买家留言：</label>
     <div class="bottom-wrapper">
       <textarea placeholder="选填：对本次交易的说明（建议填写已和卖家协商一致的内容）" v-model="value">        
@@ -19,7 +19,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .container {    
+  .comment-container {    
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -31,7 +31,7 @@ export default {
       justify-content: flex-start;
       align-items: stretch;
       height: 80px;
-      margin: 15px;
+      margin: 15px;      
       textarea {
         flex: 1;
         font-size: 14px;
@@ -39,6 +39,7 @@ export default {
         background-color: #F7F8FA;
         padding: 10px;
         border: none;
+        border-radius: 2px;
         &:focus {
           outline-style: none;
         }

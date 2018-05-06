@@ -36,7 +36,7 @@ export default {
   },
   computed: mapState({
 			height: state => state.cart.height,  
-			user: state => state.auth.user
+			isOnline: state => state.auth.isOnline
 		}),
   created() {
     this.isSignin();
@@ -48,7 +48,7 @@ export default {
     },
     // 是否登录
     isSignin() {
-				if (this.user) {
+				if (this.isOnline) {
 					this.isEmpty = true;
 				}else {
 					this.isEmpty = false;
