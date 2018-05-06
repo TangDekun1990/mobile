@@ -12,8 +12,7 @@
       <label class="title">您暂时没有任何优惠券</label>
     </div>
     <div class="list">
-      <coupon-item 
-        class="item" 
+      <coupon-item
         v-for="item in items" 
         :key="item.id" 
         :item="item" 
@@ -110,9 +109,6 @@ export default {
     justify-content: flex-start;
     align-items: stretch;
     margin-bottom: 54px;
-  }
-  .item {
-    height: 125px;
   }
   .submit {    
     position: fixed;       

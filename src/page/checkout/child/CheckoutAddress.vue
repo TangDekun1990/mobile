@@ -66,8 +66,7 @@ export default {
     flex-direction: column;
     justify-content: flex-start;
     align-items: stretch;
-    background-color: #fff;
-    border-top: 1px solid #E8EAED;  
+    background-color: #fff; 
   }
   .top-wrapper {  
     flex: 1;  
@@ -76,7 +75,6 @@ export default {
     justify-content: flex-start;
     align-items: center;
     background-color: #fff;
-    border-top: 1px solid #E8EAED;  
   }
   .selected-wrapper {
     flex: 1;
