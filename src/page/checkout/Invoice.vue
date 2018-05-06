@@ -180,6 +180,7 @@ export default {
         background-color: #F7F8FA;
         padding: 10px;
         border: none;
+        border-radius: 2px;
         &:focus {
           outline-style: none;
         }

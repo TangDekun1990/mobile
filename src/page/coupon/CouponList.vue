@@ -9,10 +9,9 @@
 		</div>
 		<div class="list" v-infinite-scroll="getMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
 			<coupon-item
-			class="item"
-			v-for="item in list"
-			:key="item.id"
-			:item="item">
+				v-for="item in list"
+				:key="item.id"
+				:item="item">
 			</coupon-item>
 		</div>
 		<v-coupon-empty v-if="list.length <= 0"></v-coupon-empty>
@@ -92,15 +91,12 @@ export default {
 				this.getCouponList(true);
 			}
 		}
-
 	},
-
 	components: {
 		couponItem,
 		'v-coupon-tab': couponTab,
 		'v-coupon-empty': EmptyPage
 	},
-
 }
 </script>
 
@@ -130,10 +126,6 @@ export default {
 }
 .header {
 	@include header;
-}
-
-.item {
-	// height: 125px;
 }
 </style>
 
