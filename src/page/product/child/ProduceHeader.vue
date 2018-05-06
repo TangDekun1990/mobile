@@ -34,7 +34,7 @@
 
 		computed: mapState({
 			isSearch: state => state.product.isSearch,
-			user: state => state.auth.user
+			isOnline: state => state.auth.isOnline
 		}),
 
 		watch: {
@@ -94,7 +94,7 @@
 			 *  goCart: 跳转到购物车列表
 			 */
 			goCart() {
-				if (this.user) {
+				if (this.isOnline) {
 					this.$router.push({'name': 'cart', 'params': {type: 0}});
 				} else {
 					this.$router.push({'name': 'signin'});

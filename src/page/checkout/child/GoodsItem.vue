@@ -31,10 +31,11 @@ export default {
             url = photo.large
           } else if (photo.thumb) {
             url = photo.thumb
-          } else {
-            url = require('../../../assets/image/change-icon/default_image_02@2x.png')
-          }
+          } 
         }
+      }
+      if (!url) {
+        url = require('../../../assets/image/change-icon/default_image_02@2x.png')
       }
       return url
     },

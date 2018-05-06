@@ -59,13 +59,13 @@ export const openLink = (router, link) => {
         } else if (where === 'search') {
           // 搜索界面
           params = { name: 'search' }
-        } else if (where === 'category') {
+        } else if (where === 'category') {          
           if (action === 'all') {
             // 分类列表
-            params = { name: 'category' }
+            params = { name: 'category', params: { isFromHome: true } }
           } else {
-            // 分类详情(商品列表) 
-            params = { name: 'product', params: { category: action, isFromHome: true } }
+            // 分类详情(商品列表)             
+            params = { name: 'product', query: { category: action, isFromHome: true } }
           }
         } else if (where === 'notice/all') {
           if (aciton === 'all') {
@@ -146,6 +146,7 @@ export const openLink = (router, link) => {
           }          
         } else if (where === 'message') {
           // 消息列表（需要登录）
+          debugger
           if (action === 'all') {
             showAuth = true  
             params = { name: 'newsNoticeMessage' }

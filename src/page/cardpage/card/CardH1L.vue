@@ -62,8 +62,9 @@ export default {
       .desc {
         font-size: $h5;
         color: $subtitleTextColor;
-        text-align: left;
+        text-align: left;        
         margin-top: 6px;
+        margin-left: 9px;
         margin-right: 5px;
         @include limit-line(1)
       }

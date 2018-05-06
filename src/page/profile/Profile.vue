@@ -14,8 +14,8 @@
       <label class="nickname" @click="goProfileInfo">{{nickname}}</label>
       </div>
       <div class="info-wrapper">
-        <div class="info-item">{{getScore}}积分</div>
-        <div class="info-item" @click="goIntegral">积分记录</div>
+        <div class="info-item" @click="goScoreList">{{getScore}}积分</div>
+        <div class="info-item" @click="goRecordList">积分记录</div>
       </div>
     </div>
     <div class="order-header" @click="goOrder">
@@ -105,7 +105,7 @@
 import Tabbar from "../../components/common/Tabbar";
 import InfoItem from "./child/InfoItem";
 import OrderItem from "./child/OrderItem";
-import { mapState } from "vuex";
+import { mapState, mapMutations } from "vuex";
 import { userProfileGet } from "../../api/network/user";
 import { scoreGet } from '../../api/network/score'
 import { ENUM } from '../../config/enum'
@@ -126,7 +126,12 @@ export default {
   },
   created: function() {
     if (this.isOnline) {
-      userProfileGet().then(response => {}, error => {});
+      userProfileGet().then(response => {
+        if (response && response.user) {
+          this.saveUser(response) 
+        }        
+      }, error => {        
+      });
       scoreGet().then(
         response => {
           this.score = response.score
@@ -185,6 +190,9 @@ export default {
     }
   },
   methods: {
+    ...mapMutations({
+      saveUser: 'saveUser'
+    }),
     // 获取订单不同状态的数量统计
     getOrderSubtotal() {
       orderSubtotal().then(res=> {
@@ -194,10 +202,13 @@ export default {
       })
     },
     showLogin() {
-      this.$router.push("/signin");
+      this.$router.push({ name: 'signin' });
     },
-    goIntegral() {
-      this.$router.push("/integralList");
+    goScoreList() {
+      this.$router.push({ name: 'scoreList', query: { index: 0 } });
+    },
+    goRecordList() {
+      this.$router.push({ name: 'scoreList', query: { index: 1 } });
     },
     goProfileInfo() {
       if (this.isOnline) {
@@ -207,7 +218,7 @@ export default {
       }
     },
     goSetting() {
-      this.$router.push("setting");
+      this.$router.push({ name: 'setting' });
     },
     goNews() {
       this.$router.push('news');
@@ -226,8 +237,7 @@ export default {
     },
     goOrder() {
       this.$router.push({ name:'order', params: {'order': ENUM.ORDER_STATUS.ALL}});
-    },
-
+    }, 
   },
 };
 </script>

@@ -1,6 +1,6 @@
 <template>
 	<div class="container">
-		<mt-header class="header" fixed v-bind:title="getTitle">
+		<mt-header class="header" fixed v-bind:title="getTitle" v-if="isShowHeader">
       <header-item slot="left" isBack v-on:onclick="leftClick">
       </header-item> 
 			<div slot="right" class="right-item">
@@ -9,7 +9,7 @@
 				<span class="cart-number" v-if="count >= 100 ">99+</span>
 			</div>              
     </mt-header>
-		<div class="list">
+		<div class="list" v-bind:style="getTopMargin">
 			<card-group 
 				class="section" 
 				v-for="(item, index) in getCardGroups" 
@@ -68,6 +68,21 @@
 			getCardGroups: function () {
 				let groups = this.cardpage ? this.cardpage.groups : []
 				return groups
+			},
+			isShowHeader () {
+				if (window.WebViewJavascriptBridge && window.WebViewJavascriptBridge.isInApp()) {
+					return false
+				}
+				return true
+			},
+			getTopMargin () {
+				let margin = 44
+				if (!this.isShowHeader) {
+					margin = 0
+				}
+				return {
+					'margin-top': margin + 'px'
+				}
 			}
 		},
 		methods: {
@@ -98,7 +113,7 @@
 		border-bottom: 1px solid $lineColor;
 	}
 	.list {
-		margin-top: 44px;
+		position: relative;	
 		display: flex;
 		flex-direction: column;
 		justify-content: flex-start;

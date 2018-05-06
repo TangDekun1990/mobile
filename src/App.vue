@@ -8,19 +8,11 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
 export default {
 	name: 'app',
-
-	data(){
-		return{
-			zhiManager: ''
-		}
-	},
-
-	components: {},
-
 	created: function() {
-		window.location.href = 'wenchao://'
+		window.location.href = 'wenchao://'		
 		/*
 		 * detectBack： 监听浏览器返回事件
 		 */
@@ -45,14 +37,35 @@ export default {
   //   	};
 	//   	detectBack.initialize();
 	},
-
 	methods: {
+		...mapMutations({
+			saveToken: 'saveToken',
+			clearToken: 'clearToken'
+		}),
 		goBack () {
 			window.history.length > 1
 			? this.$router.go(-1)
 			: this.$router.push('/')
 		}
-	}
+	},
+	mounted () {
+		if (window.WebViewJavascriptBridge && window.WebViewJavascriptBridge.isInApp()) {			
+			// 加载页面时获取token			
+			wenchaoApp.getToken((token) => {	 
+				if (token && token.length) {
+					this.saveToken({ 'token': token })
+				} else {
+					this.clearToken()
+				}
+			})
+			// native登录成功后，重新获取token
+			wenchaoApp.onLogin((token) => {
+				if (token && token.length) {
+					this.saveToken({ 'token': token })
+				}
+			})
+		}		
+	},
 }
 </script>
 

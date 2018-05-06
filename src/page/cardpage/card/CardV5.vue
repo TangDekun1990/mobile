@@ -13,7 +13,7 @@
             <label class="subtitle" style="-webkit-box-orient:vertical">{{getSubtitle}}</label>
             <label class="desc" style="-webkit-box-orient:vertical">{{getDesc}}</label>
           </div>
-          <div class="icon-wrapper" v-if="isProductItem()" @click.stop="addToCart">
+          <div class="icon-wrapper" v-if="isProductItem()" @click.stop="onClickCart">
             <img src="../../../assets/image/change-icon/cart@2x.png">
           </div>
         </div> 
@@ -27,7 +27,7 @@
             <label class="subtitle" style="-webkit-box-orient:vertical">{{getSubtitle}}</label>
             <label class="desc" style="-webkit-box-orient:vertical">{{getDesc}}</label>
           </div>
-          <div class="icon-wrapper" v-if="isProductItem()" @click.stop="addToCart">
+          <div class="icon-wrapper" v-if="isProductItem()" @click.stop="onClickCart">
             <img src="../../../assets/image/change-icon/cart@2x.png">
           </div>
         </div> 
@@ -46,10 +46,14 @@ import Common from './Common'
 import PhotoV from './PhotoV'
 import { Indicator, Toast } from 'mint-ui'
 import { cartAdd } from '../../../api/network/cart'
+import { mapState } from 'vuex'
 export default {
   name: 'CardV5',
   mixins: [ Common, PhotoV ],  
   computed: { 
+    ...mapState({
+      isOnline: state => state.auth.isOnline,
+    }),
     isTop () {
       return this.isCardStyle('B')
     },
@@ -122,6 +126,21 @@ export default {
       }
       return false
     },
+    onClickCart () {
+      console.log('====================================');
+      console.log('isOnline...');
+      console.log('====================================');
+      if (this.isOnline) {
+         this.addToCart()
+      } else {        
+        // 未登录时，判断是App内打开还是App外打开
+        if (window.WebViewJavascriptBridge && window.WebViewJavascriptBridge.isInApp()) {
+          wenchaoApp.doLogin()
+		    } else {
+          this.$router.push({ name: 'signin' });
+        }
+      }       
+    },
     addToCart () {      
       let product = this.item.product
       let productId = product.id
@@ -148,6 +167,9 @@ export default {
       cartAdd(productId, property, amount).then(
         (response) => {
           Indicator.close()
+          if (window.WebViewJavascriptBridge && window.WebViewJavascriptBridge.isInApp()) {
+            wenchaoApp.addCartSucceed()
+          }
         }, (error) => {
           Indicator.close()
           Toast(error.errorMsg)

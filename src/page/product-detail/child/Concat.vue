@@ -21,7 +21,6 @@
 		},
 
 		computed: mapState({
-			user: state => state.auth.user,
 			detailInfo: state => state.detail.detailInfo
 		}),
 

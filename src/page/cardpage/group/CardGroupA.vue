@@ -117,31 +117,7 @@ export default {
           columnCount = 5
           ratio = 3.0 / 5.0
         } 
-        break;
-        case ENUM.CARDGROUP_LAYOUT.N1: 
-        {                
-          columnCount = 1
-          ratio = 6.0 / 5.0
-        } 
-        break;
-        case ENUM.CARDGROUP_LAYOUT.N2: 
-        {                
-          columnCount = 2
-          ratio = 1.0 / 1.0
-        } 
-        break;
-        case ENUM.CARDGROUP_LAYOUT.N3: 
-        {                
-          columnCount = 3
-          ratio = 1.0 / 1.0
-        } 
-        break;
-        case ENUM.CARDGROUP_LAYOUT.N4: 
-        {                
-          columnCount = 4
-          ratio = 1.0 / 1.0
-        } 
-        break;
+        break;        
       
         default:
         {
