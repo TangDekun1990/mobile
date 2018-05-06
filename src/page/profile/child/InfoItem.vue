@@ -38,13 +38,13 @@ export default {
     color: #4E545D;
   }
   .info-item-icon {
-    width: 22px;
-    height: 22px;
-    margin-left: 21px;
+    width: 28px;
+    height: 28px;
+    margin-left: 18px;
   }
   .info-item-title {
     flex: 1;
-    margin-left: 19px;
+    margin-left: 16px;
   }
   .indicator {
     width: 7px;

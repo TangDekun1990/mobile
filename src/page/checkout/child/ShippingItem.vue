@@ -70,7 +70,7 @@ export default {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    align-items: flex-start;
+    align-items: stre;
   } 
   .right-wrapper {
     flex: 1;

@@ -78,7 +78,6 @@
 		margin: 0px;
 		background-color: #ffffff;
 		border-top: 1px solid #F0F2F5;
-		// @include pb();
 		.tabbar-wrapper {
 			ul {
 				display: flex;
@@ -92,7 +91,7 @@
 				li {
 					font-family: $fontFamily;
 					img {
-						@include wh(20px, 20px);
+						@include wh(24px, 24px);
 						@include ilc();
 						display: $block;
 					}
