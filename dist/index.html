@@ -213,7 +213,7 @@
           // callHander
 
           openLink: function (link, callback) {
-            if (window.WebViewJavascriptwenchaoApp) {
+            if (window.WebViewJavascriptBridge) {
               window.WebViewJavascriptBridge.callHandler('openLink', { link: link }, callback)
             } else {
               // 非APP内
