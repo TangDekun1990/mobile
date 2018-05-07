@@ -70,6 +70,7 @@
 			this.getCurrentDate();
 			if(this.detailInfo) {
 				let title = this.detailInfo.name;
+				let imgUrl = this.detailInfo.photos[0].thumb;
 				this.wxApi.getConfigRes(title, imgUrl);
 			}
 		},
