@@ -70,9 +70,9 @@
         <div>
           <img src="../../../assets/image/change-icon/e5_address@2x.png">
           <span>{{orderDetail.order.consignee.name}}</span>
-          <span class="mobile" style="-webkit-box-orient:vertical; -webkit-line-clamp: 2;">{{orderDetail.order.consignee.mobile}}</span> 
+          <span class="mobile">{{orderDetail.order.consignee.mobile}}</span> 
         </div>
-        <p>{{orderDetail.order.consignee.address}}</p>
+        <p style="-webkit-box-orient: vertical; -webkit-line-clamp: 2;">{{orderDetail.order.consignee.address}}</p>
       </div>
       <div class="contact">
           <span>联系客服</span>
