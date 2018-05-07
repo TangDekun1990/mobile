@@ -48,6 +48,7 @@ export default {
     return {
       isShow:false,
       popupVisible: false,
+      getUrl: this.$route.query.url ? this.$route.query.url : ""
     }
   },
   computed: {
@@ -66,7 +67,7 @@ export default {
     },
      // 刷新页面
     getRefresh() {
-      console.log('点击了');
+       window.location.reload();
     },
     // 分享
     getShare() {

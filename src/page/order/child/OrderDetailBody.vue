@@ -593,7 +593,6 @@ export default {
     input {
       color: #7c7f88;
       height: 20px;
-      border-radius: 2px;
     }
   }
   .pay {
