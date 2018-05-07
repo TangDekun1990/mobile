@@ -168,7 +168,6 @@ export default{
 				color: #4E545D;
 				font-size: 16px;
 				font-weight: normal;
-				font-family: 'PingFangSC';
 
 				display:-moz-box;
 			  display:-webkit-box;
@@ -186,7 +185,6 @@ export default{
 			}
 			.sub-title {
 				color: #55595F;
-				font-family: 'PingFangSC';
 				font-size: 12px;
 
 				display:-moz-box;
@@ -222,16 +220,18 @@ export default{
 				justify-content: space-between;
 				align-items: center;
 				font-size: 12px;
-				font-family: 'PingFangSC';
 				font-weight: 'Regular';
 				span{
 					color: #7C7F88;
 					&.self-support {
 						font-size: 10px;
 						color: #F34444;
-						padding: 3px;
 						border: 1px solid #F34444;
 						border-radius: 2px;
+						width: 32px;
+					    height: 16px;
+					    line-height: 16px;
+					    text-align: center;
 					}
 				}
 				img {

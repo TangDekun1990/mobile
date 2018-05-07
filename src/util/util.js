@@ -155,6 +155,7 @@ export default {
 			}(),
 			language: (navigator.browserLanguage || navigator.language).toLowerCase()
 		};
+		let browserHeight = 0;
 		if (browser.versions.mobile) {//判断是否是移动设备打开。
 		    let ua = navigator.userAgent.toLowerCase();//获取判断用的对象
 		    //在微信中打开
@@ -164,12 +165,16 @@ export default {
 		    //在QQ空间打开
 		  	if (ua.match(/QQ/i) == "qq") {}
 		  	//是否在IOS浏览器打开
-		  	if (browser.versions.ios) {}
+		  	if (browser.versions.ios) {
+		  		browserHeight = 35;
+		  	}
 		  	//是否在安卓浏览器打开
-		    if(browser.versions.android){}
+		    if(browser.versions.android){
+		    	browserHeight = 35;
+		    }
 		} else {
 		  //否则就是PC浏览器打开
 		}
-		return browser.versions.ios;
+		return browserHeight;
 	}
 }

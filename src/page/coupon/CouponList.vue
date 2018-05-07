@@ -126,6 +126,7 @@ export default {
 }
 .header {
 	@include header;
+	border-bottom: 0.5px solid rgba(232,234,237,1);
 }
 </style>
 

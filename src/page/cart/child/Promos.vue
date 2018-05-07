@@ -147,17 +147,17 @@
 					height = 0;
 				if (this.promos) {
 					if (this.promos.length > 2) {
-						height += 2 * 39;
+						height += 2 * 33;
 					} else {
-						height += this.promos.length * 39;
+						height += this.promos.length * 33;
 					}
 				}
 
 				if (this.un_promos) {
 					if (this.un_promos.length > 2) {
-						height += 2 * 39;
+						height += 2 * 33;
 					} else {
-						height += this.un_promos.length * 39;
+						height += this.un_promos.length * 33;
 					}
 				}
 				return height;
@@ -169,7 +169,7 @@
 <style lang='scss' scoped>
 	.ui-cart-promos {
 		background: rgba(255,255,255,1);
-	    position: absolute;
+	    position: fixed;
 	    width: 100%;
 	    border-bottom: 1px solid #e8eaed;
 	    bottom: 44px;

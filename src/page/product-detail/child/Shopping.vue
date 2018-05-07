@@ -39,12 +39,14 @@
 					<div class="info-body">
 						<p>数量</p>
 						<div class="ui-number">
-							<div class="reduce ui-common" v-on:click='reduceNumber()'>-</div><input type="number" min="1" class="number" value='1' v-model="numbers" v-on:keyup ='getInputNumber($event)'><div class="add ui-common" v-on:click='addNumber()'>+</div>
+							<!-- <div class="reduce ui-common" v-on:click='reduceNumber()'>-</div><input type="number" min="1" class="number" value='1' v-model="numbers" v-on:keyup ='getInputNumber($event)'><div class="add ui-common" v-on:click='addNumber()'>+</div> -->
+							<img src="../../../assets/image/change-icon/b3_minus_dis@2x.png" v-if="numbers <= 1" v-on:click='reduceNumber()'><img src="../../../assets/image/change-icon/b3_minus@2x.png" v-if="numbers > 1" v-on:click='reduceNumber()'><input type="number" min="1" class="number" value='1' v-model="numbers" v-on:keyup ='getInputNumber($event)'><img src="../../../assets/image/change-icon/b3_plus@2x.png" v-on:click='addNumber()'>
 						</div>
 					</div>
 				</div>
 
-				<div class="info-footer" v-on:click='addShoppingCart()'>确定</div>
+				<div class="info-footer" v-on:click='addShoppingCart()' v-if="!type">确定</div>
+				<div class="info-footer" v-on:click='addShoppingCart()' v-if="type">加入购物车</div>
 
 			</div>
 		</div>
@@ -93,7 +95,8 @@
 			isOnline: state => state.auth.isOnline,
 			detailInfo: state => state.detail.detailInfo,
 			number: state => state.detail.number,
-			chooseinfo: state => state.detail.chooseinfo
+			chooseinfo: state => state.detail.chooseinfo,
+			type: state => state.detail.type
 		})
 	},
 
@@ -173,7 +176,7 @@
 					this.$router.push({'name': 'signin'});
 				} else {
 					if (this.detailInfo.properties.length > 0) {
-						if (this.ids.length <= 0) {
+						if (this.ids.length <= 0 || this.ids.length != this.detailInfo.properties.length) {
 							Toast('请选择商品属性');
 							return false;
 						} else {
@@ -251,6 +254,7 @@
 							let data = this.detailInfo.stock;
 							let count = 0;
 							for (let a = 0; a <= data.length -1; a++) {
+								this.setPriceByProperty(data[a]);
 					 			if (data[a].goods_attr.indexOf(''+attr[j].id+'') >= 0){
 					 				count = count + data[a].stock_number;
 					 				if (count > 0) {
@@ -439,20 +443,18 @@
 				margin-top: -15px;
 				position: absolute;
 				top: -13px;
-				/*border: 1px solid #FFFFFF;*/
-				/*border-radius: 1px;*/
 			}
 			div {
 				padding-left: 135px;
-				/* margin-left: 120px; */
 				width: 100%;
 				span{
 					display: block;
-					color:rgba(239,51,56,1);
+					color: #8F8E94;
 					&:first-child {
 						font-size:18px;
 						line-height:20px;
 						padding-bottom: 12px;
+						color:rgba(239,51,56,1);
 					}
 					&:nth-child(2) {
 						img {
@@ -464,7 +466,6 @@
 						span {
 							display: inline;
 							font-size:14px;
-							color:rgba(143,142,148,1);
 							line-height:14px;
 							padding-bottom: 9px;
 							padding-top: 12px;
@@ -490,6 +491,7 @@
 				width: 13px;
 				height: 13px;
 				cursor: pointer;
+				opacity:  1;
 			}
 		}
 		div.goods-detail-properties {
@@ -550,7 +552,11 @@
 			}
 			div.ui-number{
 				height: 30px;
-				input, div {
+				img {
+					width: 31px;
+				    cursor: pointer;
+				}
+				input{
 					height: 28px;
 					text-align: center;
 					color: #404245;
@@ -581,6 +587,8 @@
 					border-image-width: 0px;
 					box-shadow: 0px;
 					vertical-align: bottom;
+					border-left: 0px;
+    				border-right: 0px;
 					&:focus {
 						outline: none;
 					}

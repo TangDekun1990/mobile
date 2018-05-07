@@ -3,10 +3,10 @@
     <!-- header -->
     <mt-header class="header" title="我的收藏">
       <header-item slot="left" v-bind:isBack=true v-on:onclick="goBack()">
-      </header-item>    
+      </header-item>
     </mt-header>
-    <!-- body --> 
-    <mt-cell-swipe v-for="(item, index) in collectionList" v-bind:key="item.id" :right="rightbottom(item.id)" >  
+    <!-- body -->
+    <mt-cell-swipe v-for="(item, index) in collectionList" v-bind:key="item.id" :right="rightbottom(item.id)" >
       <div class="collection-body" v-on:click="goOrderDetail(item.id, item.shop)" v-if="collectionList.length > 0">
         <div class="image">
           <img src="../../assets/image/change-icon/default_image_02@2x.png" v-if='item.photos <= 0'>
@@ -28,7 +28,7 @@
           </div>
         </div>
       </div>
-    </mt-cell-swipe>  
+    </mt-cell-swipe>
     <div v-if="collectionList.length <= 0" class="order-air">
         <img src="../../assets/image/change-icon/favorite_empty@2x.png">
 				<p>您暂时还未收藏过任何商品</p>
@@ -36,7 +36,7 @@
 					<label>随便逛逛</label>
 				</button>
       </div>
-  </div>  
+  </div>
 
 </template>
 
@@ -50,15 +50,15 @@ import { productLikedList, productUnlike } from '../../api/network/product' //�
         orderListParams: {'page':1, 'per_page': 10},
       }
     },
-    created() {  
+    created() {
       this.orderCollection();
-    },  
+    },
     methods: {
       rightbottom(productId){
-        return [   
-          {  
-            content: '删除',  
-            style: { background: 'red', color: '#fff', },  
+        return [
+          {
+            content: '删除',
+            style: { background: 'red', color: '#fff', },
             handler: () => MessageBox({
               title: '确认删除',
               message: '是否要删除此商品？',
@@ -66,8 +66,8 @@ import { productLikedList, productUnlike } from '../../api/network/product' //�
             }).then(actiob =>{
               this.getCancelCollection(productId);
             })
-          }  
-        ];  
+          }
+        ];
       },
       goBack() {
         this.$router.go(-1);
@@ -79,10 +79,10 @@ import { productLikedList, productUnlike } from '../../api/network/product' //�
           if(res) {
             this.collectionList = Object.assign([], res.products);
           }
-        }) 
-      },      
+        })
+      },
       // 去商品详情
-      goOrderDetail(orderId) {  
+      goOrderDetail(orderId) {
         this.$router.push({name: 'detail', params:{id: orderId}})
       },
       // 取消收藏商品数据
@@ -114,11 +114,12 @@ import { productLikedList, productUnlike } from '../../api/network/product' //�
     }
     .collection-body {
       display: flex;
-      justify-content: space-between;
+      justify-content: flex-start;
       align-items: center;
       background-color:#FFF;
       border-bottom:1px solid #E8EAED;
       padding: 11px 22px 11px 10px;
+      width: 100%;
       .image {
         width:110px;
         height:110px;
@@ -197,7 +198,7 @@ import { productLikedList, productUnlike } from '../../api/network/product' //�
       text-align: center;
 			img {
 				width:102px;
-				height:102px; 
+				height:102px;
 				box-sizing: border-box;
 				margin:	96px auto 20px;
 			}
@@ -210,9 +211,9 @@ import { productLikedList, productUnlike } from '../../api/network/product' //�
 			}
 			.button {
 				width:200px;
-				height:44px; 
+				height:44px;
 				background:rgba(252,46,57,1);
-				border-radius: 2px ; 
+				border-radius: 2px ;
 				padding:14px 68px;
 				margin: 28px auto;
 				border:none;
@@ -226,7 +227,7 @@ import { productLikedList, productUnlike } from '../../api/network/product' //�
 				line-height: 16px;
 			}
 	  }
-  }  
+  }
 </style>
 
  <!--Cell Swipe样式覆盖 -->
@@ -240,5 +241,9 @@ import { productLikedList, productUnlike } from '../../api/network/product' //�
 }
  .mint-cell-wrapper {
    padding: 0px;
+ }
+
+ .mint-cell-wrapper .mint-cell-value {
+ 	width: 100%;
  }
 </style>

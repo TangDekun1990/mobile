@@ -1,6 +1,6 @@
 <!-- 商品详情  -->
 <template>
-	<div class="ui-detail-swiper" v-bind:class="{'height-wrapper': isHideCart, 'has-goods-stock': isStock <= 0}">
+	<div class="ui-detail-swiper" v-bind:class="{'height-wrapper': isHideCart, 'has-goods-stock': isStock <= 0, 'hide-promotion-bottom': ispromotion}">
 		<swiper ref="mySwiper" :options="swiperOption">
             <swiper-slide v-for="(item, index) in list" :key="index">
             	<keep-alive>
@@ -53,7 +53,8 @@
 				isHideHeader: state => state.detail.isHideHeader,
 				isComment: state => state.detail.isComment,
 				currentSwiperIndex: state => state.detail.currentSwiperIndex,
-				detailInfo: state => state.detail.detailInfo
+				detailInfo: state => state.detail.detailInfo,
+				ispromotion: state => state.detail.ispromotion
 			}),
 
 			swiper() {
@@ -110,6 +111,9 @@
 		background: rgba(240,242,245,1);
 		&.has-goods-stock {
 			bottom: 82px;
+		}
+		&.hide-promotion-bottom {
+			bottom: 0px;
 		}
 	}
 	.swiper-container {
