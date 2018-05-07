@@ -70,7 +70,7 @@ export default {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    align-items: flex-start;
+    align-items: stre;
   } 
   .right-wrapper {
     flex: 1;
@@ -88,6 +88,8 @@ export default {
   .name {    
     font-size: 17px;
     color: #4E545D;
+    width: 40px;
+    word-break: break-all;
   }
   .title-wrapper {    
     display: flex;

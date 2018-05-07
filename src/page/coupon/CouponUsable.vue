@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <mt-header class="header" title="我的优惠券">
+    <mt-header class="header" fixed title="我的优惠券">
       <header-item slot="left" v-bind:isBack=true v-on:onclick="goBack">
       </header-item>          
     </mt-header>
@@ -88,8 +88,10 @@ export default {
   }
   .header {
     @include header;
+    border-bottom: 1px solid $lineColor;
   }  
   .tips-wrapper {
+    margin-top: 44px;
     height: 26px;
     background-color: #E8EAED;
     display: flex;    

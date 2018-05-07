@@ -107,6 +107,7 @@ export default {
 
 <style lang="scss" scoped>
   .coupon-item-container {
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -114,7 +115,7 @@ export default {
     background-color: #fff;
     margin: 10px 10px 0px 10px;
     .desc-wrapper {
-      flex: 1;
+      flex: 1;      
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
@@ -167,7 +168,7 @@ export default {
   .indicator {
     width: 36px;
     height: 36px;
-    position: relative;
+    position: absolute;
     left: 0px;
     bottom: 0px;
   }  

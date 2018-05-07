@@ -6,6 +6,7 @@
         <label class="title">{{item.mobile}}</label>        
       </div>
       <label class="desc address-text" style="-webkit-box-orient:vertical">{{detailAddress}}</label>
+      <div class="bottom-line"></div>
     </div>
     <div class="bottom-wrapper">
       <div class="bottom-left-wrapper" @click="onDefault">
@@ -82,15 +83,15 @@ export default {
     justify-content: flex-start;
     align-items: stretch;
     background-color: #fff;
-    border-top: 1px solid #E8EAED;  
+    border-bottom: 1px solid $lineColor;  
   }
   .top-wrapper {
+    position: relative;
     flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: stretch;
-    border-bottom: 1px solid $lineColor;
   }
   .title-wrapper {
     height: 20px;
@@ -126,6 +127,14 @@ export default {
     margin-left: 20px;
     margin-right: 10px;
     @include limit-line(2);
+  }
+  .bottom-line {
+    position: absolute;
+    height: 1px;
+    left: 10px;
+    bottom: 0px;
+    right: 10px;
+    background-color: $lineColor;
   }
   .bottom-wrapper {
     height: 50px;
