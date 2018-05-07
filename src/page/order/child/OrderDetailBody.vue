@@ -1,7 +1,7 @@
 <!-- OrderDetailBody.vue -->
 <template>
   <div>
-    <div class="order-body" v-if="orderDetail && orderDetail.order && trackList[0]" v-bind:class="{'ship': orderDetail.order.status == 1}">
+    <div class="order-body" v-if="orderDetail && orderDetail.order" v-bind:class="{'ship': orderDetail.order.status == 1}">
 
       <div class="image" v-if="orderDetail.order.status == 0">
         <img src="../../../assets/image/change-icon/e5_clock@2x.png">
