@@ -42,7 +42,8 @@
 				isStatus: true,  //是否默认选中底部的全选按钮
 				isshowpromos: true,  //是否显示促销信息
 				target: '',  //设置高度的element元素
-				isEmpty: false
+				isEmpty: false,
+				browserHeight: this.utils.getOpenBrowser()
 			}
 		},
 
@@ -131,9 +132,12 @@
 			// 计算内容高度
 		    this.$nextTick( () => {
 		    	this.target = document.querySelector('.cart-list-wrapper');
-		    	let totalHeight = (44 * 2) + this.height + 20;
+		    	let totalHeight = (44 * 2) + this.height + 10;
 				if (this.type) {
 					totalHeight = totalHeight + 50;
+				}
+				if (this.browserHeight > 0) {
+					totalHeight = totalHeight + this.browserHeight;
 				}
 				const target = this.target;
 		    	this.utils.fillTheScreen({target, totalHeight});
@@ -151,9 +155,12 @@
 		methods: {
 			// TODO
 			setHeight(height) {
-				let totalHeight = (44 * 2) + height + 20;
+				let totalHeight = (44 * 2) + height;
 				if (this.type) {
 					totalHeight = totalHeight + 50;
+				}
+				if (this.browserHeight > 0) {
+					totalHeight = totalHeight + this.browserHeight;
 				}
 				const target = this.target;
 		    	this.utils.fillTheScreen({target, totalHeight})

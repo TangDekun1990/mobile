@@ -177,7 +177,7 @@ export default {
 	align-items: stretch;
 }
 .header {
-	border-bottom: 1px solid #E8EAED;
+	border-bottom: 0.5px solid #E8EAED;
 	@include header;
 }
 

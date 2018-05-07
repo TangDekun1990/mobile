@@ -281,9 +281,10 @@ span.cart-number {
 	}
 	img {
 		position: absolute;
-		height: 18px;
-		width: 11px;
-		top: 13px;
+		width: 24px;
+		height: 24px;
+		left: 15px;
+		top: 10px;
 	}
 	img.ui-cart {
 		right: 15px;
@@ -338,7 +339,7 @@ span.cart-number {
 	height:50px;
 	padding: 0px 20px;
 	background:rgba(255,255,255,1);
-	border-bottom: 1px solid rgba(232,234,237,1);
+	border-bottom: 0.5px solid rgba(232,234,237,1);
 	width: auto;
 	input {
 		width: -webkit-fill-available;

@@ -70,13 +70,13 @@
 			/*
 			 * goBack: 返回上一级
 			 */
-			goBack() {	
+			goBack() {
 				let isFromHome = this.$route.params.isFromHome
 				if (isFromHome) {
 					this.$router.push({ name: 'home' })
 				}	else {
 					this.$router.go(-1);
-				}						
+				}
 			},
 
 			/*
@@ -110,15 +110,18 @@
 			display: flex;
 			width: auto;
 			height: auto;
-			padding: 6px;
-			justify-content: space-around;
+			padding: 6px 16px;
 			align-content: center;
-	    align-items: center;
+	    	align-items: center;
 			img.ui-back {
-				height: 16px;
+				height: 24px;
+    			width: 24px;
 			}
 			input{
-				flex-basis: 200px;
+				width: 100%;
+			    margin-left: 16px;
+			    margin-right: 17px;
+				flex-basis: auto;
 				border-radius: 16px;
 				border: 0px;
 				background: url('../../../assets/image/change-icon/search@2x.png') no-repeat 8px center;
@@ -139,8 +142,8 @@
 				}
 			}
 			img.ui-cart {
-				width: 22px;
-				height: 20px;
+				width: 30px;
+				height: 30px;
 			}
 			span.cart-number {
 			  top: 5px;

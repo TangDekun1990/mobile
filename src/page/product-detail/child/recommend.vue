@@ -131,6 +131,7 @@
 		padding: 15px 15px 0px 15px;
 		background:rgba(255,255,255,1);
 		margin-top: 8px;
+		margin-bottom: 20px;
 		.wrapper-swipe {
 			.mint-swipe {
 				height: 105px;
@@ -173,12 +174,6 @@
 				flex-basis: 105px;
 				border: 1px solid #EFEFF4;
 				border-radius: 2px;
-				&:nth-child(2) {
-					border-left: 0px;
-				}
-				&:nth-child(3) {
-					border-left: 0px;
-				}
 				img {
 					width: 100%;
 					height: 100%;
