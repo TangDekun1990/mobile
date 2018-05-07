@@ -146,7 +146,7 @@ import { productLikedList, productUnlike } from '../../api/network/product' //å·
           color:#55595F;
           font-size:12px;
           margin-bottom: 9px;
-          height: 13px;
+          height: 12px;
 
           display:-moz-box;
           display:-webkit-box;
