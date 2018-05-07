@@ -1,7 +1,7 @@
 <!-- OrderDetailBody.vue -->
 <template>
   <div>
-    <div class="order-body" v-if="orderDetail && orderDetail.order && trackList[0]" v-bind:class="{'ship': orderDetail.order.status == 1}">
+    <div class="order-body" v-if="orderDetail && orderDetail.order" v-bind:class="{'ship': orderDetail.order.status == 1}">
 
       <div class="image" v-if="orderDetail.order.status == 0">
         <img src="../../../assets/image/change-icon/e5_clock@2x.png">
@@ -72,7 +72,7 @@
           <span>{{orderDetail.order.consignee.name}}</span>
           <span class="mobile">{{orderDetail.order.consignee.mobile}}</span> 
         </div>
-        <p>{{orderDetail.order.consignee.address}}</p>
+        <p style="-webkit-box-orient: vertical; -webkit-line-clamp: 2;">{{orderDetail.order.consignee.address}}</p>
       </div>
       <div class="contact">
           <span>联系客服</span>
@@ -84,7 +84,8 @@
         <img class="photo" v-bind:src="item.product.photos[0].thumb" v-if='item.product.photos.length > 0' data-src='../../../assets/image/change-icon/default_image_02@2x.png' >
         <div class="right-wrapper">
           <label class="title">{{item.product.name}}</label>
-          <div class="desc-wrapper">
+          <label class="property" >{{item.property}}</label>
+          <div class="desc-wrapper" v-bind:class="{'propertyOrder': item.property == ''}">
             <label class="price">AED {{utils.currencyPrice(item.product_price)}}</label>
             <label class="count">x{{item.total_amount}}</label>
           </div>
@@ -417,7 +418,6 @@ export default {
   position: absolute;
   width: 100%;
   margin-top: 44px;
-  margin-bottom: 54px;
 }
 .image {
   background-image: url("../../../assets/image/change-icon/bg_order@2x.png");
@@ -501,6 +501,12 @@ export default {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+.property {
+  font-size: 13px;
+  color: #7C7F88;
+  padding-top: 10px;
+  
+}
 .count {
   margin-top: 4px;
   color: #7c7f88;
@@ -513,8 +519,11 @@ export default {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  margin-top: 44px;
+  padding-top: 21px;
 }
+.propertyOrder {
+    padding-top: 34px;
+  }
 .price {
   color: #4e545d;
   font-size: 17px;
@@ -593,7 +602,6 @@ export default {
     input {
       color: #7c7f88;
       height: 20px;
-      border-radius: 2px;
     }
   }
   .pay {
@@ -623,7 +631,7 @@ export default {
   align-items: stretch;
   padding-top: 12px;
   box-sizing: border-box;
-  margin-bottom: 26px;
+  margin-bottom: 80px;
   .desc-item {
     flex: 1;
   }

@@ -16,7 +16,7 @@
         </div>
         <div class="orderInfo">
           <p class="title">{{item.name}}</p>
-          <p class="content">{{item.desc}}</p>
+          <p class="content" style="-webkit-box-orient:vertical">{{item.desc}}</p>
           <div class="price">
             <span class="now">AED{{item.current_price}}</span>
             <del class="old">AED{{utils.currencyPrice(item.price)}}</del>
