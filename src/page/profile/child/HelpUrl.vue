@@ -64,7 +64,7 @@ export default {
 
   created() {
     let title = this.$route.query.title;
-    let imgUrl = require('../../../assets/image/change-icon/favicon.png')
+    let imgUrl = require('../../../assets/image/change-icon/default_image_02@2x.png')
     this.wxApi.getConfigRes(title, imgUrl);
   },
 
