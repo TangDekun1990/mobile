@@ -48,7 +48,7 @@ export default {
     return {
       isShow:false,
       popupVisible: false,
-      getUrl: this.$route.query.url ? this.$route.query.url : ""
+      // getUrl: this.$route.query.url ? this.$route.query.url : ""
     }
   },
   computed: {
@@ -57,6 +57,11 @@ export default {
       return url 
     },
   },  
+  created() {
+    let title = "公司简介";
+    let imgUrl = require('../../../assets/image/change-icon/apple-touch-icon.png')
+    this.wxApi.getConfigRes(title, imgUrl);
+  },
   methods: {   
     goBack() {
       this.$router.go(-1) 
@@ -75,7 +80,7 @@ export default {
     },
     // 分享到微信
     goWachat() {
-      this.$router.push('home');
+      
     },
     // 取消分享
     cancelInfo() {
