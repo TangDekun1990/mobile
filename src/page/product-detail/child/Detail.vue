@@ -28,8 +28,6 @@ import { Webview } from '../../../components/common'
 		    }
 		},
 		props:['url', 'unqie'],
-		created(){
-		},
 		methods: {
 		}
 	}

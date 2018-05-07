@@ -170,6 +170,8 @@ export default {
         box-sizing: border-box;
         padding: 10px 0px 0px 10px;
         font-size: 14px;
+        -webkit-appearance: none;
+        outline: none;
       }
     }
   }
