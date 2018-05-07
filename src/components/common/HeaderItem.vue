@@ -29,7 +29,11 @@ export default {
     isLeft: {
       type: Boolean,
       default: false,
-    },    
+    }, 
+    titleColor: {
+      type: String,
+      default: "#48505D"
+    } 
   },
   computed: {
     itemStyle () {
