@@ -40,13 +40,13 @@ import AddressList from '../page/address/AddressList'
 import AddressManage from '../page/address/AddressManage'
 import AddressEdit from '../page/address/AddressEdit'
 
-// integral
+// coupon
 import CouponList from '../page/coupon/CouponList'
 import CouponUsable from '../page/coupon/CouponUsable'
 
-// integral
-import IntegralList from '../page/integral/IntegralList'
-import IntegralRule from '../page/integral/child/IntegralRule'
+// score
+import ScoreList from '../page/score/ScoreList'
+import ScoreRule from '../page/score/child/ScoreRule'
 
 // checkout
 import Checkout from '../page/checkout/Checkout'
@@ -175,7 +175,7 @@ export default [
 				component: NewsOrderMessage
 			},
 			{
-				name: 'NewsNoticeMessage',
+				name: 'newsNoticeMessage',
 				path: '/newsNoticeMessage',
 				component: NewsNoticeMessage
 			},
@@ -320,14 +320,14 @@ export default [
 				component: updateinfo
 			},
 			{
-				name: 'integralList',
-				path: '/integralList',
-				component: IntegralList
+				name: 'scoreList',
+				path: '/scoreList',
+				component: ScoreList
 			},
 			{
-				name: 'integralRule',
-				path: '/integralRule',
-				component: IntegralRule
+				name: 'scoreRule',
+				path: '/scoreRule',
+				component: ScoreRule
 			},
 			{
 				name: 'redetail',

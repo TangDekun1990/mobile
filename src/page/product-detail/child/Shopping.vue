@@ -93,7 +93,6 @@
 			isOnline: state => state.auth.isOnline,
 			detailInfo: state => state.detail.detailInfo,
 			number: state => state.detail.number,
-			user: state => state.auth.user,
 			chooseinfo: state => state.detail.chooseinfo
 		})
 	},
@@ -170,7 +169,7 @@
 
 			// 加入购物车
 			addShoppingCart() {
-				if (!this.user) {
+				if (!this.isOnline) {
 					this.$router.push({'name': 'signin'});
 				} else {
 					if (this.detailInfo.properties.length > 0) {

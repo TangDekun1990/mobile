@@ -37,6 +37,19 @@ function getErrorInfo(errorCode, errorMsg) {
     return error;
 }
 
+function getUserAgent() {
+    let userAgent = ''
+    let platform = 'Browser'
+    const { width, height } = window.screen
+    if (window.WebViewJavascriptBridge && window.WebViewJavascriptBridge.isWeixin()) {
+        platform = 'Weixin'
+    }
+    var lang = (navigator.systemLanguage ? navigator.systemLanguage : navigator.language)
+    userAgent = 'Platform/' + platform + ', Device/Unknown, Lang/' + lang + ', ScreenWidth/' + width + ', ScreenHeight/' + height
+    console.log('userAgent is ', userAgent)
+    return userAgent
+}
+
 // 请求加密
 axios.interceptors.request.use(config => {
     let isAPIRequest = config.url.indexOf(apiBaseUrl) == 0 ? true : false;
@@ -59,15 +72,18 @@ axios.interceptors.request.use(config => {
 
             // xSign格式: sign,timestamp
             let xSign = sign + ',' + timestamp;
-            let token = null;
+            let token = null;            
             if (store.getters.isOnline && store.getters.token) {
                 token = store.getters.token;
             }
-            config.headers['X-ECAPI-Authorization'] = store.state.auth.token;
+                        
+            config.headers['X-ECAPI-Authorization'] = token;
             config.headers['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
-            config.headers['X-ECAPI-Sign'] = xSign;
-            config.headers['X-ECAPI-UserAgent'] = 'UserAgent'; // TODO:
-            config.headers['X-ECAPI-UDID'] = 'udid'; // TODO:
+            config.headers['X-ECAPI-Sign'] = xSign; 
+            // TODO:
+            config.headers['X-ECAPI-UserAgent'] = 'Platform/iOS, Device/iPhone, Lang/zh-Hans-CN, ScreenWidth/375.000000, ScreenHeight/667.000000'; // TODO:
+            // config.headers['X-ECAPI-UserAgent'] = this.getUserAgent()
+            // config.headers['X-ECAPI-UDID'] = 'udid'; 
             config.headers['X-ECAPI-Ver'] = VERSION;
 
             let encry_post_body = '';
@@ -83,7 +99,7 @@ axios.interceptors.request.use(config => {
             // TODO:
             if (process.env.NODE_ENV === 'development') {
                 config.params = params ? JSON.stringify(params) : ''
-            }
+            }            
         }
     }
     return config

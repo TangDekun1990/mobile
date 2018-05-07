@@ -11,29 +11,30 @@
         <div class="avatar-wrapper" @click="goProfileInfo">
         <img class="avatar" :src="getAvatarUrl" />
       </div>
-      <label class="nickname" @click="goProfileInfo">{{nickname}}</label>
+      <label class="nickname" style="-webkit-box-orient:vertical" @click="goProfileInfo">{{nickname}}</label>
       </div>
       <div class="info-wrapper">
-        <div class="info-item">{{getScore}}积分</div>
-        <div class="info-item" @click="goIntegral">积分记录</div>
+        <div class="info-item" @click="goScoreList">{{getScore}}积分</div>
+        <div class="info-item" @click="goRecordList">积分记录</div>
       </div>
     </div>
     <div class="order-header" @click="goOrder">
       <div class="order-header-item" id="order-item-left">
-        <img class="order-header-icon" src="../../assets/image/change-icon/e0_order@2x.png" />
+        <img class="order-header-icon" src="../../assets/image/change-icon/e1_order@2x.png" />
         <label class="item-title order-header-title">我的订单</label>
       </div>
       <div class="order-header-item" id="order-item-right">
         <label class="order-subtitle">查看全部订单</label>
         <img class="indicator" src="../../assets/image/change-icon/enter@2x.png" />
       </div>
+      <div class="order-header-line"></div>
     </div>
     <div class="order-wrapper" >
       <order-item
         class="order-item"
         testAttr = 'order'
         id='0'
-        :icon="require('../../assets/image/change-icon/e0_payment@2x.png')"
+        :icon="require('../../assets/image/change-icon/b10_payment@2x.png')"
         title="待付款"
         :orderNumber = 'orderCount.created'
         >
@@ -105,7 +106,7 @@
 import Tabbar from "../../components/common/Tabbar";
 import InfoItem from "./child/InfoItem";
 import OrderItem from "./child/OrderItem";
-import { mapState } from "vuex";
+import { mapState, mapMutations } from "vuex";
 import { userProfileGet } from "../../api/network/user";
 import { scoreGet } from '../../api/network/score'
 import { ENUM } from '../../config/enum'
@@ -126,7 +127,12 @@ export default {
   },
   created: function() {
     if (this.isOnline) {
-      userProfileGet().then(response => {}, error => {});
+      userProfileGet().then(response => {
+        if (response && response.user) {
+          this.saveUser(response) 
+        }        
+      }, error => {        
+      });
       scoreGet().then(
         response => {
           this.score = response.score
@@ -152,7 +158,7 @@ export default {
               title = this.user.username
             }
         }
-      }
+      }      
       return title;
     },
     getAvatarUrl () {
@@ -185,6 +191,9 @@ export default {
     }
   },
   methods: {
+    ...mapMutations({
+      saveUser: 'saveUser'
+    }),
     // 获取订单不同状态的数量统计
     getOrderSubtotal() {
       orderSubtotal().then(res=> {
@@ -194,10 +203,13 @@ export default {
       })
     },
     showLogin() {
-      this.$router.push("/signin");
+      this.$router.push({ name: 'signin' });
     },
-    goIntegral() {
-      this.$router.push("/integralList");
+    goScoreList() {
+      this.$router.push({ name: 'scoreList', query: { index: 0 } });
+    },
+    goRecordList() {
+      this.$router.push({ name: 'scoreList', query: { index: 1 } });
     },
     goProfileInfo() {
       if (this.isOnline) {
@@ -207,7 +219,7 @@ export default {
       }
     },
     goSetting() {
-      this.$router.push("setting");
+      this.$router.push({ name: 'setting' });
     },
     goNews() {
       this.$router.push('news');
@@ -226,8 +238,7 @@ export default {
     },
     goOrder() {
       this.$router.push({ name:'order', params: {'order': ENUM.ORDER_STATUS.ALL}});
-    },
-
+    }, 
   },
 };
 </script>
@@ -243,7 +254,7 @@ export default {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    align-items: center;
+    align-items: stretch;
     height: 225px;
     @include linear-gradient( #EAD6CE, #E2E3DF);
     .top-info-wrapper {
@@ -262,7 +273,7 @@ export default {
     align-items: center;
     width: 44px;
     height: 44px;
-    top: 21px;
+    top: 11px;
   }
   #left-nav-item {
     left: 2px;
@@ -283,7 +294,7 @@ export default {
     height: 76px;
     border-radius: 38px;
     background-color: #fff;
-    margin-top: 50px;
+    margin-top: 40px;
     .avatar {
       width: 72px;
       height: 72px;
@@ -291,12 +302,14 @@ export default {
     }
   }
   .nickname {
-    margin-top: 20px;
+    width: 100%;
+    margin-top: 20px; 
     font-size: 16px;
     color: #646464;
     text-align: center;
-    margin-left: 20px;
-    margin-right: 20px;
+    margin-left: 0px;
+    margin-right: 0px;
+    @include limit-line(1);
   }
   .info-wrapper {
     width: 100%;
@@ -305,9 +318,7 @@ export default {
     flex-direction: row;
     justify-content: flex-start;
     align-content: stretch;
-    background-color: #fff;
-    background-color: #000000;
-    opacity: 0.1;
+    background-color: rgba(0,0,0,0.1);
   }
   .info-item {
     flex: 1;
@@ -319,12 +330,12 @@ export default {
   }
   .order-header {
     height: 44px;
+    position: relative;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
     align-content: stretch;
     background-color: #fff;
-    border-bottom: 1px solid $lineColor;
   }
   .order-header-item {
     flex: 1;
@@ -338,6 +349,14 @@ export default {
   }
   #order-item-right {
     justify-content: flex-end;
+  }
+  .order-header-line {
+    position: absolute;
+    height: 1px;
+    left: 10px;
+    bottom: 0px;
+    right: 10px;
+    background-color: $lineColor;
   }
   .item-title {
     font-size: 14px;

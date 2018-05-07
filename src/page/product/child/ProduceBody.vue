@@ -44,7 +44,7 @@ export default{
 
 	computed: {
 		...mapState({
-			user: state => state.auth.user
+			isOnline: state => state.auth.isOnline
 		}),
 	},
 
@@ -62,7 +62,7 @@ export default{
 		 * @param： product： 商品id
 		*/
 		_cartAdd(product) {
-			if (this.user) {
+			if (this.isOnline) {
 				cartAdd(product, '', 1).then(res => {
 					if (res) {
 						this.$parent.$emit('get-cart-quantity');

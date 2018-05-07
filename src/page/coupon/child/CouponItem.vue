@@ -1,5 +1,5 @@
 <template>
-  <div class="container" @click="onclick">
+  <div class="coupon-item-container" @click="onclick">
     <img class="top-img" v-bind:src="getTopBg">
     <label class="title" :class="{enableText: isAvaiable, disableText: !isAvaiable}">{{getName}}</label>
     <label class="subtitle">{{getCondition}}</label>
@@ -106,7 +106,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .container {
+  .coupon-item-container {
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -114,7 +115,7 @@ export default {
     background-color: #fff;
     margin: 10px 10px 0px 10px;
     .desc-wrapper {
-      flex: 1;
+      flex: 1;      
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
@@ -167,7 +168,7 @@ export default {
   .indicator {
     width: 36px;
     height: 36px;
-    position: relative;
+    position: absolute;
     left: 0px;
     bottom: 0px;
   }  

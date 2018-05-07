@@ -416,6 +416,7 @@ export default {
   }
   .header {
     @include header;
+    border-bottom: 1px solid #E8EAED;  
   }
   .body {
     margin-top: 44px;

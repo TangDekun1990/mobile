@@ -118,7 +118,7 @@ export default {
       authBase.authSignin(username, password).then(
         (response) => {
           Indicator.close()
-          this.saveToken({ 'token' : response.token, 'user': response.user })
+          this.saveToken({ 'token': response.token, 'user': response.user })
           this.goHome()
         }, (error) => {
           Indicator.close()

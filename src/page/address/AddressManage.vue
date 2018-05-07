@@ -47,9 +47,6 @@ export default {
     },
   },
   created: function () {
-    console.log('====================================');
-    console.log('Address Manage created:');
-    console.log('====================================');
     consignee.consigneeList().then(
       (response) => {
         let items = response.consignees                
@@ -122,6 +119,7 @@ export default {
   }
   .header {
     @include header;
+    border-bottom: 1px solid $lineColor;
   }
   .button {    
     @include button;    
