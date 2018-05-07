@@ -32,7 +32,8 @@
         <div class="flex-right">
           <h3>客服消息</h3>
           <span>在线客服咨询时间为08:00-22:00 </span>
-          <img src="../../assets/image/change-icon/b0_indicator_active@2x.png" v-show="isShow">
+          <!-- <img src="../../assets/image/change-icon/b0_indicator_active@2x.png" v-show="isShow"> -->
+          <span class="prompt" v-show="isShow"></span>
         </div>
       </div>
     </div>
@@ -136,12 +137,14 @@ import {messageOrderList, messageSystemList } from '../../api/network/message' /
             white-space: nowrap;
             display: block;
           }
-          img{
+          .prompt{
             width: 6px;
             height: 6px;
             position: absolute;
             right: 19px;
             top: 50%;
+            background-color: #F23030;
+            border-radius: 50%;
           }
         }
       }

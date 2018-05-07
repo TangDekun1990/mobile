@@ -7,7 +7,7 @@
     </mt-header>
     <order-detail-body></order-detail-body>
   </div>
-</template>
+</template> 
 
 <script>
 import { Header } from 'mint-ui'
@@ -16,7 +16,7 @@ import OrderDetailBody from '../order/child/OrderDetailBody'
 import { ENUM } from '../../config/enum'
 export default {
  components: {
-   OrderDetailBody
+   OrderDetailBody,
  },
   methods: {
     goBack() {

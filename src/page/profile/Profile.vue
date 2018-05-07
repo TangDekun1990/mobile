@@ -6,6 +6,7 @@
       </div>
       <div class="nav-item" id="right-nav-item" @click="goNews()">
         <img class="nav-icon" src="../../assets/image/change-icon/e0_message@2x.png" />
+        <span></span>
       </div>
       <div class="top-info-wrapper">
         <div class="avatar-wrapper" @click="goProfileInfo">
@@ -274,6 +275,15 @@ export default {
     width: 44px;
     height: 44px;
     top: 11px;
+    span {
+      width: 7px;
+      height: 7px;
+      background-color: #F23030;
+      border-radius: 50%;
+      position: absolute;
+      top: 11px;
+      right: 11px;
+    }
   }
   #left-nav-item {
     left: 2px;
