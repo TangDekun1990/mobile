@@ -326,7 +326,6 @@ export default {
 	top: 44px;
 	margin-top: 8px;
 	margin-bottom: 10px;
-	border: 1px solid red;
 	.list {
 		background-color: #fff;
 		padding:12px;
@@ -354,7 +353,7 @@ export default {
 				position: relative;
 				width: 20px;
 				margin: 0px;
-				z-index: -999;
+				opacity: 0;
 				background-color: #fff;
 				&:checked + label {
 					background: url('../../../assets/image/change-icon/multi_sel@2x.png') no-repeat;
@@ -369,20 +368,19 @@ export default {
 		}
 		.list-item {
 			display: flex;
-			/* align-content: center;
-			align-items: center; */
 			width: 100%;
 			flex-direction: column;
 			div.item {
 				display: flex;
 				width: 100%;
 				div.ui-image{
-					position: relative;
+					flex-shrink: 0;
+				    width: 90px;
+				    height: 90px;
+				    flex-basis: 90px;
 					img {
-						width: 90px;
-						height: 90px;
-						flex-shrink: 0;
-						flex-basis: 90px;
+						width: 100%;
+						height: 100%;
 						border: 1px solid #E8EAED;
 						border-radius: 3px;
 					}
@@ -415,13 +413,14 @@ export default {
 					}
 				}
 				div.list-info {
-					margin-left: 5px;
-					height: 90px;
+					margin-left: 10px;
 					width: 100%;
-					position: relative;
+					display: flex;
+				    flex-direction: column;
+				    align-content: center;
+				    justify-content: space-between;
 					h3{
 						font-size:14px;
-						font-family:'PingFangSC-Regular';
 						color:rgba(78,84,93,1);
 						padding: 0px;
 						margin: 0px;
@@ -441,16 +440,11 @@ export default {
 						width: 100%;
 						display: flex;
 						justify-content: space-between;
-						align-content: center;
-						align-items: center;
-						margin-top: 18px;
-						position: absolute;
-						bottom: 0px;
+						align-content: flex-end;
+						align-items: flex-end;
 						p {
 							font-size:17px;
-							font-family:'PingFangSC-Regular';
 							color:rgba(242,48,48,1);
-							line-height:17px;
 							padding: 0px;
 							margin: 0px;
 							display: inline-block;
@@ -504,14 +498,13 @@ export default {
 				}
 			}
 			p.list-promotion-info {
-				margin: 12px 0px 0px 0px;
+				margin-top: 12px;
 				padding: 8px 0px;
+				line-height: auto;
 				font-size:10px;
 				color: #000;
 				background: #F8F8F8;
-				flex-basis:  100%;
-				flex-shrink: 0;
-				flex-grow: 0;
+				width: 100%;
 				span {
 					border: 1px solid #FC2E39;
 					padding: 1px 4px;

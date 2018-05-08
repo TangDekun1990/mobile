@@ -17,8 +17,8 @@
 							<span v-if='detailInfo.activity'>{{detailInfo.activity.name}}</span>
 						</span>
 						<!-- {{ chooseinfo}} -->
-						<span v-if="info.length > 0 ">已选{{ info.join(',') }} &nbsp;数量：{{ numbers }}</span>
-						<span v-if="info.length <= 0 ">数量：{{ numbers }}</span>
+						<span v-if="ids.length > 0 ">已选{{ info.join(',') }} &nbsp;数量：{{ numbers }}</span>
+						<span v-if="ids.length <= 0 ">数量：{{ numbers }}</span>
 					</div>
 					<img src="../../../assets/image/change-icon/close@2x.png" class="close" v-on:click='closeCartInfo(false)'>
 				</div>
@@ -36,11 +36,11 @@
 							</div>
 						</div>
 					</div>
-					<div class="info-body">
+					<div class="info-body" id="info-body">
 						<p>数量</p>
 						<div class="ui-number">
 							<!-- <div class="reduce ui-common" v-on:click='reduceNumber()'>-</div><input type="number" min="1" class="number" value='1' v-model="numbers" v-on:keyup ='getInputNumber($event)'><div class="add ui-common" v-on:click='addNumber()'>+</div> -->
-							<img src="../../../assets/image/change-icon/b3_minus_dis@2x.png" v-if="numbers <= 1" v-on:click='reduceNumber()'><img src="../../../assets/image/change-icon/b3_minus@2x.png" v-if="numbers > 1" v-on:click='reduceNumber()'><input type="number" min="1" class="number" value='1' v-model="numbers" v-on:keyup ='getInputNumber($event)'><img src="../../../assets/image/change-icon/b3_plus@2x.png" v-on:click='addNumber()'>
+							<img src="../../../assets/image/change-icon/b3_minus_dis@2x.png" v-if="numbers <= 1" v-on:click='reduceNumber()'><img src="../../../assets/image/change-icon/b3_minus@2x.png" v-if="numbers > 1" v-on:click='reduceNumber()'><input type="number" min="1" class="number" value='1' v-model="numbers" v-on:focus='keyDown($event)'><img src="../../../assets/image/change-icon/b3_plus@2x.png" v-on:click='addNumber()'>
 						</div>
 					</div>
 				</div>
@@ -116,8 +116,21 @@
 				this.saveNumber(this.numbers);
 			}
 		},
-
 	},
+
+	mounted(){
+		// 计算内容高度
+	    this.$nextTick( () => {
+	    	this.target = document.querySelector('.goods-detail-properties');
+	    	let height = document.querySelector('.info-header').offsetHeight,
+	    		elementHeight = document.querySelector('.shopping-info').offsetHeight;
+	    	let totalHeight = 44 + height + 75;
+	    	// this.target.style.height = totalHeight / elementHeight * 100 + 'vh';
+	    	// console.log(elementHeight);
+	    	// this.utils.fillTheScreen({'target': this.target, 'totalHeight': totalHeight, 'height': elementHeight, 'baseHeight': 0.6});
+	    })
+	},
+
 	methods: {
 			...mapMutations({
 				saveCartState: 'saveCartState',
@@ -223,7 +236,13 @@
 				})
 			},
 
-			getInputNumber(e) {
+			keyDown(event) {
+			    let _this = this;
+			    setTimeout(function() {
+			    	let pannel = document.getElementById('info-body');
+			    	pannel.scrollIntoView(true);
+					pannel.scrollIntoViewIfNeeded();
+			    }, 200);
 			},
 
 			/*
@@ -426,11 +445,13 @@
 	background:rgba(0,0,0, 0.4);
 	.shopping-info {
 		background:rgba(255,255,255,1);
-		height: 60%;
+		height: 70%;
 		position: absolute;
 		width: -webkit-fill-available;
 		bottom: 0px;
 		z-index: 10;
+		width: 100%;
+		overflow: hidden;
 		.info-header {
 			padding: 15px;
 			display: flex;
@@ -495,10 +516,12 @@
 			}
 		}
 		div.goods-detail-properties {
-			position: absolute;
-		    bottom: 44px;
-		    height: inherit;
+    		width: auto;
 			overflow: auto;
+			height: auto;
+			position: absolute;
+			top: 104px;
+			bottom: 44px;
 		}
 		div.goods-properties {
 			padding: 30px 0px 0px 0px;
@@ -565,12 +588,13 @@
 					margin:  0px;
 					border:  0px;
 					outline-offset: 0px;
+					text-shadow: none;
 				}
 				.ui-common {
 					line-height: 27px;
 					width: 30px;
 					height: 28px;
-					border:  1px solid #404245;
+					border: 0.5px solid #404245;
 					cursor: pointer;
 				}
 				.reduce {
@@ -603,7 +627,7 @@
 			font-size:16px;
 			color:rgba(255,255,255,1);
 			width: 100%;
-			position: absolute;
+			position: fixed;
 			bottom: 0px;
 		}
 	}
