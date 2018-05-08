@@ -9,7 +9,7 @@
 		</div>
 		<!-- 展示促销信息 -->
 		<div class="promotions-body">
-			<div class="body-list" v-for="(item, index) in detailInfo.promos" :key="index">
+			<div class="body-list" v-for="(item, index) in detailInfo.promos" :key="index" v-if="index <= 1">
 				<span class="name">{{ item.name }}</span>
 				<span class="title">{{item.promo}}</span>
 				<div class="content">
