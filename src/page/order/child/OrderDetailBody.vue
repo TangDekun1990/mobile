@@ -142,7 +142,7 @@
       <!-- 待发货按钮 -->
       <div class="btn" v-if="orderDetail.order.status == 1 ? '':checkState"></div>
 
-      <!-- 发货中按钮 -->
+      <!-- 待收货按钮 -->
 			<div class="btn"  v-if="orderDetail.order.status == 2">
 				<button class="buttonbottom" v-on:click="confirm(orderDetail.order.id, index)">确认收货</button>
 			</div>
@@ -165,8 +165,8 @@
 
 			<!-- 配货中 -->
 			<div class="btn" v-if="orderDetail.order.status == 6" >
-				<button class="buttonbottom" v-on:click="confirm(orderDetail.order.id,index)">确认收货</button>
-			</div>
+				<button class="buttonbottom" v-on:click="confirm(orderDetail.order.id, index)">确认收货</button>
+			</div>                         
     </div>  
   </div>
 </template>
@@ -216,9 +216,7 @@ export default {
     CheckoutDesc
   },
   created() {
-    let id = this.$route.params.orderDetail
-      ? this.$route.params.orderDetail
-      : "";
+    let id = this.$route.params.orderDetail ? this.$route.params.orderDetail : null;
     this.orderInfo(id);
     this.orderReasonList();
     this.getShippingStatusGet(id);
@@ -288,6 +286,7 @@ export default {
     },
     // 确认收货
     confirm(id, index) {
+      debugger;
       MessageBox.confirm("是否确认收货？", "确认收货").then(action => {
         this.orderConfirms(id, index);
         window.location.reload();
@@ -297,6 +296,7 @@ export default {
     orderConfirms(id, index) {
       orderConfirm(id).then(res => {
         if (res) {
+          debugger;
           this.orderList[index] = res.order;
         }
       });
