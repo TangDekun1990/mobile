@@ -166,11 +166,11 @@ export default {
 		  	if (ua.match(/QQ/i) == "qq") {}
 		  	//是否在IOS浏览器打开
 		  	if (browser.versions.ios) {
-		  		browserHeight = 35;
+		  		browserHeight = 44;
 		  	}
 		  	//是否在安卓浏览器打开
 		    if(browser.versions.android){
-		    	browserHeight = 35;
+		    	browserHeight = 44;
 		    }
 		} else {
 		  //否则就是PC浏览器打开

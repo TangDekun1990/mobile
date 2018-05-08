@@ -1,5 +1,5 @@
 <template>
-	<div class="cart-list-wrapper">
+	<div class="cart-list-wrapper" v-bind:style="{'bottom': heigth + 'px'}">
 		<div class="list" v-for="(item, index) in cartList">
 			<div class="list-checkbox">
 				<input type="checkbox" class='checkbox' :id='index' v-model="item.checked" @change="changeSingleStatu(item.checked, index)" :disabled="item.product.good_stock == 0" v-if="!isCheckedAll">
@@ -59,6 +59,10 @@ export default {
 		isCheckedAll: {
 			type: Boolean,
 			default: false
+		},
+		heigth: {
+			type: Number,
+			default: 44
 		}
 	},
 
@@ -321,6 +325,8 @@ export default {
 	bottom: 44px;
 	top: 44px;
 	margin-top: 8px;
+	margin-bottom: 10px;
+	border: 1px solid red;
 	.list {
 		background-color: #fff;
 		padding:12px;
