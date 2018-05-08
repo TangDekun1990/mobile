@@ -41,6 +41,9 @@
 						<div v-for="(item, index) in promos">
 							<span class="name">{{ item.name }}</span>
 							<span class="promo">{{item.promo}}</span>
+							<div class="promos-image-list">
+								<img :src="images.photos[0].thumb" v-if="item.gift.length >= 1" v-for="(images, key) in item.gift" v-bind:key="key">
+							</div>
 						</div>
 					</div>
 				</div>
@@ -245,6 +248,14 @@
 						overflow: hidden;
 					    text-overflow: ellipsis;
 					    white-space: nowrap;
+					}
+					div.promos-image-list{
+						width: 100%;
+						overflow-x: auto;
+						img {
+							height: 80px;
+							width: 80px;
+						}
 					}
 				}
 			}
