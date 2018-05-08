@@ -149,7 +149,7 @@
 			<!-- 待发货按钮 -->
 			<div class="btn" v-if="orderDetail.order.status == 1 ? '':checkState"></div>
 
-			<!-- 发货中按钮 -->
+      <!-- 待收货按钮 -->
 			<div class="btn"  v-if="orderDetail.order.status == 2">
 				<button class="buttonbottom" v-on:click="confirm(orderDetail.order.id, index)">确认收货</button>
 			</div>
@@ -189,42 +189,41 @@ import { shippingStatusGet } from "../../../api/network/shipping"; //订单跟�
 import { Toast } from "mint-ui";
 import Clipboard from "clipboard";
 export default {
-	mixins: [Promos],
-	data() {
-		return {
-			orderDetail: {},
-			popupVisible: false,
-			reasonList: [],
-			orderCancel: [],
-			checkState: "",
-			ORDERSTATUS: ORDERSTATUS,
-			currentNAVId: "",
-			orderListParams: { page: 0, per_page: 10, status: "" },
-			index: "",
-			order: {},
-			total_price: [],
-			orderIndex: 2,
-			isShow: false,
-			trackList: []
-		};
-	},
-	props: {
-		item: {
-			type: Object
-		}
-	},
-	components: {
-		OrderPrice,
-		CheckoutDesc
-	},
-	created() {
-		let id = this.$route.params.orderDetail ? this.$route.params.orderDetail : "";
-		this.orderInfo(id);
-		this.orderReasonList();
-		this.getShippingStatusGet(id);
-	},
-	methods: {
-
+  mixins: [Promos],
+  data() {
+    return {
+      orderDetail: {},
+      popupVisible: false,
+      reasonList: [],
+      orderCancel: [],
+      checkState: "",
+      ORDERSTATUS: ORDERSTATUS,
+      currentNAVId: "",
+      orderListParams: { page: 0, per_page: 10, status: "" },
+      index: "",
+      order: {},
+      total_price: [],
+      orderIndex: 2,
+      isShow: false,
+      trackList: []
+    };
+  },
+  props: {
+    item: {
+      type: Object
+    }
+  },
+  components: {
+    OrderPrice,
+    CheckoutDesc
+  },
+  created() {
+    let id = this.$route.params.orderDetail ? this.$route.params.orderDetail : null;
+    this.orderInfo(id);
+    this.orderReasonList();
+    this.getShippingStatusGet(id);
+  },
+  methods: {
     // 获取订单详情数据
     orderInfo(id) {
     	orderGet(id).then(res => {
@@ -305,7 +304,6 @@ export default {
 
     // 获取确认收货数据
     orderConfirms(id, index) {
-    	// debugger;
     	orderConfirm(id).then(res => {
     		if (res) {
     			// this.orderDetail = Object.assign({}, res);
