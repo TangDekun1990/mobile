@@ -2,7 +2,7 @@
 <template>
 	<div class="recommend-wrapper">
 		<div class="ui-commmon-header">
-			<img src="../../assets/image/change-icon/back@2x.png" v-on:click='goBack()'>
+			<img src="../../assets/image/change-icon/back@2x.png" v-on:click='goBack()' class="ui-go-back">
 			<h3>相关商品</h3>
 			<img src="../../assets/image/change-icon/b2_cart@2x.png" class="ui-cart" v-on:click='goCart()'>
 			<span class="cart-number" v-if="quantity <= 100">{{ quantity }}</span>
@@ -130,12 +130,6 @@
 		top: 0px;
 		width: 100%;
 		padding: 0px;
-		img:first-child{
-			padding-left: 15px;
-		}
-		img.ui-cart {
-			/* padding-right: 15px; */
-		}
 		span.cart-number {
 			right: 15px;
 		}

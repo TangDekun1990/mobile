@@ -1,6 +1,6 @@
 <template>
 	<div class="cart-header-wrapper ui-commmon-header">
-		<img src="../../../assets/image/change-icon/back@2x.png" v-if="!issShowTabbar" @click="goBack()">
+		<img src="../../../assets/image/change-icon/back@2x.png" v-if="!issShowTabbar" @click="goBack()" class="ui-go-back">
 		<h3>购物车</h3>
 		<span @click="changeFinishStatus()" v-if="!isFinish && !isEmpty">编辑</span>
 		<span @click="changeFinishStatus()" v-if="isFinish">完成</span>

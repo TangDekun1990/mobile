@@ -279,7 +279,7 @@ span.cart-number {
 		height: 44px;
 		text-align: center;
 	}
-	img {
+	img.ui-go-back{
 		position: absolute;
 		width: 24px;
 		height: 24px;
@@ -287,9 +287,11 @@ span.cart-number {
 		top: 10px;
 	}
 	img.ui-cart {
+		position: absolute;
 		right: 15px;
-		width: 22px;
-		height: 20px;
+		width: 30px;
+		height: 30px;
+		top: 7px;
 	}
 }
 
