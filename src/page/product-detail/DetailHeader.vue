@@ -85,6 +85,7 @@ export default {
 			cursor: pointer;
 			position: absolute;
 			left: 9px;
+			top: 10px;
 		}
 		div.navbar-wrapper {
 			div {
