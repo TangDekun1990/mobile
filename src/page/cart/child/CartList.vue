@@ -21,7 +21,7 @@
 						<div class="info-price">
 							<p v-bind:class="{'disabled-list': item.product.good_stock == 0}">AED {{ item.product.current_price }}</p>
 							<div class="ui-number">
-								<div class="reduce ui-common" @click.stop="reduceNumber(item.id, item.amount, index)">-</div><input type="number" min="1" class="number" value="1" v-model="item.amount" readonly="true"><div class="add ui-common" @click.stop="addNumber(item.id, item.amount, item.product.good_stock, index)">+</div>
+								<div class="reduce ui-common" @click.stop="reduceNumber(item.id, item.amount, index)" v-bind:class="{'reduce-opacity':  item.amount <= 1}">-</div><input type="number" min="1" class="number" value="1" v-model="item.amount" readonly="true"><div class="add ui-common" @click.stop="addNumber(item.id, item.amount, item.product.good_stock, index)">+</div>
 							</div>
 						</div>
 					</div>
@@ -315,12 +315,12 @@ export default {
 
 <style lang='scss' scoped>
 .cart-list-wrapper {
-	overflow: auto;
-	position: absolute;
+	overflow-y: auto;
+	position: fixed;
 	width: 100%;
 	bottom: 44px;
 	top: 44px;
-	padding-top: 8px;
+	margin-top: 8px;
 	.list {
 		background-color: #fff;
 		padding:12px;
@@ -456,6 +456,7 @@ export default {
 					div.ui-number{
 						height: 24px;
 						display: flex;
+						border-radius: 3px 0px 0px 3px;
 						input, div {
 							height: 24px;
 							text-align: center;
@@ -470,19 +471,21 @@ export default {
 							line-height: 24px;
 							width: 26px;
 							height: 24px;
-							border:  1px solid #404245;
+							border: 1px solid #C7C7CD;
 							cursor: pointer;
 						}
 						.reduce {
-							opacity:0.4;
 							border-right: 0px;
+						}
+						.reduce-opacity {
+							opacity:0.4;
 						}
 						.add {
 							border-left: 0px;
 						}
 						input[type='number'] {
 							width: 26px;
-							border: 1px solid #404245;
+							border: 1px solid #C7C7CD;
 							border-radius: 0px;
 							border-image-width: 0px;
 							box-shadow: 0px;

@@ -41,12 +41,14 @@
 			...mapMutations({
 				saveCartState: 'saveCartState',
 				setIsHideCommodity: 'setIsHideCommodity',
-				saveChooseInfo: 'saveChooseInfo'
+				saveChooseInfo: 'saveChooseInfo',
+				changeType: 'changeType'
 			}),
 
 			changeCartState() {
 				this.saveCartState(true);
 				this.setIsHideCommodity(true);
+				this.changeType(true);
 			},
 
 			setSpecification() {

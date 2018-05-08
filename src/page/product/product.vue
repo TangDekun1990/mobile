@@ -97,7 +97,7 @@
 			// 计算内容高度
 		    this.$nextTick( () => {
 		    	this.target = document.querySelector('.product-body');
-		    	let totalHeight = 98;
+		    	let totalHeight = 89;
 				const target = this.target;
 		    	this.utils.fillTheScreen({target, totalHeight});
 		    });
@@ -218,8 +218,9 @@
 			width: 100%;
 		}
 		div.product-body{
+			font-family: 'PingFangSC-Regular';
 			position: absolute;
-			top: 98px;
+			top: 89px;
 			background-color: #ffffff;
 			width: 100%;
 			height: auto;

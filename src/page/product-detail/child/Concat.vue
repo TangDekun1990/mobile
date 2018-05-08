@@ -1,13 +1,12 @@
 <!-- Concat.vue -->
 <template>
 	<div class="ui-concat-wrapper ui-detail-common">
-		<div class="header zhiCustomBtns" @click="openZhiManager()">
-						<!-- <a href="https://www.sobot.com/chat/h5/index.html?sysNum=5b696ae2d5394f06b558e64ebbaf3be7&back=1&titleFlag=2&customTtile='智齿客服'&title_info='智齿_商品详情页_小智智能'&url_info='http://www.sobot.com/images/logo.png'&abstract_info='更精确的理解，更精确地回答，在闲聊寒暄中，拉近与客户的距离，导入知识库，意想不到的方便快捷，最简单的知识添加，事半功倍'&label_info=200&thumbnail_info='http://www.sobot.com/images/logo.png'">rrrr</a>
- -->
-
-			<p>点击联系客服</p>
-			<img src="../../../assets/image/change-icon/e5_service@2x.png">
-		</div>
+		<a href="https://www.sobot.com/chat/h5/index.html?sysNum=5b696ae2d5394f06b558e64ebbaf3be7&back=1&titleFlag=2&customTtile='智齿客服' ">
+			<div class="header zhiCustomBtns" @click="openZhiManager()">
+				<p>点击联系客服</p>
+				<img src="../../../assets/image/change-icon/e5_service@2x.png">
+			</div>
+		</a>
 	</div>
 </template>
 
@@ -33,16 +32,13 @@
 			}
 		},
 
-		mounted() {
-			// location.reload(true);
-		},
+		mounted() {},
 
 		created(){
 			// let zhiManager = (getzhiSDKInstance());
 			// console.log(zhiManager);
 			// //再调用load方法
 			// zhiManager.on("load", function() {
-			// 	console.log('yefgeygey');
 			// 	zhiManager.initBtnDOM();
 			// 	zhiManager.set('customBtn', 'true');
 			// 	zhiManager.set('lazyFlag', true);
@@ -55,26 +51,24 @@
 			/*
 			 * initzhichi: 初始化智齿
 			 */
-			initzhichi() {
-				var data = this.detailInfo;
-		        zhiManager.set('thumbnail_info', data.photos[0].thumb);
-		        zhiManager.set('label_info', data.current_price);
-		        zhiManager.set('abstract_info', data.desc);
-		        zhiManager.set('url_info', 'http://192.168.10.18:8080/#/detial/'+data.id+'');
-		        zhiManager.set('title_info', data.name);
-			},
+			// initzhichi() {
+			// 	var data = this.detailInfo;
+			// 	let zhiManager = this.zhiManager;
+		 //        zhiManager.set('thumbnail_info', data.photos[0].thumb);
+		 //        zhiManager.set('label_info', data.current_price);
+		 //        zhiManager.set('abstract_info', data.desc);
+		 //        zhiManager.set('url_info', 'http://192.168.10.18:8080/#/detial/'+data.id+'');
+		 //        zhiManager.set('title_info', data.name);
+			// },
 
-			openZhiManager() {
-				// zhiManager.on("load", function() {
-				// 	// zhiManager.initBtnDOM();
-				// 	zhiManager.expand();
-				// });
-			}
-		},
-
-		destroyed(){
-			this.zhiManager = null;
+			// openZhiManager() {
+			// 	this.zhiManager.expand();
+			// }
 		}
+
+		// destroyed(){
+		// 	this.zhiManager = null;
+		// }
 	}
 </script>
 

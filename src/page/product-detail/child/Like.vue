@@ -9,9 +9,9 @@
 		</div>
 
 		<div class="like-body">
-			<div v-for="(item, index) in detailInfo.collector">
-				<img :src="item.thumb" v-if="item.thumb" v-bind:key="index">
-				<img src="../../../assets/image/change-icon/img_avatar@2x.png" v-if="!item.thumb"  v-bind:style="{left: -(index * 15) +'px', zIndex: detailInfo.collector.length - index}">
+			<div v-for="(item, index) in detailInfo.collector" v-if="index < 10" v-bind:key="index">
+				<img :src="item.thumb" v-if="item.thumb">
+				<img src="../../../assets/image/change-icon/img_avatar@2x.png" v-if="!item.thumb" v-bind:style="{left: -(index * 10) +'px', zIndex: detailInfo.collector.length - index}">
 			</div>
 		</div>
 	</div>
@@ -47,13 +47,11 @@
 			border-bottom: 1px solid #e8eaed;
 			span:first-child{
 				font-size:16px;
-				font-family:'PingFangSC-Regular';
 				color:rgba(78,84,93,1);
 				line-height:20px;
 			}
 			span:last-child {
 				font-size:13px;
-				font-family:'PingFangSC-Regular';
 				color:rgba(124,127,136,1);
 				line-height:18px;
 			}
@@ -75,7 +73,9 @@
 					width:40px;
 					height:40px;
 					position: relative;
-					/*position: absolute;*/
+					border: 2px solid #fff;
+    				border-radius: 50%;
+					box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.1)
 				}
 			}
 		}

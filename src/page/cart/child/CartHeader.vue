@@ -52,6 +52,8 @@
 
 <style lang='scss' scoped>
 	.cart-header-wrapper {
+		position: fixed;
+		width: -webkit-fill-available;
 		span {
 			position: absolute;
 			font-size:15px;

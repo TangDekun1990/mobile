@@ -113,7 +113,7 @@ export default {
 					cursor: pointer;
 					border-bottom: 1px solid rgb(232,234,237);
 					a {
-						color: #7C7F88;
+						color: #4E545D;
 					}
 				}
 			}

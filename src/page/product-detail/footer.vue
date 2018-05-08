@@ -1,6 +1,6 @@
 <!-- footer.vue -->
 <template>
-	<div class="ui-detail-footer" v-if="detailInfo">
+	<div class="ui-detail-footer" v-if="detailInfo" v-bind:class="{'hidden-cart-footer': ispromotion, 'show-cart-footer': !ispromotion}">
 
 		<div class="footer-flex">
 			<div class="left">
@@ -43,11 +43,19 @@
 			shopping
 		},
 
+		props: {
+			ishidefooter: {
+				type: Boolean,
+				default: false
+			}
+		},
+
 		computed: mapState({
 			//是否显示购物车浮层
 			isShowcartInfo: state => state.detail.isShowcartInfo,
 			detailInfo: state => state.detail.detailInfo,
-			isOnline: state => state.auth.isOnline
+			isOnline: state => state.auth.isOnline,
+			ispromotion: state => state.detail.ispromotion
 		}),
 
 		created(){
@@ -66,12 +74,14 @@
 		methods: {
 			...mapMutations({
 				saveCartState: 'saveCartState',
-				hideCommodity: 'setIsHideCommodity'
+				hideCommodity: 'setIsHideCommodity',
+				changeType: 'changeType'
 			}),
 
 			// 加入购物车
 			addShopping(value) {
 				this.saveCartState(value);
+				this.changeType(false);
 			},
 
 			// 获取购物车总数
@@ -98,7 +108,7 @@
 <style lang='scss' scoped>
 	.ui-detail-footer {
 		background:rgba(255,255,255,1);
-		box-shadow: 0px 0.5px 0px 0px rgba(232,234,237,1);
+		border-top: 1px solid #e8eaed;
 		width: auto;
 
 		position: absolute;
@@ -106,6 +116,14 @@
 		left: 0px;
 		right: 0px;
 		z-index: 1;
+
+		&.hidden-cart-footer {
+			display: none;
+		}
+
+		&.show-cart-footer {
+			display: block;
+		}
 
 		.footer-flex {
 			display: flex;
@@ -137,8 +155,8 @@
 			img {
 				width: 30px;
 				height: 30px;
-				/*padding: 0px 10px;*/
 				flex-shrink: 0;
+				margin: 10px;
 			}
 			span.icon {
 				position: absolute;
@@ -157,18 +175,21 @@
 			div.price {
 				padding-left: 15px;
 				border-left: 1px solid #E8EAED;
+				height: 50px;
+			    line-height: 50px;
+			    display: flex;
+			    flex-direction: column;
+			    justify-content: center;
 				span {
 					display: block;
 					font-weight: normal;
 					&:first-child {
 						font-size:16px;
-						font-family:'HelveticaNeue';
 						color:rgba(239,51,56,1);
 						line-height:20px;
 					}
 					&:last-child {
 						font-size:12px;
-						font-family:'HelveticaNeue';
 						color:rgba(164,170,179,1);
 						line-height:20px;
 						text-decoration: line-through;
@@ -180,7 +201,6 @@
 			width:120px;
 			height:50px;
 			font-size:16px;
-			font-family:'PingFangSC-Regular';
 			color:rgba(255,255,255,1);
 			text-align: center;
 			line-height: 50px;

@@ -56,7 +56,7 @@
 
 		methods: {
 			...mapMutations({
-				setIsHasBottom: 'setIsHasBottom'
+				changePromotion: 'changePromotion'
 			}),
 
 			/*
@@ -64,10 +64,12 @@
 			*/
 			openPopup(){
 				this.popupvisible = !this.popupvisible;
+				this.changePromotion(this.popupvisible);
 			},
 
 			close() {
 				this.popupvisible = false;
+				this.changePromotion(this.popupvisible);
 			}
 		}
 	}
@@ -118,13 +120,13 @@
 					padding:0px;
 					margin:0px;
 					font-size:11px;
-					font-family:PingFangSC-Light;
 					color:rgba(243,68,68,1);
 					line-height:16px;
 					display: -webkit-box;
 				    -webkit-box-orient: vertical;
 				    -webkit-line-clamp: 2;
 				    overflow: hidden;
+				    padding: 12px 12px 10px 12px;
 				}
 			}
 		}
@@ -137,13 +139,13 @@
 			h3{
 	    		font-size:15px;
 				color:rgba(78,84,93,1);
-				line-height:20px;
 				padding: 0px;
 				margin: 0px;
 				height: 44px;
 				line-height: 44px;
 				text-align: center;
-				border-bottom: 1px solid rgba(232,234,237,1);
+				border-bottom: 0.5px solid rgba(232,234,237,1);
+				width: 100%;
 	    	}
 	    	img {
 				position: absolute;
@@ -151,6 +153,7 @@
 			    right: 10px;
 			    width: 16px;
 			    height: 16px;
+			    opacity: 1;
 	    	}
 		}
 	}
