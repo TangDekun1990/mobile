@@ -1,5 +1,5 @@
 <template>
-	<div class="cart-list-wrapper">
+	<div class="cart-list-wrapper" v-bind:style="{'bottom': heigth + 'px'}">
 		<div class="list" v-for="(item, index) in cartList">
 			<div class="list-checkbox">
 				<input type="checkbox" class='checkbox' :id='index' v-model="item.checked" @change="changeSingleStatu(item.checked, index)" :disabled="item.product.good_stock == 0" v-if="!isCheckedAll">
@@ -21,7 +21,7 @@
 						<div class="info-price">
 							<p v-bind:class="{'disabled-list': item.product.good_stock == 0}">AED {{ item.product.current_price }}</p>
 							<div class="ui-number">
-								<div class="reduce ui-common" @click.stop="reduceNumber(item.id, item.amount, index)">-</div><input type="number" min="1" class="number" value="1" v-model="item.amount" readonly="true"><div class="add ui-common" @click.stop="addNumber(item.id, item.amount, item.product.good_stock, index)">+</div>
+								<div class="reduce ui-common" @click.stop="reduceNumber(item.id, item.amount, index)" v-bind:class="{'reduce-opacity':  item.amount <= 1}">-</div><input type="number" min="1" class="number" value="1" v-model="item.amount" readonly="true"><div class="add ui-common" @click.stop="addNumber(item.id, item.amount, item.product.good_stock, index)">+</div>
 							</div>
 						</div>
 					</div>
@@ -59,6 +59,10 @@ export default {
 		isCheckedAll: {
 			type: Boolean,
 			default: false
+		},
+		heigth: {
+			type: Number,
+			default: 44
 		}
 	},
 
@@ -315,12 +319,13 @@ export default {
 
 <style lang='scss' scoped>
 .cart-list-wrapper {
-	overflow: auto;
-	position: absolute;
+	overflow-y: auto;
+	position: fixed;
 	width: 100%;
 	bottom: 44px;
 	top: 44px;
-	padding-top: 8px;
+	margin-top: 8px;
+	margin-bottom: 10px;
 	.list {
 		background-color: #fff;
 		padding:12px;
@@ -348,7 +353,7 @@ export default {
 				position: relative;
 				width: 20px;
 				margin: 0px;
-				z-index: -999;
+				opacity: 0;
 				background-color: #fff;
 				&:checked + label {
 					background: url('../../../assets/image/change-icon/multi_sel@2x.png') no-repeat;
@@ -363,20 +368,19 @@ export default {
 		}
 		.list-item {
 			display: flex;
-			/* align-content: center;
-			align-items: center; */
 			width: 100%;
 			flex-direction: column;
 			div.item {
 				display: flex;
 				width: 100%;
 				div.ui-image{
-					position: relative;
+					flex-shrink: 0;
+				    width: 90px;
+				    height: 90px;
+				    flex-basis: 90px;
 					img {
-						width: 90px;
-						height: 90px;
-						flex-shrink: 0;
-						flex-basis: 90px;
+						width: 100%;
+						height: 100%;
 						border: 1px solid #E8EAED;
 						border-radius: 3px;
 					}
@@ -409,13 +413,14 @@ export default {
 					}
 				}
 				div.list-info {
-					margin-left: 5px;
-					height: 90px;
+					margin-left: 10px;
 					width: 100%;
-					position: relative;
+					display: flex;
+				    flex-direction: column;
+				    align-content: center;
+				    justify-content: space-between;
 					h3{
 						font-size:14px;
-						font-family:'PingFangSC-Regular';
 						color:rgba(78,84,93,1);
 						padding: 0px;
 						margin: 0px;
@@ -435,16 +440,11 @@ export default {
 						width: 100%;
 						display: flex;
 						justify-content: space-between;
-						align-content: center;
-						align-items: center;
-						margin-top: 18px;
-						position: absolute;
-						bottom: 0px;
+						align-content: flex-end;
+						align-items: flex-end;
 						p {
 							font-size:17px;
-							font-family:'PingFangSC-Regular';
 							color:rgba(242,48,48,1);
-							line-height:17px;
 							padding: 0px;
 							margin: 0px;
 							display: inline-block;
@@ -456,6 +456,7 @@ export default {
 					div.ui-number{
 						height: 24px;
 						display: flex;
+						border-radius: 3px 0px 0px 3px;
 						input, div {
 							height: 24px;
 							text-align: center;
@@ -470,19 +471,21 @@ export default {
 							line-height: 24px;
 							width: 26px;
 							height: 24px;
-							border:  1px solid #404245;
+							border: 1px solid #C7C7CD;
 							cursor: pointer;
 						}
 						.reduce {
-							opacity:0.4;
 							border-right: 0px;
+						}
+						.reduce-opacity {
+							opacity:0.4;
 						}
 						.add {
 							border-left: 0px;
 						}
 						input[type='number'] {
 							width: 26px;
-							border: 1px solid #404245;
+							border: 1px solid #C7C7CD;
 							border-radius: 0px;
 							border-image-width: 0px;
 							box-shadow: 0px;
@@ -495,14 +498,13 @@ export default {
 				}
 			}
 			p.list-promotion-info {
-				margin: 12px 0px 0px 0px;
+				margin-top: 12px;
 				padding: 8px 0px;
+				line-height: auto;
 				font-size:10px;
 				color: #000;
 				background: #F8F8F8;
-				flex-basis:  100%;
-				flex-shrink: 0;
-				flex-grow: 0;
+				width: 100%;
 				span {
 					border: 1px solid #FC2E39;
 					padding: 1px 4px;

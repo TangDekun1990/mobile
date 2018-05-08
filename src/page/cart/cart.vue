@@ -4,7 +4,7 @@
 		<v-cart-header ref="header" :issShowTabbar="type" :isEmpty="isEmpty"></v-cart-header>
 		<div v-if='!isEmpty'>
 			<!-- list -->
-			<v-cart-list ref='list' :issShowTabbar="type" :isCheckedAll="isFinish"></v-cart-list>
+			<v-cart-list ref='list' :issShowTabbar="type" :isCheckedAll="isFinish" :heigth="heigth"></v-cart-list>
 			<!-- 促销 -->
 			<v-cart-promos ref='promos' :issShowTabbar="type" :isCheckedAll="isFinish" :isshowpromos="isshowpromos"></v-cart-promos>
 			<!-- footer -->
@@ -42,7 +42,8 @@
 				isStatus: true,  //是否默认选中底部的全选按钮
 				isshowpromos: true,  //是否显示促销信息
 				target: '',  //设置高度的element元素
-				isEmpty: false
+				isEmpty: false,
+				heigth: 0
 			}
 		},
 
@@ -53,12 +54,11 @@
 
 		watch: {
 			height: function (value) {
-				let totalHeight = (44 * 2) + value + 20;
+				let totalHeight = 44 + value;
 				if (this.type) {
 					totalHeight = totalHeight + 50;
 				}
-				const target = this.target;
-		    	this.utils.fillTheScreen({target, totalHeight})
+				this.heigth = totalHeight;
 			}
 		},
 
@@ -131,12 +131,6 @@
 			// 计算内容高度
 		    this.$nextTick( () => {
 		    	this.target = document.querySelector('.cart-list-wrapper');
-		    	let totalHeight = (44 * 2) + this.height + 20;
-				if (this.type) {
-					totalHeight = totalHeight + 50;
-				}
-				const target = this.target;
-		    	this.utils.fillTheScreen({target, totalHeight});
 		    })
 		},
 
@@ -151,12 +145,11 @@
 		methods: {
 			// TODO
 			setHeight(height) {
-				let totalHeight = (44 * 2) + height + 20;
+				let totalHeight = 44 + height;
 				if (this.type) {
 					totalHeight = totalHeight + 50;
 				}
-				const target = this.target;
-		    	this.utils.fillTheScreen({target, totalHeight})
+				this.heigth = totalHeight;
 			},
 
 			/*

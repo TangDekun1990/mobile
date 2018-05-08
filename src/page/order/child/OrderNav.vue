@@ -131,7 +131,7 @@ import OrderNav from './OrderNav';
 		},
 		// 去订单详情
 		goOrderDetail(id){
-			this.$router.push({name: 'orderDetail',params: {orderDetail: id}})
+			this.$router.push({name: 'orderDetail', params: {orderDetail: id}})
 		},
 
 		setOrderNavActive(item) {

@@ -40,23 +40,12 @@
 			this.saveCartState(false);
 		},
 
-		watch: {
-		    // '$route': function (route) {
-		    //    this.productId = route.params.id;
-		    //    this.getDetail();
-		    // }
-		},
-
 		computed: mapState({
 			isHideCart: state => state.detail.isHideCart,
 			isHideHeader: state => state.detail.isHideHeader
 		}),
 
 		mounted() {
-		    // 计算内容高度
-		    // const target = document.querySelector('.ui-detail-swiper')
-		    // const totalHeight = 50 + 44;
-		    // this.fillTheScreen({target, totalHeight})
 		},
 
 		methods: {

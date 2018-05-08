@@ -17,6 +17,8 @@ const state = {
 
 	isShowDetail: false,
 
+	ispromotion: false,
+	type: false,
 	chooseinfo: {
 		specification:[],
 		ids: []
@@ -61,6 +63,14 @@ const mutations = {
 
 	saveChooseInfo(state, info) {
 		state.chooseinfo = info;
+	},
+
+	changePromotion(state, data) {
+		state.ispromotion = data;
+	},
+
+	changeType(state, value) {
+		state.type = value;
 	}
 }
 

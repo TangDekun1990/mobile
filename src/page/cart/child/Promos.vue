@@ -41,6 +41,9 @@
 						<div v-for="(item, index) in promos">
 							<span class="name">{{ item.name }}</span>
 							<span class="promo">{{item.promo}}</span>
+							<div class="promos-image-list">
+								<img :src="images.photos[0].thumb" v-if="item.gift.length >= 1" v-for="(images, key) in item.gift" v-bind:key="key">
+							</div>
 						</div>
 					</div>
 				</div>
@@ -147,17 +150,17 @@
 					height = 0;
 				if (this.promos) {
 					if (this.promos.length > 2) {
-						height += 2 * 39;
+						height += 2 * 33;
 					} else {
-						height += this.promos.length * 39;
+						height += this.promos.length * 33;
 					}
 				}
 
 				if (this.un_promos) {
 					if (this.un_promos.length > 2) {
-						height += 2 * 39;
+						height += 2 * 33;
 					} else {
-						height += this.un_promos.length * 39;
+						height += this.un_promos.length * 33;
 					}
 				}
 				return height;
@@ -169,7 +172,7 @@
 <style lang='scss' scoped>
 	.ui-cart-promos {
 		background: rgba(255,255,255,1);
-	    position: absolute;
+	    position: fixed;
 	    width: 100%;
 	    border-bottom: 1px solid #e8eaed;
 	    bottom: 44px;
@@ -245,6 +248,14 @@
 						overflow: hidden;
 					    text-overflow: ellipsis;
 					    white-space: nowrap;
+					}
+					div.promos-image-list{
+						width: 100%;
+						overflow-x: auto;
+						img {
+							height: 80px;
+							width: 80px;
+						}
 					}
 				}
 			}

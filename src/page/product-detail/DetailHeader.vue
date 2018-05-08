@@ -2,7 +2,9 @@
 <template>
 	<div class="ui-detail-header">
 		<img src="../../assets/image/change-icon/back@2x.png" v-on:click='goBack()'>
-		<div v-for="(item, index) in data" v-bind:class="{'active': index == currentIndex}" v-on:click='changeEvent(index)'>{{ item.name}}</div>
+		<div class="navbar-wrapper">
+			<div v-for="(item, index) in data" v-bind:class="{'active': index == currentIndex}" v-on:click='changeEvent(index)'>{{ item.name}}</div>
+		</div>
 		<!-- <img src="../../assets/image/change-icon/b0_share@2x.png"> -->
 	</div>
 </template>
@@ -58,7 +60,7 @@ export default {
 
 <style lang='scss'>
 	.ui-detail-header {
-		padding: 0px 20px;
+		padding: 0px 9px;
 		height:44px;
 		background:rgba(255,255,255,1);
 		box-shadow: 0px -0.5px 0px 0px rgba(232,234,237,1);
@@ -67,7 +69,7 @@ export default {
 		width: auto;
 
 		display: flex;
-		justify-content: space-between;
+		justify-content: center;
 		align-content: center;
 		align-items: center;
 	    flex-basis: auto;
@@ -81,20 +83,24 @@ export default {
 			width: 24px;
 			height: 24px;
 			cursor: pointer;
-			/*&:first-child {
-				padding-left: 10px;
-			}*/
-			/*&:last-child {
-				padding-right: 10px;
-			}*/
+			position: absolute;
+			left: 9px;
+			top: 10px;
 		}
-		div {
-    		line-height: 42px;
-    		border-bottom: 2px solid transparent;
-    		cursor: pointer;
-			&.active {
-				color: #FC2E39;
-				border-bottom: 2px solid #FC2E39;
+		div.navbar-wrapper {
+			div {
+	    		line-height: 42px;
+	    		border-bottom: 2px solid transparent;
+	    		display: inline-block;
+	    		cursor: pointer;
+	    		margin-right: 48px;
+				&.active {
+					color: #FC2E39;
+					border-bottom: 2px solid #FC2E39;
+				}
+				&:last-child {
+					margin-right: 0px;
+				}
 			}
 		}
 	}

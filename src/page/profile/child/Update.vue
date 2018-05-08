@@ -171,7 +171,7 @@ export default {
 
 <style lang='scss' scoped>
 .header {
-	border-bottom: 1px solid #E8EAED;
+	border-bottom: 0.5px solid #E8EAED;
 	@include header;
 }
 .ui-popup-right {
@@ -192,6 +192,9 @@ export default {
 		height: 16px;
 		cursor: pointer;
 	}
+}
+.ui-common-update input {
+	border: 0px;
 }
 .ui-save-btn {
 	padding: 36px 38px;

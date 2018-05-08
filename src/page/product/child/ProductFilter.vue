@@ -144,23 +144,20 @@ export default {
 			justify-content: space-around;
 			align-content: center;
     		align-items: center;
-    		border: 1px solid #E8EAED;
-    		border-left: 0px;
-    		border-right: 0px;
+    		border: 0px;
+    		border-bottom: 1px solid #E8EAED;
     		li{
-    			/* padding: 15px 0px; */
     			font-size: 14px;
     			color: #4E545D;
-    			font-family: 'PingFangSC';
     			border-bottom: 2px solid transparent;
     			position: relative;
     			flex-basis: 100px;
 				text-align: center;
-				height: 50px;
+				height: 42px;
 			    padding: 0px;
-			    line-height: 50px;
+			    line-height: 42px;
 			    a {
-			    	height: 50px;
+			    	height: 42px;
 			    	display: inline-block;
 			    }
 				img {

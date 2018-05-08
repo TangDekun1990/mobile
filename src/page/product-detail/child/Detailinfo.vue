@@ -256,7 +256,8 @@
 			    }
 			}
 			img {
-				width: 20px;
+				width: 8px;
+				height: 4px;
 				margin-left: 11px;
 			}
 		}

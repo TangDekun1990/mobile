@@ -89,7 +89,7 @@
 		border-bottom: 1px solid #E8EAED;
 		padding-left: 12px;
 		bottom: 0px;
-    	position: absolute;
+    	position: fixed;
     	width: -webkit-fill-available;
 		.list-checkbox {
 			flex-shrink: 0;
@@ -109,10 +109,10 @@
 			}
 			input {
 				position: relative;
-				// width: 20px;
 				margin: 0px;
 				z-index: -999;
 				background-color: #fff;
+				opacity: 0;
 				&:checked + label {
 					background: url('../../../assets/image/change-icon/multi_sel@2x.png') no-repeat;
 					background-size: cover;
@@ -127,7 +127,6 @@
 			    padding-left: 12px;
 			    font-style: normal;
 			    font-size:14px;
-				font-family:'PingFangSC-Regular';
 				color:rgba(41,43,45,1);
 				&.total-price span {
 					color:rgba(231,1,14,1);
@@ -136,13 +135,12 @@
 		}
 		span.cart-footer-btn {
 			width:150px;
-			height:44px;
+			height:45px;
 			background:rgba(242,48,48,1);
 			display: inline-block;
 			font-size:16px;
-			font-family:'PingFangSC-Regular';
 			color:rgba(255,255,255,1);
-			line-height: 44px;
+			line-height: 45px;
 			text-align: center;
 			cursor: pointer;
 			font-weight: normal;
