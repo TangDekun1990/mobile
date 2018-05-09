@@ -237,12 +237,12 @@
 			},
 
 			keyDown(event) {
-			    let _this = this;
-			    setTimeout(function() {
-			    	let pannel = document.getElementById('info-body');
-			    	pannel.scrollIntoView(true);
-					pannel.scrollIntoViewIfNeeded();
-			    }, 200);
+			    // let _this = this;
+			  //   setTimeout(function() {
+			  //   	let pannel = document.getElementById('info-body');
+			  //   	pannel.scrollIntoView(true);
+					// pannel.scrollIntoViewIfNeeded();
+			  //   }, 200);
 			},
 
 			/*
@@ -451,7 +451,7 @@
 		bottom: 0px;
 		z-index: 10;
 		width: 100%;
-		overflow: hidden;
+		/* overflow: hidden; */
 		.info-header {
 			padding: 15px;
 			display: flex;
@@ -516,7 +516,7 @@
 			}
 		}
 		div.goods-detail-properties {
-    		width: auto;
+    		width: 100%;
 			overflow: auto;
 			height: auto;
 			position: absolute;
