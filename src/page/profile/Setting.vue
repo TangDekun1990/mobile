@@ -10,7 +10,7 @@
       <ul>
         <li>
           <span>展示高清图片</span>
-          <mt-switch v-model="value"></mt-switch>
+          <mt-switch v-model ="value" v-if="changeOpen" v-on:click="setSwitch()"></mt-switch>
         </li>
         <!-- <li>
           <span>接收消息通知</span>
@@ -33,17 +33,20 @@ import { Header, MessageBox, Switch } from 'mint-ui'
 export default {
   data() {
     return {
-      value:true, 
+      value: true,
+      changeOpen: true
     }
   },
   computed: {
     ...mapState({
       isOnline: state => state.auth.isOnline,
+      switch: state => state.profile.switch,
     }),
   },
   methods: {  
     ...mapMutations({
       clearToken: 'signout',
+      isOpen: 'isOpen'
     }),  
     goBack() {
       this.$router.go(-1) 
@@ -57,6 +60,11 @@ export default {
     about() {
       this.$router.push('/SettingAbout');
     },
+    setSwitch() {
+      if(value == true){
+        this.changeOpen = false
+      }
+    }
   }
 }
 </script>

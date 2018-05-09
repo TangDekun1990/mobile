@@ -6,7 +6,7 @@
       </header-item>
     </mt-header>
     <!-- body -->
-    <mt-cell-swipe v-for="(item, index) in collectionList" v-bind:key="item.id" :right="rightbottom(item.id)" >
+    <mt-cell-swipe v-for="(item, index) in collectionList" v-bind:key="item.id" :right="rightBottom(item.id)">
       <div class="collection-body" v-on:click="goOrderDetail(item.id, item.shop)" v-if="collectionList.length > 0">
         <div class="image">
           <img src="../../assets/image/change-icon/default_image_02@2x.png" v-if='item.photos <= 0'>
@@ -54,7 +54,7 @@ import { productLikedList, productUnlike } from '../../api/network/product' //�
       this.orderCollection();
     },
     methods: {
-      rightbottom(productId){
+      rightBottom(productId){
         return [
           {
             content: '删除',
