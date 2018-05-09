@@ -108,7 +108,7 @@
 
 			goDetail(id) {
 				let data = Object.assign({}, {'id':id});
-				this.$router.push({'name': 'redetail', 'params': {'id':id}});
+				this.$router.push({'name': 'detail', 'params': {'id':id}});
 			}
 		}
 	}
