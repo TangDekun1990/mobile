@@ -9,10 +9,12 @@
 					v-bind:key="item.id" 
 					v-bind:class="{'active': currentNAVId == item.id}"
 					v-on:click="setOrderNavActive(item)"
+					v-if="orderStatus"
 				>{{ item.name }}</li>
 			</ul>
 		</div>
 		<!-- body -->
+		<!-- 无限加载滚动列表 -->
 		<div v-infinite-scroll="getMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
 			<div class="order-body" v-if="orderList.length > 0 ">
 				<div class="list" v-for="(item, index) in orderList">
@@ -72,6 +74,9 @@
 						</div>
 					</div>
 				</div>
+				<div class="loading-wrapper">
+					<p v-if='!isMore'>没有更多了</p>
+				</div>
 			</div>
 			<div v-if="orderList.length <= 0" class="order-air">
 				<img src="../../../assets/image/change-icon/order_empty@2x.png">
@@ -84,12 +89,12 @@
 	</div>
 </template>
 
-<script>
-// static 
+<script> 
 import { ORDERSTATUS, ORDERNAV } from '../static';
 import { orderList, orderCancel, orderReasonList, orderConfirm, orderRebuy} from '../../../api/network/order'; //订单列表  //取消订单 //获取退货原因 //确认收货 //再次购买
 import { Indicator, MessageBox, Popup  } from 'mint-ui';
 import OrderNav from './OrderNav';
+import { mapState, mapMutations } from "vuex";
   export default {
     name:'page-navbar',
     data() {
@@ -122,160 +127,170 @@ import OrderNav from './OrderNav';
 			this.getUrlParams();
 			this.orderReasonList();
 		},
-	methods: {
-		getUrlParams() {
-			let urlparams = this.$route.params;
-			if(urlparams.order) {
-				this.currentNAVId = urlparams.order;
-			}
+		computed: {
+			...mapState({
+      	orderStatus: state => state.order.orderStatus
+    	}),
 		},
-		// 去订单详情
-		goOrderDetail(id){
-			this.$router.push({name: 'orderDetail', params: {orderDetail: id}})
-		},
+		methods: {
+			...mapMutations({
+				changeStatus: 'changeStatus'
+			}),
+			getUrlParams() {
+				let urlparams = this.$route.params;
+				if(urlparams.order) {
+					this.currentNAVId = urlparams.order;
+				}
+			},
+			// 去订单详情
+			goOrderDetail(id){
+				this.$router.push({name: 'orderDetail', params: {orderDetail: id}})
+			},
 
-		setOrderNavActive(item) {
-			this.currentNAVId = item.id;
-			this.orderList = [];
-			this.orderListParams.page = 1;
-			this.getOrderList();
-		},
+			setOrderNavActive(item) {
+				this.currentNAVId = item.id;
+				this.orderList = [];
+				this.orderListParams.page = 1;
+				this.getOrderList();
+				this.changeStatus(this.currentNAVId)
+			},
 
-		// 获取订单列表
-		getOrderList(ispush) {
-			let data = this.orderListParams;
-			data.status =  this.currentNAVId;
-			orderList(data.page, data.per_page, data.status).then(res => {
-				if(res) {
-					this.isMore = res.paged.more;
-					if(ispush) {
-						this.orderList = this.orderList.concat( res.orders);
-					} else {
-						this.orderList = Object.assign([], this.orderList, res.orders);
+			// 获取订单列表
+			getOrderList(ispush) {
+				let data = this.orderListParams;
+				data.status =  this.currentNAVId;
+				orderList(data.page, data.per_page, data.status).then(res => {
+					if(res) {
+						this.isMore = res.paged.more;
+						if(ispush) {
+							this.orderList = this.orderList.concat( res.orders);
+						} else {
+							this.orderList = Object.assign([], this.orderList, res.orders);
+						}
+						Indicator.close();
 					}
-					Indicator.close();
-				}
-			})
-		},
+				})
+			},
 
-		// 根据订单状态值获取对应的状态
-		getOrderStatusBy(status) {
-			let data = this.ORDERSTATUS;
-			for(let i = 0, len = data.length; i <= len-1; i++) {
-				if(data[i].id == status) {
-					return data[i].name;
+			// 根据订单状态值获取对应的状态
+			getOrderStatusBy(status) {
+				let data = this.ORDERSTATUS;
+				for(let i = 0, len = data.length; i <= len-1; i++) {
+					if(data[i].id == status) {
+						return data[i].name;
+					}
 				}
+			},
+			//  加载更多数据
+			getMore() {
+				if(this.isMore) {
+					Indicator.open({text: 'Loading...', spinnerType: 'fading-circle'});
+				}
+				this.orderListParams.page = ++this.orderListParams.page;
+				if (this.isMore) {
+					this.loading = false;
+					this.getOrderList(true);
+				} else {
+					this.loading = true;
+				}
+			},
+	
+			// 取消订单
+			cancel() {
+				this.popupVisible = true;
+				this.stop();
+			},
+			cancelInfo() {
+				this.popupVisible = false;
+			},
+			complete(id, index) {
+				this.popupVisible = false;
+				this.getordersuccess(id, index);
+			},
+
+			/***滑动限制***/
+			stop(){
+				var mo=function(e){e.preventDefault();};
+				document.body.style.overflow='hidden';
+				document.addEventListener("touchmove",mo,false);//禁止页面滑动
+			},
+			/***取消滑动限制
+			move(){
+				var mo=function(e){e.preventDefault();};
+				document.body.style.overflow='';//出现滚动条
+				document.removeEventListener("touchmove",mo,false);
+			},
+			***/
+			
+			// 查看物流
+			track(id) {
+				this.$router.push({ name: 'orderTrack', params: {orderTrack: id}});
+			},
+			// 去支付
+			payment(order) {
+				this.$router.push({ name: 'payment', params: { order: order }})
+			},
+			// 随便逛逛
+			goVisit() {
+				this.$router.push('/home');
+			},
+			// 确认收货
+			confirm(item, index) {
+				debugger;
+				MessageBox.confirm('是否确认收货？', '确认收货').then(action => {        
+				this.$router.push({name:'orderTrade', query: {'item': item}});
+				this.orderConfirms(item.id, index);	
+				});
+			},
+			// 获取确认收货数据
+			orderConfirms(id, index) {
+				orderConfirm(id).then(res => {
+					if(res) {
+						this.orderList[index] = res.order;
+					}
+				})
+			},
+			
+			// 获取再次购买数据
+			goBuy(id) {
+				Indicator.open({
+					spinnerType: 'fading-circle'
+				});
+				orderRebuy(id).then( res => {
+					if(res) {
+						Indicator.close();
+						this.$router.push('/cart')
+					}
+				});
+			},
+
+			// 晒单评价
+			goComment(item) {
+				this.$router.push({ name: 'orderComment', params:{ order: item}});
+			},
+			
+			// 获取退货原因数据
+			orderReasonList() {
+				orderReasonList().then(res => {
+					if(res) {
+						this.reasonList = Object.assign([], this.reasonList, res.reasons);
+					}
+				})
+			},
+			// 获取取消订单数据
+			getordersuccess(id, index) {
+				orderCancel(id, this.reasonId).then(res=> {
+					if(res) {
+						this.orderList = [];
+						this.getOrderList();
+					}
+				})
+			},
+			// 
+			getReasonItem(item) {
+				this.reasonId = item.id;
 			}
 		},
-		//  加载更多数据
-		getMore() {
-			if(this.isMore) {
-				Indicator.open({text: 'Loading...', spinnerType: 'fading-circle'});
-			}
-			this.orderListParams.page = ++this.orderListParams.page;
-			if (this.isMore) {
-				this.loading = false;
-				this.getOrderList(true);
-			} else {
-				this.loading = true;
-			}
-		},
-
-		// 取消订单
-		cancel() {
-			this.popupVisible = true;
-			this.stop();
-		},
-		cancelInfo() {
-			this.popupVisible = false;
-		},
-		complete(id, index) {
-			this.popupVisible = false;
-			this.getordersuccess(id, index);
-		},
-
-		/***滑动限制***/
-    stop(){
-      var mo=function(e){e.preventDefault();};
-      document.body.style.overflow='hidden';
-      document.addEventListener("touchmove",mo,false);//禁止页面滑动
-    },
-    /***取消滑动限制
-    move(){
-      var mo=function(e){e.preventDefault();};
-      document.body.style.overflow='';//出现滚动条
-      document.removeEventListener("touchmove",mo,false);
-		},
-		***/
-		
-		// 查看物流
-		track(id) {
-			this.$router.push({ name: 'orderTrack', params: {orderTrack: id}});
-		},
-		// 去支付
-		payment(order) {
-			this.$router.push({ name: 'payment', params: { order: order }})
-		},
-		// 随便逛逛
-		goVisit() {
-			this.$router.push('/home');
-		},
-		// 确认收货
-		confirm(item, index) {
-			MessageBox.confirm('是否确认收货？', '确认收货').then(action => {        
-			this.$router.push({name:'orderTrade', query: {'item': item}});
-			this.orderConfirms(item.id, index);	
-			});
-		},
-		// 获取确认收货数据
-		orderConfirms(id, index) {
-			orderConfirm(id).then(res => {
-				if(res) {
-					this.orderList[index] = res.order;
-				}
-			})
-		},
-		
-		// 获取再次购买数据
-		goBuy(id) {
-			Indicator.open({
-				spinnerType: 'fading-circle'
-			});
-			orderRebuy(id).then( res => {
-				if(res) {
-					Indicator.close();
-					this.$router.push('/cart')
-				}
-			});
-		},
-
-		// 晒单评价
-		goComment(item) {
-      this.$router.push({ name: 'orderComment', params:{ order: item}});
-		},
-		
-		// 获取退货原因数据
-		orderReasonList() {
-			orderReasonList().then(res => {
-				if(res) {
-					this.reasonList = Object.assign([], this.reasonList, res.reasons);
-				}
-			})
-		},
-		// 获取取消订单数据
-		getordersuccess(id, index) {
-			orderCancel(id, this.reasonId).then(res=> {
-				if(res) {
-					this.orderList = [];
-					this.getOrderList();
-				}
-			})
-		},
-		// 
-		getReasonItem(item) {
-			this.reasonId = item.id;
-		}
-	},
 }
 </script>
 
@@ -393,6 +408,15 @@ import OrderNav from './OrderNav';
 					color:#F23030;
 					border:1px solid #F23030;
 				}
+			}
+		}
+		.loading-wrapper {
+			text-align: center;
+			p{
+				color: #7C7F88;
+				font-size: 12px;
+				font-weight: 'Regular';
+				margin: 10px auto;
 			}
 		}
 	}

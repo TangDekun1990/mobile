@@ -17,6 +17,8 @@ import product from './modules/product'
 import cart from './modules/cart'
 import delivery from './modules/delivery'
 import search from './modules/search'
+import profile from './modules/profile'
+import order from './modules/order'
 
 Vue.use(Vuex)
 
@@ -33,7 +35,9 @@ export default new Vuex.Store({
     coupon,
     invoice,
     delivery,
-    search
+    search,
+    profile,
+    order
   },
   getters: getters,
   plugins: [

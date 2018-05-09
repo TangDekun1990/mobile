@@ -6,7 +6,7 @@
       </div>
       <div class="nav-item" id="right-nav-item" @click="goNews()">
         <img class="nav-icon" src="../../assets/image/change-icon/e0_message@2x.png" />
-        <span></span>
+        <span v-show="ishasCount"></span>
       </div>
       <div class="top-info-wrapper">
         <div class="avatar-wrapper" @click="goProfileInfo">
@@ -109,16 +109,19 @@ import InfoItem from "./child/InfoItem";
 import OrderItem from "./child/OrderItem";
 import { mapState, mapMutations } from "vuex";
 import { userProfileGet } from "../../api/network/user";
-import { scoreGet } from '../../api/network/score'
-import { ENUM } from '../../config/enum'
-import { orderSubtotal } from '../../api/network/order'
+import { scoreGet } from "../../api/network/score";
+import { ENUM } from "../../config/enum";
+import { orderSubtotal } from "../../api/network/order";
+import { messageCount } from "../../api/network/message";
 export default {
   name: "profile",
-   data() {
+  data() {
     return {
       orderAll: 1,
       score: 0,
       orderCount: {},
+	  isShow: true,
+	  ishasCount: false
     };
   },
   components: {
@@ -128,89 +131,120 @@ export default {
   },
   created: function() {
     if (this.isOnline) {
-      userProfileGet().then(response => {
-        if (response && response.user) {
-          this.saveUser(response) 
-        }        
-      }, error => {        
-      });
+      userProfileGet().then(
+        response => {
+          if (response && response.user) {
+            this.saveUser(response);
+          }
+        },
+        error => {}
+      );
       scoreGet().then(
         response => {
-          this.score = response.score
-        }, error => {
-        });
-    };
+          this.score = response.score;
+        },
+        error => {}
+      );
+    }
     this.getOrderSubtotal();
+	this.getMessageCount(1);
+	this.getMessageCount(2);
   },
   computed: {
     ...mapState({
       isOnline: state => state.auth.isOnline,
-      user: state => state.auth.user
+      user: state => state.auth.user,
+      time: state => state.profile.time,
+      type: state => state.profile.type
     }),
-    nickname () {
+    nickname() {
       let title = "登录/注册";
       if (this.isOnline) {
-        if (this.user &&
+        if (
+          this.user &&
           typeof this.user != "undefined" &&
-          JSON.stringify(this.user) != "{}") {
-            if (this.user.nickname) {
-              title = this.user.nickname;
-            } else if (this.user.username) {
-              title = this.user.username
-            }
+          JSON.stringify(this.user) != "{}"
+        ) {
+          if (this.user.nickname) {
+            title = this.user.nickname;
+          } else if (this.user.username) {
+            title = this.user.username;
+          }
         }
-      }      
+      }
       return title;
     },
-    getAvatarUrl () {
-      let url = null
+    getAvatarUrl() {
+      let url = null;
       if (this.isOnline) {
-        if (this.user &&
+        if (
+          this.user &&
           typeof this.user != "undefined" &&
-          JSON.stringify(this.user) != "{}") {
-          let avatar = this.user.avatar
+          JSON.stringify(this.user) != "{}"
+        ) {
+          let avatar = this.user.avatar;
           if (avatar) {
             if (avatar.large && avatar.large) {
-              url = avatar.large
+              url = avatar.large;
             } else if (avatar.thumb && avatar.thumb) {
-              url = avatar.thumb
+              url = avatar.thumb;
             }
           }
         }
       }
       if (url === null) {
-        url = require('../../assets/image/change-icon/img_avatar@2x.png')
+        url = require("../../assets/image/change-icon/img_avatar@2x.png");
       }
-      return url
+      return url;
     },
-    getScore () {
-      let score = '0'
+    getScore() {
+      let score = "0";
       if (this.isOnline) {
-        score = this.score
+        score = this.score;
       }
-      return score
+      return score;
     }
   },
   methods: {
     ...mapMutations({
-      saveUser: 'saveUser'
+	  saveUser: "saveUser",
+	  changeType: 'changeType'
     }),
     // 获取订单不同状态的数量统计
     getOrderSubtotal() {
-      orderSubtotal().then(res=> {
-        if(res) {
+      orderSubtotal().then(res => {
+        if (res) {
           this.orderCount = res.subtotal;
         }
-      })
+      });
+    },
+    // 获取未读消息数字
+    getMessageCount(type) {
+		let after = this.user.joined_at;
+		if(this.type) {
+			if(type == 1 && this.time.noticeTime) {
+				after = this.time.noticeTime;
+			} 
+			if(type == 2 && this.time.ordertime){
+				after = this.time.ordertime;
+			} 
+		}
+      messageCount(after, type).then(res => {
+        if (res) {
+          if(res.count >= 0) {
+            this.ishasCount = true;
+          }
+        }
+      });
     },
     showLogin() {
-      this.$router.push({ name: 'signin' });
+      this.$router.push({ name: "signin" });
     },
     goScoreList() {
-      this.$router.push({ name: 'scoreList', query: { index: 0 } });
+      this.$router.push({ name: "scoreList", query: { index: 0 } });
     },
     goRecordList() {
-      this.$router.push({ name: 'scoreList', query: { index: 1 } });
+      this.$router.push({ name: "scoreList", query: { index: 1 } });
     },
     goProfileInfo() {
       if (this.isOnline) {
@@ -220,27 +254,30 @@ export default {
       }
     },
     goSetting() {
-      this.$router.push({ name: 'setting' });
+      this.$router.push({ name: "setting" });
     },
     goNews() {
-      this.$router.push('news');
+      this.$router.push("news");
     },
     goFavourite() {
-      this.$router.push('collection');
+      this.$router.push("collection");
     },
     goAddress() {
-      this.$router.push('addressManage');
+      this.$router.push("addressManage");
     },
     goCoupon() {
-      this.$router.push({ name: 'couponList', 'query': { index: 0 }});
+      this.$router.push({ name: "couponList", query: { index: 0 } });
     },
     goHelp() {
       this.$router.push("help");
     },
     goOrder() {
-      this.$router.push({ name:'order', params: {'order': ENUM.ORDER_STATUS.ALL}});
-    }, 
-  },
+      this.$router.push({
+        name: "order",
+        params: { order: ENUM.ORDER_STATUS.ALL }
+      });
+    }
+  }
 };
 </script>
 
@@ -278,7 +315,7 @@ export default {
     span {
       width: 7px;
       height: 7px;
-      background-color: #F23030;
+      background-color: #f23030;
       border-radius: 50%;
       position: absolute;
       top: 11px;
@@ -313,7 +350,7 @@ export default {
   }
   .nickname {
     width: 100%;
-    margin-top: 20px; 
+    margin-top: 20px;
     font-size: 16px;
     color: #646464;
     text-align: center;
@@ -328,7 +365,7 @@ export default {
     flex-direction: row;
     justify-content: flex-start;
     align-content: stretch;
-    background-color: rgba(0,0,0,0.1);
+    background-color: rgba(0, 0, 0, 0.1);
   }
   .info-item {
     flex: 1;

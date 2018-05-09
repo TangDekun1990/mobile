@@ -26,7 +26,7 @@
 				<span>配送中</span>
 			</div>
 
-			<div class="receipt" v-if="orderDetail.order.status == 2" v-on:click="goOrderrack(order.id)">
+			<div class="receipt" v-if="orderDetail.order.status == 2 && trackList.length >= 1" v-on:click="goOrderrack(order.id)">
 				<label>
 					<img src="../../../assets/image/change-icon/icon_car@2x.png">
 					<span>{{trackList[0].content}}</span>
@@ -39,7 +39,7 @@
 				<span>待评价</span>
 			</div>
 
-			<div class="receipt" v-if="orderDetail.order.status == 3" v-on:click="goOrderrack(order.id)">
+			<div class="receipt" v-if="orderDetail.order.status == 3 && trackList.length >= 1" v-on:click="goOrderrack(order.id)">
 				<label>
 					<img src="../../../assets/image/change-icon/icon_car@2x.png">
 					<span>{{trackList[0].content}}</span>
@@ -672,6 +672,7 @@ computed: {
 	justify-content: flex-end;
 	background-color: #fff;
 	align-items: center;
+	border-top: 1px solid #E8EAED;
 	button {
 		width: 82px;
 		height: 36px;
