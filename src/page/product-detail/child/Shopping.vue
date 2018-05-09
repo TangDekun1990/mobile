@@ -88,6 +88,7 @@
 		this.info = this.chooseinfo.specification;
 		this.ids = Object.assign([], this.chooseinfo.ids);
 		this.buildProperties();
+		console.log(this.ids);
 	},
 
 	computed: {
@@ -178,25 +179,23 @@
 					this.$router.push({'name': 'signin'});
 				} else {
 					if (this.detailInfo.properties.length > 0) {
-						if (this.ids.length <= 0 || this.ids.length != this.detailInfo.properties.length) {
-							Toast('请选择商品属性');
-							return false;
+						let status = true;
+						if ( this.ids.length <= 0 ) {
+							status = false;
 						} else {
-							let status = true;
 							for (let i = 0; i <= this.ids.length-1; i++) {
-								if (this.ids[i] == "") {
-									this.status = false
-									return false;
+								if (this.ids[i] == "" || this.ids[i] == undefined ) {
+									status = false;
+									break;
 								}
 							}
-							if (status) {
-								this.addShopCart();
-							} else {
-								Toast('请选择商品属性');
-								return false;
-							}
 						}
-
+						if (status) {
+							this.addShopCart();
+						} else {
+							Toast('请选择商品属性');
+							return false;
+						}
 					} else {
 						this.addShopCart();
 					}
