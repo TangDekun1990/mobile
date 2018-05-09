@@ -19,7 +19,6 @@ const initState = {
 const state = {
 	...initState,
 	initState(){
-
         return initState
     }
 	// isHideCart: false,  // 点击看大图隐藏脚部

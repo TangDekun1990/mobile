@@ -4,6 +4,8 @@ import Vuex from 'vuex'
 import createPersistedState from 'vuex-persistedstate'
 
 import * as getters from './getter'
+import mutations from './mutations'
+import actions from './actions'
 
 import auth from './modules/auth'
 import config from './modules/config'
@@ -23,27 +25,29 @@ import order from './modules/order'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-  modules: {
-    auth,
-    config,
-    address,
-    region,
-    detail,
-    product,
-    cart,
-    shipping,
-    coupon,
-    invoice,
-    delivery,
-    search,
-    profile,
-    order
-  },
-  getters: getters,
-  plugins: [
-    createPersistedState({
-      key: 'vuex',
-      paths: ['auth', 'config', 'region']
-    })
-  ]
+	modules: {
+		auth,
+		config,
+		address,
+		region,
+		detail,
+		product,
+		cart,
+		shipping,
+		coupon,
+		invoice,
+		delivery,
+		search,
+		profile,
+		order
+	},
+	getters: getters,
+	actions,
+	mutations,
+	plugins: [
+		createPersistedState({
+			key: 'vuex',
+			paths: ['auth', 'config', 'region']
+		})
+	]
 })

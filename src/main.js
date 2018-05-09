@@ -47,30 +47,6 @@ Vue.filter('convertTime', function (timeStr) {
 	return Moment(timeStr).format('YYYY-MM-DD HH:mm:ss')
 })
 
-// 路由导航
-// router.beforeEach((to, from, next) => {
-// 	console.log(to);
-// 	console.log(from);
-// 	window.location.reload();
-// 	next();
-// });
-
-// router.afterEach((to, from) => {
-// 	window.location.reload();
-// 	console.log('afterEach')
-// });
-
-// router.beforeRouteEnter((to, from, next) => {
-// 	console.log('beforeRouteEnter')
-// });
-
-// router.beforeRouteUpdate((to, from, next) => {
-// 	console.log('beforeRouteUpdate')
-// });
-
-// router.beforeRouteLeave((to, from, next) => {
-// 	console.log('beforeRouteLeave')
-// });
 // router.beforeEach((to, from, next) => {
 // 	const toDepth = to.path.split('/').length
 // 	const fromDepth = from.path.split('/').length
