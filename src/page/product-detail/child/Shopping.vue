@@ -445,6 +445,7 @@
 			display: flex;
 			justify-content: flex-start;
 			padding-bottom: 25px;
+			border-bottom: 0.5px solid rgba(232,234,237,1);
 			img.info-image{
 				width:120px;
 				height:120px;
