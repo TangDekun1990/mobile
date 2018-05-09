@@ -118,18 +118,7 @@
 		},
 	},
 
-	mounted(){
-		// 计算内容高度
-	    this.$nextTick( () => {
-	    	this.target = document.querySelector('.goods-detail-properties');
-	    	let height = document.querySelector('.info-header').offsetHeight,
-	    		elementHeight = document.querySelector('.shopping-info').offsetHeight;
-	    	let totalHeight = 44 + height + 75;
-	    	// this.target.style.height = totalHeight / elementHeight * 100 + 'vh';
-	    	// console.log(elementHeight);
-	    	// this.utils.fillTheScreen({'target': this.target, 'totalHeight': totalHeight, 'height': elementHeight, 'baseHeight': 0.6});
-	    })
-	},
+	mounted(){},
 
 	methods: {
 			...mapMutations({
