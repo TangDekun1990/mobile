@@ -2,7 +2,7 @@
 const state = {
   isOnline: false,
   token: null,
-  user: null,
+  user: null
 }
 
 // mutations
@@ -33,5 +33,5 @@ const mutations = {
 
 export default {
   state,
-  mutations,
+  mutations
 }

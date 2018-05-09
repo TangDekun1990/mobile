@@ -90,13 +90,17 @@
 	    		height: 50px;
 				li {
 					font-family: $fontFamily;
+					display: flex;
+					flex-direction: column;
+					justify-content: flex-start;
+					align-items: center;
 					img {
-						@include wh(24px, 24px);
+						@include wh(30px, 30px);
 						@include ilc();
 						display: $block;
 					}
 					a {
-						@include sc($fontSize, $mainFontColor);
+						@include sc($fontSize, $mainFontColor);												
 					}
 				}
 				li.currentavtive {

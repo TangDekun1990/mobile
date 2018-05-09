@@ -3,7 +3,7 @@
     <div class="left-wrapper">
       <label class="title" style="-webkit-box-orient:vertical">{{getTitle}}</label>
       <label class="subtitle" style="-webkit-box-orient:vertical">{{getSubtitle}}</label>      
-      <label class="desc">{{getLeftDesc}}</label> 
+      <label class="desc" style="-webkit-box-orient:vertical">{{getLeftDesc}}</label> 
     </div>  
     <img class="photo" v-bind:style="getPhotoStyle" :src="getPhotoUrl" />         
   </div>

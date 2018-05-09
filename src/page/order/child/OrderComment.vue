@@ -9,10 +9,11 @@
       </header-item>        
     </mt-header>
     <!-- body -->
-    <div class="order-comment-body" v-for="(item, index) in commentinfo.goods">
+    <div class="order-comment-body" v-for="(item, index) in commentinfo.goods" v-if="commentinfo.goods.length > 0">
       <div class="body-list">
-        <div class="image" >
-          <img v-bind:src="item.product.photos[0].large" >
+        <div class="image">
+          <img v-bind:src="item.product.photos[0].thumb" v-if="item.product.photos.length > 0">
+          <img src="../../../assets/image/change-icon/default_image_02@2x.png" v-if="item.product.photos.length <= 0">
         </div>
         <div class="comment">
           <span>{{item.product.name }}</span>
