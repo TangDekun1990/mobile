@@ -1,8 +1,8 @@
 <!-- CategoryHeader.vue -->
 <template>
-	<mt-header class="header" title="分类">  
-		<header-item v-if="isShowBack" slot="left" isBack v-on:onclick="leftClick"></header-item>     
-    <header-item slot="right" :icon="require('../../../assets/image/change-icon/b0_search@2x.png')" v-on:onclick="goState()"></header-item>
+	<mt-header class="header" title="分类">
+		<header-item v-if="isShowBack" slot="left" isBack v-on:onclick="leftClick"></header-item>
+    <header-item slot="right" :icon="require('../../../assets/image/change-icon/b0_search@2x.png')" v-on:onclick="goState()" :minIcon="true"></header-item>
   </mt-header>
 </template>
 
@@ -36,6 +36,6 @@
 <style scoped lang='scss'>
   .header {
 		@include header;
-		border-bottom: 1px solid $lineColor;
+		border-bottom: 0.5px solid $lineColor;
   }
 </style>
