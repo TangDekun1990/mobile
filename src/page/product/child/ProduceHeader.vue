@@ -112,15 +112,15 @@
 			height: auto;
 			padding: 6px 16px;
 			align-content: center;
-	    	align-items: center;
+	    align-items: center;
 			img.ui-back {
 				height: 24px;
-    			width: 24px;
+    		width: 24px;
 			}
 			input{
 				width: 100%;
-			    margin-left: 16px;
-			    margin-right: 17px;
+			  margin-left: 16px;
+			  margin-right: 17px;
 				flex-basis: auto;
 				border-radius: 16px;
 				border: 0px;

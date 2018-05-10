@@ -223,30 +223,34 @@ export default {
     }),
     // 获取订单不同状态的数量统计
     getOrderSubtotal() {
-      orderSubtotal().then(res => {
-        if (res) {
-          this.orderCount = res.subtotal;
-        }
-      });
+      if(this.user != null){
+        orderSubtotal().then(res => {
+          if (res) {
+            this.orderCount = res.subtotal;
+          }
+        });
+      }
     },
     // 获取未读消息数字
     getMessageCount(type) {
-		let after = this.user.joined_at;
-		if(this.type) {
-			if(type == 1 && this.time.noticeTime) {
-				after = this.time.noticeTime;
-			} 
-			if(type == 2 && this.time.ordertime){
-				after = this.time.ordertime;
-			} 
-		}
-      messageCount(after, type).then(res => {
-        if (res) {
-          if(res.count >= 0) {
-            this.ishasCount = true;
-          }
+      if(this.user !=null) {
+        let after = this.user.joined_at;
+        if(this.type) {
+          if(type == 1 && this.time.noticeTime) {
+            after = this.time.noticeTime;
+          } 
+          if(type == 2 && this.time.ordertime){
+            after = this.time.ordertime;
+          } 
         }
-      });
+        messageCount(after, type).then(res => {
+          if (res) {
+            if(res.count >= 0) {
+              this.ishasCount = true;
+            }
+          }
+        });
+      }
     },
     showLogin() {
       this.$router.push({ name: "signin" });

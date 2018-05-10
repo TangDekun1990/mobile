@@ -3,7 +3,7 @@
     <!-- header -->
     <mt-header class="header" :title="getTitle">
       <header-item slot="left" v-bind:isBack=true v-on:onclick="goBack()"></header-item>  
-      <mt-button slot="right" icon="more" v-on:click="getShow()"></mt-button>   
+      <!-- <mt-button slot="right" icon="more" v-on:click="getShow()"></mt-button>    -->
     </mt-header>
     <!-- body -->
     <div class="bullet" v-show="isShow" v-on:click="getShow()">
