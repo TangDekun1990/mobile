@@ -47,10 +47,6 @@ export default {
 		},
 
 		goBack() {
-			this.setSwiperIndex(0);
-			this.saveNumber(0);
-			this.saveChooseInfo({'specification':[], 'ids': []}); // TODO
-			// this.saveInfo();
 			this.$router.go(-1);
 		}
 	}

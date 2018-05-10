@@ -1,28 +1,49 @@
-// initial state
-const state = {
-	isHideCart: false,  // 点击看大图隐藏脚部
-	isHideHeader: false, // 点击看大图隐藏头部
-
-	detailInfo: {},    //保存商品详情
-
-	isShowcartInfo: false,  //是否显示购物车浮层
-
-	currentSwiperIndex: 0, //当前滑动的id
-
-	isHideCommodity: false, //点击查看大图，隐藏商品展示
-
+const initState = {
+	isHideCart: false,
+	isHideHeader: false,
+	detailInfo: {},
+	isShowcartInfo: false,
+	currentSwiperIndex: 0,
+	isHideCommodity: false,
 	number: 0,
-
 	isComment: false,
-
 	isShowDetail: false,
-
 	ispromotion: false,
 	type: false,
 	chooseinfo: {
 		specification:[],
 		ids: []
-	}  //选择口味的信息
+	}
+}
+// initial state
+const state = {
+	...initState,
+	initState(){
+        return initState
+    }
+	// isHideCart: false,  // 点击看大图隐藏脚部
+	// isHideHeader: false, // 点击看大图隐藏头部
+
+	// detailInfo: {},    //保存商品详情
+
+	// isShowcartInfo: false,  //是否显示购物车浮层
+
+	// currentSwiperIndex: 0, //当前滑动的id
+
+	// isHideCommodity: false, //点击查看大图，隐藏商品展示
+
+	// number: 0,
+
+	// isComment: false,
+
+	// isShowDetail: false,
+
+	// ispromotion: false,
+	// type: false,
+	// chooseinfo: {
+	// 	specification:[],
+	// 	ids: []
+	// }  //选择口味的信息
 }
 
 // mutations

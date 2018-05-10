@@ -123,12 +123,14 @@ import { productLikedList, productUnlike } from '../../api/network/product' //å·
       .image {
         width:110px;
         height:110px;
+        flex-basis: 110px;
+        flex-shrink: 0;
         margin: 0px 14px 0px 0px;
         box-sizing: border-box;
         img {
-          width:83px;
-          height:83px;
-          padding:14px 14px 0px 14px;
+          width:100%;
+          height:100%;
+          // padding:14px 14px 0px 14px;
         }
         p {
           text-align: center;

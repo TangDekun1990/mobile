@@ -1,7 +1,6 @@
-<!-- recommend.vue -->
+<!-- with.vue -->
 <template>
 	<div class="ui-recommend-wrapper" v-if="list.length > 0">
-
 		<div class="wrapper-swipe">
 			<mt-swipe :auto="0" :show-indicators="false" @change="handleChange" :default-index="currentIndex" :stop-propagation='true' :speed='100'>
 			  	<mt-swipe-item v-for="(item, index) in list" :key="index">
@@ -30,7 +29,7 @@
 </template>
 
 <script>
-	import { getRecommendProduct } from '../../../api/network/product';
+	import { productAccessoryList } from '../../../api/network/product';
 	export default {
 		data() {
 			return{
@@ -48,14 +47,11 @@
 			*/
 			getRecommendList() {
 				let params = {
-					"brand": this.$route.params.brand ? this.$route.params.brand : '',
-                	"category": this.$route.params.category ? this.$route.params.category : '',
-                	"shop": this.$route.params.shop ? this.$route.params.shop : '',
                 	"product": this.$route.params.id ? this.$route.params.id : '',
                 	"page": 1,
                 	"per_page": 10
 				};
-				getRecommendProduct(params).then(res => {
+				productAccessoryList(params.product, params.page, params.per_page).then(res => {
 					if (res) {
 						this.list =  this.buildList(res.products);
 						this.buildSwipeIndicators();
@@ -104,19 +100,10 @@
 			 */
 			goRecommend() {
 				let params = {};
-				if (this.$route.params.brand) {
-					params.brand = this.$route.params.brand;
-				}
-				if (this.$route.params.category) {
-					params.category = this.$route.params.category;
-				}
-				if (this.$route.params.shop) {
-					params.shop = this.$route.params.shop;
-				}
 				if (this.$route.params.id) {
 					params.product = this.$route.params.id;
 				}
-				this.$router.push({'name': 'recommend', 'params': params});
+				this.$router.push({'name': 'with', 'query': params});
 			},
 
 			goDetail(id) {
@@ -153,6 +140,7 @@
 			background:rgba(255,255,255,1);
 			border-top: 1px solid rgba(232,234,237,1);
 			font-size:15px;
+			font-family:'PingFangSC-Regular';
 			color:rgba(78,84,93,1);
 			width: 100%;
 			flex-basis: 100%;

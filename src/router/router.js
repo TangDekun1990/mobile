@@ -75,10 +75,9 @@ import Cart from '../page/cart/cart'
 
 // 查看推荐商品
 import Recommend from '../page/recommend/Recommend'
-
+import With from '../page/recommend/with'
 //
 import updateinfo from '../page/profile/child/Update'
-// /:category?/:brand?/:shop?/:keywords?/
 export default [
 	{
 		path: '/',
@@ -313,6 +312,11 @@ export default [
 				meta: {
 					keepAlive: false,
 				}
+			},
+			{
+				name: 'with',
+				path: '/with/:product?',
+				component: With
 			},
 			{
 				name: 'updateinfo',
