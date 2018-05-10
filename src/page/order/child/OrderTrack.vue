@@ -29,6 +29,7 @@
 import { HeaderItem } from '../../../components/common'
 import { Header } from 'mint-ui'
 import { shippingStatusGet } from '../../../api/network/shipping' //物流状态查询
+import { ENUM } from '../../../config/enum'
 export default { 
   data() {
     return {
@@ -41,7 +42,7 @@ export default {
     },
   methods: {  
     goBack() {
-      this.$router.go(-1) 
+      this.$router.push({ name: 'order', params: { order: ENUM.ORDER_STATUS.DELIVERING }});
     },
     // 获取物流状态查询
     getShippingStatusGet(id) {

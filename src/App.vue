@@ -12,7 +12,7 @@ import { mapMutations } from 'vuex'
 export default {
 	name: 'app',
 	created: function() {
-		window.location.href = 'wenchao://'		
+		// window.location.href = 'wenchao://'		
 		/*
 		 * detectBack： 监听浏览器返回事件
 		 */

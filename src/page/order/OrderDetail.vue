@@ -20,9 +20,12 @@ export default {
  },
   methods: {
     goBack() {
-      let isFromPay = this.$route.params.isFromPay
+      let isFromPay = this.$route.params.isFromPay;
+      let isSuccess = this.$route.params.isSuccess;
       if (isFromPay) {
         this.$router.push({ name: 'order', params: { order: ENUM.ORDER_STATUS.PAID}});
+      } else if(isSuccess) {
+        this.$router.push({name: 'order', params: { order: ENUM.ORDER_STATUS.DELIVERIED}});
       } else {
         this.$router.go(-1)
       }      
