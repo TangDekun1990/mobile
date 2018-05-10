@@ -57,22 +57,22 @@
 		},
 
 		// TODO
-		watch: {
-			detailInfo: function(value) {
-				if(value) {
-						let title = this.detailInfo.name;
-						let imgUrl = this.detailInfo.photos[0].thumb;
-						this.wxApi.getConfigRes(title, imgUrl);
-				}
-			}
-		},
+		// watch: {
+		// 	detailInfo: function(value) {
+		// 		if(value) {
+		// 				let title = this.detailInfo.name;
+		// 				let imgUrl = this.detailInfo.photos[0].thumb;
+		// 				this.wxApi.getConfigRes(title, imgUrl);
+		// 		}
+		// 	}
+		// },
 		created(){
 			this.getCurrentDate();
-			if(this.detailInfo) {
-				let title = this.detailInfo.name;
-				let imgUrl = this.detailInfo.photos[0].thumb;
-				this.wxApi.getConfigRes(title, imgUrl);
-			}
+			// if(this.detailInfo) {
+			// 	let title = this.detailInfo.name;
+			// 	let imgUrl = this.detailInfo.photos[0].thumb;
+			// 	this.wxApi.getConfigRes(title, imgUrl);
+			// }
 		},
 
 		methods: {

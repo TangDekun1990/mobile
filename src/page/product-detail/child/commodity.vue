@@ -19,6 +19,8 @@
 		<v-goods-like></v-goods-like>
 		<!-- 推荐商品  -->
 		<v-goods-recommend></v-goods-recommend>
+		<!-- 商品搭配 -->
+		<v-goods-with></v-goods-with>
 		<!-- 详情 -->
 		<!-- <v-goods-aspect v-if='isShowDetail'></v-goods-aspect> -->
 	</div>
@@ -35,6 +37,7 @@
 	import detailLike from './Like';
 	import goodsReview from './Goodsreview';
 	import recommend from './recommend';
+	import withproduct from './with'
 
 	import aspect from './aspect';
 
@@ -59,6 +62,7 @@
 			'v-goods-like': detailLike,
 			'v-goods-review': goodsReview,
 			'v-goods-recommend': recommend,
+			'v-goods-with': withproduct,
 			'v-goods-aspect': aspect
 		},
 		computed: mapState({

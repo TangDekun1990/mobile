@@ -88,6 +88,7 @@
 		this.info = this.chooseinfo.specification;
 		this.ids = Object.assign([], this.chooseinfo.ids);
 		this.buildProperties();
+		console.log(this.ids);
 	},
 
 	computed: {
@@ -118,18 +119,7 @@
 		},
 	},
 
-	mounted(){
-		// 计算内容高度
-	    this.$nextTick( () => {
-	    	this.target = document.querySelector('.goods-detail-properties');
-	    	let height = document.querySelector('.info-header').offsetHeight,
-	    		elementHeight = document.querySelector('.shopping-info').offsetHeight;
-	    	let totalHeight = 44 + height + 75;
-	    	// this.target.style.height = totalHeight / elementHeight * 100 + 'vh';
-	    	// console.log(elementHeight);
-	    	// this.utils.fillTheScreen({'target': this.target, 'totalHeight': totalHeight, 'height': elementHeight, 'baseHeight': 0.6});
-	    })
-	},
+	mounted(){},
 
 	methods: {
 			...mapMutations({
@@ -189,25 +179,23 @@
 					this.$router.push({'name': 'signin'});
 				} else {
 					if (this.detailInfo.properties.length > 0) {
-						if (this.ids.length <= 0 || this.ids.length != this.detailInfo.properties.length) {
-							Toast('请选择商品属性');
-							return false;
+						let status = true;
+						if ( this.ids.length <= 0 ) {
+							status = false;
 						} else {
-							let status = true;
 							for (let i = 0; i <= this.ids.length-1; i++) {
-								if (this.ids[i] == "") {
-									this.status = false
-									return false;
+								if (this.ids[i] == "" || this.ids[i] == undefined ) {
+									status = false;
+									break;
 								}
 							}
-							if (status) {
-								this.addShopCart();
-							} else {
-								Toast('请选择商品属性');
-								return false;
-							}
 						}
-
+						if (status) {
+							this.addShopCart();
+						} else {
+							Toast('请选择商品属性');
+							return false;
+						}
 					} else {
 						this.addShopCart();
 					}
@@ -237,12 +225,12 @@
 			},
 
 			keyDown(event) {
-			    let _this = this;
-			    setTimeout(function() {
-			    	let pannel = document.getElementById('info-body');
-			    	pannel.scrollIntoView(true);
-					pannel.scrollIntoViewIfNeeded();
-			    }, 200);
+			    // let _this = this;
+			  //   setTimeout(function() {
+			  //   	let pannel = document.getElementById('info-body');
+			  //   	pannel.scrollIntoView(true);
+					// pannel.scrollIntoViewIfNeeded();
+			  //   }, 200);
 			},
 
 			/*
@@ -451,7 +439,7 @@
 		bottom: 0px;
 		z-index: 10;
 		width: 100%;
-		overflow: hidden;
+		/* overflow: hidden; */
 		.info-header {
 			padding: 15px;
 			display: flex;
@@ -516,7 +504,7 @@
 			}
 		}
 		div.goods-detail-properties {
-    		width: auto;
+    		width: 100%;
 			overflow: auto;
 			height: auto;
 			position: absolute;
