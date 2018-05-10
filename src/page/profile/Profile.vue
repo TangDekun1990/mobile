@@ -35,7 +35,7 @@
         class="order-item"
         testAttr = 'order'
         id='0'
-        :icon="require('../../assets/image/change-icon/b10_payment@2x.png')"
+        :icon="require('../../assets/image/change-icon/e0-payment@2x.png')"
         title="待付款"
         :orderNumber = 'orderCount.created'
         >
@@ -94,6 +94,7 @@
         title="使用帮助">
       </info-item>
       <info-item
+        v-on:onclick="callTelephone()"
         class="info-item-wrapper section-footer"
         :icon="require('../../assets/image/change-icon/e0_phone@2x.png')"
         title="客服电话">
@@ -113,6 +114,8 @@ import { scoreGet } from "../../api/network/score";
 import { ENUM } from "../../config/enum";
 import { orderSubtotal } from "../../api/network/order";
 import { messageCount } from "../../api/network/message";
+import * as site from '../../api/network/site'
+import { MessageBox } from 'mint-ui'
 export default {
   name: "profile",
   data() {
@@ -120,8 +123,9 @@ export default {
       orderAll: 1,
       score: 0,
       orderCount: {},
-	  isShow: true,
-	  ishasCount: false
+	    isShow: true,
+      ishasCount: false,
+      telephone: ''
     };
   },
   components: {
@@ -147,8 +151,15 @@ export default {
       );
     }
     this.getOrderSubtotal();
-	this.getMessageCount(1);
-	this.getMessageCount(2);
+    this.getMessageCount(1);
+    this.getMessageCount(2);
+    site.siteGet().then(
+      (response) => { 
+        if (response && response.site_info) {
+          this.telephone = response.site_info.telephone  
+        }
+      }, (error) => {
+    })
   },
   computed: {
     ...mapState({
@@ -280,6 +291,14 @@ export default {
         name: "order",
         params: { order: ENUM.ORDER_STATUS.ALL }
       });
+    },
+    callTelephone() {
+      let telephone = this.telephone        
+      MessageBox.confirm(telephone, '拨打电话').then(action => {        
+        if (telephone && telephone.length) {                
+          window.location.href = 'tel://' + telephone
+        }
+      })      
     }
   }
 };
