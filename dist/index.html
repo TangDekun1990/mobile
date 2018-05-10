@@ -213,7 +213,7 @@
 					// callHander
 
 					openLink: function (link, callback) {
-						window.WebViewJavascriptBridge.callHandler('openLink', { link: link }, callback)
+						window.WebViewJavascriptBridge.callHandler('openLink', link, callback)
 					},
 
 					checkInApp: function (callback) {
