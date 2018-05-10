@@ -12,7 +12,7 @@
 		</div>
 
 		<div v-if='isEmpty' class="empty-cart">
-			<img src="../../assets/image/tabbar-icon/tabbar_cart_nor@2x.png">
+			<img src="../../assets/image/change-icon/cart_empty@2x.png">
 			<p v-if="isOnline">您的购物车还是空的</p>
 			<p v-if="!isOnline">登录后即可查看购物车中的商品</p>
 			<span @click="goHome()" v-if="isOnline">随便逛逛</span>
@@ -181,7 +181,7 @@
 	.ui-cart-wrapper {
 	}
 	.empty-cart{
-		padding-top: 79px;
+		padding-top: 124px;
     	text-align: center;
     	img {
     		width: 75px;

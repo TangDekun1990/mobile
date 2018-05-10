@@ -79,7 +79,7 @@
 .ui-promotions-wrapper {
 	height: auto;
 	.promotions-header {
-		border-bottom: 1px solid #E8EAED;
+		border-bottom: 0.5px solid #E8EAED;
 		height: 50px;
 		h3 {
 			font-size:16px;

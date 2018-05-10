@@ -135,7 +135,7 @@
 		}
 		span.cart-footer-btn {
 			width:150px;
-			height:45px;
+			height:46px;
 			background:rgba(242,48,48,1);
 			display: inline-block;
 			font-size:16px;
