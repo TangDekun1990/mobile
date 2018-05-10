@@ -24,12 +24,12 @@ import { Header } from 'mint-ui'
 import { ENUM } from '../../../config/enum'
 export default {    
   methods: {  
-    goBack() {
+     goBack() {
       this.$router.push({ name: 'order', params: { order: ENUM.ORDER_STATUS.DELIVERIED }});
     },
     // 去订单详情
     goOrderDetail() {
-      this.$router.push({ name: 'orderDetail',params: {'orderDetail':this.$route.query.item.id}}) 
+      this.$router.push({ name: 'orderDetail',params: {'orderDetail':this.$route.query.item.id, isSuccess: true}}) 
     },
     // 去评价订单
     goOrderComment() {

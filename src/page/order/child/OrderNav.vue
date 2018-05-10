@@ -9,7 +9,6 @@
 					v-bind:key="item.id" 
 					v-bind:class="{'active': currentNAVId == item.id}"
 					v-on:click="setOrderNavActive(item)"
-					v-if="orderStatus"
 				>{{ item.name }}</li>
 			</ul>
 		</div>
@@ -78,7 +77,7 @@
 					<p v-if='!isMore'>没有更多了</p>
 				</div>
 			</div>
-			<div v-if="orderList.length <= 0" class="order-air">
+			<div v-if="orderList.length <= 0" class="order-air" >
 				<img src="../../../assets/image/change-icon/order_empty@2x.png">
 				<p>你的订单为空</p>
 				<button class="button" v-on:click="goVisit()">
@@ -94,7 +93,7 @@ import { ORDERSTATUS, ORDERNAV } from '../static';
 import { orderList, orderCancel, orderReasonList, orderConfirm, orderRebuy} from '../../../api/network/order'; //订单列表  //取消订单 //获取退货原因 //确认收货 //再次购买
 import { Indicator, MessageBox, Popup  } from 'mint-ui';
 import OrderNav from './OrderNav';
-import { mapState, mapMutations } from "vuex";
+import { mapState, mapMutations } from 'vuex';
   export default {
     name:'page-navbar',
     data() {
@@ -120,7 +119,7 @@ import { mapState, mapMutations } from "vuex";
 						success:[],
 						reasonId: '',
 						message:'',
-						checkState:''
+						checkState: '',
 			}
     },
     created() {
@@ -129,8 +128,8 @@ import { mapState, mapMutations } from "vuex";
 		},
 		computed: {
 			...mapState({
-      	orderStatus: state => state.order.orderStatus
-    	}),
+				orderStatus: state => state.order.orderStatus
+			}),
 		},
 		methods: {
 			...mapMutations({
@@ -147,12 +146,14 @@ import { mapState, mapMutations } from "vuex";
 				this.$router.push({name: 'orderDetail', params: {orderDetail: id}})
 			},
 
-			setOrderNavActive(item) {
+			setOrderNavActive(item, index) {
 				this.currentNAVId = item.id;
 				this.orderList = [];
 				this.orderListParams.page = 1;
 				this.getOrderList();
-				this.changeStatus(this.currentNAVId)
+				if(this.currentNAVId == item.id) {
+					this.changeStatus(!this.orderStatus) ;
+				}
 			},
 
 			// 获取订单列表
@@ -236,7 +237,6 @@ import { mapState, mapMutations } from "vuex";
 			},
 			// 确认收货
 			confirm(item, index) {
-				debugger;
 				MessageBox.confirm('是否确认收货？', '确认收货').then(action => {        
 				this.$router.push({name:'orderTrade', query: {'item': item}});
 				this.orderConfirms(item.id, index);	
@@ -290,7 +290,7 @@ import { mapState, mapMutations } from "vuex";
 			getReasonItem(item) {
 				this.reasonId = item.id;
 			}
-		},
+		}
 }
 </script>
 
@@ -298,7 +298,11 @@ import { mapState, mapMutations } from "vuex";
 .order-wrapepr {
 	height: 100%;
 	.order-header {
+		position: fixed;
 		height: 44px;
+    width: 100%;
+    top: 44px;
+    z-index: 100;
 		ul {
 			list-style: none;
 			width: auto;
@@ -314,8 +318,8 @@ import { mapState, mapMutations } from "vuex";
 				font-family:'PingFangSC-Regular';
 				color:rgba(124,127,136,1);
 				height: 100%;
-    			text-align: center;
-    			line-height: 44px;
+    		text-align: center;
+    		line-height: 44px;
 				border-bottom: 2px solid transparent;
 				&.active {
 					color:rgba(242,48,48,1);
@@ -329,6 +333,7 @@ import { mapState, mapMutations } from "vuex";
 	 	height: 100%;
 		position: absolute;
 		width: 100%;
+		top: 89px;
 		.list {
 			width: 100%;
 			margin-top: 11px;
@@ -423,7 +428,7 @@ import { mapState, mapMutations } from "vuex";
 		.order-air {
 			width:100%;
 			vertical-align: middle;
-      text-align: center;
+      text-align: center;	
 			img {
 				width:52px;
 				height:59px; 

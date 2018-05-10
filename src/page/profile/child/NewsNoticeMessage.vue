@@ -6,7 +6,7 @@
       </header-item>    
     </mt-header>
     <!-- body -->
-    <div class="notice-message-body" v-for="(item, index) in NoticeMessage" v-on:click="goNotice(item.link)">
+    <div class="notice-message-body" v-for="(item, index) in NoticeMessage" v-on:click="goNotice(item.link)" :disabled= "!isClick">
       <p>{{item.created_at * 1000 | convertTime }}</p>
       <div class="notice-track">
         <span>{{item.title}}</span>
@@ -28,7 +28,8 @@ import { messageSystemList } from '../../../api/network/message' //通知消息
 export default { 
   data() {
     return {
-      NoticeMessage: []
+      NoticeMessage: [],
+      isClick: ''
     }
   },
   created() {
@@ -48,7 +49,10 @@ export default {
     },
     // 去到通知消息详情页面
     goNotice(link) {
-      this.$router.push({ name: 'NoticeMessageInfo', params: {'link': link}})
+      if(link == ''){ 
+        return false;
+      }
+        this.$router.push({ name: 'NoticeMessageInfo', params: {'link': link}})
     }  
   }
 }

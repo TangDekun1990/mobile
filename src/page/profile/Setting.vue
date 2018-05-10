@@ -10,7 +10,7 @@
       <ul>
         <li>
           <span>展示高清图片</span>
-          <mt-switch v-model ="value" v-if="changeOpen" v-on:click="setSwitch()"></mt-switch>
+          <mt-switch v-model ="isSwitch" v-on:change="setSwitch()"></mt-switch>
         </li>
         <!-- <li>
           <span>接收消息通知</span>
@@ -28,25 +28,25 @@
 
 <script>
 import { HeaderItem, Button } from '../../components/common'
-import { mapState, mapMutations } from 'vuex'
+import { mapState, mapMutations } from 'vuex';
 import { Header, MessageBox, Switch } from 'mint-ui'
 export default {
-  data() {
-    return {
-      value: true,
-      changeOpen: true
-    }
-  },
   computed: {
     ...mapState({
       isOnline: state => state.auth.isOnline,
-      switch: state => state.profile.switch,
     }),
+    isSwitch: {
+      get:function() {
+        return this.$store.state.profile.isSwitch;
+      },
+      set: function () {}
+    }
   },
+
   methods: {  
     ...mapMutations({
       clearToken: 'signout',
-      isOpen: 'isOpen'
+      changeOpen: 'changeOpen'
     }),  
     goBack() {
       this.$router.go(-1) 
@@ -61,9 +61,7 @@ export default {
       this.$router.push('/SettingAbout');
     },
     setSwitch() {
-      if(value == true){
-        this.changeOpen = false
-      }
+      this.changeOpen(!this.isSwitch)
     }
   }
 }
