@@ -1,7 +1,7 @@
 <template>
 	<div class="app">
 		<keep-alive>
-			<router-view v-if="$route.meta.keepAlive"></router-view>
+		  <router-view v-if="$route.meta.keepAlive"></router-view>
 		</keep-alive>
 		<router-view v-if="!$route.meta.keepAlive"></router-view>
 		<v-tab-bar v-if="$route.meta.isshowtabbar" ref='bar'></v-tab-bar>
@@ -18,7 +18,7 @@ export default {
 		window.location.href = 'wenchao://';
 	},
 
-	 watch: {
+	watch: {
         $route(to, from) {
             // 路由改变发起重置
             this.resetStates();
@@ -32,13 +32,8 @@ export default {
 			clearToken: 'clearToken',
 			changeTabBar: 'changeTabBar'
 		}),
-
-		...mapActions({
-			resetStates: "resetStates"
-		}),
-
 		goBack () {
-			window.history.length > 1 ? this.$router.go(-1): this.$router.push('/')
+			window.history.length > 1 ? this.$router.go(-1) : this.$router.push('/')
 		}
 	},
 
@@ -63,15 +58,12 @@ export default {
 				}
 			})
 		}
-		// if (this.$refs.bar) {
-		// 	this.$refs.bar.currentItem = this.$refs.bar.staticData[0];
-		// }
 	},
 }
 </script>
 
 <style>
-div.app {
-	height: 100%;
-}
+	div.app {
+		height: 100%;
+	}
 </style>

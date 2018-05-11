@@ -36,6 +36,10 @@ export default {
   .header {
     @include header;
     border-bottom: 1px solid #E8EAED;
+    position: fixed;
+    width: 100%;
+    top: 0px;
+    z-index: 101;
   }
 </style>
 <style>

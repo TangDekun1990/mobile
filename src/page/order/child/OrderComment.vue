@@ -37,7 +37,8 @@
 import { HeaderItem } from "../../../components/common";
 import { Header, Toast} from "mint-ui";
 import { orderReview } from "../../../api/network/order"; //评价晒单
-import { IMAGE } from "../static";
+import { IMAGE } from '../static'
+import { ENUM } from '../../../config/enum'
 export default {
   data() {
     return {
@@ -50,7 +51,7 @@ export default {
   },
   methods: {
     goBack() {
-      this.$router.go(-1);
+      this.$router.push({ name: 'order', params: { order: ENUM.ORDER_STATUS.DELIVERIED }});
     },
     submit() {
       let id = this.$route.params.order.id ? this.$route.params.order.id : "";

@@ -14,7 +14,7 @@ const wxApi = {
 	},
 
 	/*
-	* getConfigRes： 获取config1微信配置
+	* getConfigRes： 获取config微信配置
 	*/
 	getConfigRes(title, imgUrl) {
 		let that = this;

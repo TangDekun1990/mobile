@@ -1,8 +1,8 @@
 // profile.js
 const state = {
-  time: {'noticeTime':'', ordertime: ''},
+  time: {'noticeTime': '', ordertime: ''},
   type: false, // type == false ? join_at : create_at
-  switch: true // switch == true ? 开 : 关
+  isSwitch: true // switch == true ? 开 : 关
 }
 
 // mutations
@@ -14,8 +14,9 @@ const mutations = {
   changeType(state, type) {
     state.type = type
   },
-  isOpen(state, open) {
-    state.switch = open
+  changeOpen(state, value) {
+    // debugger;
+    state.isSwitch = value
   }
 }
 

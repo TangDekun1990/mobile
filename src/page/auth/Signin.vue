@@ -89,7 +89,7 @@ export default {
     }
   },
   created: function () {
-    this.fetchConfig()
+    this.fetchConfig();
   },
   methods: {
     ...mapMutations({
