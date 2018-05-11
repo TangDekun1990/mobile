@@ -8,8 +8,8 @@
 					v-for="(item, index) in ORDERNAV" 
 					v-bind:key="item.id" 
 					v-bind:class="{'active': currentNAVId == item.id}"
-					v-on:click="setOrderNavActive(item)"
-				>{{ item.name }}</li>
+					v-on:click="setOrderNavActive(item, index)"
+				>{{ item.name }} {{orderStatus}}</li>
 			</ul>
 		</div>
 		<!-- body -->
@@ -77,7 +77,7 @@
 					<p v-if='!isMore'>没有更多了</p>
 				</div>
 			</div>
-			<div v-if="orderList.length <= 0" class="order-air" >
+			<div class="order-air" v-if="orderList.length <= 0">
 				<img src="../../../assets/image/change-icon/order_empty@2x.png">
 				<p>你的订单为空</p>
 				<button class="button" v-on:click="goVisit()">
@@ -121,20 +121,21 @@ import { mapState, mapMutations } from 'vuex';
 						message:'',
 						checkState: '',
 			}
-    },
+		},
     created() {
 			this.getUrlParams();
 			this.orderReasonList();
 		},
 		computed: {
 			...mapState({
-				orderStatus: state => state.order.orderStatus
+				orderStatus: state => state.order.orderStatus,
 			}),
 		},
 		methods: {
 			...mapMutations({
-				changeStatus: 'changeStatus'
+				changeStatus: 'changeStatus',
 			}),
+
 			getUrlParams() {
 				let urlparams = this.$route.params;
 				if(urlparams.order) {
@@ -151,9 +152,7 @@ import { mapState, mapMutations } from 'vuex';
 				this.orderList = [];
 				this.orderListParams.page = 1;
 				this.getOrderList();
-				if(this.currentNAVId == item.id) {
-					this.changeStatus(!this.orderStatus) ;
-				}
+				this.changeStatus(index);
 			},
 
 			// 获取订单列表
@@ -184,16 +183,12 @@ import { mapState, mapMutations } from 'vuex';
 			},
 			//  加载更多数据
 			getMore() {
-				if(this.isMore) {
-					Indicator.open({text: 'Loading...', spinnerType: 'fading-circle'});
-				}
+				this.loading = true;
 				this.orderListParams.page = ++this.orderListParams.page;
 				if (this.isMore) {
 					this.loading = false;
 					this.getOrderList(true);
-				} else {
-					this.loading = true;
-				}
+				} 
 			},
 	
 			// 取消订单
@@ -496,6 +491,16 @@ import { mapState, mapMutations } from 'vuex';
 				}
 			}
 		}
+	}
+	.show-product-model {
+		background: rgba(0, 0, 0, 0.5);
+		overflow: hidden;
+		height: 100%;
+		position: fixed;
+		top: 100px;
+		bottom: 0px;
+		left: 0px;
+		right: 0px;
 	}
 }
 </style>

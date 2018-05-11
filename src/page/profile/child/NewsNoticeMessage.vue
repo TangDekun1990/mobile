@@ -69,6 +69,7 @@ export default {
     }
      .notice-message-body {
       width:100%;
+      height: 100%;
       >p {
         text-align: center;
         margin-top:20px;
@@ -77,7 +78,7 @@ export default {
         color: #7C7F88;
       }
       .notice-track {
-        height:96px; 
+        height:100%; 
         background:rgba(255,255,255,1);
         border-radius: 2px ; 
         margin: 0px 10px;
@@ -94,8 +95,8 @@ export default {
           p {
             font-size: 13px;
             color:rgba(124,127,136,1);
-            width:310px;
-            height:36px;
+            width:100%;
+            height:100%;
             padding:0px 30px 14px 15px;
           }
           .arrow-right {

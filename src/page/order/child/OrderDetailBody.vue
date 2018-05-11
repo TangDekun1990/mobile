@@ -13,7 +13,7 @@
 				<span>待发货</span>
 			</div>
 
-			<div class="receipt" v-if="orderDetail.order.status == 1 " v-on:click="goOrderrack(order.id)">
+			<div class="receipt" v-if="orderDetail.order.status == 1 && trackList.length >= 1" v-on:click="goOrderrack(order.id)">
 				<label>
 					<img src="../../../assets/image/change-icon/e0_delivery@2x.png">
 					<span>{{trackList[0].content}}</span>
@@ -493,6 +493,8 @@ computed: {
 	height: 80px;
 	margin: 15px 10px 15px 15px;
 	border: 1px solid #e8eaed;
+	flex-basis: 80px;
+	flex-shrink: 0;
 }
 .right-wrapper {
 	display: flex;

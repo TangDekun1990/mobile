@@ -13,7 +13,7 @@
         </div>
         <div class="flex-right">
           <h3>订单消息</h3>
-          <span>{{orderMessage.content}}</span>
+          <span v-if="orderMessage.length >= 1">{{orderMessage.content}}</span>
           <span class="prompt" v-show="isShow"></span>
         </div>
       </div>
@@ -23,8 +23,8 @@
         </div>
         <div class="flex-right">
           <h3>通知消息</h3>
-          <span>{{NoticeMessage.content}}</span>
-          <span class="prompt" v-show="isShow"></span>
+          <span v-if="orderMessage.length >= 1">{{NoticeMessage.content}}</span>
+          <span class="prompt"></span>
         </div>
       </div>
       <div class="newslist" v-on:click="getServiceMessage()">
@@ -80,8 +80,10 @@ export default {
     },
     // 通知消息
     getNoticeMessage() {
-      this.changeType(true);
-      this.saveMessageTime({ noticeTime: this.NoticeMessage.created_at });
+      if(this.NoticeMessage) {
+        this.changeType(true);
+        this.saveMessageTime({ noticeTime: this.NoticeMessage.created_at });
+      }
       this.$router.push("newsNoticeMessage");
     },
 
