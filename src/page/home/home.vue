@@ -1,20 +1,18 @@
 <template>
 	<div class="container">
 		<div class="list">
-			<card-group 
-				class="section" 
-				v-for="(item, index) in getCardGroups" 
-				:key="index" 
+			<card-group
+				class="section"
+				v-for="(item, index) in getCardGroups"
+				:key="index"
 				:item="item">
 			</card-group>
-		</div>	
+		</div>
 		<home-header class="header"></home-header>
-		<tab-bar></tab-bar>
 	</div>
 </template>
 
 <script>
-	import tabBar from '../../components/common/Tabbar'
 	import { HeaderItem } from '../../components/common'
 	import { Header, Indicator, Toast } from 'mint-ui'
 	import { cardpageGet } from '../../api/network/cardpage'
@@ -28,7 +26,6 @@
 			}
 		},
 		components: {
-			tabBar,
 			CardGroup,
 			HomeHeader,
 		},
@@ -58,7 +55,7 @@
 				return groups
 			}
 		},
-		methods: {						
+		methods: {
 		},
 	}
 </script>

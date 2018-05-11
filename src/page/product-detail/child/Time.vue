@@ -4,7 +4,7 @@
 		<div class="time-body">
 			<span class="title">距离活动结束时间</span>
 			<div>
-				<span>{{ day }}</span>&nbsp;&nbsp;天&nbsp;&nbsp;<span>{{ hours }}</span>&nbsp;&nbsp;时&nbsp;&nbsp;<span>{{minute}}</span>&nbsp;&nbsp;分&nbsp;&nbsp;<span>{{second}}</span>&nbsp;&nbsp;秒
+				<span>{{ day }}</span>&nbsp;天&nbsp;<span>{{ hours }}</span>&nbsp;时&nbsp;<span>{{minute}}</span>&nbsp;分&nbsp;<span>{{second}}</span>&nbsp;秒
 			</div>
 		</div>
 	</div>
@@ -89,7 +89,7 @@
 			padding: 0px 15px;
 			line-height: 50px;
 			span.title {
-				font-size:15px;
+				font-size:14px;
 				color:rgba(239,51,56,1);
 			}
 			div {

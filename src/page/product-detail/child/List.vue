@@ -60,10 +60,9 @@ export default {
 	background:rgba(255,255,255,1);
 	.list{
 		padding: 15px 0px;
-		border-bottom: 1px solid #e8eaed;
+		border-bottom: 0.5px solid #e8eaed;
 		color: #4E545D;
 		font-size: 15px;
-		font-family: 'PingFangSC';
 		div {
 			overflow: hidden;
 			padding-bottom: 15px;
@@ -93,7 +92,6 @@ export default {
 					height:16px;
 					text-align:center;
 					background-size:cover;
-					font-weight: 100;
 					line-height: 16px;
 				}
 				&.medium-review {
@@ -102,7 +100,6 @@ export default {
 					height:16px;
 					text-align:center;
 					background-size:cover;
-					font-weight: 100;
 					line-height: 16px;
 				}
 				&.bad-review {
@@ -111,7 +108,6 @@ export default {
 					height:16px;
 					text-align:center;
 					background-size:cover;
-					font-weight: 100;
 					line-height: 16px;
 				}
 			}

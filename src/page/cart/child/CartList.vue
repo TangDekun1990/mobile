@@ -391,8 +391,8 @@ export default {
 						height: 19px;
 						color: #FFFFFF;
 						font-size: 10px;
-						top: 0px;
-						left: 0px;
+						top: 12px;
+						/* left: 0px; */
 						background-size: cover;
 						font-weight: 100;
 						line-height: 19px;

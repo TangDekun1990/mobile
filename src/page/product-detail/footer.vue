@@ -108,7 +108,7 @@
 <style lang='scss' scoped>
 	.ui-detail-footer {
 		background:rgba(255,255,255,1);
-		border-top: 1px solid #e8eaed;
+		border-top: 0.5px solid #e8eaed;
 		width: auto;
 
 		position: absolute;
@@ -163,7 +163,6 @@
 			    left: 20px;
 			    top: 11px;
 			    font-size: 10px;
-			    font-family: 'HelveticaNeue';
 			    line-height: 14px;
 			    width: 18px;
 			    height: 14px;
@@ -174,7 +173,7 @@
 			}
 			div.price {
 				padding-left: 15px;
-				border-left: 1px solid #E8EAED;
+				border-left: 0.5px solid #E8EAED;
 				height: 50px;
 			    line-height: 50px;
 			    display: flex;

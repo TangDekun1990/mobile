@@ -243,7 +243,7 @@
 		}
 
 		.info-sub {
-			border-bottom: 1px solid #e8eaed;
+			border-bottom: 0.5px solid #e8eaed;
 			padding-bottom: 15px;
 			p {
 				padding: 0px;
@@ -268,7 +268,7 @@
 			align-content: center;
 			align-items: center;
 			padding: 15px 0px;
-			border-bottom: 1px solid #e8eaed;
+			border-bottom: 0.5px solid #e8eaed;
 			span {
 				margin-left: 15px;
 				font-size:12px;

@@ -47,15 +47,17 @@ Vue.filter('convertTime', function (timeStr) {
 	return Moment(timeStr).format('YYYY-MM-DD HH:mm:ss')
 })
 
-// router.beforeEach((to, from, next) => {
-// 	const toDepth = to.path.split('/').length
-// 	const fromDepth = from.path.split('/').length
-// 	if (toDepth < fromDepth) {
-// 		from.meta.keepAlive = false
-// 		to.meta.keepAlive = true
-// 	}
-// 	next()
-// })
+router.beforeEach((to, from, next) => {
+	let metaData = to.meta;
+	if (metaData.setIsShowTabBar) {
+		for (const key in to.params) {
+			if (key == metaData.setIsShowTabBar) {
+				metaData.isshowtabbar = parseInt(to.params[metaData.setIsShowTabBar]);
+			}
+		}
+	}
+	next();
+});
 
 Vue.use(VueRouter)
 Vue.use(Mint)
