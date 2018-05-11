@@ -6,8 +6,8 @@
 				<img src="../../../assets/image/change-icon/back@2x.png" class="ui-back" @click="goBack()">
 				<input type="search" placeholder="请输入您要搜索的商品" v-model="keyword" autocomplete="off">
 				<img src="../../../assets/image/change-icon/b2_cart@2x.png" class="ui-cart" v-on:click='goCart()'>
-				<span class="cart-number" v-if="quantity > 0 && quantity <= 100">{{ quantity }}</span>
-				<span class="cart-number" v-if="quantity >= 100 ">99+</span>
+				<span class="cart-number" v-if="cartNumber <= 100 && cartNumber > 0">{{ cartNumber }}</span>
+			<span class="cart-number" v-if="cartNumber >= 100  && cartNumber > 0 ">99+</span>
 			</div>
 		</form>
 	</div>
@@ -23,18 +23,16 @@
 
 		data() {
 			return {
-				keyword: this.value ? this.value : '',  //关键字
-				quantity: 0  //购物车数量
+				keyword: this.value ? this.value : ''  //关键字
 			}
 		},
 
-		created(){
-			this.getCarNumber();
-		},
+		created(){},
 
 		computed: mapState({
 			isSearch: state => state.product.isSearch,
-			isOnline: state => state.auth.isOnline
+			isOnline: state => state.auth.isOnline,
+			cartNumber: state => state.tabBar.cartNumber
 		}),
 
 		watch: {
@@ -47,7 +45,8 @@
 
 		methods: {
 			...mapMutations({
-				changeSearch: 'changeSearch'
+				changeSearch: 'changeSearch',
+				setCartNumber: 'setCartNumber'
 			}),
 
 			/*
@@ -85,7 +84,7 @@
 			getCarNumber() {
 				cartQuantity().then(res => {
 					if (res) {
-						this.quantity = res.quantity;
+						this.setCartNumber(res.quantity);
 					}
 				})
 			},

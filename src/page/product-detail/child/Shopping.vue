@@ -57,7 +57,7 @@
 	import { mapState, mapMutations } from 'vuex';
 	import { Toast } from 'mint-ui';
 
-	import { cartAdd } from '../../../api/network/cart';
+	import { cartAdd, cartQuantity } from '../../../api/network/cart';
 
 	import { ENUM } from '../../../config/enum';
 
@@ -126,7 +126,8 @@
 				hideCommodity: 'setIsHideCommodity',
 				saveNumber: 'saveNumber',
 				saveChooseInfo: 'saveChooseInfo',
-				saveProperties: 'saveProperties'
+				saveProperties: 'saveProperties',
+				setCartNumber: 'setCartNumber'
 			}),
 
 			// 关闭购物车浮层
@@ -217,10 +218,22 @@
 					this.$parent.$emit('start-addcart-animation');
 					if (res.cart_goods) {
 						this.saveNumber(this.numbers);
+						this.getCarNumber();
 						this.$parent.$emit('end-addcart-animation');
 					}
 				},(error) => {
 					Toast(error.errorMsg);
+				})
+			},
+
+			/*
+			 *  getCarNumber: 获取购物车数量
+			 */
+			getCarNumber() {
+				cartQuantity().then(res => {
+					if (res) {
+						this.setCartNumber(res.quantity);
+					}
 				})
 			},
 

@@ -76,6 +76,8 @@ import Cart from '../page/cart/cart'
 // 查看推荐商品
 import Recommend from '../page/recommend/Recommend'
 import With from '../page/recommend/with'
+
+import Promotions from '../page/promotions/Promotions'
 //
 import updateinfo from '../page/profile/child/Update'
 export default [
@@ -348,6 +350,11 @@ export default [
 				name: 'redetail',
 				path: '/redetail/:id?',
 				component: redetail
+			},
+			{
+				name: 'promotions',
+				path: '/promotions',
+				component: Promotions
 			}
 		]
 	}

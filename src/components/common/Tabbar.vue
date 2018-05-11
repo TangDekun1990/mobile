@@ -5,6 +5,8 @@
 				<li class="item" v-for='item in staticData' v-bind:key="item.key"  v-on:click='setCurrentActive(item)' v-bind:class="{'currentavtive': currentItem == item.link}">
 					<img v-bind:src="item.bgurl" v-if='currentItem != item.link'>
 					<img v-bind:src="item.activeBgurl" v-if='currentItem == item.link'>
+					<span v-if="cartNumber <= 100 && cartNumber > 0 && item.link == 'cart'">{{ cartNumber }}</span>
+					<span v-if="cartNumber >= 100  && cartNumber > 0 && item.link == 'cart'">99+</span>
 					<a>{{item.name}}</a>
 				</li>
 			</ul>
@@ -58,7 +60,8 @@
 
 		computed: {
 			...mapState({
-				currentTabBar: state => state.tabBar.currentTabBar
+				currentTabBar: state => state.tabBar.currentTabBar,
+				cartNumber: state => state.tabBar.cartNumber
 			})
 		},
 
@@ -112,11 +115,11 @@
 	    		align-items: center;
 	    		height: 50px;
 				li {
-					font-family: $fontFamily;
 					display: flex;
 					flex-direction: column;
 					justify-content: flex-start;
 					align-items: center;
+					position: relative;
 					img {
 						@include wh(30px, 30px);
 						@include ilc();
@@ -124,6 +127,15 @@
 					}
 					a {
 						@include sc($fontSize, $mainFontColor);
+					}
+					span {
+						position: absolute;
+					    right: -5px;
+					    background: rgba(242,16,0,1);
+					    font-size: 10px;
+					    color: #FFFFFF;
+					    border-radius: 50%;
+					    padding: 2px 4px;
 					}
 				}
 				li.currentavtive {

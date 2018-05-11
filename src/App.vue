@@ -11,11 +11,13 @@
 <script>
 import { mapMutations, mapActions } from 'vuex'
 import tabBar from './components/common/Tabbar'
+import { cartQuantity } from './api/network/cart'
 export default {
 	name: 'app',
 
 	created: function() {
 		window.location.href = 'wenchao://';
+		this.getCartNumber();
 	},
 
 	watch: {
@@ -30,10 +32,24 @@ export default {
 		...mapMutations({
 			saveToken: 'saveToken',
 			clearToken: 'clearToken',
-			changeTabBar: 'changeTabBar'
+			changeTabBar: 'changeTabBar',
+			setCartNumber: 'setCartNumber'
 		}),
+
+		...mapActions({
+			resetStates: 'resetStates'
+		}),
+
 		goBack () {
 			window.history.length > 1 ? this.$router.go(-1) : this.$router.push('/')
+		},
+
+		getCartNumber() {
+			cartQuantity().then( res => {
+				if (res) {
+					this.setCartNumber(res.quantity);
+				}
+			})
 		}
 	},
 
