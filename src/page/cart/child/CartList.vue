@@ -197,6 +197,7 @@ export default {
 		 	Indicator.open();
 		 	cartDelete(deleteGoods).then(res => {
 		 		if (res) {
+		 			this.getCartNumber();
 		 			this.getCartList(false);
 		 			Indicator.close();
 		 		}
