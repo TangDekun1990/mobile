@@ -166,7 +166,8 @@ export default {
 			isOnline: state => state.auth.isOnline,
 			user: state => state.auth.user,
 			time: state => state.profile.time,
-			type: state => state.profile.type
+			type: state => state.profile.type,
+			orderStatus: state => state.order.orderStatus
 		}),
 		nickname() {
 			let title = "登录/注册";
@@ -219,7 +220,8 @@ export default {
 methods: {
 	...mapMutations({
 		saveUser: "saveUser",
-		changeType: 'changeType'
+		changeType: 'changeType',
+		changeStatus: 'changeStatus'
 	}),
     // 获取订单不同状态的数量统计
     getOrderSubtotal() {
@@ -296,6 +298,9 @@ methods: {
     	this.$router.push("help");
     },
     goOrder() {
+		if(	this.orderStatus != 10) {
+			this.changeStatus(10)
+		}
     	this.$router.push({
     		name: "order",
     		params: { order: ENUM.ORDER_STATUS.ALL }
