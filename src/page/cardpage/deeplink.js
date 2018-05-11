@@ -73,7 +73,8 @@ export const openLink = (router, link) => {
             params = { name: 'News' }
           }
         } else if (where === 'promotions') {
-          // 组合促销列表 // TODO:								
+          // 组合促销列表 
+          params = { name: 'promotions', query: { id: action } }								
         } else if (where === 'product') {
           if (action === 'all') {
             // 商品列表 
