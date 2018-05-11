@@ -3,21 +3,23 @@
      <!-- header -->
     <mt-header class="header" title="客服消息">
       <header-item slot="left" v-bind:isBack=true v-on:onclick="goBack">
-      </header-item>    
+      </header-item>
     </mt-header>
     <!-- body -->
-    <div class="service-Message-body" v-on:click="goService()">
-        <img class="photo" src="../../../assets/image/change-icon/avatar_service.png">
-        <div class="right-wrapper">
-          <div>
-            <span class="title">温超客服</span>
-            <p class="message-number">
-              <span>6</span> 
-            </p>
-          </div>
-          <p class="content">您好，我是温超机器人，请问有什么可以帮您？请...</p>
-        </div>
-      </div> 
+    <div class="service-Message-body">
+    	<a href="https://www.sobot.com/chat/h5/index.html?sysNum=5b696ae2d5394f06b558e64ebbaf3be7&back=1&titleFlag=2&customTtile='智齿客服' ">
+	        <img class="photo" src="../../../assets/image/change-icon/avatar_service.png">
+	        <div class="right-wrapper">
+	          <div>
+	            <span class="title">温超客服</span>
+	            <p class="message-number">
+	              <span>6</span>
+	            </p>
+	          </div>
+	          <p class="content">您好，我是温超机器人，请问有什么可以帮您？请...</p>
+	        </div>
+	    </a>
+      </div>
   </div>
 </template>
 
@@ -53,7 +55,7 @@
       border-bottom: 1px solid #E8EAED;
       .photo {
         width:50px;
-        height:50px; 
+        height:50px;
         padding:15px;
       }
       .right-wrapper {

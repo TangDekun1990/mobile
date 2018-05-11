@@ -32,11 +32,9 @@
           <img src="../../assets/image/change-icon/e12_service@2x.png">
         </div>
         <div class="flex-right">
-        	<a href="https://www.sobot.com/chat/h5/index.html?sysNum=5b696ae2d5394f06b558e64ebbaf3be7&back=1&titleFlag=2&customTtile='智齿客服' ">
 	          <h3>客服消息</h3>
 	          <span>在线客服咨询时间为08:00-22:00 </span>
 	          <span class="prompt" v-show="isShow"></span>
-	        </a>
         </div>
       </div>
     </div>
