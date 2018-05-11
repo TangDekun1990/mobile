@@ -5,8 +5,8 @@
 			<img src="../../assets/image/change-icon/back@2x.png" v-on:click='goBack()' class="ui-go-back">
 			<h3>相关商品</h3>
 			<img src="../../assets/image/change-icon/b2_cart@2x.png" class="ui-cart" v-on:click='goCart()'>
-			<span class="cart-number" v-if="quantity <= 100">{{ quantity }}</span>
-			<span class="cart-number" v-if="quantity >= 100 ">99+</span>
+			<span class="cart-number" v-if="cartNumber <= 100 && cartNumber > 0">{{ cartNumber }}</span>
+			<span class="cart-number" v-if="cartNumber >= 100  && cartNumber > 0 ">99+</span>
 		</div>
 		<div class="ui-recommend-body" v-infinite-scroll="getMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
 			<v-recommend-list v-for="(item, index) in recommendList" :item="item" :productId="item.id" v-bind:key="index"></v-recommend-list>
@@ -39,14 +39,14 @@
 		},
 
 		created(){
-			this.getCarNumber();
 			this.$on('get-cart-quantity', () => {
 				this.getCarNumber();
 			})
 		},
 
 		computed: mapState({
-			user: state => state.auth.user
+			user: state => state.auth.user,
+			cartNumber: state => state.tabBar.cartNumber
 		}),
 
 		mounted(){
@@ -60,13 +60,16 @@
 		},
 
 		methods: {
+			...mapMutations({
+				setCartNumber: 'setCartNumber'
+			}),
 			/*
 			 *  getCarNumber: 获取购物车数量
 			 */
 			getCarNumber() {
 				cartQuantity().then(res => {
 					if (res) {
-						this.quantity = res.quantity;
+						this.setCartNumber(res.quantity);
 					}
 				})
 			},

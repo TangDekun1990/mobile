@@ -11,13 +11,14 @@
       <div class="order-track">
         <span>{{item.title}}</span>
         <div class="order-status"> 
-          <div class="orderImage">
-            <img :src="item.photo.large">
-          </div>
-          <p>{{item.content}}</p>
-          <div class="arrow-right">
-            <img src="../../../assets/image/change-icon/enter@2x.png">
-          </div>
+        <div class="orderImage">
+          <img :src="item.photo.thumb" v-if="item.photo != null">
+          <img src="../../../assets/image/change-icon/default_image_02@2x.png" v-if=' item.photo == null'>
+        </div>
+        <p>{{item.content}}</p>
+        <div class="arrow-right">
+          <img src="../../../assets/image/change-icon/enter@2x.png">
+        </div>
         </div>
       </div>
     </div>

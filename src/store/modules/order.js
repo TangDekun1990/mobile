@@ -1,6 +1,6 @@
 // order.js
 const state = {
-  orderStatus: false // orderStatus == true ? 选中 : 不选中
+  orderStatus: true // orderStatus == true ? 选中 : 不选中
 }
 
 // mutations

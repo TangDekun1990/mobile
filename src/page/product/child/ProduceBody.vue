@@ -10,7 +10,7 @@
 				<span v-if="item.good_stock > 0 && item.good_stock <= 10">仅剩{{ item.good_stock }}件</span>
 			</div>
 
-			<span class="promos" v-if="item.activity && item.activity.display_time">促销</span>
+			<span class="promos" v-if="item.activity">促销</span>
 
 			<div class="flex-right">
 				<h3 class="title" style="-webkit-box-orient:vertical">{{ item.name }}</h3>
@@ -22,7 +22,8 @@
 				<div class="sendway">
 					<span v-if="item.self_employed" class="self-support">自营</span>
 					<span>评论：{{ item.comment_count }}</span>
-					<span>收藏：{{item.collector.length}}</span>
+					<span v-if="item.collector">收藏：{{item.collector.length}}</span>
+					<span v-if="!item.collector">收藏：0</span>
 					<img src="../../../assets/image/change-icon/cart@2x.png" @click.stop="_cartAdd(item.id)">
 				</div>
 			</div>
