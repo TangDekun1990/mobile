@@ -12,7 +12,7 @@
 			<div class="body-list" v-for="(item, index) in detailInfo.promos" :key="index" v-if="index <= 1">
 				<span class="name">{{ item.name }}</span>
 				<span class="title">{{item.promo}}</span>
-				<div class="content">
+				<div class="content" v-if="item.desc">
 					<p>{{item.desc}}</p>
 				</div>
 			</div>
@@ -29,7 +29,7 @@
 					<div class="body-list" v-for="(item, index) in detailInfo.promos" :key="index">
 						<span class="name">{{ item.name }}</span>
 						<span class="title">{{item.promo}}</span>
-						<div class="content">
+						<div class="content" v-if="item.desc">
 							<p>{{item.desc}}</p>
 						</div>
 					</div>
@@ -79,7 +79,7 @@
 .ui-promotions-wrapper {
 	height: auto;
 	.promotions-header {
-		border-bottom: 1px solid #E8EAED;
+		border-bottom: 0.5px solid #E8EAED;
 		height: 50px;
 		h3 {
 			font-size:16px;
@@ -94,8 +94,9 @@
 	}
 	.promotions-body {
 		background:rgba(255,255,255,1);
-		padding: 12px 0px;
+		padding: 0px 0px 12px 0px;
 		.body-list {
+			margin-top: 12px;
 			span.name{
 				background:rgba(255,255,255,1);
 				border-radius: 2px ;
@@ -113,9 +114,8 @@
 				line-height:12px;
 			}
 			div.content{
-				background:rgba(255,244,244,1);
 				border-radius: 1px ;
-				margin: 10px 0px 0px 0px;
+				padding: 12px 0px 0px 0px;
 				p {
 					padding:0px;
 					margin:0px;
@@ -127,6 +127,7 @@
 				    -webkit-line-clamp: 2;
 				    overflow: hidden;
 				    padding: 12px 12px 10px 12px;
+				    background:rgba(255,244,244,1);
 				}
 			}
 		}

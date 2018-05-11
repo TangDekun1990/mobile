@@ -44,7 +44,7 @@
 	.ui-like-wrapper {
 		background-color: #ffffff;
 		.header{
-			border-bottom: 1px solid #e8eaed;
+			border-bottom: 0.5px solid #e8eaed;
 			span:first-child{
 				font-size:16px;
 				color:rgba(78,84,93,1);

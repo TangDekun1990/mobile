@@ -59,7 +59,8 @@ export default {
 		padding: 0px 9px;
 		height:44px;
 		background:rgba(255,255,255,1);
-		box-shadow: 0px -0.5px 0px 0px rgba(232,234,237,1);
+		border-bottom: 0.5px solid rgba(232,234,237,1);
+		/* box-shadow: 0px -0.5px 0px 0px rgba(232,234,237,1); */
 		color: #55595F;
 		font-size: 17px;
 		width: auto;

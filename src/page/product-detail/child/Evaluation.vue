@@ -134,15 +134,15 @@
 				div {
 					color: #5C5958;
 					font-size: 14px;
-					font-family: 'PingFangSC';
 					height: 24px;
-					border: 1px solid #4E545D;
-					padding: 2px 9px;
+					border: 0.5px solid #4E545D;
+					padding: 0px 9px;
+					line-height: 24px;
 					text-align: center;
 					&.active {
 						color: #FFFFFF;
 						background: #EF3338;
-						border: 1px solid transparent;
+						border: 0.5px solid transparent;
 					}
 				}
 			}
@@ -152,10 +152,9 @@
 			background:rgba(255,255,255,1);
 			.list{
 				padding: 15px 0px;
-				box-shadow: 0px 0.5px 0px 0px rgba(232,234,237,1);
+				border-bottom: 0.5px solid rgba(232,234,237,1);
 				color: #4E545D;
 				font-size: 15px;
-				font-family: 'PingFangSC';
 				div {
 					overflow: hidden;
 					padding-bottom: 15px;
@@ -185,7 +184,6 @@
 						    height:16px;
 						    text-align:center;
 						    background-size:cover;
-						    font-weight: 100;
 						    line-height: 16px;
 						}
 						&.medium-review {
@@ -194,7 +192,6 @@
 						    height:16px;
 						    text-align:center;
 						    background-size:cover;
-						    font-weight: 100;
 						    line-height: 16px;
 						}
 						&.bad-review {
@@ -203,7 +200,6 @@
 						    height:16px;
 						    text-align:center;
 						    background-size:cover;
-						    font-weight: 100;
 						    line-height: 16px;
 						}
 					}

@@ -218,7 +218,6 @@
 			width: 100%;
 		}
 		div.product-body{
-			font-family: 'PingFangSC-Regular';
 			position: absolute;
 			top: 89px;
 			background-color: #ffffff;
@@ -231,7 +230,6 @@
 				p{
 					color: #7C7F88;
 					font-size: 12px;
-					font-family: 'PingFangSC';
 					font-weight: 'Regular';
 					padding: 0px;
 					margin: 0px;

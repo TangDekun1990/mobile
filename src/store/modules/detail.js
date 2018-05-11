@@ -13,7 +13,8 @@ const initState = {
 	chooseinfo: {
 		specification:[],
 		ids: []
-	}
+	},
+	properties: []
 }
 // initial state
 const state = {
@@ -92,6 +93,10 @@ const mutations = {
 
 	changeType(state, value) {
 		state.type = value;
+	},
+
+	saveProperties(state, value) {
+		state.properties = value;
 	}
 }
 

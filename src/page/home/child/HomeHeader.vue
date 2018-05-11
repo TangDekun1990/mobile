@@ -1,7 +1,5 @@
 <template>
-	<div class="home-header">    
-    <div class="header-item">
-    </div>
+	<div class="home-header"> 
     <input type="search" placeholder="想找什么" autocomplete="off" @click="onSearch">      
     <div class="header-item" @click="rightClick">
       <img src="../../../assets/image/change-icon/b0_message@2x.png" class="header-icon">				
@@ -37,6 +35,7 @@
       align-items: center;
     }
     input {
+      margin-left: 15px;
       flex: 1;
       flex-basis: 200px;
       border-radius: 4px;
