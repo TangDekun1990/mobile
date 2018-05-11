@@ -20,7 +20,7 @@ export default {
     getTitle () {
       let title = ''
       if (this.isOptain()) {
-        title = '获得积分'
+        title = this.item.reason ? this.item.reason : '获得积分'
       } else {
         title = '积分兑换优惠劵'
       } 
