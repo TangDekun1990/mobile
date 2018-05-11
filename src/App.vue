@@ -16,7 +16,7 @@ export default {
 	name: 'app',
 
 	created: function() {
-		window.location.href = 'wenchao://';
+		// window.location.href = 'wenchao://';
 		this.getCartNumber();
 	},
 
