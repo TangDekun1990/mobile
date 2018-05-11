@@ -1,15 +1,15 @@
 <!-- OrderNav.vue -->
-<template> 
+<template>
 	<div class="order-wrapepr">
 		<!-- header -->
 		<div class="order-header">
 			<ul>
-				<li class="item" 
-					v-for="(item, index) in ORDERNAV" 
-					v-bind:key="item.id" 
+				<li class="item"
+					v-for="(item, index) in ORDERNAV"
+					v-bind:key="item.id"
 					v-bind:class="{'active': currentNAVId == item.id}"
 					v-on:click="setOrderNavActive(item, index)"
-				>{{ item.name }} {{orderStatus}}</li>
+				>{{ item.name }}</li>
 			</ul>
 		</div>
 		<!-- body -->
@@ -18,7 +18,7 @@
 			<div class="order-body" v-if="orderList.length > 0 ">
 				<div class="list" v-for="(item, index) in orderList">
 					<h3 class="title" v-if="item.status != 4">{{ getOrderStatusBy(item.status) }}</h3>
-					<h3 v-if="item.status == 4"> 
+					<h3 v-if="item.status == 4">
 						<img src="../../../assets/image/change-icon/e3_seal@2x.png">
 					</h3>
 					<div class="order-image" v-if="item.goods.length > 0"  @click="goOrderDetail(item.id)">
@@ -34,7 +34,7 @@
 							<mt-popup v-model="popupVisible" position="bottom" class="mint-popup">
 								<div class="cancels">
 									<div class="cancelInfo">
-										<span class="cancel" v-on:click="cancelInfo()">取消</span> 
+										<span class="cancel" v-on:click="cancelInfo()">取消</span>
 										<span class="success" v-on:click="complete(item.id, index)">完成</span>
 									</div>
 									<div class="reason">
@@ -46,7 +46,7 @@
 						</div>
 						<!-- 待发货 -->
 						<div class="btn"  v-if="item.status == 1 ? '':checkState">
-						
+
 						</div>
 						<!-- 发货中 -->
 						<div class="btn"  v-if="item.status == 2">
@@ -88,7 +88,7 @@
 	</div>
 </template>
 
-<script> 
+<script>
 import { ORDERSTATUS, ORDERNAV } from '../static';
 import { orderList, orderCancel, orderReasonList, orderConfirm, orderRebuy} from '../../../api/network/order'; //订单列表  //取消订单 //获取退货原因 //确认收货 //再次购买
 import { Indicator, MessageBox, Popup  } from 'mint-ui';
@@ -188,9 +188,9 @@ import { mapState, mapMutations } from 'vuex';
 				if (this.isMore) {
 					this.loading = false;
 					this.getOrderList(true);
-				} 
+				}
 			},
-	
+
 			// 取消订单
 			cancel() {
 				this.popupVisible = true;
@@ -217,7 +217,7 @@ import { mapState, mapMutations } from 'vuex';
 				document.removeEventListener("touchmove",mo,false);
 			},
 			***/
-			
+
 			// 查看物流
 			track(id) {
 				this.$router.push({ name: 'orderTrack', params: {orderTrack: id}});
@@ -232,9 +232,9 @@ import { mapState, mapMutations } from 'vuex';
 			},
 			// 确认收货
 			confirm(item, index) {
-				MessageBox.confirm('是否确认收货？', '确认收货').then(action => {        
+				MessageBox.confirm('是否确认收货？', '确认收货').then(action => {
 				this.$router.push({name:'orderTrade', query: {'item': item}});
-				this.orderConfirms(item.id, index);	
+				this.orderConfirms(item.id, index);
 				});
 			},
 			// 获取确认收货数据
@@ -245,7 +245,7 @@ import { mapState, mapMutations } from 'vuex';
 					}
 				})
 			},
-			
+
 			// 获取再次购买数据
 			goBuy(id) {
 				Indicator.open({
@@ -263,7 +263,7 @@ import { mapState, mapMutations } from 'vuex';
 			goComment(item) {
 				this.$router.push({ name: 'orderComment', params:{ order: item}});
 			},
-			
+
 			// 获取退货原因数据
 			orderReasonList() {
 				orderReasonList().then(res => {
@@ -281,7 +281,7 @@ import { mapState, mapMutations } from 'vuex';
 					}
 				})
 			},
-			// 
+			//
 			getReasonItem(item) {
 				this.reasonId = item.id;
 			}
@@ -346,19 +346,19 @@ import { mapState, mapMutations } from 'vuex';
 				padding: 0px 15px 0px 10px;
 				img {
 					width:76px;
-					height:60px;	
+					height:60px;
 				}
 			}
 			.order-image {
-				height:91px; 
+				height:91px;
 				background:rgba(250,250,250,1);
 				width: 100%;
     		overflow: auto;
 				white-space:nowrap;
 				img {
 					width:60px;
-					height:60px; 
-					border-radius: 1px ; 
+					height:60px;
+					border-radius: 1px ;
 					margin: 17px 10px 10px;
 				}
 			}
@@ -392,7 +392,7 @@ import { mapState, mapMutations } from 'vuex';
 				display: flex;
 				justify-content:flex-end;
 				background:rgba(255,255,255,1);
-				border-radius: 2px ; 
+				border-radius: 2px ;
 				button {
 					width: 90px;
 					height: 30px;
@@ -423,10 +423,10 @@ import { mapState, mapMutations } from 'vuex';
 		.order-air {
 			width:100%;
 			vertical-align: middle;
-      text-align: center;	
+      text-align: center;
 			img {
 				width:52px;
-				height:59px; 
+				height:59px;
 				box-sizing: border-box;
 				margin:	139px auto 30px;
 			}
@@ -441,9 +441,9 @@ import { mapState, mapMutations } from 'vuex';
 			}
 			.button {
 				width:200px;
-				height:44px; 
+				height:44px;
 				background:rgba(252,46,57,1);
-				border-radius: 2px ; 
+				border-radius: 2px ;
 				padding:14px 68px;
 				margin: 28px auto;
 				border:none;
@@ -469,7 +469,7 @@ import { mapState, mapMutations } from 'vuex';
 			justify-content:space-between;
 			span {
 				color:#000;
-				font-size: 14px;	
+				font-size: 14px;
 			}
 			.cancel {
 				padding-left:15px;
