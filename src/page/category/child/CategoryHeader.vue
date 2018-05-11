@@ -36,6 +36,6 @@
 <style scoped lang='scss'>
   .header {
 		@include header;
-		border-bottom: 0.5px solid $lineColor;
+		border-bottom: 0.5px solid #E8EAED;
   }
 </style>

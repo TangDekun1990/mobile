@@ -37,7 +37,7 @@ import { mapState, mapMutations } from 'vuex';
 import { Indicator } from 'mint-ui';
 import { Toast } from 'mint-ui';
 import { orderPrice } from '../../../api/network/order';
-import { cartGet, cartDelete, cartUpdate} from '../../../api/network/cart'
+import { cartGet, cartDelete, cartUpdate, cartQuantity} from '../../../api/network/cart'
 import { productValidate } from '../../../api/network/product'
 
 export default {
@@ -73,7 +73,8 @@ export default {
 	methods: {
 		...mapMutations({
 			getAmount: 'calculationAmount',
-			getPrice: 'calculationPrice'
+			getPrice: 'calculationPrice',
+			setCartNumber: 'setCartNumber'
 		}),
 
 		/*
@@ -273,11 +274,22 @@ export default {
 		 		if (res) {
 		 			Indicator.open(this.indicator);
 		 			this.updateList(index);
+		 			this.getCartNumber();
 		 		}
 		 	}, (error) => {
 		 		Toast(error.errorMsg);
 		 	});
 		 },
+		/*
+		 * getCartNumber： 获取购物车列表
+		 */
+		getCartNumber() {
+			cartQuantity().then( res => {
+				if (res) {
+					this.setCartNumber(res.quantity);
+				}
+			})
+		},
 
 		/*
 		 *  goDetail: 跳转到详情
@@ -378,6 +390,7 @@ export default {
 				    width: 90px;
 				    height: 90px;
 				    flex-basis: 90px;
+				    position: relative;
 					img {
 						width: 100%;
 						height: 100%;
@@ -391,7 +404,7 @@ export default {
 						height: 19px;
 						color: #FFFFFF;
 						font-size: 10px;
-						top: 12px;
+						top: 0px;
 						/* left: 0px; */
 						background-size: cover;
 						font-weight: 100;
