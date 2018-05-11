@@ -128,7 +128,6 @@
 			 */
 			getPromotionsList(){
 				let params = Object.assign({}, this.params, this.$route.query);
-				console.log(params);
 				productActivity(params.id, params.page, params.per_page).then( res => {
 					if (res) {
 						this.promotionsList = Object.assign({}, res);
