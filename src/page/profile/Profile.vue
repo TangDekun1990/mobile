@@ -99,7 +99,7 @@
         title="客服电话">
       </info-item>
     </div>
-    <tabbar></tabbar>
+    <!-- <tabbar></tabbar> -->
   </div>
 </template>
 
@@ -224,10 +224,10 @@ export default {
 		if(this.type) {
 			if(type == 1 && this.time.noticeTime) {
 				after = this.time.noticeTime;
-			} 
+			}
 			if(type == 2 && this.time.ordertime){
 				after = this.time.ordertime;
-			} 
+			}
 		}
       messageCount(after, type).then(res => {
         if (res) {

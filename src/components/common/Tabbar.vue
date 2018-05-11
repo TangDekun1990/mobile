@@ -2,9 +2,9 @@
 	<div class="ui-tabbar-wrapper">
 		<div class="tabbar-wrapper">
 			<ul>
-				<li class="item" v-for='item in staticData' v-bind:key="item.key"  v-on:click='setCurrentActive(item)' v-bind:class="{'currentavtive': currentItem.key == item.key}">
-					<img v-bind:src="item.bgurl" v-if='currentItem.key != item.key'>
-					<img v-bind:src="item.activeBgurl" v-if='currentItem.key == item.key'>
+				<li class="item" v-for='item in staticData' v-bind:key="item.key"  v-on:click='setCurrentActive(item)' v-bind:class="{'currentavtive': currentItem == item.link}">
+					<img v-bind:src="item.bgurl" v-if='currentItem != item.link'>
+					<img v-bind:src="item.activeBgurl" v-if='currentItem == item.link'>
 					<a>{{item.name}}</a>
 				</li>
 			</ul>
@@ -13,6 +13,7 @@
 </template>
 
 <script>
+	import { mapState, mapMutations } from 'vuex';
 	export default {
 		data() {
 			return {
@@ -23,7 +24,7 @@
 						'key': 0,
 						'bgurl': require('../../assets/image/tabbar-icon/tabbar_home_nor@2x.png'),
 						'activeBgurl': require('../../assets/image/tabbar-icon/tabbar_home_sel@2x.png'),
-						'isActive': false
+						'isActive': true
 					},
 					{
 						'name': '分类',
@@ -51,15 +52,37 @@
 						'isActive': false
 					}
 				],
-				currentItem: {}
+				currentItem: this.$store.state.tabBar.currentTabBar ? this.$store.state.tabBar.currentTabBar : 'home'
 			}
 		},
+
+		computed: {
+			...mapState({
+				currentTabBar: state => state.tabBar.currentTabBar
+			})
+		},
+
+		watch: {
+			currentTabBar: function(value){
+	            let data = this.staticData;
+	            for ( let i = 0; i <= data.length-1; i++) {
+		    		if(value == data[i].link) {
+			            this.currentItem = data[i].link;
+			        }
+		    	}
+        	}
+		},
+
+		created(){},
+
 		methods: {
+
 			gotoPage(path) {
 				this.$router.push(path)
 			},
+
 			setCurrentActive(item) {
-				this.currentItem = item;
+				this.currentItem = item.link;
 				this.$router.push({ 'name': item.link, 'params': item.params});
 			}
 		}
@@ -100,7 +123,7 @@
 						display: $block;
 					}
 					a {
-						@include sc($fontSize, $mainFontColor);												
+						@include sc($fontSize, $mainFontColor);
 					}
 				}
 				li.currentavtive {

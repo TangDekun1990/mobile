@@ -21,6 +21,7 @@ import delivery from './modules/delivery'
 import search from './modules/search'
 import profile from './modules/profile'
 import order from './modules/order'
+import tabBar from './modules/tabbar'
 
 Vue.use(Vuex)
 
@@ -39,7 +40,8 @@ export default new Vuex.Store({
 		delivery,
 		search,
 		profile,
-		order
+		order,
+		tabBar
 	},
 	getters: getters,
 	actions,

@@ -4,11 +4,13 @@
 			<router-view v-if="$route.meta.keepAlive"></router-view>
 		</keep-alive>
 		<router-view v-if="!$route.meta.keepAlive"></router-view>
+		<v-tab-bar v-if="$route.meta.isshowtabbar" ref='bar'></v-tab-bar>
 	</div>
 </template>
 
 <script>
 import { mapMutations, mapActions } from 'vuex'
+import tabBar from './components/common/Tabbar'
 export default {
 	name: 'app',
 
@@ -20,13 +22,15 @@ export default {
         $route(to, from) {
             // 路由改变发起重置
             this.resetStates();
+            this.changeTabBar(to.name);
         }
     },
 
 	methods: {
 		...mapMutations({
 			saveToken: 'saveToken',
-			clearToken: 'clearToken'
+			clearToken: 'clearToken',
+			changeTabBar: 'changeTabBar'
 		}),
 
 		...mapActions({
@@ -36,6 +40,10 @@ export default {
 		goBack () {
 			window.history.length > 1 ? this.$router.go(-1): this.$router.push('/')
 		}
+	},
+
+	components: {
+		'v-tab-bar': tabBar
 	},
 
 	mounted () {
@@ -55,6 +63,9 @@ export default {
 				}
 			})
 		}
+		// if (this.$refs.bar) {
+		// 	this.$refs.bar.currentItem = this.$refs.bar.staticData[0];
+		// }
 	},
 }
 </script>

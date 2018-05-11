@@ -18,10 +18,6 @@
 			<span @click="goHome()" v-if="isOnline">随便逛逛</span>
 			<span @click="goSingin()" v-if="!isOnline">去登录</span>
 		</div>
-
-		<!-- 底部tabbar -->
-		<v-cart-tabBar v-if='type'></v-cart-tabBar>
-
 	</div>
 </template>
 
@@ -63,6 +59,7 @@
 		},
 
 		created(){
+
 			this.isSignin();
 
 			// 监听是否改变购物车列表选中的状态
