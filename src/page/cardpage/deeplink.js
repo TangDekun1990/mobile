@@ -58,7 +58,7 @@ export const openLink = (router, link) => {
           params = { name: 'cart', params: { type: 0 } }
         } else if (where === 'search') {
           // 搜索界面
-          params = { name: 'search' }
+          params = { name: 'search', params: { isFromHome: true } }
         } else if (where === 'category') {          
           if (action === 'all') {
             // 分类列表
@@ -73,7 +73,8 @@ export const openLink = (router, link) => {
             params = { name: 'News' }
           }
         } else if (where === 'promotions') {
-          // 组合促销列表 // TODO:								
+          // 组合促销列表 
+          params = { name: 'promotions', query: { id: action } }								
         } else if (where === 'product') {
           if (action === 'all') {
             // 商品列表 

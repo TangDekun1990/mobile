@@ -5,7 +5,8 @@
 		<div class="footer-flex">
 			<div class="left">
 				<img src="../../assets/image/change-icon/b0_cart@2x.png" v-on:click='goCart()'>
-				<span class="icon" v-if='quantity > 0'>{{ quantity }}</span>
+				<span class="icon" v-if="cartNumber <= 100 && cartNumber > 0">{{ cartNumber }}</span>
+				<span class="icon" v-if="cartNumber >= 100  && cartNumber > 0 ">99+</span>
 				<div class="price">
 					<span>AED {{ detailInfo.current_price }}</span>
 					<span>AED {{ detailInfo.price }}</span>
@@ -34,8 +35,7 @@
 	export default {
 		data() {
 			return {
-				isAnimation: false,  //加入购物车成功之后是否显示动画
-				quantity: 0  //购物车总数
+				isAnimation: false  //加入购物车成功之后是否显示动画
 			}
 		},
 
@@ -55,11 +55,12 @@
 			isShowcartInfo: state => state.detail.isShowcartInfo,
 			detailInfo: state => state.detail.detailInfo,
 			isOnline: state => state.auth.isOnline,
-			ispromotion: state => state.detail.ispromotion
+			ispromotion: state => state.detail.ispromotion,
+			cartNumber: state => state.tabBar.cartNumber
 		}),
 
 		created(){
-			this.getShoppingTotal();
+			// this.getShoppingTotal();
 			this.$on('start-addcart-animation', () => {
 				this.isAnimation = true;
 			});
@@ -67,7 +68,7 @@
 				this.isAnimation = false;
 				this.saveCartState(false);
 				this.hideCommodity(false);
-				this.getShoppingTotal();
+				// this.getShoppingTotal();
 			});
 		},
 
@@ -108,7 +109,7 @@
 <style lang='scss' scoped>
 	.ui-detail-footer {
 		background:rgba(255,255,255,1);
-		border-top: 1px solid #e8eaed;
+		border-top: 0.5px solid #e8eaed;
 		width: auto;
 
 		position: absolute;
@@ -163,7 +164,6 @@
 			    left: 20px;
 			    top: 11px;
 			    font-size: 10px;
-			    font-family: 'HelveticaNeue';
 			    line-height: 14px;
 			    width: 18px;
 			    height: 14px;
@@ -174,7 +174,7 @@
 			}
 			div.price {
 				padding-left: 15px;
-				border-left: 1px solid #E8EAED;
+				border-left: 0.5px solid #E8EAED;
 				height: 50px;
 			    line-height: 50px;
 			    display: flex;

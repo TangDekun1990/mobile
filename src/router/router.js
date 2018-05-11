@@ -76,6 +76,8 @@ import Cart from '../page/cart/cart'
 // 查看推荐商品
 import Recommend from '../page/recommend/Recommend'
 import With from '../page/recommend/with'
+
+import Promotions from '../page/promotions/Promotions'
 //
 import updateinfo from '../page/profile/child/Update'
 export default [
@@ -92,13 +94,17 @@ export default [
 				path: '/home',
 				component: Home,
 				meta: {
-					keepAlive: true
+					keepAlive: true,
+					isshowtabbar: true
 				},
 			},
 			{
 				name: 'category',
 				path: '/category',
-				component: Category
+				component: Category,
+				meta: {
+					isshowtabbar: true
+				},
 			},
 			{
 				name: 'product',
@@ -131,7 +137,10 @@ export default [
 			{
 				name: 'profile',
 				path: '/profile',
-				component: Profile
+				component: Profile,
+				meta: {
+					isshowtabbar: true
+				},
 			},
 			{
 				name: 'setting',
@@ -303,7 +312,11 @@ export default [
 			{
 				name: 'cart',
 				path: '/cart/:type?',
-				component: Cart
+				component: Cart,
+				meta: {
+					isshowtabbar: true,
+					setIsShowTabBar: 'type'
+				},
 			},
 			{
 				name: 'recommend',
@@ -337,6 +350,11 @@ export default [
 				name: 'redetail',
 				path: '/redetail/:id?',
 				component: redetail
+			},
+			{
+				name: 'promotions',
+				path: '/promotions',
+				component: Promotions
 			}
 		]
 	}

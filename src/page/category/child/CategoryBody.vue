@@ -72,7 +72,7 @@ export default {
 			background-color: $mainbgColor;
 			overflow-y: scroll;
 			ul {
-				border-right: 1px solid #E8EAED;
+				border-right: 0.5px solid #E8EAED;
 				li {
 					display: block;
 					padding: 20px 11px;
@@ -86,7 +86,7 @@ export default {
 				}
 				li.noActive {
 					background-color: $mainbgColor;
-					border-left: 0px;
+					border-left: 2px solid transparent;
 					a {
 						color: #4E545D;
 					}
@@ -111,7 +111,7 @@ export default {
 					padding: 20px 0px;
 					text-align: center;
 					cursor: pointer;
-					border-bottom: 1px solid rgb(232,234,237);
+					border-bottom: 0.5px solid rgb(232,234,237);
 					a {
 						color: #4E545D;
 					}

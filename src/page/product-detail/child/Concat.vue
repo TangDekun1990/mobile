@@ -83,8 +83,8 @@
 			margin: 0px;
 		}
 		img {
-			width:12px;
-			height:13px;
+			width:16px;
+			height:16px;
 			cursor: pointer;
 		}
 	}

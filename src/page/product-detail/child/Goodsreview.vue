@@ -63,10 +63,9 @@
 <style lang="scss">
 	.ui-goods-review {
 		.header{
-			border-bottom: 1px solid #e8eaed;
+			border-bottom: 0.5px solid #e8eaed;
 			p{
 				font-size:16px;
-				font-family:'PingFangSC-Regular';
 				color:rgba(78,84,93,1);
 				line-height:20px;
 				padding: 0px;

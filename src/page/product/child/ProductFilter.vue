@@ -16,8 +16,8 @@
 		<div class="sort-model" v-if='isShowMore' >
 			<div v-for='(item, index) in childSort' v-bind:key='item.id' v-on:click='getSortChild(item)' v-bind:class="{'active': item.id == sort.id}">
 				<a>{{item.name}}</a>
-				<img src="../../../assets/image/change-icon/c1_choose@2x.png" v-if='item.id != sort.id'>
-				<img src="../../../assets/image/change-icon/d1-yes@2x.png" v-if='item.id == sort.id'>
+				<img src="../../../assets/image/change-icon/c1_choose@2x.png" v-if='item.id == sort.id'>
+				<!-- <img src="../../../assets/image/change-icon/d1-yes@2x.png" v-if='item.id == sort.id'> -->
 			</div>
 		</div>
 	</div>
@@ -200,8 +200,8 @@ export default {
 				align-items: center;
 				img {
 					float: right;
-					width: 13px;
-					height: 9px;
+					width: 16px;
+					height: 16px;
 				}
 				&.active {
 					color: #F23030;

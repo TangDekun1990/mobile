@@ -52,17 +52,17 @@ export default {
       }
       .subtitle {
         font-size: $h5;
-        color: $subtitleTextColor;        
+        color: $subtitleTextColor;
         margin-left: 9px;
         margin-right: 9px;
         margin-top: 9px;
         text-align: left;
         @include limit-line(2)
-      } 
+      }
       .desc {
         font-size: $h5;
         color: $subtitleTextColor;
-        text-align: left;        
+        text-align: left;
         margin-top: 6px;
         margin-left: 9px;
         margin-right: 5px;
