@@ -43,7 +43,12 @@
 
 			// 取消返回上一级
 			cancel() {
-				this.$router.push({'name': 'category'});
+				let isFromHome = this.$route.params.isFromHome
+				if (isFromHome) {
+					this.$router.go(-1)
+				} else {
+					this.$router.push({'name': 'category'});
+				}				
 			},
 
 			clear() {
