@@ -1,6 +1,6 @@
 <template>
 	<div class="home-header"> 
-    <input type="search" placeholder="想找什么" autocomplete="off" @click="onSearch">      
+    <input type="search" placeholder="想找什么？" autocomplete="off" @click="onSearch">      
     <div class="header-item" @click="rightClick">
       <img src="../../../assets/image/change-icon/b0_message@2x.png" class="header-icon">				
     </div>		
