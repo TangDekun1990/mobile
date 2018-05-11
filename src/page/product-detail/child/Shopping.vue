@@ -87,8 +87,7 @@
 	created(){
 		this.info = this.chooseinfo.specification;
 		this.ids = Object.assign([], this.chooseinfo.ids);
-		this.buildProperties();
-		console.log(this.ids);
+		this.buildProperties(true);
 	},
 
 	computed: {
@@ -126,7 +125,8 @@
 				saveCartState: 'saveCartState',
 				hideCommodity: 'setIsHideCommodity',
 				saveNumber: 'saveNumber',
-				saveChooseInfo: 'saveChooseInfo'
+				saveChooseInfo: 'saveChooseInfo',
+				saveProperties: 'saveProperties'
 			}),
 
 			// 关闭购物车浮层
@@ -224,57 +224,65 @@
 				})
 			},
 
-			keyDown(event) {
-			    // let _this = this;
-			  //   setTimeout(function() {
-			  //   	let pannel = document.getElementById('info-body');
-			  //   	pannel.scrollIntoView(true);
-					// pannel.scrollIntoViewIfNeeded();
-			  //   }, 200);
-			},
+			keyDown(event) {},
 
 			/*
 			 * buildProperties: 构建多属性， 为每个规格添加当前点击的id值
 			 */
-			 buildProperties() {
-			 	if (this.detailInfo && this.detailInfo.properties && this.detailInfo.properties.length > 0) {
-			 		let len = this.detailInfo.properties.length;
-			 		// 循环 this.detailInfo.properties
-			 		for (let i = 0; i <= len-1; i++) {
-			 			this.detailInfo.properties[i].currentIndex = '';
-			 			this.detailInfo.properties[i].iselected = false;
-						// 给每种规格下的属性添加 是否还有库存的字段
-						let attr = this.detailInfo.properties[i].attrs;
-						//  循环每每种规格下的属性
-						for (let j = 0, len = attr.length; j <= len -1; j++) {
-							attr[j].selected = false;
-							attr[j].count = 0;
+			buildProperties(isbckfill) {
+				if ( this.detailInfo && this.detailInfo.properties && this.detailInfo.properties.length > 0) {
+					let properties = this.detailInfo.properties,
+						len = properties.length,
+						currentId = [];
+					// 循环 最外层的属性
+					for (let p = 0; p <= len - 1; p++ ) {
+						properties[p].currentIndex = '';
+						//
+						let attrs = properties[p].attrs;
+						for (let a = 0; a <= attrs.length - 1; a++ ) {
+							this.setIsHasStock(p, attrs[a].id, attrs[a]);
+						}
+						if (isbckfill) {
+							// 数据回填
 							if (this.ids.length > 0) {
-								// 数据回填
 								for (let x = 0; x <= this.ids.length-1; x++) {
-									if (attr[j].id == this.ids[x]) {
-										this.detailInfo.properties[i].currentIndex = this.ids[x];
+									if ( x == p && this.ids[x]) {
+										properties[p].currentIndex = this.ids[x];
 									}
 								}
 							}
-							// 循环库存
-							let data = this.detailInfo.stock;
-							let count = 0;
-							for (let a = 0; a <= data.length -1; a++) {
-								this.setPriceByProperty(data[a]);
-					 			if (data[a].goods_attr.indexOf(''+attr[j].id+'') >= 0){
-					 				count = count + data[a].stock_number;
-					 				if (count > 0) {
-					 					attr[j].ishasstock = true;
-					 				} else {
-					 					attr[j].ishasstock = false;
-					 				}
-					 			}
-					 		}
+							if (properties[p].currentIndex) {
+								currentId[p] = properties[p].currentIndex;
+							}
 						}
 					}
-					// console.log(this.detailInfo.properties);
+					for (let i = 0; i <= currentId.length -1; i++ ) {
+						if (currentId[i]) {
+							let newsData = this.getNewDataById(i, currentId[i]);
+							this.getCurrentStock(i, currentId[i], newsData);
+						}
+					}
 				}
+			},
+
+			/*
+			 * setIsHasStock: 设置是否还有库存
+			 */
+			setIsHasStock(index, id, item) {
+				let data = this.detailInfo.stock,
+					count = 0;
+				for (let s = 0; s <= data.length -1; s++) {
+					this.setPriceByProperty(data[s]);
+		 			if (data[s].goods_attr.indexOf(''+id+'') >= 0){
+		 				count = count + data[s].stock_number;
+		 				if (count > 0) {
+		 					item.ishasstock = true;
+		 				} else {
+		 					item.ishasstock = false;
+		 				}
+		 			}
+		 		}
+		 		this.detailInfo.properties = Object.assign([], this.detailInfo.properties);
 			},
 
 			/*
@@ -290,9 +298,8 @@
 			 	// 获取当前点击的id
 			 	this.getIds();
 			 	// 点击规格，判断关联属性是否有库存
-			 	let newDatas = this.getNewDataById(index, keyid);
-			 	this.getCurrentStock(index, keyid, newDatas);
-
+			 	let newDatas = this.getNewDataById(index, this.detailInfo.properties[index].currentIndex);
+			 	this.getCurrentStock(index, this.detailInfo.properties[index].currentIndex, newDatas);
 			 	this.detailInfo.properties = Object.assign([], this.detailInfo.properties);
 			 },
 
@@ -309,53 +316,77 @@
 				} else {
 					this.detailInfo.properties[index].currentIndex = keyid;
 				}
+				this.resetStock();
 				this.earlier = Object.assign({}, item);
+			},
+
+			/*
+			 * resetStock
+			 */
+			resetStock(){
+				let properties = this.detailInfo.properties,
+					len = properties.length;
+				// 循环 最外层的属性
+				for (let p = 0; p <= len - 1; p++ ) {
+					if (!properties[p].currentIndex) {
+						let attrs = properties[p].attrs;
+						for (let a = 0; a <= attrs.length - 1; a++ ) {
+							this.setIsHasStock(p, attrs[a].id, attrs[a]);
+						}
+					}
+				}
 			},
 
 			/*
 			 * getNewDataById: 根据id获取数据
 			 */
 			getNewDataById(index, currentid) {
-				let data = this.detailInfo.stock,
-					newData = [];
-				for (let i = 0; i <= data.length-1; i++) {
-					this.setPriceByProperty(data[i]);
-					let goods_attr = data[i].goods_attr.split('|');
-					for (let j = 0; j <= goods_attr.length-1; j++) {
-						if (goods_attr[j] == currentid && j == index) {
-							newData.push(data[i]);
+				if (currentid) {
+					let data = this.detailInfo.stock,
+						newData = [];
+					for (let i = 0; i <= data.length-1; i++) {
+						this.setPriceByProperty(data[i]);
+						let goods_attr = data[i].goods_attr.split('|');
+						for (let j = 0; j <= goods_attr.length-1; j++) {
+							if (goods_attr[j] == currentid && j == index) {
+								newData.push(data[i]);
+							}
 						}
 					}
+					return newData;
 				}
-				return newData;
 			},
 
 			/*
 			 * getCurrentStock: 获取当前
 			 */
 			getCurrentStock(index, currentid, newDatas) {
-				let properties = this.detailInfo.properties;
-				for (let i = 0; i <= properties.length-1; i++) {
-					if (i != index) {
-						//  循环每个属性下的规格
-						let attrs = properties[i].attrs;
-						for (let j = 0; j <= attrs.length-1; j++) {
-							// 循环 库存
-							let count = 0;
-							for (let n = 0; n <= newDatas.length-1; n++) {
-								if (newDatas[n].goods_attr.indexOf(''+attrs[j].id+'') >= 0 ) {
-									count += newDatas[n].stock_number;
+				if (newDatas) {
+					let properties = this.detailInfo.properties;
+					for (let i = 0; i <= properties.length-1; i++) {
+						if (i != index) {
+							//  循环每个属性下的规格
+							let attrs = properties[i].attrs;
+							for (let j = 0; j <= attrs.length-1; j++) {
+								// 循环 库存
+								let count = 0;
+								for (let n = 0; n <= newDatas.length-1; n++) {
+									if (newDatas[n].goods_attr.indexOf(''+attrs[j].id+'') >= 0 ) {
+										count += newDatas[n].stock_number;
+									}
 								}
-							}
-							if ( count > 0) {
-								attrs[j].ishasstock = true;
-							} else {
-								attrs[j].ishasstock = false;
+								if ( count > 0) {
+									attrs[j].ishasstock = true;
+								} else {
+									attrs[j].ishasstock = false;
+								}
 							}
 						}
 					}
+					this.detailInfo.properties = Object.assign([], this.detailInfo.properties);
+				} else {
+					// this.buildProperties(false);
 				}
-				this.detailInfo.properties = Object.assign([], this.detailInfo.properties);
 			},
 
 			/*
