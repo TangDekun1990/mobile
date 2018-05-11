@@ -196,7 +196,8 @@ export default {
         position: relative;   
       }
       .photo { 
-        width: auto;
+        width: 100%;
+        height: 100%;
       }
       .sell-out { 
         position: absolute;
