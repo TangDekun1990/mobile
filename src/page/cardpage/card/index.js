@@ -1,7 +1,7 @@
 import Vue from 'vue'
 
 import CardH1L from './CardH1L'
-import CardH1R from './CardH1R'
+import CardH1 from './CardH1'
 import CardH2L from './CardH2L'
 import CardH2R from './CardH2R'
 
@@ -22,7 +22,7 @@ import CardZ3S from './CardZ3S'
 import CardZ4 from './CardZ4'
 
 Vue.component(CardH1L.name, CardH1L)
-Vue.component(CardH1R.name, CardH1R)
+Vue.component(CardH1.name, CardH1)
 Vue.component(CardH2L.name, CardH2L)
 Vue.component(CardH2R.name, CardH2R)
 
@@ -44,7 +44,7 @@ Vue.component(CardZ4.name, CardZ4)
 
 module.export = {
   CardH1L,
-  CardH1R,
+  CardH1,
   CardH2L,
   CardH2R,
   CardV2B,

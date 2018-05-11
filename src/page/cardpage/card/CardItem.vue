@@ -1,6 +1,6 @@
 <template>
-  <card-h1-l v-if="isCardH1L" :item="item"></card-h1-l>
-  <card-h1-r v-else-if="isCardH1R" :item="item"></card-h1-r>
+  <!-- <card-h1-l v-if="isCardH1L" :item="item"></card-h1-l> -->
+  <card-h1 v-if="isCardH1" :item="item"></card-h1>
   <card-h2-l v-else-if="isCardH2L" :item="item"></card-h2-l>
   <card-h2-r v-else-if="isCardH2R" :item="item"></card-h2-r>
   <card-v2-b v-else-if="isCardV2B" :item="item"></card-v2-b>
@@ -22,7 +22,7 @@
 <script>
 import {
   CardH1L,
-  CardH1R,
+  CardH1,
   CardH2L,
   CardH2R,
   CardV2B,
@@ -52,8 +52,8 @@ export default {
     isCardH1L: function () {
       return this.isCardItemByStyle(ENUM.CARD_STYLE.H1L)
     },
-    isCardH1R: function () {
-      return this.isCardItemByStyle(ENUM.CARD_STYLE.H1R)
+    isCardH1: function () {
+      return this.isCardItemByStyle(ENUM.CARD_STYLE.H1L) || this.isCardItemByStyle(ENUM.CARD_STYLE.H1R)
     },
     isCardH2L: function () {
       return this.isCardItemByStyle(ENUM.CARD_STYLE.H2L)
