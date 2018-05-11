@@ -7,229 +7,423 @@
     </mt-header>
     <!-- body -->
     <mt-cell-swipe v-for="(item, index) in collectionList" v-bind:key="item.id" :right="rightBottom(item.id)">
-      <div class="collection-body" v-on:click="goOrderDetail(item.id, item.shop)" v-if="collectionList.length > 0">
-        <div class="image">
-          <img src="../../assets/image/change-icon/default_image_02@2x.png" v-if='item.photos <= 0'>
-          <img v-bind:src="item.photos[0].thumb" v-if='item.photos.length > 0' data-src='../../../assets/image/change-icon/default_image_02@2x.png'>
-          <p v-if="item.god_stock == 0">已售罄</p>
-          <p v-if="item.good_stock > 0 && item.good_stock <= 10">仅剩{{item.good_stock}}件</p>
+      <div class="ui-collection-body" v-on:click="goOrderDetail(item.id, item.shop)">
+
+        <div class="ui-image-wrapper">
+          <img src="../../assets/image/change-icon/default_image_02@2x.png" class="collection-img" v-if='item.photos <= 0'>
+          <img class="collection-img" v-bind:src="item.photos[0].thumb" v-if='item.photos.length > 0' data-src='../../../assets/image/change-icon/default_image_02@2x.png' v-lazy="item.photos[0].thumb">
+          <span v-if="item.good_stock == 0 ">已售罄</span>
+          <span v-if="item.good_stock > 0 && item.good_stock <= 10">仅剩{{ item.good_stock }}件</span>
         </div>
-        <div class="orderInfo">
-          <p class="title">{{item.name}}</p>
-          <p class="content" style="-webkit-box-orient:vertical">{{item.desc}}</p>
+
+        <div class="flex-right">
+          <h3 class="title" style="-webkit-box-orient:vertical">{{ item.name }}</h3>
+          <p class="sub-title" style="-webkit-box-orient:vertical">{{ item.desc }}</p>
           <div class="price">
-            <span class="now">AED{{item.current_price}}</span>
-            <del class="old">AED{{utils.currencyPrice(item.price)}}</del>
+            <span>AED{{ item.current_price }}</span>
+            <span>AED{{ utils.currencyPrice(item.price)}}</span>
           </div>
-          <div class="other">
+          <div class="sendway">
             <span v-if="item.self_employed" class="self-support">自营</span>
-            <span>评论：{{item.comment_count}}</span>
+            <span>评论：{{ item.comment_count }}</span>
             <span>收藏：{{item.collector.length}}</span>
           </div>
         </div>
       </div>
     </mt-cell-swipe>
     <div v-if="collectionList.length <= 0" class="order-air">
-        <img src="../../assets/image/change-icon/favorite_empty@2x.png">
-				<p>您暂时还未收藏过任何商品</p>
-				<button class="button" v-on:click="goVisit()">
-					<label>随便逛逛</label>
-				</button>
-      </div>
+      <img src="../../assets/image/change-icon/favorite_empty@2x.png">
+			<p>您暂时还未收藏过任何商品</p>
+			<button class="button" v-on:click="goVisit()">
+				<label>随便逛逛</label>
+			</button>
+    </div>
   </div>
-
 </template>
 
 <script>
-import { CellSwipe, MessageBox  } from 'mint-ui';
-import { productLikedList, productUnlike } from '../../api/network/product' //已收藏商品 //取消收藏商品
-  export default {
-    data() {
-      return {
-        collectionList: [],
-        orderListParams: {'page':1, 'per_page': 10},
-      }
-    },
-    created() {
-      this.orderCollection();
-    },
-    methods: {
-      rightBottom(productId){
-        return [
-          {
-            content: '删除',
-            style: { background: 'red', color: '#fff', },
-            handler: () => MessageBox({
-              title: '确认删除',
-              message: '是否要删除此商品？',
-              showCancelButton: true,
-            }).then(actiob =>{
+import { CellSwipe, MessageBox } from "mint-ui";
+import { productLikedList, productUnlike } from "../../api/network/product"; //已收藏商品 //取消收藏商品
+export default {
+  data() {
+    return {
+      collectionList: [],
+      orderListParams: { page: 1, per_page: 10 }
+    };
+  },
+  created() {
+    this.orderCollection();
+  },
+  methods: {
+    rightBottom(productId) {
+      return [
+        {
+          content: "删除",
+          style: { background: "red", color: "#fff" },
+          handler: () =>
+            MessageBox({
+              title: "确认删除",
+              message: "是否要删除此商品？",
+              showCancelButton: true
+            }).then(actiob => {
               this.getCancelCollection(productId);
             })
-          }
-        ];
-      },
-      goBack() {
-        this.$router.go(-1);
-      },
-      // 获取已收藏商品数据
-      orderCollection() {
-        let data = this.orderListParams;
-        productLikedList(data.page, data.per_page).then(res => {
-          if(res) {
-            this.collectionList = Object.assign([], res.products);
-          }
-        })
-      },
-      // 去商品详情
-      goOrderDetail(orderId) {
-        this.$router.push({name: 'detail', params:{id: orderId}})
-      },
-      // 取消收藏商品数据
-      getCancelCollection(productId) {
-        productUnlike(productId).then(res => {
-          if(res) {
-            this.CancelCollection = res;
-            this.orderCollection();
-          }
-        })
-      },
-      // 随便逛逛
-      goVisit() {
-        this.$router.push('/home');
-      },
+        }
+      ];
+    },
+    goBack() {
+      this.$router.go(-1);
+    },
+    // 获取已收藏商品数据
+    orderCollection() {
+      let data = this.orderListParams;
+      productLikedList(data.page, data.per_page).then(res => {
+        if (res) {
+          this.collectionList = Object.assign([], res.products);
+        }
+      });
+    },
+    // 去商品详情
+    goOrderDetail(orderId) {
+      this.$router.push({ name: "detail", params: { id: orderId } });
+    },
+    // 取消收藏商品数据
+    getCancelCollection(productId) {
+      productUnlike(productId).then(res => {
+        if (res) {
+          this.CancelCollection = res;
+          this.orderCollection();
+        }
+      });
+    },
+    // 随便逛逛
+    goVisit() {
+      this.$router.push("/home");
     }
   }
+};
 </script>
 
 <style lang='scss' scoped>
-  .container {
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  .header {
+    @include header;
+    border-bottom: 1px solid #E8EAED;
+  }
+  .ui-collection-body {
+    border-bottom: 1px solid rgba(232, 234, 237, 1);
     display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: stretch;
-    .header {
-      @include header;
-      border-bottom: 1px solid #E8EAED;
-    }
-    .collection-body {
+    width: auto;
+    align-items: center;
+    justify-content: space-between;
+    padding:  10px;
+    position: relative;
+    div.ui-image-wrapper {
+      width: 110px;
+      height: 110px;
+      position: relative;
+
       display: flex;
-      justify-content: flex-start;
+      justify-content: center;
+      align-content: center;
       align-items: center;
-      background-color:#FFF;
-      border-bottom:1px solid #E8EAED;
-      padding: 11px 22px 11px 10px;
-      width: 100%;
-      .image {
-        width:110px;
-        height:110px;
+      flex-basis: 110px;
+      flex-shrink: 0;
+
+      background-position: center center !important;
+      background: url("../../assets/image/change-icon/default_image_02@2x.png");
+      background-size: 100px 100px;
+      background-repeat: no-repeat;
+      -webkit-background-size: cover;
+      -moz-background-size: cover;
+      -o-background-size: cover;
+      background-size: cover;
+
+      img.collection-img {
+        width: 110px;
+        height: 110px;
         flex-basis: 110px;
         flex-shrink: 0;
-        margin: 0px 14px 0px 0px;
-        box-sizing: border-box;
-        img {
-          width:100%;
-          height:100%;
-          // padding:14px 14px 0px 14px;
-        }
-        p {
-          text-align: center;
-          color:#F23030;
-          background-color: #F3F4F5;
-          font-size: 14px;
-        }
       }
-      .orderInfo {
+      img.collection-img[lazy="loading"] {
+        width: 30px;
+        height: 30px;
+      }
+      img.collection-img[lazy="error"] {
+        width: 30px;
+        height: 30px;
+      }
+      img.collection-img[lazy="loaded"] {
+        width: 110px;
+        height: 110px;
+        flex-basis: 110px;
+        flex-shrink: 0;
+        background: rgba(255, 255, 255, 1);
+      }
+
+      span {
+        position: absolute;
+        height: 20px;
+        background: rgba(243, 244, 245, 1);
+        line-height: 20px;
+        text-align: center;
+        font-size: 14px;
+        color: rgba(242, 48, 48, 1);
+        width: 110px;
+        bottom: 0px;
+        left: 0px;
+      }
+    }
+      .flex-right {
+        padding-left: 14px;
+        width: 100%;
         .title {
-          color:#4E545D;
+          color: #4e545d;
           font-size: 16px;
-          padding-bottom: 7px;
+          font-weight: normal;
+
+          display: -moz-box;
+          display: -webkit-box;
+          display: box;
+
+          -webkit-line-clamp: 2;
+          -moz-line-clamp: 2;
+
+          -moz-box-orient: vertical;
+          -webkit-box-orient: vertical;
+          box-orient: vertical;
+
+          overflow: hidden;
+          margin-bottom: 8px;
         }
-        .content {
-          color:#55595F;
-          font-size:12px;
-          margin-bottom: 9px;
+        .sub-title {
+          color: #55595f;
+          font-size: 12px;
           height: 12px;
 
-          display:-moz-box;
-          display:-webkit-box;
-          display:box;
+          display: -moz-box;
+          display: -webkit-box;
+          display: box;
 
           -webkit-line-clamp: 1;
           -moz-line-clamp: 1;
 
-          -moz-box-orient:vertical;
-          -webkit-box-orient:vertical;
-          box-orient:vertical;
+          -moz-box-orient: vertical;
+          -webkit-box-orient: vertical;
+          box-orient: vertical;
 
           overflow: hidden;
+          margin-bottom: 8px;
         }
         .price {
-          padding-bottom:10px;
-          .now {
-            color:#F23030;
-            font-size:16px;
-            padding-right:6px;
-          }
-          .old {
-            color:#A4AAB3;
-            font-size: 12px;
+          margin-bottom: 8px;
+          span {
+            &:first-child {
+              color: #f23030;
+              font-size: 16px;
+            }
+            &:last-child {
+              color: #a4aab3;
+              font-size: 12px;
+              text-decoration: line-through;
+            }
           }
         }
-        .other {
+        .sendway {
+          font-size: 12px;
           display: flex;
           align-items: center;
           span {
-            color:#7C7F88;
-            font-size:12px;
+            color: #7c7f88;
             padding-left:7px;
             &.self-support {
               font-size: 10px;
-              color: #F34444;
-              padding: 3px;
-              border: 1px solid #F34444;
+              color: #f34444;
+              border: 1px solid #f34444;
               border-radius: 2px;
+              width: 32px;
+              height: 16px;
+              line-height: 16px;
+              text-align: center;
+              padding: 3px;
             }
+          }
+          img {
+            width: 22px;
+            height: 20px;
           }
         }
       }
     }
-    .order-air {
-			width:100%;
-			vertical-align: middle;
+  .order-air {
+    width: 100%;
+    vertical-align: middle;
+    text-align: center;
+    img {
+      width: 102px;
+      height: 102px;
+      box-sizing: border-box;
+      margin: 96px auto 20px;
+    }
+    p {
+      font-size: 17px;
+      color: rgba(124, 127, 136, 1);
+      line-height: 17px;
       text-align: center;
-			img {
-				width:102px;
-				height:102px;
-				box-sizing: border-box;
-				margin:	96px auto 20px;
-			}
-			p {
-				font-size:17px;
-				color:rgba(124,127,136,1);
-				line-height:17px;
-				text-align: center;
-				margin: 0 auto;
-			}
-			.button {
-				width:200px;
-				height:44px;
-				background:rgba(252,46,57,1);
-				border-radius: 2px ;
-				padding:14px 68px;
-				margin: 28px auto;
-				border:none;
-			}
-			label {
-				font-size:16px;
-				color:#fff;
-				display:inline-block;
-				vertical-align: middle;
-				height:16px;
-				line-height: 16px;
-			}
-	  }
+      margin: 0 auto;
+    }
+    .button {
+      width: 200px;
+      height: 44px;
+      background: rgba(252, 46, 57, 1);
+      border-radius: 2px;
+      padding: 14px 68px;
+      margin: 28px auto;
+      border: none;
+    }
+    label {
+      font-size: 16px;
+      color: #fff;
+      display: inline-block;
+      vertical-align: middle;
+      height: 16px;
+      line-height: 16px;
+    }
   }
+}
+
+
+// .container {
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: flex-start;
+//   align-items: stretch;
+//   .header {
+//     @include header;
+//     border-bottom: 1px solid #E8EAED;
+//   }
+//   .collection-body {
+//     display: flex;
+//     justify-content: flex-start;
+//     align-items: center;
+//     background-color:#FFF;
+//     border-bottom:1px solid #E8EAED;
+//     padding: 11px 22px 11px 10px;
+//     width: 100%;
+//     .image {
+//       width:110px;
+//       height:110px;
+//       flex-basis: 110px;
+//       flex-shrink: 0;
+//       margin: 0px 14px 0px 0px;
+//       box-sizing: border-box;
+//       img {
+//         width:83px;
+//         height:83px;
+//         padding:14px 14px 0px 14px;
+//       }
+//       p {
+//         text-align: center;
+//         color:#F23030;
+//         background-color: #F3F4F5;
+//         font-size: 14px;
+//       }
+//     }
+//     .orderInfo {
+//       .title {
+//         color:#4E545D;
+//         font-size: 16px;
+//         padding-bottom: 7px;
+//       }
+//       .content {
+//         color:#55595F;
+//         font-size:12px;
+//         margin-bottom: 9px;
+//         height: 12px;
+
+//         display:-moz-box;
+//         display:-webkit-box;
+//         display:box;
+
+//         -webkit-line-clamp: 1;
+//         -moz-line-clamp: 1;
+
+//         -moz-box-orient:vertical;
+//         -webkit-box-orient:vertical;
+//         box-orient:vertical;
+
+//         overflow: hidden;
+//       }
+//       .price {
+//         padding-bottom:10px;
+//         .now {
+//           color:#F23030;
+//           font-size:16px;
+//           padding-right:6px;
+//         }
+//         .old {
+//           color:#A4AAB3;
+//           font-size: 12px;
+//         }
+//       }
+//       .other {
+//         display: flex;
+//         align-items: center;
+//         span {
+//           color:#7C7F88;
+//           font-size:12px;
+//           padding-left:7px;
+//           &.self-support {
+//             font-size: 10px;
+//             color: #F34444;
+//             padding: 3px;
+//             border: 1px solid #F34444;
+//             border-radius: 2px;
+//           }
+//         }
+//       }
+//     }
+//   }
+//   .order-air {
+// 		width:100%;
+// 		vertical-align: middle;
+//     text-align: center;
+// 		img {
+// 			width:102px;
+// 			height:102px;
+// 			box-sizing: border-box;
+// 			margin:	96px auto 20px;
+// 		}
+// 		p {
+// 			font-size:17px;
+// 			color:rgba(124,127,136,1);
+// 			line-height:17px;
+// 			text-align: center;
+// 			margin: 0 auto;
+// 		}
+// 		.button {
+// 			width:200px;
+// 			height:44px;
+// 			background:rgba(252,46,57,1);
+// 			border-radius: 2px ;
+// 			padding:14px 68px;
+// 			margin: 28px auto;
+// 			border:none;
+// 		}
+// 		label {
+// 			font-size:16px;
+// 			color:#fff;
+// 			display:inline-block;
+// 			vertical-align: middle;
+// 			height:16px;
+// 			line-height: 16px;
+// 		}
+//   }
+// }
 </style>
 
  <!--Cell Swipe样式覆盖 -->
@@ -238,14 +432,14 @@ import { productLikedList, productUnlike } from '../../api/network/product' //�
   padding: 50% 0px;
   width: 90px;
   text-align: center;
-  font-size:14px;
+  font-size: 14px;
   box-sizing: border-box;
 }
- .mint-cell-wrapper {
-   padding: 0px;
- }
+.mint-cell-wrapper {
+  padding: 0px;
+}
 
- .mint-cell-wrapper .mint-cell-value {
- 	width: 100%;
- }
+.mint-cell-wrapper .mint-cell-value {
+  width: 100%;
+}
 </style>
