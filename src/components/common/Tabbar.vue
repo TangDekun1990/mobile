@@ -136,6 +136,7 @@
 					    color: #FFFFFF;
 					    border-radius: 50%;
 					    padding: 2px 4px;
+					    top: 0px;
 					}
 				}
 				li.currentavtive {

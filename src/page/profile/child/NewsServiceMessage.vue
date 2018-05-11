@@ -47,10 +47,12 @@
       border-bottom: 1px solid #E8EAED;
     }
     .service-Message-body {
-      display: flex;
-      flex-direction: row;
-      justify-content: flex-start;
-      align-items: stretch;
+    	a {
+			 display: flex;
+	      flex-direction: row;
+	      justify-content: flex-start;
+	      align-items: stretch;
+    	}
       background-color: #fff;
       border-bottom: 1px solid #E8EAED;
       .photo {

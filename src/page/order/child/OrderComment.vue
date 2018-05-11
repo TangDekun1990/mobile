@@ -79,7 +79,7 @@ export default {
       let dataArray = [];
       for(let i = 0; i <= data.length-1; i++) {
         if(data[i].currentIndex !== 0 ) {
-          let obj = {'goods': data[i].product.id, 'grade': data[i].currentIndex, 'content': data[i].content};
+          let obj = {'goods': data[i].id, 'grade': data[i].currentIndex, 'content': data[i].content};
           dataArray.push(obj);
         }
       }

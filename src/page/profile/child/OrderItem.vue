@@ -42,8 +42,14 @@ export default {
     this.isSignin();
   },
   methods: {
+     ...mapMutations({
+      changeStatus: "changeStatus"
+    }),
     onclick() {      
       // Code Review: 去掉testAttr
+      if(this.testAttr == 'order') {
+        this.changeStatus(this.id)
+      }
       this.$router.push({name: this.testAttr, params: {order: this.id}});
     },
     // 是否登录
