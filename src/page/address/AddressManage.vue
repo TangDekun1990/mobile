@@ -92,15 +92,17 @@ export default {
     },
     onDelete(item) {      
       MessageBox.confirm('确定要删除这条收货地址？', '确认删除').then(action => {
-        Indicator.open()
-        consignee.consigneeDelete(item.id).then(
-        (response) => {
-          this.removeAddressItem(item.id)           
-          Indicator.close()
-        }, (error) => {
-          Indicator.close()
-          Toast(error.errorMsg)
-        })
+        if (aciton === 'confirm') {
+          Indicator.open()
+          consignee.consigneeDelete(item.id).then(
+          (response) => {
+            this.removeAddressItem(item.id)           
+            Indicator.close()
+          }, (error) => {
+            Indicator.close()
+            Toast(error.errorMsg)
+          })
+        }                
       })
     },
     addAddress() {

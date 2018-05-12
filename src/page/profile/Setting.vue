@@ -52,7 +52,7 @@ export default {
       this.$router.go(-1) 
     },
     signout() {
-      MessageBox.confirm('确认退出').then(action => {
+      MessageBox.confirm('确认退出', '').then(action => {
         this.clearToken() 
         this.goBack() 
       })

@@ -1,0 +1,26 @@
+.mint-msgbox {
+  border-radius: 10px;
+  width: 80%;
+}
+.mint-msgbox-title {
+  color: #404245;
+  font-weight: 400;
+}
+.mint-msgbox-message {
+  color: #404245;
+  font-size: 14px;
+}
+.mint-msgbox-cancel {
+  color: #404245;
+  border-right: 1px solid $lineColor;
+}
+.mint-msgbox-cancel:active {
+  color: #787878;
+}
+.mint-msgbox-confirm {
+  color: #FC2E39;
+  background-color: #FFFFFF;
+}
+.mint-msgbox-confirm:active {
+  color: #FC2E39;
+}
