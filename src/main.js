@@ -17,6 +17,7 @@ import utils from './util/util'
 import wxApi from './util/wxapi'
 import './assets/style/reset.scss'
 import './assets/style/common.scss'
+import './assets/style/my-mint.scss'
 
 Vue.config.productionTip = false
 

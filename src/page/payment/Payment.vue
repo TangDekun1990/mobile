@@ -49,8 +49,18 @@ export default {
   },
   methods: {
     leftClick() {
-      MessageBox.confirm('商品一眨眼就没了 确定放弃支付吗？').then(action => { 
-        this.$router.push({ name: 'order', params: { order: ENUM.ORDER_STATUS.CREATED}});
+      MessageBox({
+				title: "",				
+        message: "商品一眨眼就没了</br>确定放弃支付吗？", 
+        showCancelButton: true,       
+				cancelButtonText: "去意已决",
+        cancelButtonClass: "cancel-button",
+        confirmButtonText: '再想想',
+        confirmButtonClass: 'confirm-button-red'        
+			}).then(action => { 
+        if (action === 'cancel') {
+          this.$router.push({ name: 'order', params: { order: ENUM.ORDER_STATUS.CREATED}}) 
+        }        
       })
     },   
     pay() {

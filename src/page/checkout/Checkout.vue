@@ -36,7 +36,7 @@
       <div class="amount-wrapper">
         <label class="amount">实付款: {{getOrderTotalPrice}}</label>
       </div>     
-      <button class="submit" @click="checkout">提交订单</button>
+      <gk-buttom class="submit" @click="checkout">提交订单</gk-buttom>
     </div>
     <delivery-time 
       ref="timePicker"  
@@ -261,8 +261,18 @@ export default {
       this.unselectDelivery()
     },
     leftClick() {
-      MessageBox.confirm('好货不等人 请三思而行').then(action => {
-        this.goBack()
+      MessageBox({
+				title: '',				
+        message: '好货不等人</br>请三思而行', 
+        showCancelButton: true,       
+				cancelButtonText: '去意已决',
+        cancelButtonClass: 'cancel-button',
+        confirmButtonClass: 'confirm-button-red',
+        confirmButtonText: '再想想'
+			}).then(action => { 
+        if (action === 'cancel') {
+          this.goBack()
+        }                
       })
     },
     rightClick() {
@@ -483,6 +493,7 @@ export default {
     padding-right: 15px;
   }
   .submit {
+    flex: 1;
     width: 150px;
     background-color: #F23030;
     font-size: 16px;
