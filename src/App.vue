@@ -21,11 +21,11 @@ export default {
 	},
 
 	watch: {
-        $route(to, from) {
-            // 路由改变发起重置
-            this.resetStates();
-            this.changeTabBar(to.name);
-        }
+			$route(to, from) {
+				// 路由改变发起重置
+				this.resetStates();
+				this.changeTabBar(to.name);
+			}
     },
 
 	methods: {

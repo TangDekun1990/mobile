@@ -128,6 +128,11 @@
 			// 计算内容高度
 		    this.$nextTick( () => {
 		    	this.target = document.querySelector('.cart-list-wrapper');
+		    	let totalHeight = 44 + this.height;
+				if (this.type) {
+					totalHeight = totalHeight + 50;
+				}
+				this.heigth = totalHeight;
 		    })
 		},
 

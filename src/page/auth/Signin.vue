@@ -50,6 +50,8 @@ import * as authBase from '../../api/network/auth-base'
 import { Indicator, Toast, Header } from 'mint-ui'
 import { mapMutations, mapActions, mapState } from 'vuex'
 import { authSocial } from '../../api/network/auth-social'
+import { authWeb } from '../../api/network/auth-web'
+import { ENUM } from '../../config/enum';
 export default {
   name: 'Signin',
   data() {
@@ -144,7 +146,7 @@ export default {
       this.$router.push({ name: 'signup', params: { mode: 'retrieve' } });
     },
     onWechat() {
-      this.getAuthSocial();
+      this.wxWebAuth()
     },
     // 获取第三方授权登录数据
     getAuthSocial() {
@@ -160,6 +162,15 @@ export default {
     onQQ() {
       
     },
+    wxWebAuth() {
+      let scope = 'snsapi_userinfo' // 允许获取用户信息      
+      let ref = window.location.href ? encodeURIComponent(window.location.href) : ''      
+      authWeb(ENUM.SOCIAL_VENDOR.WEIXIN, scope, ref).then(
+        (response) => {
+
+        }, (error) => {}
+        )
+    }
   }
 };
 </script>
