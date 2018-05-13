@@ -164,7 +164,7 @@ export default {
     },
     wxWebAuth() {
       let scope = 'snsapi_userinfo' // 允许获取用户信息      
-      let ref = window.location.href      
+      let ref = window.location.href ? encodeURIComponent(window.location.href) : ''      
       authWeb(ENUM.SOCIAL_VENDOR.WEIXIN, scope, ref).then(
         (response) => {
 
