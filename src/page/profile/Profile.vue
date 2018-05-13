@@ -235,33 +235,24 @@ methods: {
     },
     // 获取未读消息数字
     getMessageCount(type) {
-    	let after = this.user.joined_at;
-    	if(this.type) {
-    		if(type == 1 && this.time.noticeTime) {
-    			after = this.time.noticeTime;
-    		}
-    		if(type == 2 && this.time.ordertime){
-    			after = this.time.ordertime;
-    		}
-    	}
-    	messageCount(after, type).then(res => {
-    		if (res) {
-    			if(res.count >= 0) {
-    				this.ishasCount = true;
-    			}
-    			if(this.user !=null) {
-    				let after = this.user.joined_at;
-    				if(this.type) {
-    					if(type == 1 && this.time.noticeTime) {
-    						after = this.time.noticeTime;
-    					}
-    					if(type == 2 && this.time.ordertime){
-    						after = this.time.ordertime;
-    					}
-    				}
-    			}
-    		}
-    	});
+    	if(this.user != null){
+				let after = this.user.joined_at;
+				if(this.type) {
+					if(type == 1 && this.time.noticeTime) {
+						after = this.time.noticeTime;
+					}
+					if(type == 2 && this.time.ordertime){
+						after = this.time.ordertime;
+					}
+				}
+				messageCount(after, type).then(res => {
+					if (res) {
+						if(res.count >= 0) {
+							this.ishasCount = true;
+						}
+					}
+				});
+			}
     },
     showLogin() {
     	this.$router.push({ name: "signin" });
@@ -283,7 +274,11 @@ methods: {
     	this.$router.push({ name: "setting" });
     },
     goNews() {
-    	this.$router.push("news");
+    	if(this.user != null) {
+				this.$router.push("news");
+			} else {
+				this.$router.push("signin");
+			}
     },
     goFavourite() {
     	this.$router.push("collection");
