@@ -15,7 +15,7 @@
 			</mt-swipe>
 		</div>
 
-		<div class="swiper-indicators">
+		<div class="swiper-indicators" v-if="list.length > 1">
 			<div class="ui-indicator">
 				<div class="indicator-item" v-for='(item,index) in indicatorArray' v-bind:class="{'active': item.index == currentIndex}"></div>
 			</div>
