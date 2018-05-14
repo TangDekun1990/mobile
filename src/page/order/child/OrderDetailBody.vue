@@ -78,11 +78,12 @@
 				</div>
 				<p style="-webkit-box-orient: vertical; -webkit-line-clamp: 2;">{{orderDetail.order.consignee.address}}</p>
 			</div>
-
-			<div class="contact">
-				<span>联系客服</span>
-				<img src="../../../assets/image/change-icon/e5_service@2x.png">
-			</div>
+      <a href="https://www.sobot.com/chat/h5/index.html?sysNum=5b696ae2d5394f06b558e64ebbaf3be7&back=1&titleFlag=2&customTtile='智齿客服' ">
+				<div class="contact">
+					<span>联系客服</span>
+					<img src="../../../assets/image/change-icon/e5_service@2x.png">
+				</div>
+      </a>	
 
 			<div class="containers" v-for="(item, index) in orderDetail.order.goods" v-bind:key="item.id" v-on:click="getOrderDetail(item.product.id)" v-if="index <= orderIndex">
 				<img class="photo" src="../../../assets/image/change-icon/default_image_02@2x.png" v-if='item.product.photos <= 0'>
