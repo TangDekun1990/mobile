@@ -4,6 +4,7 @@ import CryptoJS from 'crypto-js'
 
 import { apiBaseUrl, SIGN_KEY, ENCRYPT_KEY, VERSION } from '../config/env'
 import store from '../store/index'
+import { ENUM } from '../config/enum'
 
 function toQueryString(obj) {
     return obj ? Object.keys(obj).sort().map(function (key) {
@@ -72,18 +73,18 @@ axios.interceptors.request.use(config => {
 
             // xSign格式: sign,timestamp
             let xSign = sign + ',' + timestamp;
-            let token = null;            
+            let token = null;
             if (store.getters.isOnline && store.getters.token) {
                 token = store.getters.token;
             }
-                        
+
             config.headers['X-ECAPI-Authorization'] = token;
             config.headers['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
-            config.headers['X-ECAPI-Sign'] = xSign; 
+            config.headers['X-ECAPI-Sign'] = xSign;
             // TODO:
             config.headers['X-ECAPI-UserAgent'] = 'Platform/iOS, Device/iPhone, Lang/zh-Hans-CN, ScreenWidth/375.000000, ScreenHeight/667.000000'; // TODO:
             // config.headers['X-ECAPI-UserAgent'] = this.getUserAgent()
-            // config.headers['X-ECAPI-UDID'] = 'udid'; 
+            // config.headers['X-ECAPI-UDID'] = 'udid';
             config.headers['X-ECAPI-Ver'] = VERSION;
 
             let encry_post_body = '';
@@ -99,7 +100,7 @@ axios.interceptors.request.use(config => {
             // TODO:
             if (process.env.NODE_ENV === 'development') {
                 config.params = params ? JSON.stringify(params) : ''
-            }            
+            }
         }
     }
     return config
@@ -137,6 +138,9 @@ axios.interceptors.response.use(response => {
                     if (process.env.NODE_ENV === 'development') {
                         console.log("request url is: ", response.config.url);
                         console.log('网络错误, 错误代码:=' + errorCode + "错误信息:=" + errorMessage);
+                    }
+                    if (errorCode == ENUM.ERROR_CODE.TOKEN_INVALID || errorCode == ENUM.ERROR_CODE.TOKEN_EXPIRED) {
+                    	window.location.href = '#/signin';
                     }
                     return Promise.reject({ 'errorCode': errorCode, 'errorMsg': errorMessage });
                 }

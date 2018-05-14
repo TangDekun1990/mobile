@@ -3,7 +3,8 @@
 	<div class="ui-update-avater">
 		<div class="common-update-avatar">
 			<span>更换头像</span>
-			<input type="file" placeholder="请选择头像" capture="camera" accept="image/*" @change="getInputFile($event)">
+			<input type="file" placeholder="请选择头像" accept="image/*" @change="getInputFile($event)">
+			<!-- <input type="file" placeholder="请选择头像" accept="image/*" @change="getInputFile($event)" v-if="isIos"> -->
 			<img v-bind:src="user.avatar.thumb" v-if="user.avatar && user.avatar.thumb">
 			<img src="../../../assets/image/change-icon/img_avatar@2x.png" v-if="!user.avatar || !user.avatar.thumb">
 		</div>
@@ -21,6 +22,8 @@
 	// 图片裁剪 组件
 	import Imagecropper from './Image-cropper';
 
+	import { configGet } from '../../../api/network/config'
+
 	export default {
 		computed: {
 			...mapState({
@@ -34,7 +37,9 @@
 			return {
 				files:'',
 				isShowCropper: false,
-				imgBase64: ''
+				imgBase64: '',
+				isIos: false,
+				configs: {}
 			}
 		},
 
@@ -49,8 +54,10 @@
 			this.$on('get-image-cropper', (data) => {
 				this.startUpload(data);
 			});
-			console.log(this.user);
+			this.setIsIos();
 		},
+
+		mounted(){},
 
 		methods: {
 			...mapMutations({
@@ -62,6 +69,11 @@
 		      fetchConfig: 'fetchConfig'
 		    }),
 
+		    setIsIos() {
+		    	let ua = navigator.userAgent.toLowerCase();
+    			this.isIos = (ua.indexOf('iphone') != -1) || (ua.indexOf('ipad') != -1);
+		    },
+
 			/*
 			 * getInputFile:
 			 */
@@ -70,10 +82,6 @@
 				if (target.files && target.files[0]) {
 					this.files = target.files[0];
 					this.uploadImg(event);
-					// this.getBase64(target.files[0]).then(data => {
-					// 	this.isShowCropper = true;
-					// 	this.cropperData(data);
-					// });
 				}
 			},
 
@@ -140,8 +148,6 @@
 						let data = {
 							'avatar_url': avatar_url
 						}
-						// TODO
-						// that.fetchConfig();
 						that.$parent.$emit('update-user-info', data);
 						that.isShowCropper = false;
 						Indicator.close();
@@ -167,23 +173,27 @@
 			 * startUpload: 开始上传
 			 */
 			startUpload(bolbfile) {
-				let file = this.files;
-				// 上传参数
-				let params = {
-					'bolbfile': bolbfile ? bolbfile : file,
-					'filename': this.user.id +'-'+ this.getCurrentTime(),
-					'token': this.config.qiniu.token,
-					'config': {
-						'concurrentRequestLimit': 0,
-						'useCdnDomain': true
-					},
-					'putExtra': {
-						'fname': this.user.id +'-'+ this.getCurrentTime(),
-						'mimeType': ["image/png", "image/jpeg", "image/gif"]
+				configGet().then(res => {
+					if (res) {
+						let file = this.files;
+						// 上传参数
+						let params = {
+							'bolbfile': bolbfile ? bolbfile : file,
+							'filename': this.user.id +'-'+ this.getCurrentTime(),
+							'token': res.config.qiniu.token,
+							'config': {
+								'concurrentRequestLimit': 0,
+								'useCdnDomain': true
+							},
+							'putExtra': {
+								'fname': this.user.id +'-'+ this.getCurrentTime(),
+								'mimeType': ["image/png", "image/jpeg", "image/gif"]
+							}
+						};
+						this._qiniu(params.bolbfile, params.filename, params.token, {}, params.putExtra);
 					}
-				};
-				this._qiniu(params.bolbfile, params.filename, params.token, {}, params.putExtra);
-			}
+				});
+			},
 		}
 	}
 
@@ -205,7 +215,7 @@
 			    left: 0px;
 			    height: 50px;
 			    border: 1px solid;
-			    opacity: 0;
+				opacity: 0;
 	    		filter: alpha(opacity=0);
 	    		width: 100%;
 			    &:focus {
