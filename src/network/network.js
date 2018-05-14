@@ -56,7 +56,11 @@ axios.interceptors.request.use(config => {
     let isAPIRequest = config.url.indexOf(apiBaseUrl) == 0 ? true : false;
     if (isAPIRequest) {
         var params = config.data || {};
-        if (params != undefined) {
+        if (config.method === 'get') {
+            config.withCredentials = true
+        }
+        // TODO:
+        if (params != undefined && config.method !== 'get') {
             for (let key in params) {
                 if (params[key] === null || params[key] === undefined) {
                     delete params[key];

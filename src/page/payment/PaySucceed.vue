@@ -75,7 +75,6 @@ export default {
   }
   .left-button {
     margin-left: 40px;
-    background-color: #F6F6F6;
   }
   .right-button {
     margin-right: 40px;

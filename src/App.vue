@@ -9,23 +9,31 @@
 </template>
 
 <script>
-import { mapMutations, mapActions } from 'vuex'
+import { mapState, mapMutations, mapActions } from 'vuex'
 import tabBar from './components/common/Tabbar'
 import { cartQuantity } from './api/network/cart'
 export default {
 	name: 'app',
 
+	computed: {
+		...mapState({
+			isOnline: state => state.auth.isOnline,
+		})
+	},
+
 	created: function() {
 		window.location.href = 'wenchao://';
-		this.getCartNumber();
+		if (this.isOnline) {
+			this.getCartNumber();
+		}
 	},
 
 	watch: {
-        $route(to, from) {
-            // 路由改变发起重置
-            this.resetStates();
-            this.changeTabBar(to.name);
-        }
+			$route(to, from) {
+				// 路由改变发起重置
+				this.resetStates();
+				this.changeTabBar(to.name);
+			}
     },
 
 	methods: {

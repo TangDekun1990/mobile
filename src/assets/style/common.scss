@@ -359,13 +359,25 @@ span.cart-number {
 .confirm-button-red {
 	background:rgba(242,48,48,1);
 	color: #fff;
+	font-size: 16px;
 }
 
-.confirm-button-red:hover {
-	background:rgba(242,48,48,0.8);
-	color: #fff;
-}
+// .confirm-button-red:hover {
+// 	background:rgba(242,48,48,0.8);
+// 	color: #fff;
+// 	font-size: 16px;
+// }
 
+.cancel-button {
+	background:rgba(255,255,255,1);
+	color: #787878;
+	font-size: 16px;
+}
+// .cancel-button:hover {
+// 	background:rgba(255,255,255,0.8);
+// 	color: #787878;
+// 	font-size: 16px;
+// }
 .mint-actionsheet-list .mint-actionsheet-listitem {
 	border-bottom: 0.5px solid RGBA(0, 0, 0, 0.05);
 }

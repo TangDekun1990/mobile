@@ -65,8 +65,10 @@ export default {
               title: "确认删除",
               message: "是否要删除此商品？",
               showCancelButton: true
-            }).then(actiob => {
-              this.getCancelCollection(productId);
+            }).then(action => {
+              if (action === 'confirm') {
+                this.getCancelCollection(productId); 
+              }              
             })
         }
       ];
