@@ -47,10 +47,14 @@ export default {
     }),
     onclick() {      
       // Code Review: 去掉testAttr
-      if(this.testAttr == 'order') {
-        this.changeStatus(this.id)
-      }
-      this.$router.push({name: this.testAttr, params: {order: this.id}});
+      if (this.isOnline) {
+        if( this.testAttr == 'order') {
+          this.changeStatus(this.id)
+        }
+        this.$router.push({name: this.testAttr, params: {order: this.id}}); 
+      } else {
+        this.$router.push({ name: "signin" });
+      }      
     },
     // 是否登录
     isSignin() {
