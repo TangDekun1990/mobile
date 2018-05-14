@@ -51,7 +51,14 @@ export default {
   },
   methods: {
     goBack() {
-      this.$router.push({ name: 'order', params: { order: ENUM.ORDER_STATUS.DELIVERIED }});
+      debugger
+       let isComment = this.$route.params.isComment;
+       let id = this.$route.params.order.id ? this.$route.params.order.id : "";
+       if(this.isComment) {
+         this.$router.push({name: 'orderTrade', params:{orderId: id}})
+       } else {
+         this.$router.push({ name: 'order', params: { order: ENUM.ORDER_STATUS.DELIVERIED }});
+       }
     },
     submit() {
       let id = this.$route.params.order.id ? this.$route.params.order.id : "";

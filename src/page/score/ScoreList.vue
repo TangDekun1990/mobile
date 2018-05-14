@@ -1,25 +1,27 @@
 <template>
 	<div class="container">
-		<mt-header class="header" title="我的积分">
+		<div class="ul-score">
+			<mt-header class="header" title="我的积分">
 			<header-item slot="left" v-bind:isBack=true v-on:onclick="goBack">
 			</header-item>
 			<div class="right" slot="right" @click="goRecord">
 				<img src="../../assets/image/change-icon/btn_rule@2x.png">积分规则</div>
-		</mt-header>		
-		<div class="header-info">			
-			<div class="title">
-				{{scoreInfo.score}}
+			</mt-header>		
+			<div class="header-info">			
+				<div class="title">
+					{{scoreInfo.score}}
+				</div>
+				<div class="desc">
+					即将到账：{{scoreInfo.upcoming_score}}
+					<img @click="touchExplain()" src="../../assets/image/change-icon/btn_integral@2x.png">
+				</div>
+			</div>		
+			<div class="tab">
+				<ul>
+					<li class="tab-item" v-bind:class="{'active': currentIndex == 0}" @click="setCurrentItem(0)">积分换券</li>
+					<li class="tab-item" v-bind:class="{'active': currentIndex == 1}" @click="setCurrentItem(1)">积分记录</li>
+				</ul>
 			</div>
-			<div class="desc">
-				即将到账：{{scoreInfo.upcoming_score}}
-				<img @click="touchExplain()" src="../../assets/image/change-icon/btn_integral@2x.png">
-			</div>
-		</div>		
-		<div class="tab">
-			<ul>
-				<li class="tab-item" v-bind:class="{'active': currentIndex == 0}" @click="setCurrentItem(0)">积分换券</li>
-				<li class="tab-item" v-bind:class="{'active': currentIndex == 1}" @click="setCurrentItem(1)">积分记录</li>
-			</ul>
 		</div>
 		<div v-if="currentIndex == 0" class="list" v-infinite-scroll="getMore" infinite-scroll-disabled="canNotLoadMoer" infinite-scroll-distance="10">
 			<score-item
@@ -175,58 +177,66 @@ export default {
 	.container {
 		background-color: $mainbgColor;
 		height: 100%;
-		.header-info {
+		.ul-score {
+			position: fixed;
 			width: 100%;
-			height: 170px;
-			background: url('../../assets/image/change-icon/e2_bg@2x.png') no-repeat;
-			background-size: cover;
-			color: #fff;
-			font-size: 18px;
-			text-align: center;
-			.title {
-				font-size: 36px;
-				padding-top: 28px;
-			}
-			.desc {
-				margin-top: 12px;
-				img {
-					width: 16px;
-					height: 16px;
-					display: inline-block;
-					vertical-align: middle;		
-					margin-top: -3px;			
+			z-index: 100;
+			.header-info {
+				width: 100%;
+				height: 170px;
+				background: url('../../assets/image/change-icon/e2_bg@2x.png') no-repeat;
+				background-size: cover;
+				color: #fff;
+				font-size: 18px;
+				text-align: center;
+				.title {
+					font-size: 36px;
+					padding-top: 28px;
 				}
-			}			
-		}
-		.tab {
-			height: 50px;
-			line-height: 50px;
-			background:rgba(255,255,255,1);
-			border-top: 1px solid #E8EAED;
-			ul {
-				padding: 0px;
-				margin: 0px;
-				list-style: none;
-				display: flex;
-				justify-content: space-around;
-				align-content: center;
-				align-items: center;
-				li {
-					height: -webkit-fill-available;
-					padding: 0px 10px;
-					font-size:14px;
-					color:rgba(124,127,136,1);
-					border-bottom: 2px solid;
-					border-bottom-color: transparent;
-					&.active {
-						color:rgba(242,48,48,1);
-						border-bottom-color: #F23030;
+				.desc {
+					margin-top: 12px;
+					img {
+						width: 16px;
+						height: 16px;
+						display: inline-block;
+						vertical-align: middle;		
+						margin-top: -3px;			
+					}
+				}			
+			}
+			.tab {
+				height: 50px;
+				line-height: 50px;
+				background:rgba(255,255,255,1);
+				border-top: 1px solid #E8EAED;
+				ul {
+					padding: 0px;
+					margin: 0px;
+					list-style: none;
+					display: flex;
+					justify-content: space-around;
+					align-content: center;
+					align-items: center;
+					li {
+						height: -webkit-fill-available;
+						padding: 0px 10px;
+						font-size:14px;
+						color:rgba(124,127,136,1);
+						border-bottom: 2px solid;
+						border-bottom-color: transparent;
+						&.active {
+							color:rgba(242,48,48,1);
+							border-bottom-color: #F23030;
+						}
 					}
 				}
 			}
 		}
 		.list {
 			margin-top: 10px;
+			position: absolute;
+			top: 265px;
+			width: 100%;
 		}
 		.empty {
 			padding-top: 70px;
