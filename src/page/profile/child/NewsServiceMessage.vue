@@ -16,88 +16,85 @@
 	              <span>6</span>
 	            </p>
 	          </div>
-	          <p class="content">您好，我是温超机器人，请问有什么可以帮您？请...</p>
+	          <p class="content">您好，我是温超机器人，请问有什么可以帮您？请联系我</p>
 	        </div>
 	    </a>
-      </div>
+    </div>
   </div>
 </template>
 
 <script>
-  export default {
-    methods: {
-      goBack() {
-        this.$router.go(-1);
-      },
-      goService() {
-        console.log('温超客服')
-      }
-    }
+export default {
+  methods: {
+    goBack() {
+      this.$router.go(-1);
+    },
   }
+};
 </script>
 
 <style lang="scss" scoped>
-  .container {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: stretch;
-    .header {
-      @include header;
-      border-bottom: 1px solid #E8EAED;
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  .header {
+    @include header;
+    border-bottom: 1px solid #e8eaed;
+  }
+  .service-Message-body {
+    a {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: stretch;
     }
-    .service-Message-body {
-    	a {
-			 display: flex;
-	      flex-direction: row;
-	      justify-content: flex-start;
-	      align-items: stretch;
-    	}
-      background-color: #fff;
-      border-bottom: 1px solid #E8EAED;
-      .photo {
-        width:50px;
-        height:50px;
-        padding:15px;
+    background-color: #fff;
+    border-bottom: 1px solid #e8eaed;
+    .photo {
+      width: 50px;
+      height: 50px;
+      padding: 15px;
+    }
+    .right-wrapper {
+      padding: 15px 19px 15px 0px;
+      overflow: hidden;
+      > div {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .title {
+          color: #4e545d;
+          font-size: 14px;
+        }
+        .message-number {
+          display: block;
+          top: 5px;
+          right: 20px;
+          width: 16px;
+          height: 16px;
+          background-color: #f33c3c;
+          line-height: 12px;
+          text-align: center;
+          border-radius: 30px;
+          span {
+            font-size: 12px;
+            color: #fff;
+          }
+        }
       }
-      .right-wrapper {
-        padding:15px 19px 15px 0px;
-        overflow: hidden;
-        >div {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          .title {
-            color: #4E545D;
-            font-size: 14px;
-          }
-          .message-number {
-            display: block;
-            top: 5px;
-            right: 20px;
-            width: 16px;
-            height: 16px;
-            background-color: #F33C3C;
-            line-height: 16px;
-            text-align: center;
-            border-radius: 30px ;
-            span {
-              font-size: 12px;
-              color:#fff;
-            }
-          }
-        }
-        .content {
-          color: #7C7F88;
-          font-size: 12px;
-          margin-top:10px;
+      .content {
+        color: #7c7f88;
+        font-size: 12px;
+        margin-top: 10px;
 
-          overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
-        }
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
       }
     }
   }
+}
 </style>
 
