@@ -164,7 +164,8 @@ export default {
     },
     wxWebAuth() {
       let scope = 'snsapi_userinfo' // 允许获取用户信息      
-      let ref = window.location.href ? encodeURIComponent(window.location.href) : ''      
+      let ref = window.location.href ? encodeURIComponent(window.location.href) : '' 
+      // window.location.href = 'http://api.wenchao.pre.geek-zoo.cn/v2/ecapi.auth.web?vendor=1&scope=snsapi_userinfo&referer=http%3A%2F%2F192.168.1.36%3A8081%2F%23%2Fsignin'     
       authWeb(ENUM.SOCIAL_VENDOR.WEIXIN, scope, ref).then(
         (response) => {
 
