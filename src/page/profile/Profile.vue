@@ -32,76 +32,72 @@
 		</div>
 		<div class="order-wrapper" >
 			<order-item
-			class="order-item"
-			testAttr = 'order'
-			id='0'
-			:icon="require('../../assets/image/change-icon/e0-payment@2x.png')"
-			title="待付款"
-			:orderNumber = 'orderCount.created'
-			>
-		</order-item>
-		<order-item
-		class="order-item"
-		testAttr = 'order'
-		id='1'
-		:icon="require('../../assets/image/change-icon/e0_delivery@2x.png')"
-		title="待发货"
-		:orderNumber = 'orderCount.paid'
-		>
-	</order-item>
-	<order-item
-	class="order-item"
-	testAttr = 'order'
-	id='2'
-	:icon="require('../../assets/image/change-icon/e0_receiving@2x.png')"
-	title="待收货"
-	:orderNumber = 'orderCount.delivering'
-	>
-</order-item>
-<order-item
-class="order-item"
-testAttr = 'order'
-id='3'
-:icon="require('../../assets/image/change-icon/e0_evaluate@2x.png')"
-title="待评价"
-:orderNumber = 'orderCount.deliveried'
->
-</order-item>
-</div>
-<div class="bottom-wrapper">
-	<info-item
-	v-on:onclick="goFavourite()"
-	class="info-item-wrapper section-header"
-	:icon="require('../../assets/image/change-icon/e0_favorite@2x.png')"
-	title="我的收藏">
-</info-item>
-<info-item
-v-on:onclick="goAddress"
-class="info-item-wrapper"
-:icon="require('../../assets/image/change-icon/e0_address@2x.png')"
-title="管理收货地址">
-</info-item>
-<info-item
-v-on:onclick="goCoupon"
-class="info-item-wrapper section-footer"
-:icon="require('../../assets/image/change-icon/e0_coupon@2x.png')"
-title="我的优惠券">
-</info-item>
-<info-item
-v-on:onclick="goHelp()"
-class="info-item-wrapper section-header"
-:icon="require('../../assets/image/change-icon/e0_clause@2x.png')"
-title="使用帮助">
-</info-item>
-<info-item
-v-on:onclick="callTelephone()"
-class="info-item-wrapper section-footer"
-:icon="require('../../assets/image/change-icon/e0_phone@2x.png')"
-title="客服电话">
-</info-item>
-</div>
+        class="order-item"
+        testAttr = 'order'
+        id='0'
+        :icon="require('../../assets/image/change-icon/e0-payment@2x.png')"
+        title="待付款"
+        :orderNumber='orderCount.created'>
+		  </order-item>
+      <order-item
+        class="order-item"
+        testAttr = 'order'
+        id='1'
+        :icon="require('../../assets/image/change-icon/e0_delivery@2x.png')"
+        title="待发货"
+        :orderNumber='orderCount.paid'>
+      </order-item>
+      <order-item
+        class="order-item"
+        testAttr = 'order'
+        id='2'
+        :icon="require('../../assets/image/change-icon/e0_receiving@2x.png')"
+        title="待收货"
+        :orderNumber='orderCount.delivering'>
+      </order-item>
+      <order-item
+        class="order-item"
+        testAttr = 'order'
+        id='3'
+        :icon="require('../../assets/image/change-icon/e0_evaluate@2x.png')"
+        title="待评价"
+        :orderNumber='orderCount.deliveried'>
+      </order-item>
+    </div>
+    <div class="bottom-wrapper">
+      <info-item
+        v-on:onclick="goFavourite()"
+        class="info-item-wrapper section-header"
+        :icon="require('../../assets/image/change-icon/e0_favorite@2x.png')"
+        title="我的收藏">
+      </info-item>
+      <info-item
+        v-on:onclick="goAddress"
+        class="info-item-wrapper"
+        :icon="require('../../assets/image/change-icon/e0_address@2x.png')"
+        title="管理收货地址">
+      </info-item>
+      <info-item
+        v-on:onclick="goCoupon"
+        class="info-item-wrapper section-footer"
+        :icon="require('../../assets/image/change-icon/e0_coupon@2x.png')"
+        title="我的优惠券">
+      </info-item>
+      <info-item
+        v-on:onclick="goHelp()"
+        class="info-item-wrapper section-header"
+        :icon="require('../../assets/image/change-icon/e0_clause@2x.png')"
+        title="使用帮助">
+      </info-item>
+      <info-item
+        v-on:onclick="callTelephone()"
+        class="info-item-wrapper section-footer"
+        :icon="require('../../assets/image/change-icon/e0_phone@2x.png')"
+        title="客服电话">
+      </info-item>
+    </div>
 <!-- <tabbar></tabbar> -->
-</div>
+  </div>
 </template>
 
 <script>
@@ -150,9 +146,11 @@ export default {
         error => {}
       );
     }
-    this.getOrderSubtotal();
-    this.getMessageCount(1);
-    this.getMessageCount(2);
+    if (this.isOnline) {
+      this.getOrderSubtotal();
+      this.getMessageCount(1);
+      this.getMessageCount(2); 
+    }    
     site.siteGet().then(
       response => {
         if (response && response.site_info) {
@@ -259,10 +257,18 @@ export default {
       this.$router.push({ name: "signin" });
     },
     goScoreList() {
-      this.$router.push({ name: "scoreList", query: { index: 0 } });
+      if (this.isOnline) {
+        this.$router.push({ name: "scoreList", query: { index: 0 } }); 
+      } else {
+        this.showLogin();
+      }      
     },
     goRecordList() {
-      this.$router.push({ name: "scoreList", query: { index: 1 } });
+      if (this.isOnline) {
+        this.$router.push({ name: "scoreList", query: { index: 1 } }); 
+      } else {
+        this.showLogin();
+      }    
     },
     goProfileInfo() {
       if (this.isOnline) {
@@ -275,33 +281,48 @@ export default {
       this.$router.push({ name: "setting" });
     },
     goNews() {
-			if(this.user == null) {
-				this.$router.push("signin")
-			}
-      if(this.user != null) {
+			if(this.isOnline) {
 				this.$router.push("news");
-			}	
+			} else {
+        this.showLogin();
+      }
     },
     goFavourite() {
-      this.$router.push("collection");
+      if (this.isOnline) {
+        this.$router.push("collection"); 
+      } else {
+        this.showLogin();
+      }      
     },
     goAddress() {
-      this.$router.push("addressManage");
+      if (this.isOnline) {
+        this.$router.push("addressManage");d
+      } else {
+        this.showLogin();
+      } 
     },
     goCoupon() {
-      this.$router.push({ name: "couponList", query: { index: 0 } });
+      if (this.isOnline) {
+        this.$router.push({ name: "couponList", query: { index: 0 } });
+      } else {
+        this.showLogin();
+      }     
     },
     goHelp() {
       this.$router.push("help");
     },
     goOrder() {
-      if (this.orderStatus != 10) {
-        this.changeStatus(10);
-      }
-      this.$router.push({
-        name: "order",
-        params: { order: ENUM.ORDER_STATUS.ALL }
-      });
+      if (this.isOnline) {
+        if (this.orderStatus != 10) {
+          this.changeStatus(10);
+        }
+        this.$router.push({
+          name: "order",
+          params: { order: ENUM.ORDER_STATUS.ALL }
+        });
+      } else {
+        this.showLogin()
+      }    
     },
     callTelephone() {
       let telephone = this.telephone;
