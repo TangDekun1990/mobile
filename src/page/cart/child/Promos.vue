@@ -4,7 +4,7 @@
 		<div class="ui-cart-promos" @click="changeStatus()" v-if="!isCheckedAll" v-bind:class="{'has-bottom': issShowTabbar}">
 			<div class="promos-list" v-if='promos.length > 0 || un_promos.length >0'>
 				<!-- 以满足促销信息 -->
-				<div class="cart-promos-list">
+				<div class="cart-promos-list" v-if="promos.length > 0">
 					<span class="title">已满足</span>
 					<div class="promos-content">
 						<div v-for="(item, index) in promos"  v-if="index <= 1">
@@ -15,7 +15,7 @@
 					<img src="../../../assets/image/change-icon/enter@2x.png">
 				</div>
 				<!-- 为满足促销 -->
-				<div class="cart-promos-list">
+				<div class="cart-promos-list" v-if="un_promos.length > 0">
 					<span class="title">未满足的优惠</span>
 					<div class="promos-content">
 						<div v-for="(item, index) in un_promos" v-if="index <= 1">
@@ -35,7 +35,7 @@
 					<img src="../../../assets/image/change-icon/close@2x.png" v-on:click="close()">
 				</div>
 				<!-- 以满足促销信息 -->
-				<div class="cart-promos-list">
+				<div class="cart-promos-list" v-if="promos.length > 0">
 					<span class="title">已满足</span>
 					<div class="promos-content">
 						<div v-for="(item, index) in promos">
@@ -48,7 +48,7 @@
 					</div>
 				</div>
 				<!-- 为满足促销 -->
-				<div class="cart-promos-list">
+				<div class="cart-promos-list" v-if="un_promos.length > 0">
 					<span class="title">未满足的优惠</span>
 					<div class="promos-content">
 						<div v-for="(item, index) in un_promos">
