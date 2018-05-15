@@ -77,8 +77,18 @@ export default {
       this.close()
     },
     onClose() {
-      this.close()
+      this.close();
+      this.move();
     },
+     /***取消滑动限制 ***/
+    move() {
+      var mo = function(e) {
+        e.preventDefault();
+      };
+      document.body.style.overflow = "visible"; //出现滚动条
+      document.removeEventListener("touchmove", mo, false);
+    },
+
     open() {
       this.visiable = true
     },

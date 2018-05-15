@@ -23,6 +23,8 @@ const ENCRYPT_KEY = 'aV2woc00FmtOi8HCLsbPMQD0iih0vQ3h';
 // 路由模式
 const ROUTERMODE = 'hash'
 
+const ABOUT_URL = 'http://www.wenchao.ae/article-bangzhuzhongxin_wenchaojituan-102.html'
+
 export {
 	apiBaseUrl,
 	photoBaseUrl,
@@ -30,5 +32,6 @@ export {
 	ENCRYPT_KEY,
 	ROUTERMODE,
 	VERSION,
+	ABOUT_URL
 }
 

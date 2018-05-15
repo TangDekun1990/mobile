@@ -236,7 +236,7 @@ export default {
       }
     },
     onAgreement() {
-      this.$router.push({ name: 'agreement', params: {'url': this.aggrementUrl}})
+      this.$router.push({ name: 'webPage', query: { url: this.aggrementUrl, title: '注册协议'}})
     }
   }
 }

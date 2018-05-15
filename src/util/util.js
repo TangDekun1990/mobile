@@ -176,5 +176,43 @@ export default {
 		  //否则就是PC浏览器打开
 		}
 		return browserHeight;
+	},
+
+	/*
+	 * 调用智齿
+	 */
+	openZhichiManager(detail) {
+		let zhiManager = (getzhiSDKInstance());
+		zhiManager.on('load', function() {
+			zhiManager.init();
+			zhiManager.initBtnDOM();
+			zhiManager.set('customBtn', 'true');
+			zhiManager.set('lazyFlag', true);
+			zhiManger.set('satDegree_A',true);
+			zhiManger.set('isFeedBackFlag',true);
+	    	zhiManager.set('robotHelloWord', '您好! 我是机器人小超， 有什么吩咐您请说哦！');
+	    });
+	    // debugger;
+	    if (detail) {
+			zhiManager.set('thumbnail_info', detail.photos[0].thumb);
+	        zhiManager.set('label_info', detail.current_price + 'AED');
+	        zhiManager.set('abstract_info', detail.desc);
+	        zhiManager.set('url_info', window.location.href);
+	        zhiManager.set('title_info', detail.name);
+		}
+		return zhiManager;
+	},
+
+	/*
+	 * getunreadCount: 获取未读消息数
+	 */
+	getunreadCount(zhiManager, scoped, key) {
+		zhiManager.on("unread.count",function(data){
+	    	console.log(data);
+		});
+		zhiManager.on("receivemessage",function(ret){
+			scoped[key] = ret;
+			console.log(ret);
+		});
 	}
 }

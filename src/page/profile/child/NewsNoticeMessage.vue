@@ -6,7 +6,7 @@
       </header-item>    
     </mt-header>
     <!-- body -->
-    <div class="notice-message-body" v-for="(item, index) in NoticeMessage" v-on:click="goNotice(item.link)" :disabled= "!isClick">
+    <div class="notice-message-body" v-for="(item, index) in NoticeMessage" :key="index" v-on:click="goNotice(item.link)" :disabled= "!isClick">
       <p>{{item.created_at * 1000 | convertTime }}</p>
       <div class="notice-track">
         <span>{{item.title}}</span>
@@ -25,6 +25,7 @@
 import { HeaderItem } from '../../../components/common'
 import { Header } from 'mint-ui'
 import { messageSystemList } from '../../../api/network/message' //通知消息
+import { openLink } from '../../cardpage/deeplink'
 export default { 
   data() {
     return {
@@ -48,11 +49,10 @@ export default {
       })
     },
     // 去到通知消息详情页面
-    goNotice(link) {
-      if(link == ''){ 
-        return false;
+    goNotice(link) {            
+      if (link && link.length) { 
+        openLink(this.$router, link)
       }
-        this.$router.push({ name: 'NoticeMessageInfo', params: {'link': link}})
     }  
   }
 }

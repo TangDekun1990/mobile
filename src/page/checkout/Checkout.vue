@@ -511,6 +511,7 @@ export default {
     color: #fff;
     text-align: center;
     border: none;
+    line-height:50px;
     &:focus {
       outline-style: none;
     }
