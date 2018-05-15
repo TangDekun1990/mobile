@@ -94,7 +94,7 @@ export default [
 				path: '/home',
 				component: Home,
 				meta: {
-					keepAlive: false,
+					keepAlive: true,
 					isshowtabbar: true,
 				},
 			},
