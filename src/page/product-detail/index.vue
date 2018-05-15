@@ -48,17 +48,11 @@
 		mounted() {
 		},
 
-		watch: {
-		    $route (to, from) {
-		    	window.location.reload();
-		    }
-		},
-
-   //      beforeRouteUpdate (to, from, next) {
-   //      	this.getDetail();
-			// this.saveCartState(false);
-   //          next();
-   //      },
+		// watch: {
+		//     $route (to, from) {
+		//     	window.location.reload();
+		//     }
+		// },
 
 		methods: {
 			...mapMutations({
