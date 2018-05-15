@@ -150,9 +150,11 @@ export default {
         error => {}
       );
     }
-    this.getOrderSubtotal();
-    this.getMessageCount(1);
-    this.getMessageCount(2);
+    if (this.isOnline) {
+      this.getOrderSubtotal();
+      this.getMessageCount(1);
+      this.getMessageCount(2); 
+    }    
     site.siteGet().then(
       response => {
         if (response && response.site_info) {
@@ -259,10 +261,18 @@ export default {
       this.$router.push({ name: "signin" });
     },
     goScoreList() {
-      this.$router.push({ name: "scoreList", query: { index: 0 } });
+      if (this.isOnline) {
+        this.$router.push({ name: "scoreList", query: { index: 0 } });
+      } else {
+        this.showLogin();
+      }      
     },
     goRecordList() {
-      this.$router.push({ name: "scoreList", query: { index: 1 } });
+      if (this.isOnline) {
+        this.$router.push({ name: "scoreList", query: { index: 1 } });
+      } else {
+        this.showLogin();
+      }      
     },
     goProfileInfo() {
       if (this.isOnline) {
@@ -275,32 +285,48 @@ export default {
       this.$router.push({ name: "setting" });
     },
     goNews() {
-    	if(this.user != null) {
+    	if (this.isOnline) {
 				this.$router.push("news");
 			} else {
-				this.$router.push("signin");
+				this.showLogin();
 			}
     },
     goFavourite() {
-      this.$router.push("collection");
+      if (this.isOnline) {
+        this.$router.push("collection");
+      } else {
+        this.showLogin();
+      }      
     },
     goAddress() {
-      this.$router.push("addressManage");
+      if (this.isOnline) {
+        this.$router.push("addressManage");
+      } else {
+        this.showLogin();
+      }      
     },
     goCoupon() {
-      this.$router.push({ name: "couponList", query: { index: 0 } });
+      if (this.isOnline) {
+        this.$router.push({ name: "couponList", query: { index: 0 } });
+      } else {
+        this.showLogin();
+      }      
     },
     goHelp() {
       this.$router.push("help");
     },
     goOrder() {
-      if (this.orderStatus != 10) {
-        this.changeStatus(10);
-      }
-      this.$router.push({
-        name: "order",
-        params: { order: ENUM.ORDER_STATUS.ALL }
-      });
+      if (this.isOnline) {
+        if (this.orderStatus != 10) {
+          this.changeStatus(10);
+        }
+        this.$router.push({
+          name: "order",
+          params: { order: ENUM.ORDER_STATUS.ALL }
+        });
+      } else {
+        this.showLogin();
+      }      
     },
     callTelephone() {
       let telephone = this.telephone;

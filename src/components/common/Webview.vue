@@ -1,5 +1,12 @@
 <template>
-  <p v-html="html"></p>
+  <div class="webview-container">
+    <div v-if="isHtml" class="content-wrapper">
+      <p v-html="html"></p>
+    </div>
+    <div v-else>
+      <iframe id="iframe" allowfullscreen='true' scrolling="auto" class="content-wrapper" :style="getFrameStyle" :src="url"></iframe>
+    </div>
+  </div>   
 </template>
 
 
@@ -10,12 +17,17 @@ export default {
   props: {
     url: {
       required: true,
+    },
+    isHtml: {
+      type: Boolean,
+      default: false,
     }
   },
   data() {
     return {
       loading: false,
       html: '',
+      frameHeight: 0,
     }
   },
   watch: {
@@ -23,8 +35,18 @@ export default {
       this.load(value)
     }
   },
+  computed: {
+    getFrameStyle: function () { 
+      return {
+        height: this.frameHeight + 'px',
+      }
+    }
+  },
   mounted() {
     this.load(this.url)
+    this.$nextTick(() => {      
+      this.frameHeight = document.body.scrollHeight - 44
+    })
   },
   methods: {
     load (url) {
@@ -34,22 +56,6 @@ export default {
      let param = {
       accept: 'text/html, text/plain'
      }
-    //  url = "www.baidu.com"
-    //  url = 'http://api.wenchao.pre.geek-zoo.cn/v2/product.intro.3535'
-     console.log('====================================');
-     console.log(url);
-     console.log('====================================');
-     // GET request for remote image
-    // axios({
-    //   method:'get',
-    //   url: url,
-    //   responseType:'text'
-    // })
-    //   .then(function(response) {
-    //   console.log('====================================');
-    //   console.log(response);
-    //   console.log('====================================');
-    // });
      this.$http.get(url, param).then((response) => {
       this.loading = false
       // 处理HTML显示
@@ -59,13 +65,21 @@ export default {
       this.html = '加载失败'
      })
     }
-   }
+   },   
   }
 }
 </script>
 
 <style lang="scss" scoped>
-
+  .webview-container {    
+    width: 100%;
+    height: 100%;
+  }
+  .content-wrapper {    
+    border: none;
+    width: 100%;
+    height: 100%;    
+  }
 </style>
 
 

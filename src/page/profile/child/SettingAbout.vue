@@ -12,7 +12,7 @@
     <div class="about-body">
       <div class="logoimg">
         <img class="logo" src="../../../assets/image/change-icon/logo_wenchao@2x.png">
-        <p> V6.1.0 </p>
+        <p> V1.4.0 </p> <!-- // TODO: 确认是否隐藏版本号 -->
         <img class="code" src="../../../assets/image/change-icon/img_qrcode@2x.png">
         <p>扫描二维码，您的朋友也可以下载温超客户端！</p>
       </div>
@@ -56,34 +56,35 @@
 
 <script>
 import { Actionsheet } from 'mint-ui'
-  export default {
-    data() {
-      return {
-        popupVisible: false, 
-      }
+import { ABOUT_URL } from '../../../config/env'
+export default {
+  data() {
+    return {
+      popupVisible: false, 
+    }
+  },
+  methods: {
+    goBack() {
+      this.$router.go(-1) 
     },
-    methods: {
-      goBack() {
-        this.$router.go(-1) 
-      },
 
-      share() {
-        this.popupVisible = true;
-      },
-      // 取消分享
-      cancelInfo() {
-        this.popupVisible = false;
-      },
-      // 分享到微信
-      goWachat() {
-        this.$router.push('home');
-      },
-      // 去公司简介页面
-      goIntroduce(url) {
-        this.$router.push({name: 'SettingIntroduce', params: {url: 'http://www.wenchao.ae/article-bangzhuzhongxin_wenchaojituan-102.html'}});
-      }
+    share() {
+      this.popupVisible = true;
+    },
+    // 取消分享
+    cancelInfo() {
+      this.popupVisible = false;
+    },
+    // 分享到微信
+    goWachat() {
+      this.$router.push('home');
+    },
+    // 去公司简介页面
+    goIntroduce(url) {
+      this.$router.push({ name: 'webPage', query: { url: ABOUT_URL, title: '关于我们'}})      
     }
   }
+}
 </script>
 
 <style lang="scss" scoped>

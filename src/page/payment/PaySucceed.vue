@@ -26,7 +26,7 @@ export default {
     goDetail() {
       let order = this.$route.params.order
       let orderId = order ? order.id : null
-      this.$router.push({ name: 'orderDetail', params: {orderDetail: orderId, isFromPay: true }})      
+      this.$router.push({ name: 'orderDetail', query: {id: orderId, isFromPay: true }})      
     },
     goShopping() {
       this.$router.push('/home')
