@@ -57,6 +57,9 @@ router.beforeEach((to, from, next) => {
 			}
 		}
 	}
+	if (to.name == 'detail') {
+		window.location.reload();
+	}
 	next();
 });
 
