@@ -29,11 +29,11 @@ export default {
     },
     // 去订单详情
     goOrderDetail() {
-      this.$router.push({ name: 'orderDetail',params: {'orderDetail':this.$route.query.item.id, isSuccess: true}}) 
+      this.$router.push({ name: 'orderDetail',query: {'id':this.$route.query.id, isSuccess: true}}) 
     },
     // 去评价订单
     goOrderComment() {
-      this.$router.push({ name: 'orderComment', params: {'order': this.$route.query.item, isComment: true}});
+      this.$router.push({ name: 'orderComment', query: {'order': this.$route.query.id }});
     }
   }
 }

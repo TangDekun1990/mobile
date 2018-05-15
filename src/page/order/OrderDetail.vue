@@ -22,14 +22,14 @@ export default {
     goBack() {
       let isFromPay = this.$route.params.isFromPay;
       let isSuccess = this.$route.params.isSuccess;
-      let id = this.$route.params.orderDetail;
+      let id = this.$route.query.id?  this.$route.query.id: '';
       if (isFromPay) {
         this.$router.push({ name: 'order', params: { order: ENUM.ORDER_STATUS.PAID}});
       } else if(isSuccess) {
-        this.$router.push({name: 'orderTrade', params: { orderId: id}});
+        this.$router.push({name: 'orderTrade', query: { 'id': id }});
       } else {
-        this.$router.go(-1)
-      }      
+        this.$router.go(-1);
+      }
     },    
   },
 }
