@@ -136,7 +136,7 @@ export const openLink = (router, link) => {
             params = { name: 'order', params: { order: ENUM.ORDER_STATUS.ALL, isFromHome: true } }
           } else {
             // 订单详情（需要登录）
-            params = { name: 'orderDetail', params: { orderDetail: action } }
+            params = { name: 'orderDetail', query: { id: action } }
           }
         } else if (where === 'favorite') {
           if (action === 'product') {

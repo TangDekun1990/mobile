@@ -105,10 +105,10 @@
 			<div class="detail">
 				<div class="number">
 					<label>订单编号：{{orderDetail.order.sn}} &nbsp;
-						<input type="submit" class="copyBut" :data-clipboard-text="orderDetail.order.sn" value=" 复制 " v-on:click="getCopy()">
+						<button class="tag-read" :data-clipboard-text="orderDetail.order.sn" v-on:click="getCopy()">复制</button>  
 					</label>
 					<p>下单时间：{{orderDetail.order.created_at * 1000 | convertTime}}</p>
-				</div>
+				</div> 
 				<div class="pay">
 					<p>支付方式：货到付款</p>
 				</div>
@@ -206,7 +206,7 @@ export default {
       total_price: [],
       orderIndex: 2,
       isShow: false,
-      trackList: []
+			trackList: [],
     };
   },
   props: {
@@ -364,7 +364,7 @@ export default {
 
     // 复制
     getCopy() {
-    	var clipboard = new Clipboard(".copyBut");
+    	var clipboard = new Clipboard(".tag-read");
     	clipboard.on("success", e => {
     		console.log("复制成功");
         // 释放内存
@@ -375,7 +375,7 @@ export default {
         console.log("该浏览器不支持自动复制");
         // 释放内存
         clipboard.destroy();
-    });
+		});
     	Toast({
     		message: "复制成功",
     		iconClass: "mintui mintui-field-success",
@@ -613,9 +613,15 @@ computed: {
 			padding-top: 6px;
 			font-size: 14px;
 		}
-		input {
+		button {
 			color: #7c7f88;
 			height: 20px;
+			background-color: #fff;
+			border: 1px solid #7C7F88;
+			width: 54px;
+			height: 20px;
+			border-radius: 2px;
+			font-size:14px;
 		}
 	}
 	.pay {
