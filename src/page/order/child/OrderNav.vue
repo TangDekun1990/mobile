@@ -140,12 +140,14 @@ export default {
   },
   computed: {
     ...mapState({
-      orderStatus: state => state.order.orderStatus
+      orderStatus: state => state.order.orderStatus,
+      orderItem: state => state.order.orderItem,
     })
   },
   methods: {
     ...mapMutations({
-      changeStatus: "changeStatus"
+      changeStatus: "changeStatus",
+      changeItem: "changeItem"
     }),
 
     getUrlParams() {
@@ -157,14 +159,14 @@ export default {
     },
     // 去订单详情
     goOrderDetail(id) {
-      this.$router.push({ name: "orderDetail", params: { orderDetail: id } });
+      this.$router.push({ name: "orderDetail", query: { 'id': id } });
     },
 
     setOrderNavActive(item, index) {
       this.curentNAVId = item.id;
       this.orderList = [];
-		this.orderListParams.page = 1;
-		this.changeStatus(index);
+      this.orderListParams.page = 1;
+      this.changeStatus(index);
       this.getOrderList();
     },
 
@@ -249,8 +251,9 @@ export default {
     // 确认收货
     confirm(item, index) {
       MessageBox.confirm("是否确认收货？", "确认收货").then(action => {
-        this.$router.push({ name: "orderTrade", query: { item: item } });
+        this.changeItem(item);
         this.orderConfirms(item.id, index);
+        this.$router.push({ name: "orderTrade", query: { id: item.id }});
       });
     },
     // 获取确认收货数据

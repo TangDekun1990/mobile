@@ -57,15 +57,15 @@
 		},
 
 		// TODO
-		// watch: {
-		// 	detailInfo: function(value) {
-		// 		if(value) {
-		// 				let title = this.detailInfo.name;
-		// 				let imgUrl = this.detailInfo.photos[0].thumb;
-		// 				this.wxApi.getConfigRes(title, imgUrl);
-		// 		}
-		// 	}
-		// },
+		watch: {
+			detailInfo: function(value) {
+				if(value) {
+						let title = this.detailInfo.name;
+						let imgUrl = this.detailInfo.photos[0].thumb;
+						this.wxApi.getConfigRes(title, imgUrl);
+				}
+			}
+		},
 		created(){
 			this.getCurrentDate();
 			// if(this.detailInfo) {
@@ -87,7 +87,7 @@
 				let date = new Date();
 				let month = date.getMonth() + 1,
         			data = date.getDate(),
-					hour = date.getHours() < 10 ? "0" + date.getHours() : date.getHours(),
+								hour = date.getHours() < 10 ? "0" + date.getHours() : date.getHours(),
 		            minute = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes(),
 		            second = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
 		        this.getTimeRange(hour, minute, month, data);

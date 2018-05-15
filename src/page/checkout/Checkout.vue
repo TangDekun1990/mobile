@@ -234,6 +234,16 @@ export default {
       fetchCouponUsable: 'fetchCouponUsable', 
       fetchDeliveryList: 'fetchDeliveryList',     
     }),
+
+     /***滑动限制***/
+    stop() {
+      var mo = function(e) {
+        e.preventDefault();
+      };
+      document.body.style.overflow = "hidden";
+      document.addEventListener("touchmove", mo, false); //禁止页面滑动
+    },
+			
     getPriceByKey(key) {
       let total = ''
       let order_price = this.order_price
@@ -296,7 +306,8 @@ export default {
       this.$router.push({ name: 'invoice', params: { title: title} })
     },
     goDuration() {
-      this.$refs.timePicker.open()      
+      this.$refs.timePicker.open();     
+      this.stop(); 
     },
     onClickDate(date) {
 

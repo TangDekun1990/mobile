@@ -95,7 +95,7 @@ export default [
 				component: Home,
 				meta: {
 					keepAlive: true,
-					isshowtabbar: true
+					isshowtabbar: true,
 				},
 			},
 			{
