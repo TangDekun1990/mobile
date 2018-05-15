@@ -1,13 +1,13 @@
 <template>
   <div class="container">
     <!-- header -->
-    <mt-header class="header" title="使用帮助">
+    <mt-header fixed class="header" title="使用帮助">
       <header-item slot="left" v-bind:isBack=true v-on:onclick="goBack()">
       </header-item>    
     </mt-header>
     <!-- body -->
     <div class="help-body">
-      <help-item v-for="(item, index) in articleData" v-bind:key="item.id" v-on:onclick="getHelpInfo(item.url, item.title)"
+      <help-item v-for="(item, index) in articleData" :key="index" v-on:onclick="getHelpInfo(item.url, item.title)"
         class="section-footer" 
         :icon="require('../../assets/image/change-icon/e9_doc.png')" 
         :title="item.title"
@@ -48,7 +48,7 @@ export default {
       })
     },
     getHelpInfo(url, title) {
-      this.$router.push({ name: 'HelpUrl', query: {'url': url,'title': title}})
+      this.$router.push({ name: 'webPage', query: {'url': url,'title': title}})
     }
   }
 }
@@ -63,6 +63,9 @@ export default {
     .header {
       @include header;
       border-bottom:1px solid #E8EAED;
+    }
+    .help-body {
+      margin-top: 44px;
     }
   }
 </style>

@@ -15,21 +15,19 @@ import Search from '../page/search/Search'
 // auth
 import Signin from '../page/auth/Signin'
 import Signup from '../page/auth/Signup'
-import Agreement from '../page/auth/Agreement'
+import WebPage from '../page/auth/WebPage'
 
 // profile
 import Profile from '../page/profile/Profile'
 import ProfileInfo from '../page/profile/ProfileInfo'
 import Setting from '../page/profile/Setting'
 import SettingAbout from '../page/profile/child/SettingAbout'
-import SettingIntroduce from '../page/profile/child/SettingIntroduce'
 import Help from '../page/profile/Help'
 import HelpUrl from '../page/profile/child/HelpUrl'
 import News from '../page/profile/News'
 import NewsOrderMessage from '../page/profile/child/NewsOrderMessage'
 import NewsNoticeMessage from '../page/profile/child/NewsNoticeMessage'
 import NewsServiceMessage from '../page/profile/child/NewsServiceMessage'
-import NoticeMessageInfo from '../page/profile/child/NoticeMessageInfo'
 import Collection from '../page/profile/Collection'
 
 // cardpage
@@ -75,7 +73,7 @@ import Cart from '../page/cart/cart'
 
 // 查看推荐商品
 import Recommend from '../page/recommend/Recommend'
-import With from '../page/recommend/with'
+import With from '../page/recommend/with' // TODO: CODE REVIW (rename)
 
 import Promotions from '../page/promotions/Promotions'
 //
@@ -130,9 +128,9 @@ export default [
 				component: Signup
 			},
 			{
-				name: 'agreement',
-				path: '/agreement',
-				component: Agreement
+				name: 'webPage',
+				path: '/webPage',
+				component: WebPage
 			},
 			{
 				name: 'profile',
@@ -151,11 +149,6 @@ export default [
 				name: 'SettingAbout',
 				path: '/SettingAbout',
 				component: SettingAbout
-			},
-			{
-				name: 'SettingIntroduce',
-				path: '/settingIntroduce',
-				component: SettingIntroduce
 			},
 			{
 				name: 'profileInfo',
@@ -186,11 +179,6 @@ export default [
 				name: 'newsNoticeMessage',
 				path: '/newsNoticeMessage',
 				component: NewsNoticeMessage
-			},
-			{
-				name: 'NoticeMessageInfo',
-				path: '/noticeMessageInfo',
-				component: NoticeMessageInfo
 			},
 			{
 				name: 'NewsServiceMessage',

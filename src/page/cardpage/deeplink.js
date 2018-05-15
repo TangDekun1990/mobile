@@ -17,9 +17,8 @@ export const openLink = (router, link) => {
         let parts = link.split('/cardpage/')
         let action = parts[1]
         params = { name: 'cardpage', params: { name: action } }								
-      } else {
-        // TODO: 跨域问题
-        params = { name: 'HelpUrl', query: { 'url': link, 'title': '' } }
+      } else {        
+        params = { name: 'webPage', query: { 'url': link } }
       }      
     } else if (schema === 'deeplink') {
       let prefix = schema + '://'
@@ -137,7 +136,7 @@ export const openLink = (router, link) => {
             params = { name: 'order', params: { order: ENUM.ORDER_STATUS.ALL, isFromHome: true } }
           } else {
             // 订单详情（需要登录）
-            params = { name: 'orderDetail', params: { orderDetail: action } }
+            params = { name: 'orderDetail', query: { id: action } }
           }
         } else if (where === 'favorite') {
           if (action === 'product') {

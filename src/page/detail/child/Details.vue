@@ -3,7 +3,7 @@
 	<div class="set-ui-iframe">
 		<div class="ui-iframe" :class="{'hastop': unqie == 'detail'}" v-if="url">
 			<!-- <iframe  v-bind:src="url" class="agreemnt-iframe" allowfullscreen='true' id="iframe" name="iframe"></iframe> -->
-			<webview :url.asyc="url">
+			<webview :url.asyc="url" isHtml>
     	</webview>
 		</div>
 

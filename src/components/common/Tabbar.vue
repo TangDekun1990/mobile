@@ -136,8 +136,9 @@
 					    font-size: 10px;
 					    color: #FFFFFF;
 					    border-radius: 50%;
-					    padding: 2px 4px;
-					    top: 0px;
+					    width: 14px;
+							height: 14px;
+							text-align: center;
 					}
 				}
 				li.currentavtive {
