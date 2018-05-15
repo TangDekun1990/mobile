@@ -18,9 +18,7 @@
  	import { mapState, mapMutations } from 'vuex';
 	export default {
 		data () {
-			return{
-				items: {}
-			}
+			return{}
 		},
 
 		computed: {
@@ -31,8 +29,7 @@
 
 		watch: {
 			detailInfo: function(value) {
-				let manager = this.utils.openZhichiManager(value);
-				this.utils.getunreadCount(manager, this);
+				this.utils.openZhichiManager(value);
 			}
 		},
 
