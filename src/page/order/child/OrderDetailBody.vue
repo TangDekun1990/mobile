@@ -105,7 +105,8 @@
 			<div class="detail">
 				<div class="number">
 					<label>订单编号：{{orderDetail.order.sn}} &nbsp;
-						<input type="submit" class="copyBut" :data-clipboard-text="orderDetail.order.sn" value=" 复制 " v-on:click="getCopy()">
+						<!-- <input type="submit" class="copyBut" :data-clipboard-text="orderDetail.order.sn" value=" 复制 " v-on:click="getCopy()"> -->
+						<button class="tag-read" :data-clipboard-text="orderDetail.order.sn" @click="getCopy">复制</button>  
 					</label>
 					<p>下单时间：{{orderDetail.order.created_at * 1000 | convertTime}}</p>
 				</div>
@@ -206,7 +207,7 @@ export default {
       total_price: [],
       orderIndex: 2,
       isShow: false,
-      trackList: []
+			trackList: [],
     };
   },
   props: {
@@ -364,7 +365,7 @@ export default {
 
     // 复制
     getCopy() {
-    	var clipboard = new Clipboard(".copyBut");
+    	var clipboard = new Clipboard(".tag-read");
     	clipboard.on("success", e => {
     		console.log("复制成功");
         // 释放内存
@@ -375,7 +376,7 @@ export default {
         console.log("该浏览器不支持自动复制");
         // 释放内存
         clipboard.destroy();
-    });
+		});
     	Toast({
     		message: "复制成功",
     		iconClass: "mintui mintui-field-success",
