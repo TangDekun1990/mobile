@@ -95,12 +95,11 @@
 
 		mounted(){
 			// 计算内容高度
-		    this.$nextTick( () => {
-		    	this.target = document.querySelector('.product-body');
-		    	let totalHeight = 89;
-				const target = this.target;
-		    	this.utils.fillTheScreen({target, totalHeight});
-		    });
+			this.target = document.querySelector('.product-body');
+	    	let totalHeight = 89;
+			const target = this.target;
+	    	this.utils.fillTheScreen({target, totalHeight});
+		    this.$nextTick( () => {});
 		},
 
 		methods: {
