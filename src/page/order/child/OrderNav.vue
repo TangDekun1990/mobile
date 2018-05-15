@@ -159,7 +159,7 @@ export default {
     },
     // 去订单详情
     goOrderDetail(id) {
-      this.$router.push({ name: "orderDetail", params: { orderDetail: id } });
+      this.$router.push({ name: "orderDetail", query: { 'id': id } });
     },
 
     setOrderNavActive(item, index) {
