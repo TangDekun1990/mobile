@@ -67,15 +67,15 @@
 		},
 
 		watch: {
-			currentTabBar: function(value){
-	            let data = this.staticData;
-	            for ( let i = 0; i <= data.length-1; i++) {
-		    		if(value == data[i].link) {
-			            this.currentItem = data[i].link;
-			        }
+			currentTabBar: function(value) {
+	      let data = this.staticData;
+	      for (let i = 0; i <= data.length-1; i++) {
+		    	if(value == data[i].link) {
+			      this.currentItem = data[i].link;
+			      }
 		    	}
-        	}
-		},
+        }
+			},
 
 		created(){},
 

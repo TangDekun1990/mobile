@@ -29,9 +29,6 @@ export default {
     goBack() {
       this.$router.go(-1);
     },
-    goService() {
-      console.log("温超客服");
-    }
   }
 };
 </script>
