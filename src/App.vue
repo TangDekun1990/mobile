@@ -22,7 +22,7 @@ export default {
 	},
 
 	created: function() {
-		window.location.href = 'wenchao://';
+		// window.location.href = 'wenchao://';
 		if (this.isOnline) {
 			this.getCartNumber();
 		}
