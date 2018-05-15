@@ -14,17 +14,20 @@ import tabBar from './components/common/Tabbar'
 import { cartQuantity } from './api/network/cart'
 export default {
 	name: 'app',
+
 	computed: {
 		...mapState({
 			isOnline: state => state.auth.isOnline,
 		})
 	},
+
 	created: function() {
-		// window.location.href = 'wenchao://';
+		window.location.href = 'wenchao://';
 		if (this.isOnline) {
-			this.getCartNumber();	
-		}		
+			this.getCartNumber();
+		}
 	},
+
 	watch: {
 			$route(to, from) {
 				// 路由改变发起重置
@@ -32,6 +35,7 @@ export default {
 				this.changeTabBar(to.name);
 			}
     },
+
 	methods: {
 		...mapMutations({
 			saveToken: 'saveToken',
@@ -39,12 +43,15 @@ export default {
 			changeTabBar: 'changeTabBar',
 			setCartNumber: 'setCartNumber'
 		}),
+
 		...mapActions({
 			resetStates: 'resetStates'
 		}),
+
 		goBack () {
 			window.history.length > 1 ? this.$router.go(-1) : this.$router.push('/')
 		},
+
 		getCartNumber() {
 			cartQuantity().then( res => {
 				if (res) {
@@ -53,9 +60,11 @@ export default {
 			})
 		}
 	},
+
 	components: {
 		'v-tab-bar': tabBar
 	},
+
 	mounted () {
 		if (window.WebViewJavascriptBridge && window.WebViewJavascriptBridge.isInApp()) {
 			// 加载页面时获取token

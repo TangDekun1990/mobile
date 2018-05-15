@@ -99,14 +99,6 @@ export default {
         }
       });
     },
-    // 微信分享
-    getConfigGet() {
-      configGet().then(res => {
-        if (res) {
-          this.configGet = Object.assign([], this.configGet);
-        }
-      });
-    }
   }
 };
 </script>

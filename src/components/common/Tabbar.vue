@@ -5,8 +5,8 @@
 				<li class="item" v-for='item in staticData' v-bind:key="item.key"  v-on:click='setCurrentActive(item)' v-bind:class="{'currentavtive': currentItem == item.link}">
 					<img v-bind:src="item.bgurl" v-if='currentItem != item.link'>
 					<img v-bind:src="item.activeBgurl" v-if='currentItem == item.link'>
-					<span v-if="cartNumber <= 100 && cartNumber > 0 && item.link == 'cart'">{{ cartNumber }}</span>
-					<span v-if="cartNumber >= 100  && cartNumber > 0 && item.link == 'cart'">99+</span>
+					<span v-if="cartNumber <= 100 && cartNumber > 0 && item.link == 'cart' && isOnline">{{ cartNumber }}</span>
+					<span v-if="cartNumber >= 100  && cartNumber > 0 && item.link == 'cart' && isOnline">99+</span>
 					<a>{{item.name}}</a>
 				</li>
 			</ul>
@@ -61,7 +61,8 @@
 		computed: {
 			...mapState({
 				currentTabBar: state => state.tabBar.currentTabBar,
-				cartNumber: state => state.tabBar.cartNumber
+				cartNumber: state => state.tabBar.cartNumber,
+				isOnline: state => state.auth.isOnline
 			})
 		},
 

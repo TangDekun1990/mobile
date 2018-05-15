@@ -219,7 +219,7 @@ export default {
     CheckoutDesc
   },
   created() {
-    let id = this.$route.params.orderDetail ? this.$route.params.orderDetail : null;
+    let id = this.$route.query.id ? this.$route.query.id : null;
     this.orderInfo(id);
     this.orderReasonList();
     this.getShippingStatusGet(id);

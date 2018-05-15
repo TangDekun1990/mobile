@@ -9,7 +9,7 @@
       </header-item>        
     </mt-header>
     <!-- body -->
-    <div class="order-comment-body" v-for="(item, index) in commentinfo.goods" v-if="commentinfo.goods.length > 0">
+    <div class="order-comment-body" v-for="(item, index) in orderItem.goods" v-if="orderItem.goods.length > 0">
       <div class="body-list">
         <div class="image">
           <img v-bind:src="item.product.photos[0].thumb" v-if="item.product.photos.length > 0">
@@ -39,22 +39,25 @@ import { Header, Toast} from "mint-ui";
 import { orderReview } from "../../../api/network/order"; //评价晒单
 import { IMAGE } from '../static'
 import { ENUM } from '../../../config/enum'
+import { mapState, mapMutations } from "vuex";
 export default {
   data() {
     return {
-      commentinfo: this.$route.params.order ? this.$route.params.order : null,
+      orderItem: this.$store.state.order.orderItem ? this.$store.state.order.orderItem : null,
       IMAGE: IMAGE
     };
   },
   created() {
-    this.buildData();
+    if(this.orderItem) {
+       this.buildData();
+    }
   },
   methods: {
     goBack() {
-      this.$router.push({ name: 'order', params: { order: ENUM.ORDER_STATUS.DELIVERIED }});
+      this.$router.go(-1);
     },
     submit() {
-      let id = this.$route.params.order.id ? this.$route.params.order.id : "";
+      let id = this.$route.query.order ? this.$route.query.order : "";
       this.getComment(id);
     },
 
@@ -75,11 +78,11 @@ export default {
     },
 
     getCommentData() {
-      let data = this.commentinfo.goods;
+      let data = this.orderItem.goods;
       let dataArray = [];
       for(let i = 0; i <= data.length-1; i++) {
         if(data[i].currentIndex !== 0 ) {
-          let obj = {'goods': data[i].id, 'grade': data[i].currentIndex, 'content': data[i].content};
+          let obj = {'goods': data[i].product.id, 'grade': data[i].currentIndex, 'content': data[i].content};
           dataArray.push(obj);
         }
       }
@@ -87,17 +90,19 @@ export default {
     },
 
     buildData() {
-     let data = this.commentinfo ? this.commentinfo.goods : [];     
-     for(let i = 0; i <= data.length-1; i++ ) {
-       data[i].IMAGE = this.IMAGE;
-       data[i].content = '';
-       data[i].currentIndex = 3;
-     }
+     let data = this.orderItem ? this.orderItem.goods : [];
+     if(data) {
+        for(let i = 0; i <= data.length-1; i++ ) {
+        data[i].IMAGE = this.IMAGE;
+        data[i].content = '';
+        data[i].currentIndex = 3;
+      }
+     }     
     },
 
     changeImage(item, imageid, index) {
       item.currentIndex = imageid;
-      this.commentinfo.goods = Object.assign([], this.commentinfo.goods);
+      this.orderItem.goods = Object.assign([], this.orderItem.goods);
     }
   }
 };
