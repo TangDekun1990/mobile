@@ -186,7 +186,13 @@ import OrderPrice from "./OrderPrice";
 import { Indicator, MessageBox, Popup } from "mint-ui";
 import CheckoutDesc from "./CheckoutDesc";
 import Promos from "../../checkout/Promos";
-import { orderGet, orderReasonList, orderCancel, orderConfirm, orderRebuy } from "../../../api/network/order";
+import {
+  orderGet,
+  orderReasonList,
+  orderCancel,
+  orderConfirm,
+  orderRebuy
+} from "../../../api/network/order";
 import { shippingStatusGet } from "../../../api/network/shipping"; //订单跟踪
 import { Toast } from "mint-ui";
 import Clipboard from "clipboard";
@@ -207,7 +213,7 @@ export default {
       total_price: [],
       orderIndex: 2,
       isShow: false,
-			trackList: [],
+      trackList: []
     };
   },
   props: {
@@ -228,514 +234,526 @@ export default {
   methods: {
     // 获取订单详情数据
     orderInfo(id) {
-    	orderGet(id).then(res => {
-    		if (res) {
-    			this.orderDetail = res;
-    			this.order = res.order;
-    			this.total_price = res.order.goods;
-    		}
-    	});
+      orderGet(id).then(res => {
+        if (res) {
+          this.orderDetail = res;
+          this.order = res.order;
+          this.total_price = res.order.goods;
+        }
+      });
     },
 
     // 取消订单
     cancel() {
-    	this.popupVisible = true;
+      this.popupVisible = true;
     },
 
     cancelInfo() {
-    	this.popupVisible = false;
+      this.popupVisible = false;
     },
 
     complete(id, index) {
-    	this.popupVisible = false;
-    	this.getordersuccess(id, index);
-      	window.location.reload();
-  	},
+      this.popupVisible = false;
+      this.getordersuccess(id, index);
+      window.location.reload();
+    },
 
     // 去支付
     payment() {
-    	let order = this.orderDetail ? this.orderDetail.order : null;
-    	if (order) {
-    		this.$router.push({ name: "payment", params: { order: order } });
-    	}
+      let order = this.orderDetail ? this.orderDetail.order : null;
+      if (order) {
+        this.$router.push({ name: "payment", params: { order: order } });
+      }
     },
 
     // 获取退货原因数据
     orderReasonList() {
-    	orderReasonList().then(res => {
-    		if (res) {
-    			this.reasonList = Object.assign([], this.reasonList, res.reasons);
-    		}
-    	});
+      orderReasonList().then(res => {
+        if (res) {
+          this.reasonList = Object.assign([], this.reasonList, res.reasons);
+        }
+      });
     },
 
     // 获取取消订单数据
     getordersuccess(id, index) {
-    	orderCancel(id, this.reasonId).then(res => {
-    		if (res) {
-    			this.orderList = [];
-    		}
-    	});
+      orderCancel(id, this.reasonId).then(res => {
+        if (res) {
+          this.orderList = [];
+        }
+      });
     },
 
     getReasonItem(item) {
-    	this.reasonId = item.id;
+      this.reasonId = item.id;
     },
 
     // 查看物流
     track(id) {
-    	this.$router.push({ name: "orderTrack", params: { orderTrack: id } });
+      this.$router.push({ name: "orderTrack", params: { orderTrack: id } });
     },
 
     // 获取物流状态数据
     getShippingStatusGet(id) {
-    	shippingStatusGet(id).then(res => {
-    		if (res) {
-    			this.trackList = res.status;
-    		}
-    	});
+      shippingStatusGet(id).then(res => {
+        if (res) {
+          this.trackList = res.status;
+        }
+      });
     },
 
     // 确认收货
     confirm(id, index) {
-    	MessageBox.confirm("是否确认收货？", "确认收货").then(action => {
-    		this.orderConfirms(id);
-    		// window.location.reload();
-    	});
+      MessageBox.confirm("是否确认收货？", "确认收货").then(action => {
+        this.orderConfirms(id);
+        // window.location.reload();
+      });
     },
 
     // 获取确认收货数据
     orderConfirms(id, index) {
-    	orderConfirm(id).then(res => {
-    		if (res) {
-    			// this.orderDetail = Object.assign({}, res);
-    			this.orderDetail.order.status = res.order.status;
-    		}
-    	});
+      orderConfirm(id).then(res => {
+        if (res) {
+          // this.orderDetail = Object.assign({}, res);
+          this.orderDetail.order.status = res.order.status;
+        }
+      });
     },
 
     // 晒单评价
     goComment(data) {
-    	this.$router.push({ name: "orderComment", params: { order: data } });
+      this.$router.push({ name: "orderComment", params: { order: data } });
     },
 
     // 获取再次购买数据
     goBuy(id) {
-    	Indicator.open({
-    		spinnerType: "fading-circle"
-    	});
-    	orderRebuy(id).then(res => {
-    		if (res) {
-    			Indicator.close();
-    			this.$router.push("/cart");
-    		}
-    	});
+      Indicator.open({
+        spinnerType: "fading-circle"
+      });
+      orderRebuy(id).then(res => {
+        if (res) {
+          Indicator.close();
+          this.$router.push("/cart");
+        }
+      });
     },
     getOrderDiscountPrice(item) {
-    	return "AED " + (item.price ? item.price : 0);
+      return "AED " + (item.price ? item.price : 0);
     },
     getFormatPrice(key) {
-    	let price = this.getPriceByKey(key);
-    	let priceStr = "AED " + (price ? this.utils.currencyPrice(price) : "");
-    	return priceStr;
+      let price = this.getPriceByKey(key);
+      let priceStr = "AED " + (price ? this.utils.currencyPrice(price) : "");
+      return priceStr;
     },
     getPriceByKey(key) {
-    	let total = "";
-    	let order = this.order;
-    	if (order && order[key]) {
-    		total = order[key];
-    	}
-    	return total;
+      let total = "";
+      let order = this.order;
+      if (order && order[key]) {
+        total = order[key];
+      }
+      return total;
     },
     // 计算商品总额
     goodsTotalPrice() {
-    	let totalPrice = 0;
-    	let total_price = this.total_price;
-    	if (total_price.length > 0) {
-    		for (let i = 0, len = total_price.length; i <= len - 1; i++) {
-    			if (total_price[i].total_price) {
-    				totalPrice += parseFloat(total_price[i].total_price);
-    			}
-    		}
-    		return "AED " + this.utils.currencyPrice(totalPrice);
-    	} else {
-    		return "AED " + this.utils.currencyPrice(totalPrice);
-    	}
+      let totalPrice = 0;
+      let total_price = this.total_price;
+      if (total_price.length > 0) {
+        for (let i = 0, len = total_price.length; i <= len - 1; i++) {
+          if (total_price[i].total_price) {
+            totalPrice += parseFloat(total_price[i].total_price);
+          }
+        }
+        return "AED " + this.utils.currencyPrice(totalPrice);
+      } else {
+        return "AED " + this.utils.currencyPrice(totalPrice);
+      }
     },
 
     // 复制
     getCopy() {
-    	var clipboard = new Clipboard(".tag-read");
-    	clipboard.on("success", e => {
-    		console.log("复制成功");
-        // 释放内存
-        clipboard.destroy();
-    });
-    	clipboard.on("error", e => {
-        // 不支持复制
-        console.log("该浏览器不支持自动复制");
-        // 释放内存
-        clipboard.destroy();
-		});
-    	Toast({
-    		message: "复制成功",
-    		iconClass: "mintui mintui-field-success",
-    		duration: 2000
-    	});
+      var clipboard = new Clipboard(".tag-read");
+      // 	clipboard.on("success", e => {
+      // 		console.log("复制成功");
+      //     // 释放内存
+      //     clipboard.destroy();
+      // });
+      // 	clipboard.on("error", e => {
+      //     // 不支持复制
+      //     console.log("该浏览器不支持自动复制");
+      //     // 释放内存
+      //     clipboard.destroy();
+      // });
+      clipboard.on("success", function(e) {
+        console.log("复制成功!");
+        e.clearSelection();
+      });
+      clipboard.on("error", function(e) {
+        console.log("请选择“拷贝”进行复制!");
+      });
+      Toast({
+        message: "复制成功",
+        iconClass: "mintui mintui-field-success",
+        duration: 2000
+      });
     },
 
     // 去商品详情
     getOrderDetail(orderId) {
-    	this.$router.push({ name: "detail", params: { id: orderId } });
+      this.$router.push({ name: "detail", params: { id: orderId } });
     },
     // 点击展示所有商品
     getNumber() {
-    	this.orderIndex = this.orderDetail.order.goods.length - 1;
-    	this.isShow = true;
+      this.orderIndex = this.orderDetail.order.goods.length - 1;
+      this.isShow = true;
     },
     // 从订单详情去订单跟踪页面
     goOrderrack(id) {
-    	this.$router.push({ name: "orderTrack", params: { orderTrack: id } });
+      this.$router.push({ name: "orderTrack", params: { orderTrack: id } });
     }
-},
-computed: {
-	getPromos: function() {
-		return this.getPriceByKey("promos");
-	},
-	getOrderTotalPrice: function() {
-		return this.getFormatPrice("total");
-	},
-	getOrderProductPrice: function() {
-		return this.goodsTotalPrice();
-	},
-	getOrderTaxPrice: function() {
-		return this.getFormatPrice("tax");
-	},
-	getOrderShippingPrice: function() {
-		let priceStr = "";
-		let price = this.getPriceByKey("shipping");
-		if (price) {
-			priceStr = "AED " + this.utils.currencyPrice(price.price);
-		} else {
-			priceStr = "免运费";
-		}
-		return priceStr;
-	}
-}
+  },
+  computed: {
+    getPromos: function() {
+      return this.getPriceByKey("promos");
+    },
+    getOrderTotalPrice: function() {
+      return this.getFormatPrice("total");
+    },
+    getOrderProductPrice: function() {
+      return this.goodsTotalPrice();
+    },
+    getOrderTaxPrice: function() {
+      return this.getFormatPrice("tax");
+    },
+    getOrderShippingPrice: function() {
+      let priceStr = "";
+      let price = this.getPriceByKey("shipping");
+      if (price) {
+        priceStr = "AED " + this.utils.currencyPrice(price.price);
+      } else {
+        priceStr = "免运费";
+      }
+      return priceStr;
+    }
+  }
 };
 </script>
 <style lang="scss" scoped>
 .order-body {
-	overflow: auto;
-	height: 100%;
-	position: absolute;
-	width: 100%;
-	margin-top: 44px;
+  overflow: auto;
+  height: 100%;
+  position: absolute;
+  width: 100%;
+  margin-top: 44px;
 }
 .image {
-	background-image: url("../../../assets/image/change-icon/bg_order@2x.png");
-	height: 70px;
-	display: flex;
-	justify-content: flex-start;
-	align-items: center;
-	img {
-		height: 18px;
-		padding: 0px 12px;
-	}
-	span {
-		font-size: 17px;
-		color: #fff;
-	}
+  background-image: url("../../../assets/image/change-icon/bg_order@2x.png");
+  height: 70px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  img {
+    height: 18px;
+    padding: 0px 12px;
+  }
+  span {
+    font-size: 17px;
+    color: #fff;
+  }
 }
 .receipt {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	height: auto;
-	padding: 13px;
-	background-color: #fff;
-	margin-bottom: 8px;
-	label {
-		display: flex;
-		align-items: center;
-	}
-	img {
-		height: 16px;
-		margin: 0px 15px 0px 10px;
-	}
-	.arrow {
-		width: 5px;
-		height: 10px;
-	}
-	span {
-		font-size: 14px;
-		color: #4e545d;
-	}
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: auto;
+  padding: 13px;
+  background-color: #fff;
+  margin-bottom: 8px;
+  label {
+    display: flex;
+    align-items: center;
+  }
+  img {
+    height: 16px;
+    margin: 0px 15px 0px 10px;
+  }
+  .arrow {
+    width: 5px;
+    height: 10px;
+  }
+  span {
+    font-size: 14px;
+    color: #4e545d;
+  }
 }
 .containers {
-	display: flex;
-	flex-direction: row;
-	justify-content: flex-start;
-	align-items: stretch;
-	background-color: #fff;
-	border-bottom: 1px solid #e8eaed;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: stretch;
+  background-color: #fff;
+  border-bottom: 1px solid #e8eaed;
 }
 .onClick {
-	height: 44px;
-	line-height: 44px;
-	text-align: center;
-	background-color: #fff;
-	p {
-		font-size: 14px;
-		color: #4e545d;
-	}
+  height: 44px;
+  line-height: 44px;
+  text-align: center;
+  background-color: #fff;
+  p {
+    font-size: 14px;
+    color: #4e545d;
+  }
 }
 .photo {
-	width: 80px;
-	height: 80px;
-	margin: 15px 10px 15px 15px;
-	border: 1px solid #e8eaed;
-	flex-basis: 80px;
-	flex-shrink: 0;
+  width: 80px;
+  height: 80px;
+  margin: 15px 10px 15px 15px;
+  border: 1px solid #e8eaed;
+  flex-basis: 80px;
+  flex-shrink: 0;
 }
 .right-wrapper {
-	display: flex;
-	flex-direction: column;
-	justify-content: flex-start;
-	align-items: stretch;
-	padding: 0px 15px 0px 0px;
-	width: 100%;
-	overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  padding: 0px 15px 0px 0px;
+  width: 100%;
+  overflow: hidden;
 }
 .title {
-	margin-top: 15px;
-	color: #4e545d;
-	font-size: 14px;
+  margin-top: 15px;
+  color: #4e545d;
+  font-size: 14px;
 
-	overflow: hidden;
-	text-overflow: ellipsis;
-	white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .property {
-	font-size: 13px;
-	color: #7C7F88;
-	padding-top: 10px;
-
+  font-size: 13px;
+  color: #7c7f88;
+  padding-top: 10px;
 }
 .count {
-	margin-top: 4px;
-	color: #7c7f88;
-	font-size: 13px;
-	margin-right: 10px;
+  margin-top: 4px;
+  color: #7c7f88;
+  font-size: 13px;
+  margin-right: 10px;
 }
 .desc-wrapper {
-	height: 20px;
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
-	align-items: center;
-	padding-top: 21px;
+  height: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 21px;
 }
 .propertyOrder {
-	padding-top: 34px;
+  padding-top: 34px;
 }
 .price {
-	color: #4e545d;
-	font-size: 17px;
-	margin-left: 0px;
+  color: #4e545d;
+  font-size: 17px;
+  margin-left: 0px;
 }
 .count {
-	color: #7c7f88;
-	font-size: 16px;
-	margin-right: 10px;
+  color: #7c7f88;
+  font-size: 16px;
+  margin-right: 10px;
 }
 .address {
-	height: 87px;
-	background-color: #fff;
-	div {
-		padding: 11px 10px 0px;
-	}
-	img {
-		height: 16px;
-	}
-	span {
-		color: #4e545d;
-		font-size: 16px;
-		&.mobile {
-			padding-left: 21px;
-		}
-	}
-	p {
-		margin: 5px 18px 11px 32px;
-		font-size: 14px;
-		color: #7c7f88;
+  height: 87px;
+  background-color: #fff;
+  div {
+    padding: 11px 10px 0px;
+  }
+  img {
+    height: 16px;
+  }
+  span {
+    color: #4e545d;
+    font-size: 16px;
+    &.mobile {
+      padding-left: 21px;
+    }
+  }
+  p {
+    margin: 5px 18px 11px 32px;
+    font-size: 14px;
+    color: #7c7f88;
 
-		overflow: hidden;
-		text-overflow: ellipsis;
-		display: -webkit-box;
-		-webkit-box-orient: vertical;
-		-webkit-line-clamp: 2;
-	}
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
 }
 
 .contact {
-	display: flex;
-	justify-content: flex-end;
-	align-items: center;
-	height: 46px;
-	background-color: #fff;
-	margin-top: 8px;
-	border-bottom: 1px solid $lineColor;
-	padding: 0 13px;
-	span {
-		font-size: 12px;
-		color: #4e545d;
-		padding-right: 6px;
-	}
-	img {
-		width: 12px;
-		height: 13px;
-	}
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  height: 46px;
+  background-color: #fff;
+  margin-top: 8px;
+  border-bottom: 1px solid $lineColor;
+  padding: 0 13px;
+  span {
+    font-size: 12px;
+    color: #4e545d;
+    padding-right: 6px;
+  }
+  img {
+    width: 12px;
+    height: 13px;
+  }
 }
 
 .detail {
-	display: flex;
-	flex-direction: column;
-	font-size: 14px;
-	color: #7c7f88;
-	height: 195px;
-	background-color: #fff;
-	margin: 8px 0;
-	box-sizing: border-box;
-	.number {
-		padding: 14px 12px 12px;
-		border-bottom: 1px solid $lineColor;
-		p {
-			padding-top: 6px;
-			font-size: 14px;
-		}
-		input {
-			color: #7c7f88;
-			height: 20px;
-		}
-	}
-	.pay {
-		border-bottom: 1px solid $lineColor;
-		p {
-			padding: 13px 15px 12px;
-		}
-	}
-	.givetime {
-		padding: 18px 15px 14px;
-		font-size: 14px;
-		:last-child {
-			padding-top: 6px;
-		}
-	}
-	input {
-		background-color: #fff;
-		border: 1px solid #7c7f88;
-	}
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+  color: #7c7f88;
+  height: 195px;
+  background-color: #fff;
+  margin: 8px 0;
+  box-sizing: border-box;
+  .number {
+    padding: 14px 12px 12px;
+    border-bottom: 1px solid $lineColor;
+    p {
+      padding-top: 6px;
+      font-size: 14px;
+    }
+    button {
+      color: #7c7f88;
+      height: 20px;
+      background-color: #fff;
+      border: 1px solid #7c7f88;
+      width: 54px;
+      height: 20px;
+      border-radius: 2px;
+      font-size: 14px;
+    }
+  }
+  .pay {
+    border-bottom: 1px solid $lineColor;
+    p {
+      padding: 13px 15px 12px;
+    }
+  }
+  .givetime {
+    padding: 18px 15px 14px;
+    font-size: 14px;
+    :last-child {
+      padding-top: 6px;
+    }
+  }
+  input {
+    background-color: #fff;
+    border: 1px solid #7c7f88;
+  }
 }
 .desc {
-	height: 163px;
-	background-color: #fff;
-	display: flex;
-	flex-direction: column;
-	justify-content: flex-start;
-	align-items: stretch;
-	padding-top: 12px;
-	box-sizing: border-box;
-	margin-bottom: 80px;
-	.desc-item {
-		flex: 1;
-	}
-	.amount {
-		display: flex;
-		justify-content: flex-end;
-		font-size: 14px;
-		color: #4e545d;
-		padding-right: 15px;
-		border-top: 1px solid $lineColor;
-		margin-top: 12px;
-		height: 45px;
-		line-height: 45px;
-		span {
-			font-size: 16px;
-			color: #f33c3c;
-		}
-	}
+  height: 163px;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  padding-top: 12px;
+  box-sizing: border-box;
+  margin-bottom: 80px;
+  .desc-item {
+    flex: 1;
+  }
+  .amount {
+    display: flex;
+    justify-content: flex-end;
+    font-size: 14px;
+    color: #4e545d;
+    padding-right: 15px;
+    border-top: 1px solid $lineColor;
+    margin-top: 12px;
+    height: 45px;
+    line-height: 45px;
+    span {
+      font-size: 16px;
+      color: #f33c3c;
+    }
+  }
 }
 .btn {
-	position: fixed;
-	bottom: 0;
-	right: 0;
-	width: 100%;
-	height: 54px;
-	display: flex;
-	justify-content: flex-end;
-	background-color: #fff;
-	align-items: center;
-	border-top: 1px solid #E8EAED;
-	button {
-		width: 82px;
-		height: 36px;
-		font-size: 14px;
-		margin-right: 7px;
-		background-color: #fff;
-		border: 1px solid #ccc;
-	}
-	.buttonbottom {
-		color: #f23030;
-		border: 1px solid #f23030;
-	}
-	.mint-popup {
-		width: 100%;
-		height: 235px;
-	}
-	.cancels {
-		height: 100%;
-		.cancelInfo {
-			display: flex;
-			flex-wrap: nowrap;
-			justify-content: space-between;
-			span {
-				color: #000;
-				font-size: 14px;
-			}
-			.cancel {
-				padding-left: 15px;
-			}
-			.success {
-				padding-right: 15px;
-			}
-		}
-		.reason {
-			width: 100%;
-			p {
-				height: 16px;
-				line-height: 16px;
-				width: 100%;
-				text-align: center;
-				padding-top: 10px;
-				&:hover {
-					color: red;
-				}
-			}
-		}
-	}
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 54px;
+  display: flex;
+  justify-content: flex-end;
+  background-color: #fff;
+  align-items: center;
+  border-top: 1px solid #e8eaed;
+  button {
+    width: 82px;
+    height: 36px;
+    font-size: 14px;
+    margin-right: 7px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+  }
+  .buttonbottom {
+    color: #f23030;
+    border: 1px solid #f23030;
+  }
+  .mint-popup {
+    width: 100%;
+    height: 235px;
+  }
+  .cancels {
+    height: 100%;
+    .cancelInfo {
+      display: flex;
+      flex-wrap: nowrap;
+      justify-content: space-between;
+      span {
+        color: #000;
+        font-size: 14px;
+      }
+      .cancel {
+        padding-left: 15px;
+      }
+      .success {
+        padding-right: 15px;
+      }
+    }
+    .reason {
+      width: 100%;
+      p {
+        height: 16px;
+        line-height: 16px;
+        width: 100%;
+        text-align: center;
+        padding-top: 10px;
+        &:hover {
+          color: red;
+        }
+      }
+    }
+  }
 }
 .ship {
-	margin-bottom: 0px;
+  margin-bottom: 0px;
 }
 </style>
 
 <!-- 字体图标样式覆盖 -->
 <style>
 .mint-toast-icon {
-	font-size: 38px;
+  font-size: 38px;
 }
 button {
-	padding: 0;
+  padding: 0;
 }
 </style>
