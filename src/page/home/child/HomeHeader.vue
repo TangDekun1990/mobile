@@ -8,17 +8,27 @@
 </template>
 
 <script>
-	export default {
-    name: 'HomeHeader',
-    methods: {
-      onSearch() {
-        this.$router.push('search')
-      },
-      rightClick() {
-				this.$router.push('news')
-			},
+import { mapState } from 'vuex'
+export default {
+  name: 'HomeHeader',
+  computed: {
+    ...mapState({
+      isOnline: state => state.auth.isOnline
+    })
+  },
+  methods: {
+    onSearch() {
+      this.$router.push({ name: 'search', params: { isFromHome: true } })
     },
-	}
+    rightClick() {
+      if (this.isOnline) {
+        this.$router.push('news') 
+      } else {
+        this.$router.push({ name: 'signin' })
+      }     
+    },
+  },
+}
 </script>
 
 <style lang="scss" scoped>

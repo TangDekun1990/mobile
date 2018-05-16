@@ -74,7 +74,7 @@ export default {
 		...mapMutations({
 			getAmount: 'calculationAmount',
 			getPrice: 'calculationPrice',
-			setCartNumber: 'setCartNumber'
+			setCartNumber: 'setCartNumber',
 		}),
 
 		/*
@@ -317,8 +317,8 @@ export default {
 			if (validate.length > 0) {
 				productValidate(JSON.stringify(validate)).then( res => {
 					if (res) {
-						if (res.is_valid) {
-							this.$router.push('/checkout')
+						if (res.is_valid) {																						
+							this.$router.push({ name: 'checkout' })
 						}
 					}
 				}, error => {

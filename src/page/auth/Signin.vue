@@ -93,6 +93,13 @@ export default {
   created: function () {
     this.fetchConfig();
   },
+  mounted () {
+    let isTokenInvalid = this.$route.params.isTokenInvalid
+    debugger
+    if (isTokenInvalid) {
+      Toast('登录过期')
+    }
+  },
   methods: {
     ...mapMutations({
       saveToken: 'signin'

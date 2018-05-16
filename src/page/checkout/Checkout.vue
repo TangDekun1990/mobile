@@ -36,7 +36,7 @@
       <div class="amount-wrapper">
         <label class="amount">实付款: {{getOrderTotalPrice}}</label>
       </div>     
-      <gk-buttom class="submit" @click="checkout">提交订单</gk-buttom>
+      <gk-button class="submit" type="primary" @click="checkout">提交订单</gk-button>
     </div>
     <delivery-time 
       ref="timePicker"  
@@ -221,20 +221,26 @@ export default {
     // 配送时间列表
     this.fetchDeliveryList()      
   },
+  beforeRouteLeave (to, from, next) {
+    if (to.name === 'cart') {
+      this.clearSelectedInfo()     
+    }
+    next()      
+  },
   methods: {
     ...mapMutations({
       saveAddressItems: 'saveAddressItems',
       selectAddressItem: 'selectAddressItem', 
+      unselectAddressItem: 'unselectAddressItem',
       unselectCouponItem: 'unselectCouponItem', 
       clearInvoiceInfo: 'clearInvoiceInfo', 
-      unselectDelivery: 'unselectDelivery',   
+      unselectDelivery: 'unselectDelivery',  
     }),
     ...mapActions({
       fetchShippingList: 'fetchShippingList',
       fetchCouponUsable: 'fetchCouponUsable', 
       fetchDeliveryList: 'fetchDeliveryList',     
     }),
-
      /***滑动限制***/
     stop() {
       var mo = function(e) {
@@ -243,7 +249,6 @@ export default {
       document.body.style.overflow = "hidden";
       document.addEventListener("touchmove", mo, false); //禁止页面滑动
     },
-			
     getPriceByKey(key) {
       let total = ''
       let order_price = this.order_price
@@ -261,29 +266,28 @@ export default {
       return priceStr
     },
     goBack() {
-      this.$router.go(-1)
-      
-      this.clearSelectedInfo()
+      MessageBox({
+        title: '',				
+        message: '好货不等人</br>请三思而行', 
+        showCancelButton: true,       
+        cancelButtonText: '去意已决',
+        cancelButtonClass: 'cancel-button',
+        confirmButtonClass: 'confirm-button-red',
+        confirmButtonText: '再想想'
+      }).then(action => { 
+        if (action === 'cancel') {
+          this.$router.go(-1)                       
+        }                
+      })       
     },
     clearSelectedInfo() {
+      this.unselectAddressItem()
       this.unselectCouponItem()
       this.clearInvoiceInfo()
       this.unselectDelivery()
     },
     leftClick() {
-      MessageBox({
-				title: '',				
-        message: '好货不等人</br>请三思而行', 
-        showCancelButton: true,       
-				cancelButtonText: '去意已决',
-        cancelButtonClass: 'cancel-button',
-        confirmButtonClass: 'confirm-button-red',
-        confirmButtonText: '再想想'
-			}).then(action => { 
-        if (action === 'cancel') {
-          this.goBack()
-        }                
-      })
+      this.goBack()      
     },
     rightClick() {
       // TODO:
@@ -292,7 +296,7 @@ export default {
       if (this.addressItems && this.addressItems.length) {
         this.$router.push('addressList')
       } else {
-        this.$router.push({ name: 'addressEdit', params: { mode: 'add', item: null } })
+        this.$router.push({ name: 'addressEdit', query: { mode: 'add', item: null, isFromCheckout: true, goBackLevel: -1 } })
       }       
     },    
     goGoodsList() {      
@@ -417,6 +421,7 @@ export default {
         (response) => {
           Indicator.close()
           if (response && response.order) {
+            this.clearSelectedInfo()
             this.$router.push({ name: 'payment', params: { order: response.order }})
           }          
         }, (error) => {
@@ -503,18 +508,9 @@ export default {
     text-align: right;
     padding-right: 15px;
   }
-  .submit {
-    flex: 1;
+  .submit {    
     width: 150px;
-    background-color: #F23030;
-    font-size: 16px;
-    color: #fff;
-    text-align: center;
-    border: none;
-    line-height:50px;
-    &:focus {
-      outline-style: none;
-    }
+    border-radius: 0px;
   }
 </style>
 

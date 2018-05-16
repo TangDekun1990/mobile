@@ -135,7 +135,7 @@ export default {
     };
   },
   created() {
-   //  this.getUrlParams();
+    this.getUrlParams();
     this.orderReasonList();
   },
   computed: {

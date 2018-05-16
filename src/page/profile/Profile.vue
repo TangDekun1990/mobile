@@ -300,7 +300,7 @@ export default {
     },
     goAddress() {
       if (this.isOnline) {
-        this.$router.push("addressManage");
+        this.$router.push({ name: 'addressManage' });
       } else {
         this.showLogin();
       }      
