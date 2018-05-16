@@ -61,18 +61,16 @@
 			detailInfo: function(value) {
 				if(value) {
 						let title = this.detailInfo.name;
-						let imgUrl = this.detailInfo.photos[0].thumb;
+						let imgUrl = '';
+						if (this.detailInfo.photos) {
+							imgUrl = this.detailInfo.photos[0].thumb;
+						}
 						this.wxApi.getConfigRes(title, imgUrl);
 				}
 			}
 		},
 		created(){
 			this.getCurrentDate();
-			// if(this.detailInfo) {
-			// 	let title = this.detailInfo.name;
-			// 	let imgUrl = this.detailInfo.photos[0].thumb;
-			// 	this.wxApi.getConfigRes(title, imgUrl);
-			// }
 		},
 
 		methods: {
