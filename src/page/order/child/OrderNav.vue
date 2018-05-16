@@ -135,7 +135,7 @@ export default {
     };
   },
   created() {
-   //  this.getUrlParams();
+    //  this.getUrlParams();
     this.orderReasonList();
   },
   computed: {
@@ -147,14 +147,14 @@ export default {
   methods: {
     ...mapMutations({
       changeStatus: "changeStatus",
-      changeItem: "changeItem"
+      changeItem: "changeItem",
     }),
 
     getUrlParams() {
       let urlparams = this.$route.params;
       if (urlparams.order) {
-			this.changeStatus(urlparams.order);
-      //   this.currentNAVId = urlparams.order;
+        this.changeStatus(urlparams.order);
+        //   this.currentNAVId = urlparams.order;
       }
     },
     // 去订单详情
@@ -172,7 +172,7 @@ export default {
 
     // 获取订单列表
     getOrderList(ispush) {
-		Indicator.open();
+      Indicator.open();
       let data = this.orderListParams;
       data.status = this.orderStatus;
       orderList(data.page, data.per_page, data.status).then(res => {
@@ -181,8 +181,8 @@ export default {
             this.orderList = this.orderList.concat(res.orders);
           } else {
             this.orderList = Object.assign([], this.orderList, res.orders);
-			 }
-			 this.isMore = res.paged.more == 1 ? true : false;
+          }
+          this.isMore = res.paged.more == 1 ? true : false;
           Indicator.close();
         }
       });
@@ -230,12 +230,13 @@ export default {
       document.addEventListener("touchmove", mo, false); //禁止页面滑动
     },
     /***取消滑动限制 ***/
-			move(){
-				var mo=function(e){e.preventDefault();};
-				document.body.style.overflow='';//出现滚动条
-				document.removeEventListener("touchmove",mo,false);
-			},
-			
+    move() {
+      var mo = function(e) {
+        e.preventDefault();
+      };
+      document.body.style.overflow = ""; //出现滚动条
+      document.removeEventListener("touchmove", mo, false);
+    },
 
     // 查看物流
     track(id) {
@@ -254,7 +255,7 @@ export default {
       MessageBox.confirm("是否确认收货？", "确认收货").then(action => {
         this.changeItem(item);
         this.orderConfirms(item.id, index);
-        this.$router.push({ name: "orderTrade", query: { id: item.id }});
+        this.$router.push({ name: "orderTrade", query: { id: item.id } });
       });
     },
     // 获取确认收货数据
@@ -281,7 +282,8 @@ export default {
 
     // 晒单评价
     goComment(item) {
-      this.$router.push({ name: "orderComment", params: { order: item } });
+      this.changeItem(item)
+      this.$router.push({ name: "orderComment", query: { order: item.id } });
     },
 
     // 获取退货原因数据

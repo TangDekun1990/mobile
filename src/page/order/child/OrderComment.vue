@@ -36,7 +36,7 @@
 <script>
 import { HeaderItem } from "../../../components/common";
 import { Header, Toast} from "mint-ui";
-import { orderReview } from "../../../api/network/order"; //评价晒单
+import { orderReview} from "../../../api/network/order"; //评价晒单
 import { IMAGE } from '../static'
 import { ENUM } from '../../../config/enum'
 import { mapState, mapMutations } from "vuex";
@@ -50,7 +50,7 @@ export default {
   created() {
     if(this.orderItem) {
        this.buildData();
-    }
+    };
   },
   methods: {
     goBack() {
