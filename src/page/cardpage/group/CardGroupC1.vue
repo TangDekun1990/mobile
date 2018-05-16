@@ -1,5 +1,5 @@
 <template>
-  <mt-swipe v-bind:style="getContainerStyle">
+  <mt-swipe v-bind:style="getContainerStyle" :showIndicators="isShowIndicators">
     <mt-swipe-item v-for="(item, index) in getItems" :key="index">
       <card-item v-bind:style="getContainerStyle" :item="item"></card-item>
     </mt-swipe-item>
@@ -34,6 +34,12 @@ export default {
         height: itemHeight + 'px'
       }
     },
+    isShowIndicators () {
+      if (this.getItems && this.getItems.length > 1) {
+        return true
+      }
+      return false
+    }
   }
 }
 </script>
