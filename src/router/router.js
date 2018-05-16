@@ -183,7 +183,10 @@ export default [
 			{
 				name: 'NewsServiceMessage',
 				path: '/newsServiceMessage',
-				component: NewsServiceMessage
+				component: NewsServiceMessage,
+				meta: {
+					keepAlive: true
+				}
 			},
 			{
 				name: 'Collection',
