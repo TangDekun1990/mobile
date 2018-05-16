@@ -93,13 +93,17 @@ export default {
         return null
       }
     },
-    getRegion() {      
-      if (!this.isAddMode && this.getItem) {
-        let regions = this.getItem.regions
-        return this.getRegionStr(regions)
+    getRegion() {     
+      let region = null 
+      if (this.isAddMode) {
+        region = '市，区，街'
       } else {
-        return null
+        if (this.getItem) {
+          let regions = this.getItem.regions
+          region = this.getRegionStr(regions)
+        }
       }
+      return region
     },
     getAddress() {      
       if (!this.isAddMode && this.getItem) {
