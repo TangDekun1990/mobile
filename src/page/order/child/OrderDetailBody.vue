@@ -189,6 +189,7 @@ import { orderGet, orderReasonList, orderCancel, orderConfirm, orderRebuy } from
 import { shippingStatusGet } from "../../../api/network/shipping"; //订单跟踪
 import { Toast } from "mint-ui";
 import Clipboard from "clipboard";
+import { mapState, mapMutations } from "vuex";
 export default {
   mixins: [Promos],
   data() {
@@ -217,6 +218,11 @@ export default {
   components: {
     OrderPrice,
     CheckoutDesc
+	},
+	 computed: {
+    ...mapState({
+      orderItem: state => state.order.orderItem,
+    })
   },
   created() {
     let id = this.$route.query.id ? this.$route.query.id : null;
@@ -225,6 +231,9 @@ export default {
     this.getShippingStatusGet(id);
   },
   methods: {
+		...mapMutations({
+      changeItem: "changeItem",
+    }),
     // 获取订单详情数据
     orderInfo(id) {
     	orderGet(id).then(res => {
@@ -248,7 +257,7 @@ export default {
     complete(id, index) {
     	this.popupVisible = false;
     	this.getordersuccess(id, index);
-      	window.location.reload();
+      window.location.reload();
   	},
 
     // 去支付
@@ -315,7 +324,8 @@ export default {
 
     // 晒单评价
     goComment(data) {
-    	this.$router.push({ name: "orderComment", params: { order: data } });
+			this.changeItem(data);
+    	this.$router.push({ name: "orderComment", query: { order: data } });
     },
 
     // 获取再次购买数据

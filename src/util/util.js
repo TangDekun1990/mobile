@@ -192,9 +192,10 @@ export default {
 			zhiManger.set('isFeedBackFlag',true);
 	    	zhiManager.set('robotHelloWord', '您好! 我是机器人小超， 有什么吩咐您请说哦！');
 	    });
-	    // debugger;
 	    if (detail) {
-			zhiManager.set('thumbnail_info', detail.photos[0].thumb);
+	    	if ( detail.photos) {
+	    		zhiManager.set('thumbnail_info', detail.photos[0].thumb);
+	    	}
 	        zhiManager.set('label_info', detail.current_price + 'AED');
 	        zhiManager.set('abstract_info', detail.desc);
 	        zhiManager.set('url_info', window.location.href);
@@ -211,7 +212,8 @@ export default {
 	    	console.log(data);
 		});
 		zhiManager.on("receivemessage",function(ret){
-			scoped[key] = ret;
+			scoped.key = ret;
+			// return ret
 			console.log(ret);
 		});
 	}
