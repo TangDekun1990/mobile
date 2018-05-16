@@ -29,28 +29,21 @@ const getDefaultItem = (items) => {
 // mutations
 const mutations = {
   setDefaultAddress(state, item) {
-    const { defaultItem } = state
-    if (defaultItem) {
-      if (defaultItem.id !== item.id) {
-        state.defaultItem = item
-      } 
-    } else {
-      if (item) {
-        state.defaultItem = item
-      } 
-    }     
+    state.defaultItem = item      
+    
+    // 当前选中的地址和要设置为默认的地址不同时，更新当前选中的地址值
+    let selectedItem = state.selectedItem    
+    if (selectedItem && selectedItem.id) {
+      if (selectedItem.id !== item.id) {        
+        selectedItem.is_default = false        
+      } else {
+        selectedItem.is_default = true        
+      }
+      this.commit('selectAddressItem', selectedItem)
+    }
   },
   selectAddressItem(state, item) {
-    const { selectedItem } = state
-    if (selectedItem) {
-      if (selectedItem.id !== item.id) {
-        state.selectedItem = item
-      }
-    } else {
-      if (item) {
-        state.selectedItem = item
-      }
-    }    
+    state.selectedItem = item    
   },
   unselectAddressItem(state) {
     state.selectedItem = null
@@ -89,6 +82,12 @@ const mutations = {
     const { items } = state
     let index = getIndexById(items, item.id)
     state.items.splice(index, 1, item)
+
+    // 当前选中的地址和要修改的地址相同时，更新当前选中的地址
+    let selectedItem = state.selectedItem
+    if (selectedItem && selectedItem.id && selectedItem.id === item.id) {
+      this.commit('selectAddressItem', item)
+    }
     this.commit('traverseAddressItems')
   },
   saveAddressItems(state, items) {

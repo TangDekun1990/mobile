@@ -67,7 +67,7 @@ export const openLink = (router, link) => {
             params = { name: 'product', query: { category: action, isFromHome: true } }
           }
         } else if (where === 'notice/all') {
-          if (aciton === 'all') {
+          if (action === 'all') {
             // 公告列表
             params = { name: 'News' }
           }
@@ -105,14 +105,14 @@ export const openLink = (router, link) => {
           } else if (action === 'new') {
             // 新建收货地址（需要登录）
             showAuth = true
-            params = { name: 'addressEdit', params: { mode: 'add', item: null } }
+            params = { name: 'addressEdit', query: { mode: 'add', item: null } }
           } else {
             // 编辑收货地址（需要登录）// TODO: address item
             showAuth = true
-            params = { name: 'addressEdit', params: { mode: 'edit', item: action } }
+            params = { name: 'addressEdit', query: { mode: 'edit', item: action } }
           }          
         } else if (where === 'order') {
-          showAuth = true
+          showAuth = true          
           if (action === 'all') {
             // 全部订单（需要登录）
             params = { name: 'order', params: { order: ENUM.ORDER_STATUS.ALL, isFromHome: true } }

@@ -61,7 +61,7 @@ export default {
       this.$router.go(-1)
     },
     goManage() {
-      this.$router.push('addressManage')
+      this.$router.push({ name: 'addressManage', query: { isFromCheckout: true }});
     },
     onclick(item) {
       this.selectAddressItem(item)

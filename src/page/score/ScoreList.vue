@@ -239,7 +239,7 @@ export default {
 			width: 100%;
 		}
 		.empty {
-			padding-top: 70px;
+			padding-top: 285px;
 			text-align: center;
 			img {
 				width: 181px;
