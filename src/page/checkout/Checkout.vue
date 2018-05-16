@@ -514,7 +514,7 @@ export default {
   }
   .submit {    
     width: 150px;
-    height: 44px;
+    height: 50px;
     border-radius: 0px;
   }
 </style>
