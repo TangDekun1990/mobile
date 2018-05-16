@@ -8,7 +8,7 @@
 					v-for="(item, index) in ORDERNAV" 
 					v-bind:key="item.id" 
 					v-bind:class="{'active': orderStatus == item.id}"
-					v-on:click="setOrderNavActive(item, item.id)"
+					v-on:click="setOrderNavActive(item.id)"
 				>{{ item.name }}</li>
 			</ul>
 		</div>
@@ -106,7 +106,6 @@ export default {
     return {
       ORDERNAV: ORDERNAV,
       ORDERSTATUS: ORDERSTATUS,
-      // currentNAVId: this.$store.state.order.orderStatus ? this.$store.state.order.orderStatus : '',
       orderListParams: { page: 0, per_page: 10, status: "" },
       orderList: [],
       loading: false,
@@ -135,7 +134,7 @@ export default {
     };
   },
   created() {
-    //  this.getUrlParams();
+    this.getUrlParams();
     this.orderReasonList();
   },
   computed: {
@@ -151,10 +150,12 @@ export default {
     }),
 
     getUrlParams() {
-      let urlparams = this.$route.params;
-      if (urlparams.order) {
-        this.changeStatus(urlparams.order);
-        //   this.currentNAVId = urlparams.order;
+      let status = this.$route.params.order;
+      let index = this.orderStatus;
+      if (status == 0) {
+        this.changeStatus(status);        
+      } else {
+        this.changeStatus(index);
       }
     },
     // 去订单详情
@@ -162,8 +163,7 @@ export default {
       this.$router.push({ name: "orderDetail", query: { 'id': id } });
     },
 
-    setOrderNavActive(item, index) {
-      this.curentNAVId = item.id;
+    setOrderNavActive(index) {
       this.orderList = [];
       this.orderListParams.page = 1;
       this.changeStatus(index);

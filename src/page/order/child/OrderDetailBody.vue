@@ -257,7 +257,7 @@ export default {
     complete(id, index) {
     	this.popupVisible = false;
     	this.getordersuccess(id, index);
-      	window.location.reload();
+      window.location.reload();
   	},
 
     // 去支付

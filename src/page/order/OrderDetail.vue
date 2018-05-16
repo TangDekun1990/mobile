@@ -24,7 +24,7 @@ export default {
       let isSuccess = this.$route.query.isSuccess;
       let id = this.$route.query.id?  this.$route.query.id: '';
       if (isFromPay) {
-        this.$router.push({ name: 'order', query: { order: ENUM.ORDER_STATUS.PAID}});
+        this.$router.push({ name: 'order', params: { order: ENUM.ORDER_STATUS.PAID}});
       } else if(isSuccess) {
         this.$router.push({name: 'orderTrade', query: { 'id': id }});
       } else {

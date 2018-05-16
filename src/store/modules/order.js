@@ -11,7 +11,7 @@ const mutations = {
   },
   changeItem(state, item) {
     state.orderItem = item
-  },
+  }
 }
 
 export default {

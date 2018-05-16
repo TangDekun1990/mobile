@@ -4,7 +4,7 @@
       <header-item slot="left" v-bind:isBack=true v-on:onclick="leftClick">
       </header-item> 
       <header-item slot="right" titleColor="#F23030" title="联系客服" v-on:onclick="rightClick">
-      </header-item>        
+      </header-item>     
     </mt-header>
     <div class="body">
       <checkout-address class="address" v-on:onclick="goAddress" v-bind:item="selectedAddress">
@@ -219,7 +219,7 @@ export default {
     this.fetchCartList()    
     
     // 配送时间列表
-    this.fetchDeliveryList()      
+    this.fetchDeliveryList()    
   },
   methods: {
     ...mapMutations({
