@@ -55,13 +55,14 @@ export default {
       MessageBox.confirm('确认退出', '').then(action => {
         this.clearToken() 
         this.goBack() 
-        this.$cookie.delete('openid')
-        this.$cookie.delete('token')
+        let host = window.location.host
+        this.$cookie.delete('openid', { domain: host })
+        this.$cookie.delete('token', { domain: host })
         console.log('====================================');
         console.log('document.cookie is ', document.cookie);
         console.log('====================================');
         let openid = this.$cookie.get('openid')
-        let token = this.$cookie.get('token')
+        let token = this.$cookie.get('token')       
         console.log('(openid, token) ', openid, token)
       })
     },
