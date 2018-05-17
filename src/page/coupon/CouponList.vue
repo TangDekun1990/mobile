@@ -119,7 +119,7 @@ export default {
 	    top: 100px;
 	    width: 100%;
 	    overflow: auto;
-	    bottom: 0px;
+	    bottom: 2px;
 	    div.container {
 	    	height: auto;
 	    }
