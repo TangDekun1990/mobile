@@ -51,12 +51,13 @@
 
 		mounted(){
 			// 计算内容高度
-		    this.$nextTick( () => {
-		    	this.target = document.querySelector('.ui-recommend-body');
-		    	let totalHeight = 45;
-				const target = this.target;
-		    	this.utils.fillTheScreen({target, totalHeight});
-		    });
+			// let height = this.utils.getOpenBrowser();
+		 //    this.$nextTick( () => {
+		 //    	this.target = document.querySelector('.ui-recommend-body');
+		 //    	let totalHeight = 45 + height + 10;
+			// 	const target = this.target;
+		 //    	this.utils.fillTheScreen({target, totalHeight});
+		 //    });
 		},
 
 		methods: {
@@ -127,20 +128,22 @@
 	.ui-commmon-header {
 		border-bottom: 1px solid #E8EAED;
 		background-color: #ffffff;
-		position: absolute;
-		top: 0px;
-		width: 100%;
-		padding: 0px;
+		width: -webkit-fill-available;
+	    height: auto;
+	    min-height: 44px;
+	    position: absolute;
 		span.cart-number {
 			right: 15px;
 		}
 	}
 	.ui-recommend-body {
-		position: absolute;
-		top: 45px;
 		background-color: #ffffff;
 		width: 100%;
-		height: auto;
+		position: absolute;
+	    top: 45px;
+	    bottom: 0px;
+	    width: 100%;
+	    height: auto;
 		overflow: auto;
 	}
 	.recommend-no-more {
@@ -149,7 +152,7 @@
 		padding: 0px;
 		margin: 0px;
 		text-align: center;
-    padding: 10px 0px;
+    	padding: 10px 0px;
 	}
 }
 </style>
