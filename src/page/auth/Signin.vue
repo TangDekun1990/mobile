@@ -92,10 +92,23 @@ export default {
     }
   },
   created: function () {
-    this.fetchConfig();    
-    console.log('====================================');
-    console.log('document cookies', document.cookie);
-    console.log('====================================');
+    this.fetchConfig(); 
+    let openid = this.$cookie.get('openid')
+    let token = this.$cookie.get('token')
+    console.log('1====================================');
+    console.log('openid is ', openid);
+    console.log('token is ', token)
+    console.log('1====================================');
+    if (openid && openid.length && token && token.length) {
+      this.saveToken({ 'token': token })
+      this.$cookie.delete('openid')
+      this.$cookie.delete('token')
+      console.log('2====================================');
+      console.log('openid is ', openid);
+      console.log('token is ', token)
+      console.log('2====================================');
+      this.goHome()      
+    }
   },
   mounted () {
     let isTokenInvalid = this.$route.params.isTokenInvalid    
@@ -105,7 +118,8 @@ export default {
   },
   methods: {
     ...mapMutations({
-      saveToken: 'signin'
+      saveAuthInfo: 'signin',
+      saveToken: 'saveToken'
     }),
     ...mapActions({
       fetchConfig: 'fetchConfig'
@@ -130,7 +144,7 @@ export default {
       authBase.authSignin(username, password).then(
         (response) => {
           Indicator.close()
-          this.saveToken({ 'token': response.token, 'user': response.user })
+          this.saveAuthInfo({ 'token': response.token, 'user': response.user })
           this.goHome()
         }, (error) => {
           Indicator.close()

@@ -13,6 +13,8 @@ import store from './store/index'
 import utils from './util/util'
 import wxApi from './util/wxapi'
 
+import VueCookie from 'vue-cookie'
+
 import 'swiper/dist/css/swiper.css'
 import 'mint-ui/lib/style.css'
 import './assets/style/reset.scss'
@@ -46,6 +48,7 @@ Vue.use(Mint)
 Vue.use(VueResource)
 Vue.use(VueAwesomeSwiper)
 Vue.use(qiniu)
+Vue.use(VueCookie)
 Vue.prototype.utils = utils;
 Vue.prototype.wxApi = wxApi;
 

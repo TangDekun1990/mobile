@@ -51,12 +51,12 @@ export default {
 
 	mounted(){
 		// 计算内容高度
-	    this.$nextTick( () => {
-	    	this.target = document.querySelector('.list');
-	    	let totalHeight = 100;
-			const target = this.target;
-	    	this.utils.fillTheScreen({target, totalHeight});
-	    })
+	  //   this.$nextTick( () => {
+	  //   	this.target = document.querySelector('.list');
+	  //   	let totalHeight = 100;
+			// const target = this.target;
+	  //   	this.utils.fillTheScreen({target, totalHeight});
+	  //   })
 	},
 
 	methods: {
@@ -109,7 +109,7 @@ export default {
 	background-color: $mainbgColor;
 	height: 100%;
 	.container-header {
-		position: fixed;
+		position: absolute;
 		top: 0px;
 		width: 100%;
 		height: 100px;
@@ -118,7 +118,8 @@ export default {
 		position: absolute;
 	    top: 100px;
 	    width: 100%;
-	    overflow-y: auto;
+	    overflow: auto;
+	    bottom: 2px;
 	    div.container {
 	    	height: auto;
 	    }
