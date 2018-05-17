@@ -85,9 +85,7 @@
 				recommendProductList: 获取相关商品列表
 			 */
 			recommendProductList() {
-				console.log(this.$route);
 				let params = Object.assign({}, this.listParams, this.$route.params);
-				console.log(params);
 				recommendProductList(params.brand, params.category, params.shop, params.product, params.page, params.per_page).then(res => {
 					if (res) {
 						this.recommendList = this.recommendList.concat(res.products);

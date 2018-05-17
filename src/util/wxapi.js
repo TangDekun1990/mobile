@@ -37,7 +37,7 @@ const wxApi = {
 	*/
 	wxRegister(config, title, imgUrl, callback) {
 		wx.config({
-			debug: true, // 开启调试模式
+			debug: false, // 开启调试模式
 			appId: config.app_id, // 必填，公众号的唯一标识
 			timestamp: config.timestamp, // 必填，生成签名的时间戳
 			nonceStr: config.nonceStr, // 必填，生成签名的随机串

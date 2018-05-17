@@ -50,15 +50,19 @@
 
 		beforeRouteEnter(to, from, next) {
 			next( (vm) => {
-				if (to.name === 'detail' && from.name) {
+				if (to.name == 'detail' && from.name) {
 					window.location.reload();
 				}
 			})
 		},
 
+		beforeRouteUpdate (to, from, next) {
+			next();
+			window.location.reload();
+		},
+
 		beforeRouteLeave (to, from , next) {
-			console.log('beforeRouteLeave');
-			if (from.name == 'detail') {
+			if (from.name == 'detail' && to.name != 'recommend' && to.name != 'with') {
 				window.location.reload();
 			}
 			next();
