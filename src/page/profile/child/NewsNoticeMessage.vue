@@ -70,6 +70,7 @@ export default {
      .notice-message-body {
       width:100%;
       height: 100%;
+      position: relative;
       >p {
         text-align: center;
         margin-top:20px;
