@@ -301,10 +301,10 @@ export default {
 
  <!--Cell Swipe样式覆盖 -->
 <style>
-.mint-cell-swipe-button {
+.mint-cell-swipe-button{
   width: 90px;
   font-size: 14px;
-  display: flex;
+  display: flex !important;
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
