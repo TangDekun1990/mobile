@@ -90,13 +90,7 @@
 
 <script>
 import { ORDERSTATUS, ORDERNAV } from "../static";
-import {
-  orderList,
-  orderCancel,
-  orderReasonList,
-  orderConfirm,
-  orderRebuy
-} from "../../../api/network/order"; //订单列表  //取消订单 //获取退货原因 //确认收货 //再次购买
+import { orderList, orderCancel, orderReasonList, orderConfirm, orderRebuy } from "../../../api/network/order"; //订单列表  //取消订单 //获取退货原因 //确认收货 //再次购买
 import { Indicator, MessageBox, Popup } from "mint-ui";
 import OrderNav from "./OrderNav";
 import { mapState, mapMutations } from "vuex";
@@ -152,8 +146,8 @@ export default {
     getUrlParams() {
       let status = this.$route.params.order;
       let index = this.orderStatus;
-      if (status == 0) {
-        this.changeStatus(status);        
+      if (status == null) {
+        this.changeStatus(status);   
       } else {
         this.changeStatus(index);
       }

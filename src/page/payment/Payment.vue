@@ -59,7 +59,7 @@ export default {
         confirmButtonClass: 'confirm-button-red'        
 			}).then(action => { 
         if (action === 'cancel') {
-          this.$router.push({ name: 'order', params: { order: ENUM.ORDER_STATUS.CREATED}}) 
+          this.$router.push({ name: 'order', params: { order: ENUM.ORDER_STATUS.CREATED}});
         }        
       })
     },   
