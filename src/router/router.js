@@ -183,7 +183,10 @@ export default [
 			{
 				name: 'NewsServiceMessage',
 				path: '/newsServiceMessage',
-				component: NewsServiceMessage
+				component: NewsServiceMessage,
+				meta: {
+					keepAlive: true
+				}
 			},
 			{
 				name: 'Collection',
@@ -270,7 +273,10 @@ export default [
 			{
 				name: 'orderDetail',
 				path: '/orderDetail/:orderDetail?',
-				component: OrderDetail
+				component: OrderDetail,
+				meta: {
+					keepAlive: false,
+				}
 			},
 			{
 				name: 'orderTrack',

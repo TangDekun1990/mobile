@@ -1,26 +1,26 @@
 export default {
 
-	fetch(key){
-		return JSON.parse(window.localStorage.getItem(key)||'[]')
+	fetch(key) {
+		return JSON.parse(window.localStorage.getItem(key) || '[]')
 	},
-	save(key, value){
+	save(key, value) {
 		window.localStorage.setItem(key, JSON.stringify(value))
 	},
 	stopPrevent(event) {
 		let e = event || window.event;
-		if(e.preventDefault){
+		if (e.preventDefault) {
 			e.preventDefault();
-		}else{
-	        window.event.returnValue = false;//IE
-	    }
+		} else {
+			window.event.returnValue = false; //IE
+		}
 	},
 	/*
 	 *  arrayFilter: 数组去重
 	 */
 	arrayFilter(array) {
 		let newAray = [];
-		for (let i = 0, len = array.length-1; i <= len; i++) {
-			if (newAray.indexOf(array[i]) < 0){
+		for (let i = 0, len = array.length - 1; i <= len; i++) {
+			if (newAray.indexOf(array[i]) < 0) {
 				newAray.push(array[i]);
 			}
 		}
@@ -29,26 +29,26 @@ export default {
 
 	fillTheScreen(obj) {
 		const isWX = /micromessenger/.test(navigator.userAgent.toLowerCase())
-	  	// why? document.documentElement.clientHeight - document.documentElement.offsetHeight
-	  	let height = isWX ? document.documentElement.clientHeight : document.documentElement.offsetHeight
-	  	if (!obj.target || !obj.totalHeight) return
-	  	height = 1 - obj.totalHeight / height
-	  	obj.target.style.height = height * 100 + 'vh'
+		// why? document.documentElement.clientHeight - document.documentElement.offsetHeight
+		let height = isWX ? document.documentElement.clientHeight : document.documentElement.offsetHeight
+		if (!obj.target || !obj.totalHeight) return
+		height = 1 - obj.totalHeight / height
+		obj.target.style.height = height * 100 + 'vh'
 	},
 
 	/*
-		*@param start  开始展示的字符
-		*@param end 结束字符展示位置
-		*@param target 目标字符
-	*/
-	replaceStr(target,  start, end, length) {
+	 *@param start  开始展示的字符
+	 *@param end 结束字符展示位置
+	 *@param target 目标字符
+	 */
+	replaceStr(target, start, end, length) {
 		let str = '';
 		if (start) {
 			str = target.substr(start, length) + '***';
 		} else if (end) {
-			str = '***'+ target.substr(end, length);
+			str = '***' + target.substr(end, length);
 		} else {
-			str = target.substr(0, 1) + '***'+ target.substr(target.length-1, 1);
+			str = target.substr(0, 1) + '***' + target.substr(target.length - 1, 1);
 		}
 		return str;
 	},
@@ -105,7 +105,7 @@ export default {
 	 * beginAt 开始时间（时间戳）
 	 * endAt 结束时间（时间戳）
 	 */
-	activityStatus (beginAt, endAt) {
+	activityStatus(beginAt, endAt) {
 		let status = -1 // (0: 未开始；1: 进行中；2: 已过期)
 		let timestamp = Date.parse(new Date()) / 1000
 		if (beginAt > timestamp) {
@@ -122,7 +122,7 @@ export default {
 	 * interval 时间间隔（单位为s）
 	 * 把秒数换为*天*时*分*秒的时间格式
 	 */
-	formatTimeInterval (interval) {
+	formatTimeInterval(interval) {
 		let format = null
 		let day = parseInt(interval / 60.0 / 60.0 / 24.0)
 		let hour = parseInt(interval / 60 / 60 % 24)
@@ -138,42 +138,42 @@ export default {
 	getOpenBrowser() {
 		let browser = {
 			versions: function () {
-			  	var u = navigator.userAgent,
-			  		app = navigator.appVersion;
-			  	return {   //移动终端浏览器版本信息
-				   trident: u.indexOf('Trident') > -1, //IE内核
-				   presto: u.indexOf('Presto') > -1, //opera内核
-				   webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
-				   gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
-				   mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
-				   ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
-				   android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或uc浏览器
-				   iPhone: u.indexOf('iPhone') > -1, //是否为iPhone或者QQHD浏览器
-				   iPad: u.indexOf('iPad') > -1, //是否iPad
-				   webApp: u.indexOf('Safari') == -1 //是否web应该程序，没有头部与底部
-			  	};
+				var u = navigator.userAgent,
+					app = navigator.appVersion;
+				return { //移动终端浏览器版本信息
+					trident: u.indexOf('Trident') > -1, //IE内核
+					presto: u.indexOf('Presto') > -1, //opera内核
+					webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+					gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+					mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+					ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+					android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或uc浏览器
+					iPhone: u.indexOf('iPhone') > -1, //是否为iPhone或者QQHD浏览器
+					iPad: u.indexOf('iPad') > -1, //是否iPad
+					webApp: u.indexOf('Safari') == -1 //是否web应该程序，没有头部与底部
+				};
 			}(),
 			language: (navigator.browserLanguage || navigator.language).toLowerCase()
 		};
 		let browserHeight = 0;
-		if (browser.versions.mobile) {//判断是否是移动设备打开。
-		    let ua = navigator.userAgent.toLowerCase();//获取判断用的对象
-		    //在微信中打开
+		if (browser.versions.mobile) { //判断是否是移动设备打开。
+			let ua = navigator.userAgent.toLowerCase(); //获取判断用的对象
+			//在微信中打开
 			if (ua.match(/MicroMessenger/i) == "micromessenger") {}
 			//在新浪微博客户端打开
-		    if (ua.match(/WeiBo/i) == "weibo") {}
-		    //在QQ空间打开
-		  	if (ua.match(/QQ/i) == "qq") {}
-		  	//是否在IOS浏览器打开
-		  	if (browser.versions.ios) {
-		  		browserHeight = 44;
-		  	}
-		  	//是否在安卓浏览器打开
-		    if(browser.versions.android){
-		    	browserHeight = 44;
-		    }
+			if (ua.match(/WeiBo/i) == "weibo") {}
+			//在QQ空间打开
+			if (ua.match(/QQ/i) == "qq") {}
+			//是否在IOS浏览器打开
+			if (browser.versions.ios) {
+				browserHeight = 44;
+			}
+			//是否在安卓浏览器打开
+			if (browser.versions.android) {
+				browserHeight = 44;
+			}
 		} else {
-		  //否则就是PC浏览器打开
+			//否则就是PC浏览器打开
 		}
 		return browserHeight;
 	},
@@ -181,24 +181,30 @@ export default {
 	/*
 	 * 调用智齿
 	 */
-	openZhichiManager(detail) {
+	openZhichiManager(detail, order) {
 		let zhiManager = (getzhiSDKInstance());
-		zhiManager.on('load', function() {
+		zhiManager.on('load', function () {
 			zhiManager.init();
 			zhiManager.initBtnDOM();
 			zhiManager.set('customBtn', 'true');
 			zhiManager.set('lazyFlag', true);
-			zhiManger.set('satDegree_A',true);
-			zhiManger.set('isFeedBackFlag',true);
-	    	zhiManager.set('robotHelloWord', '您好! 我是机器人小超， 有什么吩咐您请说哦！');
-	    });
-	    // debugger;
-	    if (detail) {
-			zhiManager.set('thumbnail_info', detail.photos[0].thumb);
-	        zhiManager.set('label_info', detail.current_price + 'AED');
-	        zhiManager.set('abstract_info', detail.desc);
-	        zhiManager.set('url_info', window.location.href);
-	        zhiManager.set('title_info', detail.name);
+			zhiManger.set('satDegree_A', true);
+			zhiManger.set('isFeedBackFlag', true);
+			zhiManager.set('robotHelloWord', '您好! 我是机器人小超， 有什么吩咐您请说哦！');
+		});
+		if (detail || order) {
+			let thumbnail_info = '';
+			if (detail) {
+				thumbnail_info = detail.photos ? detail.photos[0].thumb : '';
+			}
+			if (order) {
+				thumbnail_info = order.goods.length > 0 ? order.goods[0].product.photos[0].thumb : '';
+			}
+			zhiManager.set('thumbnail_info', thumbnail_info);
+			zhiManager.set('label_info', detail ? detail.current_price : order.total + 'AED');
+			zhiManager.set('abstract_info', detail ? detail.desc : '下单时间: ' + this.timestampToTime(order.created_at));
+			zhiManager.set('url_info', window.location.href);
+			zhiManager.set('title_info', detail ? detail.name : '订单编号: ' + order.id);
 		}
 		return zhiManager;
 	},
@@ -207,12 +213,28 @@ export default {
 	 * getunreadCount: 获取未读消息数
 	 */
 	getunreadCount(zhiManager, scoped, key) {
-		zhiManager.on("unread.count",function(data){
-	    	console.log(data);
+		zhiManager.on("unread.count", function (data) {
+			console.log(data);
 		});
-		zhiManager.on("receivemessage",function(ret){
-			scoped[key] = ret;
+		zhiManager.on("receivemessage", function (ret) {
+			scoped.key = ret;
+			// return ret
 			console.log(ret);
 		});
+	},
+
+	/**
+	 *  timestampToTime: 时间戳转化为日期
+	 */
+	timestampToTime(timestamp) {
+		var date = new Date(timestamp * 1000); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
+	  var	Y = date.getFullYear() + '-';
+		var	M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+		var D = date.getDate() + ' ';
+		var h = date.getHours() + ':';
+		var m = date.getMinutes() + ':';
+		var s = date.getSeconds();
+		return Y + M + D + h + m + s;
 	}
+
 }
