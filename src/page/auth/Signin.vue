@@ -92,20 +92,21 @@ export default {
     }
   },
   created: function () {
-    this.fetchConfig();    
-    console.log('====================================');
-    console.log('document cookies', document.cookie);
-    console.log('====================================');
+    this.fetchConfig(); 
     let openid = this.$cookie.get('openid')
     let token = this.$cookie.get('token')
-    console.log('====================================');
+    console.log('1====================================');
     console.log('openid is ', openid);
     console.log('token is ', token)
-    console.log('====================================');
+    console.log('1====================================');
     if (openid && openid.length && token && token.length) {
-      this.saveToken(token)
+      this.saveToken({ 'token': token })
       this.$cookie.delete('openid')
       this.$cookie.delete('token')
+      console.log('2====================================');
+      console.log('openid is ', openid);
+      console.log('token is ', token)
+      console.log('2====================================');
       this.goHome()      
     }
   },
