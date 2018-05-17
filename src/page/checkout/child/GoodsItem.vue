@@ -45,8 +45,8 @@ export default {
     getDesc: function () {
       return this.getItemByKey('desc')
     },
-    getPrice: function () {
-      let price = this.getItemByKey('price')
+    getPrice: function () {      
+      let price = this.item ? this.item.price : null     
       return (price ? this.utils.currencyPrice(price) : '')
     },
   },

@@ -35,7 +35,7 @@
       :default="getAddress" 
       placeholder="请用英文填写街道大楼及房间号">
     </form-input-item>
-    <gk-button class="button" type="primary" v-on:click="submit">保存</gk-button>
+    <gk-button class="button" type="primary" v-on:click="submit">{{getSumitTitle}}</gk-button>
     <region-picker ref="picker" :items="regions" v-on:onConfirm="onPickerConfirm">
     </region-picker>
   </div>
@@ -57,9 +57,6 @@ export default {
     }
   },
   created: function () {
-    console.log('====================================');
-    console.log('Address Edit created:');
-    console.log('====================================');
     this.fetchRegions()
   },
   computed: {
@@ -67,7 +64,7 @@ export default {
       regions: state => state.region.items
     }),
     isAddMode() {
-      let mode = this.$route.params.mode;        
+      let mode = this.$route.query.mode;        
       // add: 添加地址，edit: 编辑地址
       if (mode === 'add') {
         return true
@@ -75,12 +72,12 @@ export default {
         return false
       }
     },
-    getTitle() {      
+    getTitle() {   
       if (this.isAddMode) {
         return '新增地址'
       } else {
         return '修改收货地址'
-      }
+      }         
     },
     getName() {      
       if (!this.isAddMode && this.getItem) {
@@ -96,13 +93,17 @@ export default {
         return null
       }
     },
-    getRegion() {      
-      if (!this.isAddMode && this.getItem) {
-        let regions = this.getItem.regions
-        return this.getRegionStr(regions)
+    getRegion() {     
+      let region = null 
+      if (this.isAddMode) {
+        region = '市，区，街'
       } else {
-        return null
+        if (this.getItem) {
+          let regions = this.getItem.regions
+          region = this.getRegionStr(regions)
+        }
       }
+      return region
     },
     getAddress() {      
       if (!this.isAddMode && this.getItem) {
@@ -112,13 +113,22 @@ export default {
       }
     },
     getItem() {      
-      return this.$route.params.item;        
+      return this.$route.query.item;        
+    },
+    getSumitTitle() {   
+      let isFromCheckout = this.$route.query.isFromCheckout
+      if (isFromCheckout) {
+        return '保存并使用'
+      } else {
+        return '保存'
+      }         
     },
   },
   methods: {
     ...mapMutations([
-      'addAddressItem',
-      'modifyAddressItem'
+      'addAddressItem',      
+      'modifyAddressItem',
+      'selectAddressItem'
     ]),    
     ...mapActions({
       fetchRegions: 'fetchRegions'
@@ -144,6 +154,17 @@ export default {
         }        
       }
       return title
+    },
+    updateSelectedAddress(item) {
+      // 从确认订单添加/编辑地址后，使用添加或编辑后的地址
+      let isFromCheckout = this.$route.query.isFromCheckout
+      let goBackLevel = this.$route.query.goBackLevel ? this.$route.query.goBackLevel : -1      
+      if (isFromCheckout) {
+        this.selectAddressItem(item)        
+        this.$router.go(goBackLevel)
+      } else {
+        this.goBack()
+      }      
     },
     submit() {
       let name = this.$refs.name.value
@@ -195,7 +216,7 @@ export default {
         Toast('请填写详细地址');
         return;
       }
-
+            
       if (this.isAddMode) {        
         Indicator.open()
         consignee.consigneeAdd(name, mobile, null, null, region.id, address).then(
@@ -203,7 +224,7 @@ export default {
             Indicator.close()
             let item = response.consignee                
             this.addAddressItem(item)
-            this.goBack()
+            this.updateSelectedAddress(item)            
           }, (error) => {
             Indicator.close()
             Toast(error.errorMsg)
@@ -217,7 +238,7 @@ export default {
             Indicator.close()
             let item = response.consignee                
             this.modifyAddressItem(item)
-            this.goBack()
+            this.updateSelectedAddress(item)
           }, (error) => {
             Indicator.close()
             Toast(error.errorMsg)

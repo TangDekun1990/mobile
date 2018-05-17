@@ -44,8 +44,7 @@ export default {
 
 <style lang="scss" scoped>
   @import "../style/var.scss";
-  .button-item {   
-    border-radius: 4px;        
+  .button-item {      
     text-align: center; 
     font-size: $button-font-size; 
     border: none;

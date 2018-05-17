@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <mt-header class="header" title="积分规则">
+    <mt-header fixed class="header" title="积分规则">
     	<header-item slot="left" v-bind:isBack=true v-on:onclick="goBack">
     	</header-item>
     </mt-header>
@@ -37,8 +37,12 @@ export default {
 <style lang="scss" scoped>
   .container {
   	background-color: #fff;
+		.header {
+			@include header;
+			border-bottom: 1px solid $lineColor;
+		}
   	.content {
-  		padding: 20px;
+  		padding: 64px;
   		border-top: 1px solid #e1e1e1;
   		h3 {
 			text-align: center;

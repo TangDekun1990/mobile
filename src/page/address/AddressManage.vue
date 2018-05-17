@@ -27,7 +27,7 @@
 import { HeaderItem, Button } from '../../components/common'
 import ManageItem from './child/ManageItem'
 import { Header, Indicator, Toast, MessageBox } from 'mint-ui'
-import { mapState, mapMutations } from 'vuex'
+import { mapState, mapMutations, mapActions } from 'vuex'
 import * as consignee from '../../api/network/consignee'
 export default {
   components: {
@@ -54,6 +54,7 @@ export default {
       }, (error) => {
         Toast(error.errorMsg)
       })
+    this.fetchRegions()
   },  
   methods: {
     ...mapMutations([
@@ -61,6 +62,9 @@ export default {
       'setDefaultAddress',
       'removeAddressItem',
     ]),    
+    ...mapActions({
+      fetchRegions: 'fetchRegions'
+    }),
     isDefaultItem(item) {
       if (item && this.defaultItem) {
         if (item.id === this.defaultItem.id) {
@@ -88,11 +92,11 @@ export default {
         })
     },
     onEdit(item) {
-      this.$router.push({ name: 'addressEdit', params: { mode: 'edit', item: item }})
+      this.goAddressEdit('edit', item)
     },
     onDelete(item) {      
       MessageBox.confirm('确定要删除这条收货地址？', '确认删除').then(action => {
-        if (aciton === 'confirm') {
+        if (action === 'confirm') {
           Indicator.open()
           consignee.consigneeDelete(item.id).then(
           (response) => {
@@ -106,7 +110,12 @@ export default {
       })
     },
     addAddress() {
-      this.$router.push({ name: 'addressEdit', params: { mode: 'add', item: null }})
+      this.goAddressEdit('add', null)
+    },
+    goAddressEdit(mode, item) {
+      let isFromCheckout = this.$route.query.isFromCheckout
+      let goBackLevel = isFromCheckout ? -3 : -1      
+      this.$router.push({ name: 'addressEdit', query: { mode: mode, item: item, isFromCheckout: isFromCheckout, goBackLevel: goBackLevel }})
     }  
   }
 }

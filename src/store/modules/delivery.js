@@ -31,7 +31,7 @@ const mutations = {
   saveDeliveryItems(state, items) {
     state.items = items;
   },
-  clearDeliveryItems(state) {
+  clearDeliveryItems(state) {    
     state.items = [];
   },
   selectDeliveryDate(state, date) {    
@@ -49,7 +49,7 @@ const mutations = {
       this.commit('selectDeliveryTime', times[0])
     }
   },
-  unselectDeliveryDate(state) {
+  unselectDeliveryDate(state) {    
     state.selectedDate = null
   },
   selectDeliveryTime(state, time) {    
@@ -65,7 +65,7 @@ const mutations = {
   unselectDeliveryTime(state) {
     state.selectedTime = null
   },
-  unselectDelivery(state) {
+  unselectDelivery(state) {    
     this.commit('unselectDeliveryDate')
     this.commit('unselectDeliveryTime')
   },
@@ -80,15 +80,18 @@ const actions = {
           let items = response.delivery_time_list
           if (items && items.length) {
             commit('saveDeliveryItems', items)
-            let defaultItem = items[0]
-            if (defaultItem) {
-              const { date, time } = defaultItem
-              commit('selectDeliveryDate', date)
-              if (time && time.length) {
-                let item = time[0]
-                commit('selectDeliveryTime', item)
-              }                            
-            }
+            const { selectedDate, selectedTime } = state
+            if (!selectedDate || !selectedTime) {
+              let defaultItem = items[0]
+              if (defaultItem) {
+                const { date, time } = defaultItem
+                commit('selectDeliveryDate', date)
+                if (time && time.length) {
+                  let item = time[0]
+                  commit('selectDeliveryTime', item)
+                }
+              } 
+            }            
           }                    
         }
       }, (error) => {
