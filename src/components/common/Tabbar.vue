@@ -137,8 +137,12 @@
 					    color: #FFFFFF;
 					    border-radius: 50%;
 					    width: 14px;
-							height: 14px;
-							text-align: center;
+					    line-height: 14px;
+						height: 14px;
+						font-weight: normal;
+						text-align: center;
+						top: 0px;
+						display: inline-block;
 					}
 				}
 				li.currentavtive {
