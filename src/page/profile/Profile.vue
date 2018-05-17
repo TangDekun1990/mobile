@@ -153,8 +153,8 @@ export default {
     if (this.isOnline) {
       this.getOrderSubtotal();
       this.getMessageCount(1);
-      this.getMessageCount(2); 
-    }    
+      this.getMessageCount(2);
+    }
     site.siteGet().then(
       response => {
         if (response && response.site_info) {
@@ -208,7 +208,7 @@ export default {
         }
       }
       if (url === null) {
-        url = require("../../assets/image/change-icon/img_avatar@2x.png");
+        url = require("../../assets/image/change-icon/e0_head@2x.png");
       }
       return url;
     },
@@ -265,14 +265,14 @@ export default {
         this.$router.push({ name: "scoreList", query: { index: 0 } });
       } else {
         this.showLogin();
-      }      
+      }
     },
     goRecordList() {
       if (this.isOnline) {
         this.$router.push({ name: "scoreList", query: { index: 1 } });
       } else {
         this.showLogin();
-      }      
+      }
     },
     goProfileInfo() {
       if (this.isOnline) {
@@ -296,21 +296,21 @@ export default {
         this.$router.push("collection");
       } else {
         this.showLogin();
-      }      
+      }
     },
     goAddress() {
       if (this.isOnline) {
         this.$router.push({ name: 'addressManage' });
       } else {
         this.showLogin();
-      }      
+      }
     },
     goCoupon() {
       if (this.isOnline) {
         this.$router.push({ name: "couponList", query: { index: 0 } });
       } else {
         this.showLogin();
-      }      
+      }
     },
     goHelp() {
       this.$router.push("help");
@@ -326,7 +326,7 @@ export default {
         });
       } else {
         this.showLogin();
-      }      
+      }
     },
     callTelephone() {
       let telephone = this.telephone;
