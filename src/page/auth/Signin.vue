@@ -93,16 +93,14 @@ export default {
   },
   created: function () {
     this.fetchConfig(); 
-    // let openid = this.$cookie.get('openid')
-    // let token = this.$cookie.get('token')
-    let openid = this.utils.getCookie('openid')
-    let token = this.utils.getCookie('token')
+    let openid = this.$cookie.get('openid')
+    let token = this.$cookie.get('token')
     console.log('1====================================');
     console.log('openid is ', openid);
     console.log('token is ', token)
     console.log('1====================================');
     if (openid && openid.length && token && token.length) {
-      this.saveToken({ 'token': token })      
+      this.saveToken({ 'token': token })
       this.goHome()      
     }
   },
