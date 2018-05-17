@@ -31,14 +31,14 @@
           <img class="auth-item-icon" src="../../assets/image/change-icon/c7_commodity_list_2@2x.png"/>      
           <label class="auth-title auth-item-title">微信</label>
         </div>
-        <div class="auth-item" v-if="isShowWeibo" @click="onWeibo">
+        <!-- <div class="auth-item" v-if="isShowWeibo" @click="onWeibo">
           <img class="auth-item-icon" src="../../assets/image/change-icon/c7_commodity_list_1@2x.png"/>      
           <label class="auth-title auth-item-title">微博</label>
         </div>
         <div class="auth-item" v-if="isShowQQ" @click="onQQ">
           <img class="auth-item-icon" src="../../assets/image/change-icon/c7_commodity_list_3@2x.png"/>      
           <label class="auth-title auth-item-title">QQ</label>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
@@ -51,7 +51,8 @@ import { Indicator, Toast, Header } from 'mint-ui'
 import { mapMutations, mapActions, mapState } from 'vuex'
 import { authSocial } from '../../api/network/auth-social'
 import { authWeb } from '../../api/network/auth-web'
-import { ENUM } from '../../config/enum';
+import { ENUM } from '../../config/enum'
+import { apiBaseUrl } from '../../config/env'
 export default {
   name: 'Signin',
   data() {
@@ -91,11 +92,13 @@ export default {
     }
   },
   created: function () {
-    this.fetchConfig();
+    this.fetchConfig();    
+    console.log('====================================');
+    console.log('document cookies', document.cookie);
+    console.log('====================================');
   },
   mounted () {
-    let isTokenInvalid = this.$route.params.isTokenInvalid
-    debugger
+    let isTokenInvalid = this.$route.params.isTokenInvalid    
     if (isTokenInvalid) {
       Toast('登录过期')
     }
@@ -172,12 +175,17 @@ export default {
     wxWebAuth() {
       let scope = 'snsapi_userinfo' // 允许获取用户信息      
       let ref = window.location.href ? encodeURIComponent(window.location.href) : '' 
-      // window.location.href = 'http://api.wenchao.pre.geek-zoo.cn/v2/ecapi.auth.web?vendor=1&scope=snsapi_userinfo&referer=http%3A%2F%2F192.168.1.36%3A8081%2F%23%2Fsignin'     
-      authWeb(ENUM.SOCIAL_VENDOR.WEIXIN, scope, ref).then(
-        (response) => {
+      console.log(ref)      
+      let locationRef = apiBaseUrl + '/v2/ecapi.auth.web?vendor=' + ENUM.SOCIAL_VENDOR.WEIXIN + '&scope=' + scope + "&referer=" + ref;   
+      console.log('====================================');
+      console.log('locationRef is ', locationRef);
+      console.log('====================================');
+      window.location.href = locationRef
+      // authWeb(ENUM.SOCIAL_VENDOR.WEIXIN, scope, ref).then(
+      //   (response) => {
 
-        }, (error) => {}
-        )
+      //   }, (error) => {}
+      //   )
     }
   }
 };

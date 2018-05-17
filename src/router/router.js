@@ -273,7 +273,10 @@ export default [
 			{
 				name: 'orderDetail',
 				path: '/orderDetail/:orderDetail?',
-				component: OrderDetail
+				component: OrderDetail,
+				meta: {
+					keepAlive: false,
+				}
 			},
 			{
 				name: 'orderTrack',

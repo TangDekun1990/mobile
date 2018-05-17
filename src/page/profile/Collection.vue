@@ -66,9 +66,9 @@ export default {
               message: "是否要删除此商品？",
               showCancelButton: true
             }).then(action => {
-              if (action === 'confirm') {
-                this.getCancelCollection(productId); 
-              }              
+              if (action === "confirm") {
+                this.getCancelCollection(productId);
+              }
             })
         }
       ];
@@ -302,10 +302,11 @@ export default {
  <!--Cell Swipe样式覆盖 -->
 <style>
 .mint-cell-swipe-button {
-  padding: 50% 0px;
   width: 90px;
-  text-align: center;
   font-size: 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   box-sizing: border-box;
 }
 .mint-cell-wrapper {
