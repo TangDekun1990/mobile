@@ -84,7 +84,6 @@ export default {
 
 	methods: {
 		...mapMutations({
-			clearToken: 'signout',
 			saveUser: 'saveUser'
 		}),
 
