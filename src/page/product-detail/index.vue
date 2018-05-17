@@ -56,6 +56,14 @@
 			})
 		},
 
+		beforeRouteLeave (to, from , next) {
+			console.log('beforeRouteLeave');
+			if (from.name == 'detail') {
+				window.location.reload();
+			}
+			next();
+		},
+
 		// watch: {
 		//     $route (to, from) {
 		//     	window.location.reload();
