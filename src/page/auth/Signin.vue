@@ -198,13 +198,14 @@ export default {
             Indicator.close()
             if (response && response.user) {
               this.saveUser(response);
+              this.goHome()      
             }
           },
           error => {
             Indicator.close()
+            this.goHome()      
           }
-        );
-        this.goHome()      
+        );        
       }
     }
   }
