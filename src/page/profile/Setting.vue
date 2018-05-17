@@ -57,14 +57,19 @@ export default {
         this.goBack() 
         let domain = window.location.protocol + '//' + window.location.host
         console.log('host is ', window.location.host)
-        console.log('domin is ', domain)
-        this.$cookie.delete('openid', { domain: domain })
-        this.$cookie.delete('token', { domain: domain })
+        console.log('domain is ', domain)
+        this.utils.clearCookie('openid')
+        this.utils.clearCookie('token')
+        // this.$cookie.delete('openid', { domain: domain })
+        // this.$cookie.delete('token', { domain: domain })
         console.log('====================================');
         console.log('document.cookie is ', document.cookie);
         console.log('====================================');
-        let openid = this.$cookie.get('openid')
-        let token = this.$cookie.get('token')       
+        // let openid = this.$cookie.get('openid')
+        // let token = this.$cookie.get('token')   
+        
+        let openid = this.utils.getCookie('openid')
+        let token = this.utils.getCookie('token')
         console.log('(openid, token) ', openid, token)
       })
     },
