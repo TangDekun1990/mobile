@@ -70,9 +70,7 @@ export default {
         paymentPay(order.id, 'cod.app').then(
           (response) => {
             Indicator.close()
-            if (response) {
-              this.goPaySucceed()
-            }
+            this.goPaySucceed()
           }, (error) => {
             Indicator.close()
             Toast(error.errorMsg)
