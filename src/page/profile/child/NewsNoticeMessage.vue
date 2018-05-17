@@ -84,7 +84,7 @@ export default {
         margin: 0px 10px;
         span {
           display: inline-block;
-          padding:12px 0px 14px 15px;
+          margin:12px 0px 14px 15px;
           font-size:14px;
           color:rgba(78,84,93,1);
         }

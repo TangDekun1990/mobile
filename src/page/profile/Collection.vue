@@ -303,11 +303,11 @@ export default {
 <style>
 .mint-cell-swipe-button {
   width: 90px;
-  text-align: center;
   font-size: 14px;
-  display: block;
-  height: 100%;
-  line-height: 131px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
 }
 .mint-cell-wrapper {
   padding: 0px;
