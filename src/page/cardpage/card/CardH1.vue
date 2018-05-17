@@ -75,6 +75,7 @@ export default {
           margin-top: 9px;
           margin-left: 9px;
           margin-right: 9px;
+          line-height: 16px;
           @include limit-line(2)
         }
         .subtitle {

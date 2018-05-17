@@ -144,7 +144,12 @@ axios.interceptors.response.use(response => {
                         console.log('网络错误, 错误代码:=' + errorCode + "错误信息:=" + errorMessage);
                     }
                     if (errorCode == ENUM.ERROR_CODE.TOKEN_INVALID || errorCode == ENUM.ERROR_CODE.TOKEN_EXPIRED) {
-                    	window.location.href = '#/signin';
+                        (store._mutations.kickout[0])()
+                        let router = window.router
+                        let name = router.currentRoute.name
+                        if (name && (name !== 'home' && name !== 'category')) {
+                            router.push({ name: 'signin', params: { isTokenInvalid: true } })
+                        }                        
                     }
                     return Promise.reject({ 'errorCode': errorCode, 'errorMsg': errorMessage });
                 }

@@ -18,6 +18,7 @@
 	      </div>
         <p class="message-number" v-if="!key" v-show="false"></p>
         <p class="message-number" v-if="key" v-show="true"></p>
+	      
     </div>
   </div>
 </template>

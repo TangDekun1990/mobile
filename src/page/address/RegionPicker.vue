@@ -85,6 +85,12 @@ export default {
     align-items: stretch;
     background-color: $mainbgColor;
   }
+  .mint-popup-bottom {
+    width: 100%;
+    height: 276px;
+    border: 0px;
+    overflow: auto;
+  }
   .toolbar-item {    
     font-size: 16px;
     border: none;

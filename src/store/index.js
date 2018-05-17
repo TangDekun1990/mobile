@@ -41,7 +41,7 @@ export default new Vuex.Store({
 		search,
 		profile,
 		order,
-		tabBar
+		tabBar,
 	},
 	getters: getters,
 	actions,
