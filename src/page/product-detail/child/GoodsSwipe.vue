@@ -84,7 +84,7 @@
 <style lang='scss'>
 	.ui-common-swiper{
 		width: 100%;
-		height: 300px;
+		height: 300px !important;
 		background-color: #ffffff;
 		.mint-swipe-items-wrap {
 			.mint-swipe-item {
