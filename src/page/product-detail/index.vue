@@ -48,6 +48,14 @@
 		mounted() {
 		},
 
+		beforeRouteEnter(to, from, next) {
+			next( (vm) => {
+				if (to.name === 'detail' && from.name) {
+					window.location.reload();
+				}
+			})
+		},
+
 		// watch: {
 		//     $route (to, from) {
 		//     	window.location.reload();
