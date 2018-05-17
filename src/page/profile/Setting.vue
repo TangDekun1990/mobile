@@ -131,8 +131,8 @@ export default {
 
 <style>
 .mint-switch-input:checked+.mint-switch-core {
-  border-color: red;
-  background-color: red;
+  border-color: red !important;
+  background-color: red !important;
 }
 </style>
 
