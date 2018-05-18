@@ -55,10 +55,13 @@ export default {
       MessageBox.confirm('确认退出', '').then(action => {
         this.clearToken() 
         this.goBack() 
-        let domain = window.location.protocol + '//' + window.location.host
-        domain = '.wenchao.pre.geek-zoo.cn' // TODO:
-        
-        console.log('host is ', window.location.host)
+        let host = window.location.host
+        let parts = host.split('.')
+        let domain = ''
+        for (let i = 1; i < parts.length; i++) {
+          const element = parts[i];
+          domain = domain + '.' + element
+        }       
         console.log('domain is ', domain)
         this.$cookie.delete('openid', { domain: domain })
         this.$cookie.delete('token', { domain: domain })
