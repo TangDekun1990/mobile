@@ -11,6 +11,9 @@
 </template>
 
 <script>
+let screenCloseTime = 0
+let screenCloseAt = 0;
+
 import Common from './Common'
 export default {
   name: 'CardZ4',
@@ -64,7 +67,7 @@ export default {
           case 1: // 进行中
             {
               let timestamp = Date.parse(new Date()) / 1000
-              this.count = endAt - timestamp
+              this.count = endAt - timestamp              
               this.start()
             }
             break;
@@ -100,6 +103,18 @@ export default {
     }       
   },
 }
+document.addEventListener('visibilitychange',function() {
+        var date = new Date();        
+        if (document.visibilityState == 'hidden') {
+            screenCloseAt = date.getTime();
+        } else {
+            screenCloseTime = Math.floor((date.getTime() - screenCloseAt)/1000);
+            console.log('====================================');
+            console.log('screenCloseTime is ', screenCloseTime);
+            console.log('====================================');
+            // alert(screenCloseTime)
+        }
+    })
 </script>
 
 <style lang="scss" scoped>
