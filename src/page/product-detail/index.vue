@@ -1,6 +1,6 @@
 <!-- 商品详情 -->
 <template>
-	<div class="product-detail-wrapper">
+	<div class="product-detail-wrapper" v-if="productDetail">
 		<!-- header  -->
 		<v-detail-nav v-if='!isHideHeader'></v-detail-nav>
 		<!-- body -->
