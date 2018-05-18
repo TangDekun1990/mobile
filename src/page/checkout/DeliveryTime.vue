@@ -107,6 +107,9 @@ export default {
     justify-content: center;
     align-items: center;
     border-bottom: 1px solid $lineColor;
+    position: fixed;
+    width: 100%;
+    z-index: 1;
   }
   .title {
     color: #898B8E;
@@ -134,6 +137,9 @@ export default {
     flex-direction: row;
     justify-content: flex-start;
     align-items: stretch;
+    position:absolute;
+    width: 100%;
+    top: 48px;
   }
   .list {
     display: flex;

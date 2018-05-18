@@ -1,6 +1,6 @@
 // profile.js
 const state = {
-  time: {'noticeTime': '', ordertime: ''},
+  time: {'noticeTime': '', 'ordertime': ''},
   type: false, // type == false ? join_at : create_at
   isSwitch: true // switch == true ? 开 : 关
 }
