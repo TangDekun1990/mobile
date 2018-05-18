@@ -93,15 +93,19 @@ export default {
     getOrderProducts: function () {
       let cartGoods = this.cartGoods
       let orderProducts = []
-      if (cartGoods && cartGoods.length) {
-        orderProducts = cartGoods.map(function (cardGood) {
-          return {
-            goods_id: cardGood.product ? cardGood.product.id : '',
-            property: cardGood.attrs,
-            num: cardGood.amount,  
-          }
-        })
+      for (let i = 0; i < cartGoods.length; i++) {
+        const element = cartGoods[i]
+        let goods = new Object()
+        goods.goods_id = element.product ? element.product.id : ''
+        goods.num = element.amount
+        let attrs = new Array()
+        if (element.attrs && element.attrs.length) {
+          attrs = element.attrs.split(',')            
+        } 
+        goods.property = attrs
+        orderProducts.push(goods)
       }
+      
       return orderProducts
     },
     // 获取购物车货品id数组
@@ -205,8 +209,8 @@ export default {
     },
     getOrderShippingPrice: function () {
       let priceStr = ''
-      let price = this.getPriceByKey('shipping_price')
-      if (price && price.length) {
+      let price = this.order_price ? this.order_price.shipping_price : 0            
+      if (parseFloat(price) > 0) {
         priceStr = 'AED ' + this.utils.currencyPrice(price)
       } else {
         priceStr = '免运费'
@@ -375,7 +379,7 @@ export default {
       let coupon = this.selectedCoupon ? this.selectedCoupon.id : null
       // TODO:
       let cashgift = null
-      let score = null
+      let score = null      
       order.orderPrice(shop, order_product, consignee, shipping, coupon, cashgift, score).then(
         (response) => {
           if (response && response.order_price) {

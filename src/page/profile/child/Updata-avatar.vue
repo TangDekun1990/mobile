@@ -200,7 +200,7 @@
 </script>
 
 <style lang="scss" scoped>
-	.ui-update-avater {
+	.ui-update-avater { // CODE REVIEW: rename avater -> avatar
 		.common-update-avatar{
 			position: relative;
 			span {
