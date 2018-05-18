@@ -1,7 +1,7 @@
 <template>
    <div class="container">
     <!-- header -->
-    <mt-header class="header" title="订单消息">
+    <mt-header class="header" title="订单通知消息">
       <header-item slot="left" v-bind:isBack=true v-on:onclick="goBack">
       </header-item>    
     </mt-header>
