@@ -50,7 +50,7 @@
 
 		beforeRouteEnter(to, from, next) {
 			next( (vm) => {
-				if (to.name == 'detail' && from.name) {
+				if (to.name === 'detail' && from.name) {
 					window.location.reload();
 				}
 			})
