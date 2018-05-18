@@ -6,7 +6,8 @@
       </header-item>
     </mt-header>
     <!-- body -->
-    <mt-cell-swipe v-for="(item, index) in collectionList" v-bind:key="item.id" :right="rightBottom(item.id)">
+    <div class="body">
+      <mt-cell-swipe v-for="(item, index) in collectionList" v-bind:key="item.id" :right="rightBottom(item.id)">
       <div class="ui-collection-body" v-on:click="goOrderDetail(item.id, item.shop)">
 
         <div class="ui-image-wrapper">
@@ -37,6 +38,7 @@
 			<button class="button" v-on:click="goVisit()">
 				<label>随便逛逛</label>
 			</button>
+    </div>
     </div>
   </div>
 </template>
@@ -115,185 +117,193 @@ export default {
   .header {
     @include header;
     border-bottom: 1px solid #e8eaed;
-  }
-  .ui-collection-body {
-    border-bottom: 1px solid rgba(232, 234, 237, 1);
-    display: flex;
-    width: auto;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px;
-    position: relative;
-    div.ui-image-wrapper {
-      width: 110px;
-      height: 110px;
-      position: relative;
-
-      display: flex;
-      justify-content: center;
-      align-content: center;
-      align-items: center;
-      flex-basis: 110px;
-      flex-shrink: 0;
-
-      background-position: center center !important;
-      background: url("../../assets/image/change-icon/default_image_02@2x.png");
-      background-size: 100px 100px;
-      background-repeat: no-repeat;
-      -webkit-background-size: cover;
-      -moz-background-size: cover;
-      -o-background-size: cover;
-      background-size: cover;
-
-      img.collection-img {
-        width: 110px;
-        height: 110px;
-        flex-basis: 110px;
-        flex-shrink: 0;
-      }
-      img.collection-img[lazy="loading"] {
-        width: 30px;
-        height: 30px;
-      }
-      img.collection-img[lazy="error"] {
-        width: 30px;
-        height: 30px;
-      }
-      img.collection-img[lazy="loaded"] {
-        width: 110px;
-        height: 110px;
-        flex-basis: 110px;
-        flex-shrink: 0;
-        background: rgba(255, 255, 255, 1);
-      }
-
-      span {
-        position: absolute;
-        height: 20px;
-        background: rgba(243, 244, 245, 1);
-        line-height: 20px;
-        text-align: center;
-        font-size: 14px;
-        color: rgba(242, 48, 48, 1);
-        width: 110px;
-        bottom: 0px;
-        left: 0px;
-      }
-    }
-    .flex-right {
-      padding-left: 14px;
-      width: 100%;
-      .title {
-        color: #4e545d;
-        font-size: 16px;
-        font-weight: normal;
-
-        display: -moz-box;
-        display: -webkit-box;
-        display: box;
-
-        -webkit-line-clamp: 2;
-        -moz-line-clamp: 2;
-
-        -moz-box-orient: vertical;
-        -webkit-box-orient: vertical;
-        box-orient: vertical;
-
-        overflow: hidden;
-        margin-bottom: 8px;
-      }
-      .sub-title {
-        color: #55595f;
-        font-size: 12px;
-        height: 12px;
-
-        display: -moz-box;
-        display: -webkit-box;
-        display: box;
-
-        -webkit-line-clamp: 1;
-        -moz-line-clamp: 1;
-
-        -moz-box-orient: vertical;
-        -webkit-box-orient: vertical;
-        box-orient: vertical;
-
-        overflow: hidden;
-        margin-bottom: 8px;
-      }
-      .price {
-        margin-bottom: 8px;
-        span {
-          &:first-child {
-            color: #f23030;
-            font-size: 16px;
-          }
-          &:last-child {
-            color: #a4aab3;
-            font-size: 12px;
-            text-decoration: line-through;
-          }
-        }
-      }
-      .sendway {
-        font-size: 12px;
-        display: flex;
-        align-items: center;
-        span {
-          color: #7c7f88;
-          padding-left: 7px;
-          &.self-support {
-            font-size: 10px;
-            color: #f34444;
-            border: 1px solid #f34444;
-            border-radius: 2px;
-            width: 32px;
-            height: 16px;
-            line-height: 16px;
-            text-align: center;
-            padding: 3px;
-          }
-        }
-        img {
-          width: 22px;
-          height: 20px;
-        }
-      }
-    }
-  }
-  .order-air {
+    position: fixed;
     width: 100%;
-    vertical-align: middle;
-    text-align: center;
-    img {
-      width: 102px;
-      height: 102px;
-      box-sizing: border-box;
-      margin: 96px auto 20px;
+    z-index: 1;
+  }
+  .body {
+    position: absolute;
+    top:44px;
+    width: 100%;
+    .ui-collection-body {
+      border-bottom: 1px solid rgba(232, 234, 237, 1);
+      display: flex;
+      width: auto;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px;
+      position: relative;
+      div.ui-image-wrapper {
+        width: 110px;
+        height: 110px;
+        position: relative;
+
+        display: flex;
+        justify-content: center;
+        align-content: center;
+        align-items: center;
+        flex-basis: 110px;
+        flex-shrink: 0;
+
+        background-position: center center !important;
+        background: url("../../assets/image/change-icon/default_image_02@2x.png");
+        background-size: 100px 100px;
+        background-repeat: no-repeat;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+
+        img.collection-img {
+          width: 110px;
+          height: 110px;
+          flex-basis: 110px;
+          flex-shrink: 0;
+        }
+        img.collection-img[lazy="loading"] {
+          width: 30px;
+          height: 30px;
+        }
+        img.collection-img[lazy="error"] {
+          width: 30px;
+          height: 30px;
+        }
+        img.collection-img[lazy="loaded"] {
+          width: 110px;
+          height: 110px;
+          flex-basis: 110px;
+          flex-shrink: 0;
+          background: rgba(255, 255, 255, 1);
+        }
+
+        span {
+          position: absolute;
+          height: 20px;
+          background: rgba(243, 244, 245, 1);
+          line-height: 20px;
+          text-align: center;
+          font-size: 14px;
+          color: rgba(242, 48, 48, 1);
+          width: 110px;
+          bottom: 0px;
+          left: 0px;
+        }
+      }
+      .flex-right {
+        padding-left: 14px;
+        width: 100%;
+        .title {
+          color: #4e545d;
+          font-size: 16px;
+          font-weight: normal;
+
+          display: -moz-box;
+          display: -webkit-box;
+          display: box;
+
+          -webkit-line-clamp: 2;
+          -moz-line-clamp: 2;
+
+          -moz-box-orient: vertical;
+          -webkit-box-orient: vertical;
+          box-orient: vertical;
+
+          overflow: hidden;
+          margin-bottom: 8px;
+        }
+        .sub-title {
+          color: #55595f;
+          font-size: 12px;
+          height: 12px;
+
+          display: -moz-box;
+          display: -webkit-box;
+          display: box;
+
+          -webkit-line-clamp: 1;
+          -moz-line-clamp: 1;
+
+          -moz-box-orient: vertical;
+          -webkit-box-orient: vertical;
+          box-orient: vertical;
+
+          overflow: hidden;
+          margin-bottom: 8px;
+        }
+        .price {
+          margin-bottom: 8px;
+          span {
+            &:first-child {
+              color: #f23030;
+              font-size: 16px;
+            }
+            &:last-child {
+              color: #a4aab3;
+              font-size: 12px;
+              text-decoration: line-through;
+            }
+          }
+        }
+        .sendway {
+          font-size: 12px;
+          display: flex;
+          align-items: center;
+          span {
+            color: #7c7f88;
+            padding-left: 7px;
+            &.self-support {
+              font-size: 10px;
+              color: #f34444;
+              border: 1px solid #f34444;
+              border-radius: 2px;
+              width: 32px;
+              height: 16px;
+              line-height: 16px;
+              text-align: center;
+              padding: 3px;
+            }
+          }
+          img {
+            width: 22px;
+            height: 20px;
+          }
+        }
+      }
     }
-    p {
-      font-size: 17px;
-      color: rgba(124, 127, 136, 1);
-      line-height: 17px;
-      text-align: center;
-      margin: 0 auto;
-    }
-    .button {
-      width: 200px;
-      height: 44px;
-      background: rgba(252, 46, 57, 1);
-      border-radius: 2px;
-      padding: 14px 68px;
-      margin: 28px auto;
-      border: none;
-    }
-    label {
-      font-size: 16px;
-      color: #fff;
-      display: inline-block;
+    .order-air {
+      width: 100%;
       vertical-align: middle;
-      height: 16px;
-      line-height: 16px;
+      text-align: center;
+      img {
+        width: 102px;
+        height: 102px;
+        box-sizing: border-box;
+        margin: 96px auto 20px;
+      }
+      p {
+        font-size: 17px;
+        color: rgba(124, 127, 136, 1);
+        line-height: 17px;
+        text-align: center;
+        margin: 0 auto;
+      }
+      .button {
+        width: 200px;
+        height: 44px;
+        background: rgba(252, 46, 57, 1);
+        border-radius: 2px;
+        padding: 14px 68px;
+        margin: 28px auto;
+        border: none;
+      }
+      label {
+        font-size: 16px;
+        color: #fff;
+        display: inline-block;
+        vertical-align: middle;
+        height: 16px;
+        line-height: 16px;
+      }
     }
   }
 }
@@ -301,7 +311,7 @@ export default {
 
  <!--Cell Swipe样式覆盖 -->
 <style>
-.mint-cell-swipe-button{
+.mint-cell-swipe-button {
   width: 90px;
   font-size: 14px;
   display: flex !important;
