@@ -323,8 +323,10 @@ export default {
     onClickTime(time) {
       
     },
-    goCouponList() {      
-      this.$router.push({ name: 'couponUsable'})
+    goCouponList() {   
+      let shop = null
+      let total_price = this.order_price ? this.order_price.total_price : null   
+      this.$router.push({ name: 'couponUsable', query: { shop: shop, total_price: total_price }})
     }, 
     fetchCartList(){
       cart.cartGet().then((response) => {
@@ -362,7 +364,7 @@ export default {
     fetchCouponList() {
       let shop = null
       let total_price = this.order_price ? this.order_price.total_price : null
-      this.fetchCouponUsable({ page: 1, per_page: 10, shop: shop, total_price: total_price })  
+      this.fetchCouponUsable({ isFirstPage: true, shop: shop, total_price: total_price })  
     },
     // 计算订单价格
     getOrderPrice() {
