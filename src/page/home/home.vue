@@ -30,7 +30,7 @@
 			HomeHeader,
 		},
 		created: function () {
-			Indicator.open()
+			// Indicator.open()
 			cardpageGet('index').then(
 				(response) => {
 					Indicator.close()

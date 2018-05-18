@@ -11,10 +11,8 @@
 </template>
 
 <script>
-let screenCloseTime = 0
-let screenCloseAt = 0;
-
 import Common from './Common'
+import { Toast } from 'mint-ui'
 export default {
   name: 'CardZ4',
   mixins: [ Common ],  
@@ -22,7 +20,9 @@ export default {
     return {
       count: 0, // 活动倒计时
       timer: null,
-      tips: ''
+      tips: '',
+      screenCloseTime: 0, // 屏幕隐藏时间
+      screenCloseAt: 0, // 屏幕上次隐藏时间点
     }
   },
   computed: {    
@@ -44,6 +44,9 @@ export default {
         left: left + 'px',
       }
     },     
+  },
+  created () {
+    this.addVisibilitychange()
   },
   mounted() {
     this.$nextTick(() => {
@@ -84,37 +87,42 @@ export default {
         this.tips = '已结束'
       }
     },
-    start () {
+    start () {   
+      this.screenCloseTime = 0     
       this.timer = setInterval(() => {
-        this.updateCount()        
+        this.updateCount()                
       }, 1000)
     },
     stop () {
       this.timer && clearTimeout(this.timer); 
       this.tips = '已结束'    
     },
-    updateCount () {      
-      this.count = this.count - 1
-      if (this.count < 0) {
+    updateCount () {        
+      if (this.screenCloseTime > 0) {
+        this.count = this.count - this.screenCloseTime                
+        this.screenCloseTime = 0  
+      } else {
+        this.count = this.count - 1
+      }
+      
+      if (this.count <= 0) {
         this.stop()
       } else {
         this.tips = this.utils.formatTimeInterval(this.count)
       }      
+    },
+    addVisibilitychange: function () {
+      document.addEventListener('visibilitychange', () => {
+        var date = new Date();        
+        if (document.visibilityState == 'hidden') {
+            this.screenCloseAt = date.getTime();
+        } else {
+            this.screenCloseTime = Math.floor((date.getTime() - this.screenCloseAt)/1000);            
+        }
+      })
     }       
   },
 }
-document.addEventListener('visibilitychange',function() {
-        var date = new Date();        
-        if (document.visibilityState == 'hidden') {
-            screenCloseAt = date.getTime();
-        } else {
-            screenCloseTime = Math.floor((date.getTime() - screenCloseAt)/1000);
-            console.log('====================================');
-            console.log('screenCloseTime is ', screenCloseTime);
-            console.log('====================================');
-            // alert(screenCloseTime)
-        }
-    })
 </script>
 
 <style lang="scss" scoped>
