@@ -11,7 +11,7 @@
       <img class="photo" src="../../assets/image/change-icon/coupons_empty@2x.png">
       <label class="title">您暂时没有任何优惠券</label>
     </div>
-    <div class="list">
+    <div class="list" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
       <coupon-item
         v-for="item in items" 
         :key="item.id" 
@@ -35,10 +35,16 @@ export default {
   components: {
     CouponItem,
   },
+  data() {
+		return {
+			loading: false,  //是否加载更多
+		}
+	},
   computed: {
     ...mapState({
       total: state => state.coupon.total,
       items: state => state.coupon.items,
+      isMore: state => state.coupon.isMore,
       selectedItem: state => state.coupon.selectedItem
     }),    
     isEmpty: function () {
@@ -47,6 +53,9 @@ export default {
       }
       return false
     }
+  },
+  created () {
+    this.loadFirstPage()
   },
   methods: {
     ...mapMutations({
@@ -73,7 +82,23 @@ export default {
     unselect() {
       this.unselectCouponItem()
       this.goBack()
-    }
+    },    
+    loadFirstPage () {
+      this.fetchCouponList(true)
+    },
+    loadMore () {
+      this.loading = true;			
+			if (this.isMore) {
+				this.loading = false;
+				this.fetchCouponList(false)
+			}      
+    },
+    // 可使用的优惠券列表
+    fetchCouponList(isFirstPage) {
+      let shop = this.$route.query.shop
+      let total_price = this.$route.query.total_price          
+      this.fetchCouponUsable({ isFirstPage: isFirstPage, shop: shop, total_price: total_price })  
+    },
   }
 }
 </script>
