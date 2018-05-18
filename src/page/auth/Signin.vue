@@ -53,6 +53,7 @@ import { authSocial } from '../../api/network/auth-social'
 import { authWeb } from '../../api/network/auth-web'
 import { ENUM } from '../../config/enum'
 import { apiBaseUrl } from '../../config/env'
+import { userProfileGet } from '../../api/network/user'
 export default {
   name: 'Signin',
   data() {
@@ -93,27 +94,19 @@ export default {
   },
   created: function () {
     this.fetchConfig(); 
-    let openid = this.$cookie.get('openid')
-    let token = this.$cookie.get('token')
-    console.log('1====================================');
-    console.log('openid is ', openid);
-    console.log('token is ', token)
-    console.log('1====================================');
-    if (openid && openid.length && token && token.length) {
-      this.saveToken({ 'token': token })      
-      this.goHome()      
-    }
   },
   mounted () {
     let isTokenInvalid = this.$route.params.isTokenInvalid    
     if (isTokenInvalid) {
       Toast('登录过期')
     }
+    this.onAuthSuccess()
   },
   methods: {
     ...mapMutations({
       saveAuthInfo: 'signin',
-      saveToken: 'saveToken'
+      saveToken: 'saveToken',
+      saveUser: 'saveUser',
     }),
     ...mapActions({
       fetchConfig: 'fetchConfig'
@@ -189,11 +182,31 @@ export default {
       console.log('locationRef is ', locationRef);
       console.log('====================================');
       window.location.href = locationRef
-      // authWeb(ENUM.SOCIAL_VENDOR.WEIXIN, scope, ref).then(
-      //   (response) => {
-
-      //   }, (error) => {}
-      //   )
+    },
+    onAuthSuccess () {
+      let openid = this.$cookie.get('openid')
+      let token = this.$cookie.get('token')
+      console.log('1====================================');
+      console.log('openid is ', openid);
+      console.log('token is ', token)
+      console.log('1====================================');
+      if (openid && openid.length && token && token.length) {
+        this.saveToken({ 'token': token })
+        Indicator.open()
+        userProfileGet().then(
+          response => {
+            Indicator.close()
+            if (response && response.user) {
+              this.saveUser(response);
+              this.goHome()      
+            }
+          },
+          error => {
+            Indicator.close()
+            this.goHome()      
+          }
+        );        
+      }
     }
   }
 };
