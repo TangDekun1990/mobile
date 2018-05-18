@@ -6,7 +6,7 @@
 			<input type="file" placeholder="请选择头像" accept="image/*" @change="getInputFile($event)">
 			<!-- <input type="file" placeholder="请选择头像" accept="image/*" @change="getInputFile($event)" v-if="isIos"> -->
 			<img v-bind:src="user.avatar.thumb" v-if="user.avatar && user.avatar.thumb">
-			<img src="../../../assets/image/change-icon/img_avatar@2x.png" v-if="!user.avatar || !user.avatar.thumb">
+			<img src="../../../assets/image/change-icon/e0_head@2x.png" v-if="!user.avatar || !user.avatar.thumb">
 		</div>
 		<v-cropper-comp v-if='isShowCropper' :imageurl="imgBase64"></v-cropper-comp>
 	</div>

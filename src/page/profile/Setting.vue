@@ -55,13 +55,16 @@ export default {
       MessageBox.confirm('确认退出', '').then(action => {
         this.clearToken() 
         this.goBack() 
-        this.$cookie.delete('openid')
-        this.$cookie.delete('token')
-        console.log('====================================');
-        console.log('document.cookie is ', document.cookie);
-        console.log('====================================');
+        let domain = window.location.protocol + '//' + window.location.host
+        domain = '.wenchao.pre.geek-zoo.cn' // TODO:
+        
+        console.log('host is ', window.location.host)
+        console.log('domain is ', domain)
+        this.$cookie.delete('openid', { domain: domain })
+        this.$cookie.delete('token', { domain: domain })
+
         let openid = this.$cookie.get('openid')
-        let token = this.$cookie.get('token')
+        let token = this.$cookie.get('token')       
         console.log('(openid, token) ', openid, token)
       })
     },
