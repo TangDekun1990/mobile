@@ -1,66 +1,89 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<meta content="yes" name="apple-mobile-web-app-capable">
-		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, minimum-scale=0.5;" name="viewport" />
-		<meta http-equiv="Access-Control-Allow-Origin" content="*">
-		<link rel="shortcut icon" type="image/x-icon" href="./static/favicon.ico" rel="external nofollow" />
-		<title>温超商城</title>
-	</head>
-	<body>
-		<div id="app"></div>
-		<!-- built files will be auto injected -->
-		<script>
-			var messagingIframe;
-				var sendMessageQueue = [];
-				var receiveMessageQueue = [];
-				var messageHandlers = {};
+<head>
+	<meta charset="utf-8">
+	<!-- <meta content="yes" name="apple-mobile-web-app-capable"> -->
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, minimum-scale=1.0;" name="viewport" />
+	<meta http-equiv="Access-Control-Allow-Origin" content="*">
+	<link rel="shortcut icon" type="image/x-icon" href="./static/favicon.ico" rel="external nofollow" />
+	<title>温超商城</title>
+	<script src="https://www.sobot.com/chat/frame/js/entrance.js?sysNum=5b696ae2d5394f06b558e64ebbaf3be7" class="zhiCustomBtns" id="zhichiScript" data-args="manual=true"></script>
+	<script type="text/javascript">
+		// window.onload = function() {
+		// 	var zhiManager = (getzhiSDKInstance());
+		// 	manager = zhiManager;
+		// 	let classEle = document.getElementsByClassName('zhiCustomBtn');
+		// 	if (classEle.length >= 1) {
+		// 		for (let i = 0; i <= classEle.length-1; i++) {
+		// 			if (classEle[i].nodeName != 'SCRIPT') {
+		// 				zhiManager.on('load', function () {
+		// 					zhiManager.init();
+		// 					zhiManager.initBtnDOM();
+		// 					zhiManager.set('customBtn', 'true');
+		// 					zhiManager.set('lazyFlag', true);
+		// 					zhiManager.set('satDegree_A', true);
+		// 					zhiManager.set('isFeedBackFlag', true);
+		// 					zhiManager.set('robotHelloWord', '您好! 我是机器人小超， 有什么吩咐您请说哦！');
+		// 				});
+		// 			}
+		// 		}
+		// 	}
+		// }
+	</script>
+</head>
+<body>
+	<div id="app"></div>
+	<!-- built files will be auto injected -->
+	<script>
+		var messagingIframe;
+		var sendMessageQueue = [];
+		var receiveMessageQueue = [];
+		var messageHandlers = {};
 
-				var PVG_CUSTOM_PROTOCOL_SCHEME = 'wvjbscheme';
-				var QUEUE_HAS_MESSAGE = '__QUEUE_MESSAGE__/';
-				var QUEUE_HAS_MESSAGE_IOS = '__WVJB_QUEUE_MESSAGE__';
-				var QUEUE_HAS_MESSAGE_LOAD = '__BRIDGE_LOADED__';
+		var PVG_CUSTOM_PROTOCOL_SCHEME = 'wvjbscheme';
+		var QUEUE_HAS_MESSAGE = '__QUEUE_MESSAGE__/';
+		var QUEUE_HAS_MESSAGE_IOS = '__WVJB_QUEUE_MESSAGE__';
+		var QUEUE_HAS_MESSAGE_LOAD = '__BRIDGE_LOADED__';
 
-				var responseCallbacks = {};
-				var uniqueId = 1;
+		var responseCallbacks = {};
+		var uniqueId = 1;
 
-				function _createQueueReadyIframe(doc) {
-					messagingIframe = doc.createElement('iframe');
-					messagingIframe.style.display = 'none';
-					messagingIframe.src = PVG_CUSTOM_PROTOCOL_SCHEME + '://' + QUEUE_HAS_MESSAGE_LOAD
-					doc.documentElement.appendChild(messagingIframe);
-				}
+		function _createQueueReadyIframe(doc) {
+			messagingIframe = doc.createElement('iframe');
+			messagingIframe.style.display = 'none';
+			messagingIframe.src = PVG_CUSTOM_PROTOCOL_SCHEME + '://' + QUEUE_HAS_MESSAGE_LOAD
+			doc.documentElement.appendChild(messagingIframe);
+		}
 
-				function isAndroid() {
-					var ua = navigator.userAgent.toLowerCase();
-					var isA = ua.indexOf("android") > -1;
-					if (isA) {
-						return true;
-					}
-					return false;
-				}
+		function isAndroid() {
+			var ua = navigator.userAgent.toLowerCase();
+			var isA = ua.indexOf("android") > -1;
+			if (isA) {
+				return true;
+			}
+			return false;
+		}
 
-				function isIphone() {
-					var ua = navigator.userAgent.toLowerCase();
-					var isIph = ua.indexOf("iphone") > -1;
-					if (isIph) {
-						return true;
-					}
-					return false;
-				}
+		function isIphone() {
+			var ua = navigator.userAgent.toLowerCase();
+			var isIph = ua.indexOf("iphone") > -1;
+			if (isIph) {
+				return true;
+			}
+			return false;
+		}
 
-				function isWeixin() {
-					var ua = navigator.userAgent.toLowerCase();
-					if (ua.match(/MicroMessenger/i) == "micromessenger") {
-						return true;
-					} else {
-						return false;
-					}
-				}
+		function isWeixin() {
+			var ua = navigator.userAgent.toLowerCase();
+			if (ua.match(/MicroMessenger/i) == "micromessenger") {
+				return true;
+			} else {
+				return false;
+			}
+		}
 
-				function isInApp() {
-					var ua = navigator.userAgent.toLowerCase();
+		function isInApp() {
+			var ua = navigator.userAgent.toLowerCase();
 					//alert(ua);
 					var isIph = ua.indexOf("wenchao/") > -1;
 					if (isIph) {
@@ -179,7 +202,7 @@
 					// if (receiveMessageQueue) {
 					//     receiveMessageQueue.push(messageJSON);
 					// } else {
-					_dispatchMessageFromNative(messageJSON);
+						_dispatchMessageFromNative(messageJSON);
 					// }
 				}
 
@@ -253,7 +276,6 @@
 				};
 
 				window.wenchaoApp = wenchaoApp;
-		</script>
-		<script src="https://www.sobot.com/chat/frame/js/entrance.js?sysNum=5b696ae2d5394f06b558e64ebbaf3be7" class="zhiCustomBtns" id="zhichiScript" data-args="manual=true"></script>
-	</body>
-</html>
+			</script>
+		</body>
+		</html>

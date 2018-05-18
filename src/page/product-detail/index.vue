@@ -50,13 +50,14 @@
 
 		beforeRouteEnter(to, from, next) {
 			next( (vm) => {
-				if (to.name === 'detail' && from.name) {
+				if (to.name == 'detail' && from.name) {
 					window.location.reload();
 				}
 			})
 		},
 
 		beforeRouteUpdate (to, from, next) {
+			console.log('beforeRouteUpdate');
 			next();
 			window.location.reload();
 		},
