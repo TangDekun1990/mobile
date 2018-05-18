@@ -224,7 +224,7 @@ export default [
 				path: '/checkout/couponUsable',
 				component: CouponUsable,
 				meta: {
-					keepAlive: false,
+					keepAlive: true,
 				},
 			},
 			{

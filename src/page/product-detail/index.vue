@@ -1,6 +1,6 @@
 <!-- 商品详情 -->
 <template>
-	<div class="product-detail-wrapper">
+	<div class="product-detail-wrapper" v-if="productDetail">
 		<!-- header  -->
 		<v-detail-nav v-if='!isHideHeader'></v-detail-nav>
 		<!-- body -->
@@ -50,19 +50,20 @@
 
 		beforeRouteEnter(to, from, next) {
 			next( (vm) => {
-				if (to.name === 'detail' && from.name) {
+				if (to.name == 'detail' && from.name) {
 					window.location.reload();
 				}
 			})
 		},
 
 		beforeRouteUpdate (to, from, next) {
+			console.log('beforeRouteUpdate');
 			next();
 			window.location.reload();
 		},
 
 		beforeRouteLeave (to, from , next) {
-			if (from.name == 'detail' && to.name != 'recommend' && to.name != 'with') {
+			if (from.name == 'detail' && to.name != 'recommend' && to.name != 'with' && to.name != 'signin' && to.name != 'cart') {
 				window.location.reload();
 			}
 			next();

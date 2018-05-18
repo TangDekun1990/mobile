@@ -5,7 +5,7 @@ const state = {
   items: [],
   total: 0,
   page: 1, // 当前页码
-  isMore: true // 是否有更多
+  isMore: false // 是否有更多
 }
 
 // getters
@@ -42,7 +42,6 @@ const mutations = {
 // actions 
 const actions = {
   fetchCouponUsable({ commit, state }, params) {
-    debugger
     let page = params.isFirstPage ? 1 : state.page
     let per_page = 10
     api.couponAvailable(page, per_page, params.shop, params.total_price).then(

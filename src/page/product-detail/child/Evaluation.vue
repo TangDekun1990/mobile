@@ -20,7 +20,8 @@
 
 					<span>{{ getTime(item.created_at)}}</span>
 				</div>
-				<p> {{ item.content }}</p>
+				<p v-if="item.content"> {{ item.content }}</p>
+				<p v-if="!item.content">无评价信息</p>
 			</div>
 
 			<div class="list-empty" v-if='reviewList.length <= 0'>
