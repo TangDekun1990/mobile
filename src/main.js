@@ -38,9 +38,6 @@ router.beforeEach((to, from, next) => {
 			}
 		}
 	}
-	// if (to.name === 'detail' && from.name) {
-	// 	window.location.reload();
-	// }
 	next();
 });
 
