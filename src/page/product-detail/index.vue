@@ -63,7 +63,7 @@
 		},
 
 		beforeRouteLeave (to, from , next) {
-			if (from.name == 'detail' && to.name != 'recommend' && to.name != 'with') {
+			if (from.name == 'detail' && to.name != 'recommend' && to.name != 'with' && to.name != 'signin' && to.name != 'cart') {
 				window.location.reload();
 			}
 			next();
