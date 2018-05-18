@@ -41,8 +41,7 @@ const mutations = {
 
 // actions 
 const actions = {
-  fetchCouponUsable({ commit, state }, params) {    
-    debugger
+  fetchCouponUsable({ commit, state }, params) {
     let page = params.isFirstPage ? 1 : state.page
     let per_page = 10
     api.couponAvailable(page, per_page, params.shop, params.total_price).then(

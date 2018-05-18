@@ -325,7 +325,7 @@ export default {
     // 晒单评价
     goComment(data) {
       this.changeItem(data);
-      this.$router.push({ name: "orderComment", query: { order: data } });
+      this.$router.push({ name: "orderComment", query: { order: data.id } });
     },
 
     // 获取再次购买数据

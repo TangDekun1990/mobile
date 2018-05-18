@@ -134,8 +134,8 @@ export default {
 		 	for (let i = 0, len = data.length; i <= len-1; i++) {
 		 		if (data[i].checked) {
 		 			let obj = {'goods_id': data[i].product.id, 'property': [], 'num': data[i].amount};
-		 			if (data[i].attrs) {
-		 				obj.property = data[i].attrs.split(',');
+		 			if (data[i].attrs ) {
+		 				obj.property = toString(data[i].attrs).split(',');
 		 			}
 		 			this.orderprice.push(obj);
 		 			this.promosIds.push(data[i].id);
@@ -317,7 +317,7 @@ export default {
 			if (validate.length > 0) {
 				productValidate(JSON.stringify(validate)).then( res => {
 					if (res) {
-						if (res.is_valid) {																						
+						if (res.is_valid) {
 							this.$router.push({ name: 'checkout' })
 						}
 					}

@@ -3,7 +3,7 @@
     <mt-header class="header" fixed title="确认订单">
       <header-item slot="left" v-bind:isBack=true v-on:onclick="leftClick">
       </header-item> 
-      <header-item slot="right" class="zhiCustomBtns" titleColor="#F23030" title="联系客服" v-on:onclick="rightClick">
+      <header-item slot="right" class="zhiCustomBtns" titleColor="#F23030" title="联系客服" v-on:onclick="rightClick()">
       </header-item>     
     </mt-header>
     <div class="body">
@@ -319,7 +319,7 @@ export default {
     },
     goDuration() {
       this.$refs.timePicker.open();     
-      // this.stop(); 
+      this.stop(); 
     },
     onClickDate(date) {
 
