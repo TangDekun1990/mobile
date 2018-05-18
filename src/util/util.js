@@ -218,7 +218,6 @@ export default {
 		});
 		zhiManager.on("receivemessage", function (ret) {
 			scoped.key = ret;
-			// return ret
 			console.log(ret);
 		});
 	},
