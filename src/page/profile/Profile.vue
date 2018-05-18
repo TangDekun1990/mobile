@@ -32,92 +32,87 @@
 		</div>
 		<div class="order-wrapper" >
 			<order-item
-			class="order-item"
-			testAttr = 'order'
-			id='0'
-			:icon="require('../../assets/image/change-icon/e0-payment@2x.png')"
-			title="待付款"
-			:orderNumber = 'orderCount.created'
-			>
-		</order-item>
-		<order-item
-		class="order-item"
-		testAttr = 'order'
-		id='1'
-		:icon="require('../../assets/image/change-icon/e0_delivery@2x.png')"
-		title="待发货"
-		:orderNumber = 'orderCount.paid'
-		>
-	</order-item>
-	<order-item
-	class="order-item"
-	testAttr = 'order'
-	id='2'
-	:icon="require('../../assets/image/change-icon/e0_receiving@2x.png')"
-	title="待收货"
-	:orderNumber = 'orderCount.delivering'
-	>
-</order-item>
-<order-item
-class="order-item"
-testAttr = 'order'
-id='3'
-:icon="require('../../assets/image/change-icon/e0_evaluate@2x.png')"
-title="待评价"
-:orderNumber = 'orderCount.deliveried'
->
-</order-item>
-</div>
-<div class="bottom-wrapper">
-	<info-item
-	v-on:onclick="goFavourite()"
-	class="info-item-wrapper section-header"
-	:icon="require('../../assets/image/change-icon/e0_favorite@2x.png')"
-	title="我的收藏">
-</info-item>
-<info-item
-v-on:onclick="goAddress"
-class="info-item-wrapper"
-:icon="require('../../assets/image/change-icon/e0_address@2x.png')"
-title="管理收货地址">
-</info-item>
-<info-item
-v-on:onclick="goCoupon"
-class="info-item-wrapper section-footer"
-:icon="require('../../assets/image/change-icon/e0_coupon@2x.png')"
-title="我的优惠券">
-</info-item>
-<info-item
-v-on:onclick="goHelp()"
-class="info-item-wrapper section-header"
-:icon="require('../../assets/image/change-icon/e0_clause@2x.png')"
-title="使用帮助">
-</info-item>
-<info-item
-v-on:onclick="callTelephone()"
-class="info-item-wrapper section-footer"
-:icon="require('../../assets/image/change-icon/e0_phone@2x.png')"
-title="客服电话">
-</info-item>
-</div>
-<!-- <tabbar></tabbar> -->
-</div>
+        class="order-item"
+        testAttr = 'order'
+        id='0'
+        :icon="require('../../assets/image/change-icon/e0-payment@2x.png')"
+        title="待付款"
+        :orderNumber = 'orderCount.created'>
+		  </order-item>
+      <order-item
+        class="order-item"
+        testAttr = 'order'
+        id='1'
+        :icon="require('../../assets/image/change-icon/e0_delivery@2x.png')"
+        title="待发货"
+        :orderNumber = 'orderCount.paid'>
+      </order-item>
+      <order-item
+        class="order-item"
+        testAttr = 'order'
+        id='2'
+        :icon="require('../../assets/image/change-icon/e0_receiving@2x.png')"
+        title="待收货"
+        :orderNumber = 'orderCount.delivering'>
+      </order-item>
+      <order-item
+        class="order-item"
+        testAttr = 'order'
+        id='3'
+        :icon="require('../../assets/image/change-icon/e0_evaluate@2x.png')"
+        title="待评价"
+        :orderNumber = 'orderCount.deliveried'>
+      </order-item>
+    </div>
+    <div class="bottom-wrapper">
+      <info-item
+        v-on:onclick="goFavourite()"
+        class="info-item-wrapper section-header"
+        :icon="require('../../assets/image/change-icon/e0_favorite@2x.png')"
+        title="我的收藏">
+      </info-item>
+      <info-item
+        v-on:onclick="goAddress"
+        class="info-item-wrapper"
+        :icon="require('../../assets/image/change-icon/e0_address@2x.png')"
+        title="管理收货地址">
+      </info-item>
+      <info-item
+        v-on:onclick="goCoupon"
+        class="info-item-wrapper section-footer"
+        :icon="require('../../assets/image/change-icon/e0_coupon@2x.png')"
+        title="我的优惠券">
+      </info-item>
+      <info-item
+        v-on:onclick="goHelp()"
+        class="info-item-wrapper section-header"
+        :icon="require('../../assets/image/change-icon/e0_clause@2x.png')"
+        title="使用帮助">
+      </info-item>
+      <info-item
+        v-on:onclick="callTelephone()"
+        class="info-item-wrapper section-footer"
+        :icon="require('../../assets/image/change-icon/e0_phone@2x.png')"
+        title="客服电话">
+      </info-item>
+    </div>
+  </div>
 </template>
 
 <script>
-import Tabbar from "../../components/common/Tabbar";
-import InfoItem from "./child/InfoItem";
-import OrderItem from "./child/OrderItem";
-import { mapState, mapMutations } from "vuex";
-import { userProfileGet } from "../../api/network/user";
-import { scoreGet } from "../../api/network/score";
-import { ENUM } from "../../config/enum";
-import { orderSubtotal } from "../../api/network/order";
-import { messageCount } from "../../api/network/message";
-import * as site from "../../api/network/site";
-import { MessageBox } from "mint-ui";
+import Tabbar from '../../components/common/Tabbar';
+import InfoItem from './child/InfoItem';
+import OrderItem from './child/OrderItem';
+import { mapState, mapMutations } from 'vuex';
+import { userProfileGet } from '../../api/network/user';
+import { scoreGet } from '../../api/network/score';
+import { ENUM } from '../../config/enum';
+import { orderSubtotal } from '../../api/network/order';
+import { messageCount } from '../../api/network/message';
+import * as site from '../../api/network/site';
+import { MessageBox } from 'mint-ui';
 export default {
-  name: "profile",
+  name: 'profile',
   data() {
     return {
       orderAll: 1,
@@ -125,7 +120,7 @@ export default {
       orderCount: {},
       isShow: true,
       ishasCount: false,
-      telephone: ""
+      telephone: ''
     };
   },
   components: {
@@ -173,12 +168,12 @@ export default {
       orderStatus: state => state.order.orderStatus
     }),
     nickname() {
-      let title = "登录/注册";
+      let title = '登录/注册';
       if (this.isOnline) {
         if (
           this.user &&
-          typeof this.user != "undefined" &&
-          JSON.stringify(this.user) != "{}"
+          typeof this.user != 'undefined' &&
+          JSON.stringify(this.user) != '{}'
         ) {
           if (this.user.nickname) {
             title = this.user.nickname;
@@ -194,8 +189,8 @@ export default {
       if (this.isOnline) {
         if (
           this.user &&
-          typeof this.user != "undefined" &&
-          JSON.stringify(this.user) != "{}"
+          typeof this.user != 'undefined' &&
+          JSON.stringify(this.user) != '{}'
         ) {
           let avatar = this.user.avatar;
           if (avatar) {
@@ -213,7 +208,7 @@ export default {
       return url;
     },
     getScore() {
-      let score = "0";
+      let score = '0';
       if (this.isOnline) {
         score = this.score;
       }
@@ -222,9 +217,9 @@ export default {
   },
   methods: {
     ...mapMutations({
-      saveUser: "saveUser",
-      changeType: "changeType",
-      changeStatus: "changeStatus"
+      saveUser: 'saveUser',
+      changeType: 'changeType',
+      changeStatus: 'changeStatus'
     }),
     // 获取订单不同状态的数量统计
     getOrderSubtotal() {
@@ -238,62 +233,62 @@ export default {
     },
     // 获取未读消息数字
     getMessageCount(type) {
-    	if(this.user != null){
-				let after = this.user.joined_at;
-				if(this.type) {
-					if(type == 1 && this.time.noticeTime) {
-						after = this.time.noticeTime;
-					}
-					if(type == 2 && this.time.ordertime){
-						after = this.time.ordertime;
-					}
-				}
-				messageCount(after, type).then(res => {
-					if (res) {
-						if(res.count >= 0) {
-							this.ishasCount = true;
-						}
-					}
-				});
-			}
+      if (this.user != null) {
+        let after = this.user.joined_at;
+        if (this.type) {
+          if (type == 1 && this.time.noticeTime) {
+            after = this.time.noticeTime;
+          }
+          if (type == 2 && this.time.ordertime) {
+            after = this.time.ordertime;
+          }
+        }
+        messageCount(after, type).then(res => {
+          if (res) {
+            if (res.count >= 0) {
+              this.ishasCount = true;
+            }
+          }
+        });
+      }
     },
     showLogin() {
-      this.$router.push({ name: "signin" });
+      this.$router.push({ name: 'signin' });
     },
     goScoreList() {
       if (this.isOnline) {
-        this.$router.push({ name: "scoreList", query: { index: 0 } });
+        this.$router.push({ name: 'scoreList', query: { index: 0 } });
       } else {
         this.showLogin();
       }
     },
     goRecordList() {
       if (this.isOnline) {
-        this.$router.push({ name: "scoreList", query: { index: 1 } });
+        this.$router.push({ name: 'scoreList', query: { index: 1 } });
       } else {
         this.showLogin();
       }
     },
     goProfileInfo() {
       if (this.isOnline) {
-        this.$router.push("/profileInfo");
+        this.$router.push('/profileInfo');
       } else {
         this.showLogin();
       }
     },
     goSetting() {
-      this.$router.push({ name: "setting" });
+      this.$router.push({ name: 'setting' });
     },
     goNews() {
-    	if (this.isOnline) {
-				this.$router.push("news");
-			} else {
-				this.showLogin();
-			}
+      if (this.isOnline) {
+        this.$router.push('news');
+      } else {
+        this.showLogin();
+      }
     },
     goFavourite() {
       if (this.isOnline) {
-        this.$router.push("collection");
+        this.$router.push('collection');
       } else {
         this.showLogin();
       }
@@ -307,13 +302,13 @@ export default {
     },
     goCoupon() {
       if (this.isOnline) {
-        this.$router.push({ name: "couponList", query: { index: 0 } });
+        this.$router.push({ name: 'couponList', query: { index: 0 } });
       } else {
         this.showLogin();
       }
     },
     goHelp() {
-      this.$router.push("help");
+      this.$router.push('help');
     },
     goOrder() {
       if (this.isOnline) {
@@ -321,7 +316,7 @@ export default {
           this.changeStatus(10);
         }
         this.$router.push({
-          name: "order",
+          name: 'order',
           params: { order: ENUM.ORDER_STATUS.ALL }
         });
       } else {
@@ -330,9 +325,9 @@ export default {
     },
     callTelephone() {
       let telephone = this.telephone;
-      MessageBox.confirm(telephone, "拨打电话").then(action => {
+      MessageBox.confirm(telephone, '拨打电话').then(action => {
         if (telephone && telephone.length) {
-          window.location.href = "tel://" + telephone;
+          window.location.href = 'tel://' + telephone;
         }
       });
     }
@@ -353,7 +348,7 @@ export default {
     justify-content: flex-start;
     align-items: stretch;
     height: 225px;
-    @include linear-gradient( #EAD6CE, #E2E3DF);
+    @include linear-gradient(#ead6ce, #e2e3df);
     .top-info-wrapper {
       flex: 1;
       width: 100%;
