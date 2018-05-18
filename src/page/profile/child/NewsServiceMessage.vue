@@ -16,9 +16,8 @@
 	        <p class="content" v-if="!key">您好，我是温超机器人，请问有什么可以帮您？请联系我</p>
           <p class="content" v-if="key">{{ key.data[0].content }}</p>
 	      </div>
-        <p class="message-number" v-if="!key" v-show="false"></p>
-        <p class="message-number" v-if="key" v-show="true"></p>
-	      
+        <!-- <p class="message-number" v-if="!key" v-show="false"></p>
+        <p class="message-number" v-if="key" v-show="true"></p> -->
     </div>
   </div>
 </template>
@@ -86,15 +85,15 @@ export default {
         white-space: nowrap;
       }
     }
-    .message-number {
-      width: 6px;
-      height: 6px;
-      background-color: #f33c3c;
-      line-height: 12px;
-      text-align: center;
-      border-radius: 50%;
-      margin: auto 15px;
-    }
+    // .message-number {
+    //   width: 6px;
+    //   height: 6px;
+    //   background-color: #f33c3c;
+    //   line-height: 12px;
+    //   text-align: center;
+    //   border-radius: 50%;
+    //   margin: auto 15px;
+    // }
   }
 }
 </style>
