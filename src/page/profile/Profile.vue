@@ -95,7 +95,7 @@
         :icon="require('../../assets/image/change-icon/e0_phone@2x.png')"
         title="客服电话">
       </info-item>
-    </div>  
+    </div>
   </div>
 </template>
 
@@ -203,7 +203,7 @@ export default {
         }
       }
       if (url === null) {
-        url = require('../../assets/image/change-icon/img_avatar@2x.png');
+        url = require("../../assets/image/change-icon/e0_head@2x.png");
       }
       return url;
     },
