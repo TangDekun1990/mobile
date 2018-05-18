@@ -219,6 +219,7 @@ export default {
     ...mapMutations({
       saveUser: 'saveUser',
       changeType: 'changeType',
+      saveMessageTime: 'saveMessageTime',
       changeStatus: 'changeStatus'
     }),
     // 获取订单不同状态的数量统计

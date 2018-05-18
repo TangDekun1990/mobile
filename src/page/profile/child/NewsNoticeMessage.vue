@@ -58,69 +58,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-//  .container {
-  //   display: flex;
-  //   flex-direction: column;
-  //   justify-content: flex-start;
-  //   align-items: stretch;
-  //   .header {
-  //     @include header;
-  //     border-bottom: 1px solid #e8eaed;
-  //     position: fixed;
-  //     width: 100%;
-  //     z-index: 1;
-  //   }
-  //   .body {
-  //     width: 100%;
-  //     position: absolute;
-  //     top:44px;
-  //     .order-message-body {
-  //       width:100%;
-  //       >p {
-  //         text-align: center;
-  //         margin-top:20px;
-  //         margin-bottom:10px;
-  //         font-size:12px;
-  //       }
-  //       .order-track {
-  //         height:120px; 
-  //         background:rgba(255,255,255,1);
-  //         border-radius: 2px ; 
-  //         margin: 0px 10px;
-  //         span {
-  //           display: inline-block;
-  //           padding:12px 0px 0px 15px;
-  //         }
-  //         .order-status {
-  //           display: flex;
-  //           justify-content: space-between;
-  //           align-items: center;
-  //           .orderImage {
-  //             img {
-  //               width:60px;
-  //               height:60px;
-  //               padding:14px 10px 14px 15px;
-  //             }
-  //           }
-  //           p {
-  //             font-size: 13px;
-  //             color:rgba(124,127,136,1);
-  //             width:240px;
-  //             height:36px;
-  //           }
-  //           .arrow-right {
-  //             img {
-  //               width:5px;
-  //               height:10px;
-  //               padding-right:12px;
-  //               padding-left:13px;
-  //             }
-  //           }
-  //         }
-  //       }
-  //     }
-  //   }
-  // }
 .container {
   display: flex;
   flex-direction: column;

@@ -3,7 +3,6 @@ const state = {
 	currentTabBar: 'home',
 	cartNumber: 0
 }
-
 // mutations
 const mutations = {
 	changeTabBar(state, value) {
