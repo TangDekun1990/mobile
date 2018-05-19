@@ -69,7 +69,7 @@ export default {
     flex-direction: row;
     justify-content: flex-start;
     align-items: stretch;
-    border-top: 1px solid $lineColor;
+    border-bottom: 1px solid $lineColor;
   }
   .photo {
     width: 90px;

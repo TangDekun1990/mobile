@@ -1,7 +1,7 @@
 <template>
   <div class="card-h1r-container" @click="onClick">    
     <div v-if="isLeft" class="h1-content-wrapper">  
-      <img class="photo" v-bind:style="getPhotoStyle" :src="getPhotoUrl" />           
+      <img class="photo" :onerror="defaultImage" v-bind:style="getPhotoStyle" :src="getPhotoUrl" />           
       <div class="left-wrapper">
         <label class="title" style="-webkit-box-orient:vertical">{{getTitle}}</label>
         <label class="subtitle" style="-webkit-box-orient:vertical">{{getSubtitle}}</label>      
@@ -14,7 +14,7 @@
         <label class="subtitle" style="-webkit-box-orient:vertical">{{getSubtitle}}</label>      
         <label class="desc" style="-webkit-box-orient:vertical">{{getLeftDesc}}</label> 
       </div>  
-      <img class="photo" v-bind:style="getPhotoStyle" :src="getPhotoUrl" />         
+      <img class="photo" :onerror="defaultImage" v-bind:style="getPhotoStyle" :src="getPhotoUrl" />         
     </div>       
   </div>
 </template>
@@ -27,7 +27,7 @@ export default {
   name: 'CardH1',  
   computed: {    
     getLeftDesc: function () {
-      return this.getItemByKey('label1')     
+      return this.getItemByKey('label1') 
     },
     isLeft () {
       return this.isCardStyle('R')
@@ -83,7 +83,7 @@ export default {
           color: $subtitleTextColor;
           margin-left: 9px;
           margin-right: 9px;
-          margin-top: 9px;
+          margin-top: 6px;
           text-align: left;
           @include limit-line(2)
         }
@@ -91,7 +91,7 @@ export default {
           font-size: $h5;
           color: $subtitleTextColor;
           text-align: left;
-          margin-top: 6px;
+          margin-top: 5px;
           margin-left: 9px;
           margin-right: 5px;
           @include limit-line(1)

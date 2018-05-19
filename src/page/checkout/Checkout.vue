@@ -19,7 +19,7 @@
       </checkout-item>
       <checkout-item class="item section-header" title="优惠券" :subtitle="getCouponName" :tips="getCouponTips" v-on:onclick="goCouponList">
       </checkout-item>  
-      <checkout-comment ref="comment" class="comment section-header">
+      <checkout-comment ref="comment" :default="comment"  class="comment section-header">
       </checkout-comment>
       <div class="desc section-header section-footer">
         <checkout-desc class="desc-item" title="商品金额" :subtitle="getOrderProductPrice">
@@ -59,6 +59,7 @@ import { mapState, mapMutations, mapActions } from 'vuex'
 import * as consignee from '../../api/network/consignee'
 import * as order from '../../api/network/order'
 import * as cart from '../../api/network/cart'
+import { cartQuantity } from '../../api/network/cart'
 import { Toast, Indicator, MessageBox } from 'mint-ui'
 import Promos from './Promos'
 export default {
@@ -74,7 +75,6 @@ export default {
   data () {
     return {
       order_price: null,
-      cartGoods: [],
     }
   },
   computed: {
@@ -88,6 +88,8 @@ export default {
       invoice: state => state.invoice,
       selectedDate: state => state.delivery.selectedDate,
       selectedTime: state => state.delivery.selectedTime,      
+      comment: state => state.checkout.comment,      
+      cartGoods: state => state.cart.cartGoods,      
     }),
     // 获取订单商品数组(计算价格/获取货运公司列表)
     getOrderProducts: function () {
@@ -104,8 +106,7 @@ export default {
         } 
         goods.property = attrs
         orderProducts.push(goods)
-      }
-      
+      }    
       return orderProducts
     },
     // 获取购物车货品id数组
@@ -219,8 +220,8 @@ export default {
     },     
   },
   created: function() {     
-    this.fetchAddressList()    
-    this.fetchCartList()    
+    this.fetchAddressList()  
+    this.getOrderPrice()
     
     // 配送时间列表
     this.fetchDeliveryList()    
@@ -228,7 +229,7 @@ export default {
   beforeRouteLeave (to, from, next) {
     if (to.name === 'cart') {
       this.clearSelectedInfo()     
-    }
+    } 
     next()      
   },
   methods: {
@@ -238,7 +239,10 @@ export default {
       unselectAddressItem: 'unselectAddressItem',
       unselectCouponItem: 'unselectCouponItem', 
       clearInvoiceInfo: 'clearInvoiceInfo', 
-      unselectDelivery: 'unselectDelivery',  
+      unselectDelivery: 'unselectDelivery',        
+      clearCommentInfo: 'clearCommentInfo',
+      clearSelectedCartGoods: 'clearSelectedCartGoods',  
+      setCartNumber: 'setCartNumber'
     }),
     ...mapActions({
       fetchShippingList: 'fetchShippingList',
@@ -289,15 +293,14 @@ export default {
       this.unselectCouponItem()
       this.clearInvoiceInfo()
       this.unselectDelivery()
+      this.clearCommentInfo()
+      this.clearSelectedCartGoods()
     },
     leftClick() {
       this.goBack()      
     },
     rightClick() {
-      // TODO:
-      console.log('====================================');
-      console.log('rightClick....');
-      console.log('====================================');
+      // TODO:      
       this.utils.openZhichiManager();
     },
     goAddress() {      
@@ -431,14 +434,24 @@ export default {
         (response) => {
           Indicator.close()
           if (response && response.order) {
-            this.clearSelectedInfo()
+            // 清除选中的信息
+            this.clearSelectedInfo() 
+            this.getCartNumber()                       
             this.$router.push({ name: 'payment', params: { order: response.order }})
           }          
         }, (error) => {
           Indicator.close()
           Toast(error.errorMsg)
         })
-    }    
+    },
+    // 获取购物商品数量
+    getCartNumber() {
+			cartQuantity().then( res => {
+				if (res) {
+					this.setCartNumber(res.quantity);
+				}
+			})
+		}    
   }
 }
 </script>
