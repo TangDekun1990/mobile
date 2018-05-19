@@ -243,10 +243,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-  .container {
-    position: absolute;
-    width: 100%;
-    height: 100%;
+  .container {   
     display: flex;
     flex: 1;
     flex-direction: column;
