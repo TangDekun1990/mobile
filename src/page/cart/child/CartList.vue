@@ -46,6 +46,7 @@ export default {
 				cartList: [], //购物车列表
 				indicator: { spinnerType: 'fading-circle'},
 				orderprice: [], // 购物车总价
+				cartGoods: [], // 购物车中选中的商品
 				total_amount: 0, //购物车数量
 				promosIds: []  //促销信息IDS
 			}
@@ -75,6 +76,7 @@ export default {
 			getAmount: 'calculationAmount',
 			getPrice: 'calculationPrice',
 			setCartNumber: 'setCartNumber',
+			saveSelectedCartGoods: 'saveSelectedCartGoods'
 		}),
 
 		/*
@@ -129,7 +131,8 @@ export default {
 		 renderCart() {
 		 	let data = this.cartList;
 		 	this.total_amount = 0;
-		 	this.orderprice = [];
+			this.orderprice = [];
+			this.cartGoods = [];
 		 	this.promosIds = [];
 		 	for (let i = 0, len = data.length; i <= len-1; i++) {
 		 		if (data[i].checked) {
@@ -139,7 +142,9 @@ export default {
 		 			}
 		 			this.orderprice.push(obj);
 		 			this.promosIds.push(data[i].id);
-		 			this.total_amount += data[i].amount;
+					this.total_amount += data[i].amount;
+					 
+					this.cartGoods.push(data[i])
 		 		}
 		 	}
 		 	this.$parent.$emit('get-promos-data', this.promosIds);
@@ -317,7 +322,8 @@ export default {
 			if (validate.length > 0) {
 				productValidate(JSON.stringify(validate)).then( res => {
 					if (res) {
-						if (res.is_valid) {
+						if (res.is_valid) {							
+							this.saveSelectedCartGoods({ cartGoods: this.cartGoods })
 							this.$router.push({ name: 'checkout' })
 						}
 					}

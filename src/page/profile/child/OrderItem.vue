@@ -94,8 +94,8 @@ export default {
     margin-top: -55px;
     margin-left: 17px;
     background: RGBA(239, 51, 56, 1);
-    border-radius: 20px;
-    font-size: 12px;
+    border-radius: 7px;
+    font-size: 11px;
     text-align: center;
     color: RGBA(255, 255, 255, 1);
     font-weight: normal;

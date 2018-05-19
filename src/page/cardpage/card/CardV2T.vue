@@ -5,7 +5,7 @@
       <label class="subtitle" style="-webkit-box-orient:vertical">{{getSubtitle}}</label>
       <label class="desc" style="-webkit-box-orient:vertical">{{getDesc}}</label>
     </div>    
-    <img class="photo" v-bind:style="getPhotoStyle" :src="getPhotoUrl" />
+    <img class="photo" :onerror="defaultImage" v-bind:style="getPhotoStyle" :src="getPhotoUrl" />
   </div>
 </template>
 
