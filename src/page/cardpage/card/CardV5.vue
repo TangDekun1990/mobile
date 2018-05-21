@@ -1,8 +1,8 @@
 <template>
   <div class="card-v5b-container" @click="onClick"> 
     <div v-if="isTop" class="v5-content-wrapper">
-      <div class="photo-wrapper" v-bind:style="getPhotoStyle">
-        <img class="photo" v-bind:style="getPhotoStyle" :src="getPhotoUrl" />
+      <div class="photo-wrapper" v-bind:style="getPhotoStyle" v-bind:class="{ 'top-margin': isTop}">
+        <img class="photo" :onerror="defaultImage" v-bind:style="getPhotoStyle" :src="getPhotoUrl" />
         <img v-if="isShowSellOutIcon" class="sell-out" v-bind:style="getSellOutStyle" src="../../../assets/image/change-icon/b0-out@2x.png" />
         <span v-if="isShowPromoIcon" class="promos">促销</span>
       </div>    
@@ -32,8 +32,8 @@
           </div>
         </div> 
       </div>
-      <div class="photo-wrapper" v-bind:style="getPhotoStyle">
-        <img class="photo" v-bind:style="getPhotoStyle" :src="getPhotoUrl" />
+      <div class="photo-wrapper" v-bind:style="getPhotoStyle" v-bind:class="{ 'bottom-margin': !isTop}">
+        <img class="photo" :onerror="defaultImage" v-bind:style="getPhotoStyle" :src="getPhotoUrl" />
         <img v-if="isShowSellOutIcon" class="sell-out" v-bind:style="getSellOutStyle" src="../../../assets/image/change-icon/b0-out@2x.png" />
         <span v-if="isShowPromoIcon" class="promos">促销</span>
       </div>
@@ -189,11 +189,16 @@ export default {
       flex-direction: column;
       justify-content: space-around;
       align-items: stretch;
-      .photo-wrapper {
-        margin-top: 5px;
+      .photo-wrapper {        
         margin-left: 5px;
         margin-right: 5px;
         position: relative;   
+      }
+      .top-margin {
+        margin-top: 5px;
+      }
+      .bottom-margin {
+        margin-bottom: 5px;
       }
       .photo { 
         width: 100%;
@@ -231,7 +236,7 @@ export default {
         .title {
           font-size: $h5;
           color: $titleTextColor;
-          margin-top: 5px;
+          margin-top: 4px;
           margin-left: 9px;
           margin-right: 9px;
           @include limit-line(1); 
@@ -247,12 +252,12 @@ export default {
           flex: 1;
           display: flex;
           flex-direction: column;
-          justify-content: flex-start;
+          justify-content: flex-end;
           align-items: stretch;
+          margin-bottom: 4px;
           .subtitle {
             font-size: $h4;
             color: $primaryColor;
-            margin-top: 10px;
             margin-left: 9px;
             margin-right: 0px;
             text-align: left;
@@ -261,6 +266,7 @@ export default {
           .desc {
             font-size: $h6;
             color: $descTextColor;
+            // margin-top: 2px;
             margin-left: 9px;
             margin-right: 0px;
             text-align: left;

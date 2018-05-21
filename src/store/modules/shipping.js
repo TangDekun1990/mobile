@@ -31,20 +31,24 @@ const mutations = {
 // actions 
 const actions = {
   fetchShippingList({ commit, state }, params) {
-    api.shippingVendorList(params.shop, params.products, params.address).then(
-      (response) => {
-        if (response && response.vendors) {
-          let items = response.vendors
-          commit('saveShippingItems', items)
-          const { selectedItem } = state
-          if (selectedItem === null || selectedItem === undefined) {
-            if (items.length) {
-              commit('selectShippingItem', items[0])
+    return new Promise((resolve, reject) => {
+      api.shippingVendorList(params.shop, params.products, params.address).then(
+        (response) => {
+          if (response && response.vendors) {
+            let items = response.vendors
+            commit('saveShippingItems', items)
+            const { selectedItem } = state
+            if (selectedItem === null || selectedItem === undefined) {
+              if (items.length) {
+                commit('selectShippingItem', items[0])
+              }
             }
+            resolve(response)
           }
-        }
-      }, (error) => {
-      })
+        }, (error) => {
+          reject(error)
+        }) 
+    })   
   }
 }
 

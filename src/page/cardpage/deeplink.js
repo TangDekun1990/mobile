@@ -145,8 +145,7 @@ export const openLink = (router, link) => {
             params = { name: 'collection' }
           }          
         } else if (where === 'message') {
-          // 消息列表（需要登录）
-          debugger
+          // 消息列表（需要登录）          
           if (action === 'all') {
             showAuth = true  
             params = { name: 'newsNoticeMessage' }

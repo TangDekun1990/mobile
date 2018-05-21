@@ -11,7 +11,7 @@
       <img class="photo" src="../../assets/image/change-icon/coupons_empty@2x.png">
       <label class="title">您暂时没有任何优惠券</label>
     </div>
-    <div class="list" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
+    <div class="list" v-infinite-scroll="loadMore" infinite-scroll-distance="10">
       <coupon-item
         v-for="item in items" 
         :key="item.id" 
@@ -35,11 +35,6 @@ export default {
   components: {
     CouponItem,
   },
-  data() {
-		return {
-			loading: false,  //是否加载更多
-		}
-	},
   computed: {
     ...mapState({
       total: state => state.coupon.total,
@@ -86,10 +81,8 @@ export default {
     loadFirstPage () {
       this.fetchCouponList(true)
     },
-    loadMore () {
-      this.loading = true;			
-			if (this.isMore) {
-				this.loading = false;
+    loadMore () {      		
+			if (this.isMore) {				
 				this.fetchCouponList(false)
 			}      
     },

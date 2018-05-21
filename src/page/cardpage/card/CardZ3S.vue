@@ -21,16 +21,16 @@ export default {
     position: relative;
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     background-color: $cardbgColor; 
     .title {
-      font-size: $h2;
+      font-size: $h4;
       color: $titleTextColor; 
       margin-left: 4px;
       margin-right: 4px;
-      text-align: center;
-      @include limit-line(1);  
+      text-align: left;
+      @include limit-line(2);  
     }           
   }  
 </style>

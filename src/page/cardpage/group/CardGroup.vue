@@ -89,15 +89,17 @@ export default {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    align-items: stretch;
-    // height: auto;    
+    align-items: stretch;     
   }
   .group-section {
     height: 40px;
     background-color: lightblue;
   }
   .group-content {
-    // height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
   }
 </style>
 

@@ -1,5 +1,4 @@
-<template>
-  <!-- <card-h1-l v-if="isCardH1L" :item="item"></card-h1-l> -->
+<template>  
   <card-h1 v-if="isCardH1" :item="item"></card-h1>
   <card-h2-l v-else-if="isCardH2L" :item="item"></card-h2-l>
   <card-h2-r v-else-if="isCardH2R" :item="item"></card-h2-r>
@@ -21,7 +20,6 @@
 
 <script>
 import {
-  CardH1L,
   CardH1,
   CardH2L,
   CardH2R,
@@ -49,9 +47,6 @@ export default {
     }
   },
   computed: {  
-    isCardH1L: function () {
-      return this.isCardItemByStyle(ENUM.CARD_STYLE.H1L)
-    },
     isCardH1: function () {
       return this.isCardItemByStyle(ENUM.CARD_STYLE.H1L) || this.isCardItemByStyle(ENUM.CARD_STYLE.H1R)
     },

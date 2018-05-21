@@ -2,19 +2,38 @@
   <div class="comment-container">    
     <label class="title">买家留言：</label>
     <div class="bottom-wrapper">
-      <textarea placeholder="选填：对本次交易的说明（建议填写已和卖家协商一致的内容）" v-model="value">        
+      <textarea 
+        placeholder="选填：对本次交易的说明（建议填写已和卖家协商一致的内容）" 
+        v-model="value" 
+        @input="onInput">        
       </textarea>
     </div>       
   </div>
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
 export default {
+  props: {
+    default: {
+      type: String,
+    },    
+  },
   data () {
     return {
-      value: null
+      value: this.default
     }
-  }
+  }, 
+  methods: {
+    ...mapMutations({
+      saveCommentInfo: 'saveCommentInfo',  
+    }),
+    onInput() {
+      if (this.value) {
+        this.saveCommentInfo({ comment: this.value })
+      }
+    },
+  } 
 }
 </script>
 
