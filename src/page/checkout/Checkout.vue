@@ -322,7 +322,7 @@ export default {
     },
     goDuration() {
       this.$refs.timePicker.open();     
-      this.stop(); 
+      // this.stop(); 
     },
     onClickDate(date) {
 
@@ -365,6 +365,9 @@ export default {
         shop : null,
         products: products,
         address: address
+      }).then((response) => {        
+        this.getOrderPrice()
+      }, (error) => {        
       })
     },
     // 可使用的优惠券列表
