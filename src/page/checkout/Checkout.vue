@@ -100,9 +100,14 @@ export default {
         let goods = new Object()
         goods.goods_id = element.product ? element.product.id : ''
         goods.num = element.amount
-        let attrs = new Array()
-        if (element.attrs && element.attrs.length) {
-          attrs = element.attrs.split(',')            
+        let attrs = new Array()        
+        let selectedAttrs = element.attrs.toString()
+        if (selectedAttrs && selectedAttrs.length) {
+          if (selectedAttrs.indexOf(',') > -1) {
+            attrs = selectedAttrs.split(',')             
+          } else {
+            attrs.push(selectedAttrs)
+          }         
         } 
         goods.property = attrs
         orderProducts.push(goods)
