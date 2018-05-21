@@ -1,7 +1,8 @@
 // news.js
 const state = {
   orderNews: {},
-  noticeNews: []
+  noticeNews: [],
+  isShowOrder: false
 }
 
 // mutations
@@ -11,6 +12,9 @@ const mutations = {
   },
   saveNoticeNews(state, value) {
     state.noticeNews = value
+  },
+  changeIsShowOrder(state, value) {
+    state.isShowOrder = value
   }
 }
 

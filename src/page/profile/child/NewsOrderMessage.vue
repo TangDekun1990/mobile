@@ -48,7 +48,8 @@ export default {
   methods: {
   	...mapMutations({
       saveMessageTime: "saveMessageTime",
-      changeType: "changeType"
+      changeType: "changeType",
+      changeIsShowOrder: "changeIsShowOrder"
     }),
     goBack() {
       this.$router.go(-1);
@@ -68,6 +69,7 @@ export default {
             this.messageOrderList = Object.assign([], this.messageOrderList, res.messages);
           }
           this.isMore = res.paged.more == 1 ? true : false;
+          this.changeIsShowOrder(false);
           Indicator.close();
         }
       });
