@@ -16,7 +16,7 @@ const wxApi = {
 	/*
 	* getConfigRes： 获取config微信配置
 	*/
-	getConfigRes(title, imgUrl) {
+	getConfigRes(title, imgUrl, desc) {
 		let that = this;
 		configGet().then(res => {
 			if (res) {
@@ -27,7 +27,7 @@ const wxApi = {
 						wechatConfig = configs[key];
 					}
 				}
-				that.wxRegister(wechatConfig, title, imgUrl);
+				that.wxRegister(wechatConfig, title, imgUrl, desc);
 			}
 		})
 	},
@@ -35,7 +35,7 @@ const wxApi = {
 	* [wxRegister 微信Api初始化]
 	* @param  {Function} callback [ready回调函数]
 	*/
-	wxRegister(config, title, imgUrl, callback) {
+	wxRegister(config, title, imgUrl, desc, callback) {
 		wx.config({
 			debug: false, // 开启调试模式
 			appId: config.app_id, // 必填，公众号的唯一标识
@@ -51,8 +51,9 @@ const wxApi = {
 		});
 		wx.ready(function () {
 			wx.onMenuShareAppMessage({
-				title: title,// 分享标题
-				imgUrl: imgUrl // 分享图标
+				title: title, // 分享标题
+				imgUrl: imgUrl, // 分享图标
+				desc: desc // 分享描述
 			});
 		});
 		wx.error(res => {
@@ -91,6 +92,7 @@ const wxApi = {
 	ShareAppMessage(option) {
 		wx.onMenuShareAppMessage({
 			title: option.title, // 分享标题
+			desc: option.desc ? option.desc : '', // 分享描述
 			link: option.link ? option.link : '', // 分享链接
 			imgUrl: option.imgUrl ? option.imgUrl : '', // 分享图标
 			success() {
