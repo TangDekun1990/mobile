@@ -166,6 +166,7 @@ export default {
 			user: state => state.auth.user,
 			time: state => state.profile.time,
 			type: state => state.profile.type,
+			count: state => state.profile.count,
 			orderStatus: state => state.order.orderStatus
 		}),
 		nickname() {
@@ -221,6 +222,7 @@ methods: {
 		saveUser: 'saveUser',
 		changeType: 'changeType',
 		saveMessageTime: 'saveMessageTime',
+		changeCount: 'changeCount',
 		changeStatus: 'changeStatus'
 	}),
     // 获取订单不同状态的数量统计
@@ -247,7 +249,8 @@ methods: {
     		}
     		messageCount(after, type).then(res => {
     			if (res) {
-    				if (res.count >= 0) {
+						let	counts = this.changeCount(this.count)
+    				if (res.count > this.counts) {
     					this.ishasCount = true;
     				}
     			}
