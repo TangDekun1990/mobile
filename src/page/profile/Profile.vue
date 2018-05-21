@@ -33,71 +33,71 @@
 		</div>
 		<div class="order-wrapper" >
 			<order-item
-			class="order-item"
-			testAttr = 'order'
-			id='0'
-			:icon="require('../../assets/image/change-icon/e0-payment@2x.png')"
-			title="待付款"
-			:orderNumber = 'orderCount.created'>
-		</order-item>
-		<order-item
-		class="order-item"
-		testAttr = 'order'
-		id='1'
-		:icon="require('../../assets/image/change-icon/e0_delivery@2x.png')"
-		title="待发货"
-		:orderNumber = 'orderCount.paid'>
-	</order-item>
-	<order-item
-	class="order-item"
-	testAttr = 'order'
-	id='2'
-	:icon="require('../../assets/image/change-icon/e0_receiving@2x.png')"
-	title="待收货"
-	:orderNumber = 'orderCount.delivering'>
-</order-item>
-<order-item
-class="order-item"
-testAttr = 'order'
-id='3'
-:icon="require('../../assets/image/change-icon/e0_evaluate@2x.png')"
-title="待评价"
-:orderNumber = 'orderCount.deliveried'>
-</order-item>
-</div>
-<div class="bottom-wrapper">
-	<info-item
-	v-on:onclick="goFavourite()"
-	class="info-item-wrapper section-header"
-	:icon="require('../../assets/image/change-icon/e0_favorite@2x.png')"
-	title="我的收藏">
-</info-item>
-<info-item
-v-on:onclick="goAddress"
-class="info-item-wrapper"
-:icon="require('../../assets/image/change-icon/e0_address@2x.png')"
-title="管理收货地址">
-</info-item>
-<info-item
-v-on:onclick="goCoupon"
-class="info-item-wrapper section-footer"
-:icon="require('../../assets/image/change-icon/e0_coupon@2x.png')"
-title="我的优惠券">
-</info-item>
-<info-item
-v-on:onclick="goHelp()"
-class="info-item-wrapper section-header"
-:icon="require('../../assets/image/change-icon/e0_clause@2x.png')"
-title="使用帮助">
-</info-item>
-<info-item
-v-on:onclick="callTelephone()"
-class="info-item-wrapper section-footer"
-:icon="require('../../assets/image/change-icon/e0_phone@2x.png')"
-title="客服电话">
-</info-item>
-</div>
-</div>
+				class="order-item"
+				testAttr = 'order'
+				id='0'
+				:icon="require('../../assets/image/change-icon/e0-payment@2x.png')"
+				title="待付款"
+				:orderNumber = 'orderCount.created'>
+			</order-item>
+			<order-item
+				class="order-item"
+				testAttr = 'order'
+				id='1'
+				:icon="require('../../assets/image/change-icon/e0_delivery@2x.png')"
+				title="待发货"
+				:orderNumber = 'orderCount.paid'>
+			</order-item>
+			<order-item
+				class="order-item"
+				testAttr = 'order'
+				id='2'
+				:icon="require('../../assets/image/change-icon/e0_receiving@2x.png')"
+				title="待收货"
+				:orderNumber = 'orderCount.delivering'>
+			</order-item>
+			<order-item
+				class="order-item"
+				testAttr = 'order'
+				id='3'
+				:icon="require('../../assets/image/change-icon/e0_evaluate@2x.png')"
+				title="待评价"
+				:orderNumber = 'orderCount.deliveried'>
+			</order-item>
+		</div>
+		<div class="bottom-wrapper">
+			<info-item
+				v-on:onclick="goFavourite()"
+				class="info-item-wrapper section-header"
+				:icon="require('../../assets/image/change-icon/e0_favorite@2x.png')"
+				title="我的收藏">
+			</info-item>
+			<info-item
+			v-on:onclick="goAddress"
+			class="info-item-wrapper"
+			:icon="require('../../assets/image/change-icon/e0_address@2x.png')"
+			title="管理收货地址">
+			</info-item>
+			<info-item
+			v-on:onclick="goCoupon"
+			class="info-item-wrapper section-footer"
+			:icon="require('../../assets/image/change-icon/e0_coupon@2x.png')"
+			title="我的优惠券">
+			</info-item>
+			<info-item
+			v-on:onclick="goHelp()"
+			class="info-item-wrapper section-header"
+			:icon="require('../../assets/image/change-icon/e0_clause@2x.png')"
+			title="使用帮助">
+			</info-item>
+			<info-item
+			v-on:onclick="callTelephone()"
+			class="info-item-wrapper section-footer"
+			:icon="require('../../assets/image/change-icon/e0_phone@2x.png')"
+			title="客服电话">
+			</info-item>
+		</div>
+	</div>
 </template>
 
 <script>

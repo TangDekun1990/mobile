@@ -30,8 +30,8 @@ export default {
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
-    background-color: #fff; 
-	  @include thin-border();
+    background-color: #fff;
+    border-bottom: 1px solid $lineColor; 
   }
   .item-title {
     font-size: 14px;
