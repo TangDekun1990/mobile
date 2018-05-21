@@ -16,7 +16,7 @@
 		<!-- 无限加载滚动列表 -->
 		<div v-infinite-scroll="getMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
 			<div class="order-body" v-if="orderList.length > 0 ">
-				<div class="list" v-for="(item, index) in orderList">
+				<div class="list" v-for="(item, index) in orderList" v-bind:key="item.id">
 					<h3 class="title" v-if="item.status != 4">{{ getOrderStatusBy(item.status) }}</h3>
 					<h3 v-if="item.status == 4">
 						<img src="../../../assets/image/change-icon/e3_seal@2x.png">
@@ -158,8 +158,8 @@ export default {
     },
 
     setOrderNavActive(index) {
-      this.orderList = [];
       this.orderListParams.page = 1;
+      this.orderList = [];
       this.changeStatus(index);
       this.getOrderList();
     },
@@ -174,7 +174,7 @@ export default {
           if (ispush) {
             this.orderList = this.orderList.concat(res.orders);
           } else {
-            this.orderList = Object.assign([], this.orderList, res.orders);
+            this.orderList = res.orders;
           }
           this.isMore = res.paged.more == 1 ? true : false;
           Indicator.close();
@@ -195,7 +195,7 @@ export default {
     getMore() {
       this.loading = true;
       this.orderListParams.page = ++this.orderListParams.page;
-      if (this.isMore) {
+      if(this.isMore) {
         this.loading = false;
         this.getOrderList(true);
       }

@@ -1,5 +1,9 @@
 <template>
-  <button class="item" v-bind:disabled="codeDisable" v-bind:class="{enable: !codeDisable, disable: codeDisable}" @click="onclick">
+  <button 
+    class="item" 
+    v-bind:disabled="codeDisable" 
+    v-bind:class="{enable: !codeDisable, disable: codeDisable}" 
+    @click="onclick">
     <label class="title">{{codeText}}</label>
   </button>
 </template>
@@ -13,28 +17,52 @@ export default {
       count: 60,
       codeText: '获取验证码',
       codeDisable: false,
+      screenCloseTime: 0, // 屏幕隐藏时间
+      screenCloseAt: 0, // 屏幕上次隐藏时间点
     }
+  },
+  created () {
+    this.addVisibilitychange()
   },
   methods: {
     onclick() {
       this.$emit('onclick')
     },
     start() {
+      this.screenCloseTime = 0  
       this.count = 60
       this.codeText = 60 + "s后重新获取"
       this.codeDisable = true
       this.timer = setInterval(() => { 
-        this.count = this.count - 1;
-        this.codeText = this.count + "s后重新获取"
-        if (this.count === 0) {
-          this.stop()
-        }
+        this.updateCount()
       }, 1000)
     },
     stop() {
       this.timer && clearTimeout(this.timer);
       this.codeText = '重新获取'
       this.codeDisable = false
+    },
+    updateCount () {      
+      if (this.screenCloseTime > 0) {
+        this.count = this.count - this.screenCloseTime
+        this.screenCloseTime = 0  
+      } else {
+        this.count = this.count - 1
+      }      
+      this.codeText = this.count + "s后重新获取"
+      if (this.count <= 0) {
+        this.stop()
+      }
+    },
+    addVisibilitychange: function () {
+      document.addEventListener('visibilitychange', () => {
+        var date = new Date();        
+        if (document.visibilityState == 'hidden') {
+            this.screenCloseAt = date.getTime();
+        } else {
+            this.screenCloseTime = Math.floor((date.getTime() - this.screenCloseAt)/1000);           
+        }
+      })
     }
   },
 }
