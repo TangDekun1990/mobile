@@ -137,13 +137,20 @@ export default {
 		 	for (let i = 0, len = data.length; i <= len-1; i++) {
 		 		if (data[i].checked) {
 		 			let obj = {'goods_id': data[i].product.id, 'property': [], 'num': data[i].amount};
-		 			if (data[i].attrs ) {
-		 				obj.property = toString(data[i].attrs).split(',');
+		 			if (data[i].attrs) {
+		 				if (typeof data[i].attrs !== 'number') {
+		 					let attrs = data[i].attrs.split(',');
+			 				for (let i = 0; i <= attrs.length-1; i++) {
+			 					obj.property.push(attrs[i]);
+			 				}
+		 				} else {
+		 					obj.property.push(data[i].attrs.toString());
+		 				}
 		 			}
 		 			this.orderprice.push(obj);
 		 			this.promosIds.push(data[i].id);
 					this.total_amount += data[i].amount;
-					 
+
 					this.cartGoods.push(data[i])
 		 		}
 		 	}
@@ -164,6 +171,7 @@ export default {
 		 		'cashgift':null,
 		 		'score': null
 		 	};
+		 	// debugger;
 		 	if (this.orderprice.length > 0 ) {
 		 		params.order_product = JSON.stringify(this.orderprice);
 		 	} else {
@@ -313,7 +321,15 @@ export default {
 			for (let i = 0; i <= data.length-1; i++) {
 				let obj = {'product_id': data[i].product.id, 'property': [], 'product_number': data[i].amount};
 				if (data[i].attrs) {
-					obj.property = data[i].attrs.split(',');
+					if (typeof data[i].attrs !== 'number') {
+	 					let attrs = data[i].attrs.split(',');
+		 				for (let i = 0; i <= attrs.length-1; i++) {
+		 					obj.property.push(attrs[i]);
+		 				}
+	 				} else {
+	 					obj.property.push(data[i].attrs.toString());
+	 				}
+					// obj.property = toString(data[i].attrs).split(',');
 				}
 				if (data[i].checked) {
 		 			validate.push(obj);
@@ -322,7 +338,7 @@ export default {
 			if (validate.length > 0) {
 				productValidate(JSON.stringify(validate)).then( res => {
 					if (res) {
-						if (res.is_valid) {							
+						if (res.is_valid) {
 							this.saveSelectedCartGoods({ cartGoods: this.cartGoods })
 							this.$router.push({ name: 'checkout' })
 						}
