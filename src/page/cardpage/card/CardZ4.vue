@@ -33,7 +33,7 @@ export default {
       }
     },
     getContentStyle: function () { 
-      let width = 180
+      let width = (this.photoWidth < 180) ? this.photoWidth : 180
       let height = 66
       let top = (this.photoHeight - height) / 2.0
       let left = (this.photoWidth - width) / 2.0 
@@ -42,6 +42,7 @@ export default {
         height: height + 'px',
         top: top + 'px',
         left: left + 'px',
+        overflow: 'hidden'
       }
     },     
   },

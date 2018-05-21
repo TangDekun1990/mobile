@@ -1,16 +1,10 @@
 <!-- Concat.vue -->
 <template>
-	<div class="ui-concat-wrapper ui-detail-common zhiCustomBtns">
+	<div class="ui-concat-wrapper ui-detail-common zhiCustomBtns" v-if="detailInfo">
 		<div class="header">
 			<p>点击联系客服</p>
 			<img src="../../../assets/image/change-icon/e5_service@2x.png">
 		</div>
-		<!-- <a href="https://www.sobot.com/chat/h5/index.html?sysNum=5b696ae2d5394f06b558e64ebbaf3be7&back=1&titleFlag=2&customTtile='智齿客服' ">
-			<div class="header zhiCustomBtns" @click="openZhiManager()">
-				<p>点击联系客服</p>
-				<img src="../../../assets/image/change-icon/e5_service@2x.png">
-			</div>
-		</a> -->
 	</div>
 </template>
 

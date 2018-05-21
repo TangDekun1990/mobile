@@ -23,6 +23,7 @@ import profile from './modules/profile'
 import order from './modules/order'
 import tabBar from './modules/tabbar'
 import news from './modules/news'
+import checkout from './modules/checkout'
 
 Vue.use(Vuex)
 
@@ -43,7 +44,8 @@ export default new Vuex.Store({
 		profile,
 		order,
 		tabBar,
-		news
+		news,
+		checkout
 	},
 	getters: getters,
 	actions,

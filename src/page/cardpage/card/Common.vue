@@ -9,7 +9,8 @@ export default {
   data() {
     return {
       photoWidth: 0,
-      photoHeight: 0, 
+      photoHeight: 0,
+      defaultImage: 'this.src="' + require('../../../assets/image/change-icon/default_image_02@2x.png') +'"' 
     }
   },
   computed: {

@@ -15,13 +15,13 @@
 			</div>
 			<!-- 修改性别 -->
 			<div class="ui-update-sexs">
-				<div class="common-update-avatar" @click="isShowSheet()">
+				<div class="common-update-avatar" v-bind:class="{ 'line-border': isAuth }" @click="isShowSheet()">
 					<span>性别</span>
 					<span class="info">{{setGender(user.gender)}}</span>
 				</div>
 			</div>
 			<!-- 修改密码 -->
-			<div class="ui-update-pass">
+			<div class="ui-update-pass" v-if="!isAuth">
 				<div class="common-update-avatar" @click="goStatus(2)">
 					<span>修改密码</span>
 				</div>
@@ -47,6 +47,12 @@ export default {
 			user: state => state.auth.user,
 			config: state => state.config.config
 		}),
+		isAuth () {			
+			if (this.user && this.user.is_auth) {
+				return true
+			}
+			return false
+		}
 	},
 
 	data(){
@@ -212,6 +218,9 @@ export default {
 	    text-align: right;
 	}
 	.ui-update-pass .common-update-avatar {
+		border-bottom: 0px;
+	}
+	.line-border {
 		border-bottom: 0px;
 	}
 }

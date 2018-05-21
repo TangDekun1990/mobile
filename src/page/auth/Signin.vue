@@ -59,7 +59,7 @@ export default {
   data() {
     return {
       username: '',      
-      password: '',
+      password: ''
     }
   },
   computed: {
@@ -175,21 +175,13 @@ export default {
     },
     wxWebAuth() {
       let scope = 'snsapi_userinfo' // 允许获取用户信息      
-      let ref = window.location.href ? encodeURIComponent(window.location.href) : '' 
-      console.log(ref)      
-      let locationRef = apiBaseUrl + '/v2/ecapi.auth.web?vendor=' + ENUM.SOCIAL_VENDOR.WEIXIN + '&scope=' + scope + "&referer=" + ref;   
-      console.log('====================================');
-      console.log('locationRef is ', locationRef);
-      console.log('====================================');
+      let ref = window.location.href ? encodeURIComponent(window.location.href) : ''       
+      let locationRef = apiBaseUrl + '/v2/ecapi.auth.web?vendor=' + ENUM.SOCIAL_VENDOR.WEIXIN + '&scope=' + scope + "&referer=" + ref;         
       window.location.href = locationRef
     },
     onAuthSuccess () {
       let openid = this.$cookie.get('openid')
-      let token = this.$cookie.get('token')
-      console.log('1====================================');
-      console.log('openid is ', openid);
-      console.log('token is ', token)
-      console.log('1====================================');
+      let token = this.$cookie.get('token')      
       if (openid && openid.length && token && token.length) {
         this.saveToken({ 'token': token })
         Indicator.open()
@@ -214,9 +206,7 @@ export default {
 
 <style scoped lang='scss'>
   .container { 
-    position: absolute;
-    width: 100%;
-    height: 100%;
+    flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -254,18 +244,17 @@ export default {
     @include button;
     margin-top: 40px; 
   } 
-  .retrieve-wrapper {
+  .retrieve-wrapper {    
     height: 40px;
     margin-top: 10px;
     display: flex;
     flex-direction: row;
-    justify-content: flex-end;  
+    justify-content: flex-end;      
   }
   .retrieve-item {      
-    width: 75px;
+    width: 80px;
     height: 40px;
-    margin-left: 20px;
-    margin-right: 20px;
+    margin-right: 10px;
     display: flex;
     justify-content: center;
     align-items: center;    

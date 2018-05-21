@@ -2,7 +2,7 @@
   <div class="card-v3t-container" @click="onClick">
     <label class="title" style="-webkit-box-orient:vertical">{{getTitle}}</label>
     <label class="subtitle" style="-webkit-box-orient:vertical">{{getSubtitle}}</label>    
-    <img class="photo" v-bind:style="getPhotoStyle" :src="getPhotoUrl" />
+    <img class="photo" :onerror="defaultImage" v-bind:style="getPhotoStyle" :src="getPhotoUrl" />
   </div>
 </template>
 
