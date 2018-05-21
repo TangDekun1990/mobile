@@ -14,7 +14,7 @@
         <div class="flex-right">
           <h3>订单消息</h3>
           <span v-if="orderMessage.length > 0">{{orderMessage[0].content}}</span>
-          <span class="prompt" v-if="orderMessage.length > this.saveOrderNews"></span>
+          <span class="prompt" v-if="isShowOrder"></span>
         </div>
       </div>
       <div class="newslist" v-on:click="getNoticeMessage()">
@@ -24,7 +24,7 @@
         <div class="flex-right">
           <h3>通知消息</h3>
           <span v-if="noticeMessage.length > 0">{{noticeMessage[0].content}}</span>
-          <span class="prompt" v-if="noticeMessage.length > this.saveNoticeNews "></span>
+          <span class="prompt" v-if="isShowNotice"></span>
         </div>
       </div>
       <div class="newslist" v-on:click="getServiceMessage()">
@@ -34,7 +34,7 @@
         <div class="flex-right">
 	          <h3>客服消息</h3>
 	          <span>在线客服咨询时间为08:00-22:00 </span>
-	          <span class="prompt"></span>
+	          <!-- <span class="prompt"></span> -->
         </div>
       </div>
     </div>
@@ -49,11 +49,13 @@ export default {
     return {
       noticeMessage: [],
       orderMessage: [],
+      isShowOrder: false,
+      isShowNotice: false
     };
   },
   created() {
-    this.getmessageSystemList();
-    this.getmessageOrderList();
+    // this.getmessageSystemList();
+    // this.getmessageOrderList();
   },
   computed: {
     ...mapState({
@@ -61,38 +63,45 @@ export default {
       noticeNews: state => state.news.noticeNews
     })
   },
+  mounted() {
+    this.getmessageSystemList();
+    this.getmessageOrderList();
+  },
   methods: {
     ...mapMutations({
       saveMessageTime: "saveMessageTime",
       changeType: "changeType",
-      saveOrderNews: "saveOrderNews",   
+      saveOrderNews: "saveOrderNews",
       saveNoticeNews: "saveNoticeNews"
     }),
     goBack() {
       this.$router.go(-1);
     },
+
     // 订单消息
     getOrderMessage() {
-      this.changeType(true);
-      this.saveMessageTime({ ordertime: this.orderMessage[0].created_at });
       this.$router.push("newsOrderMessage");
+
     },
     // 获取订单消息列表数据
     getmessageOrderList() {
       messageOrderList(1, 10).then(res => {
         if (res) {
           this.orderMessage = res.messages;
-          let orderLength = this.orderMessage.length;
-          // this.saveOrderNews(orderLength);
+          if(this.orderNews && this.orderNews.paged) {
+            if(this.orderNews.paged.total < res.paged.total) {
+              this.isShowOrder = true;
+            } else {
+              this.isShowOrder = false;
+            }
+          }
+          this.saveOrderNews(res);
         }
       });
     },
+
     // 通知消息
     getNoticeMessage() {
-      if(this.NoticeMessage) {
-        this.changeType(true);
-        this.saveMessageTime({ noticeTime: this.noticeMessage[0].created_at });
-      }
       this.$router.push("newsNoticeMessage");
     },
 
@@ -101,8 +110,14 @@ export default {
       messageSystemList(1, 10).then(res => {
         if (res) {
           this.noticeMessage = res.messages;
-          let noticeLength = this.noticeMessage.length;
-          // this.saveNoticeNews(noticeLength);
+         if(this.noticeNews && this.noticeNews.paged) {
+           if(this.noticeNews.paged.total < res.paged.total) {
+             this.isShowNotice = true;
+           } else {
+             this.isShowNotice = false;
+           }
+         }
+         this.saveNoticeNews(res);
         }
       });
     },

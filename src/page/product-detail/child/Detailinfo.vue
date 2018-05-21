@@ -62,10 +62,14 @@
 				if(value) {
 						let title = this.detailInfo.name;
 						let imgUrl = '';
+						let desc = '';
 						if (this.detailInfo.photos) {
 							imgUrl = this.detailInfo.photos[0].thumb;
 						}
-						this.wxApi.getConfigRes(title, imgUrl);
+						if(this.detailInfo.desc) {
+							desc = this.detailInfo.desc;
+						}
+						this.wxApi.getConfigRes(title, imgUrl, desc);
 				}
 			}
 		},
