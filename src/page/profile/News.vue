@@ -49,7 +49,6 @@ export default {
     return {
       noticeMessage: [],
       orderMessage: [],
-      isShowOrder: false,
       isShowNotice: false
     };
   },
@@ -60,7 +59,8 @@ export default {
   computed: {
     ...mapState({
       orderNews: state => state.news.orderNews,
-      noticeNews: state => state.news.noticeNews
+      noticeNews: state => state.news.noticeNews,
+      isShowOrder: state => state.news.isShowOrder
     })
   },
   mounted() {
@@ -72,7 +72,8 @@ export default {
       saveMessageTime: "saveMessageTime",
       changeType: "changeType",
       saveOrderNews: "saveOrderNews",
-      saveNoticeNews: "saveNoticeNews"
+      saveNoticeNews: "saveNoticeNews",
+      changeIsShowOrder: "changeIsShowOrder"
     }),
     goBack() {
       this.$router.go(-1);
@@ -89,9 +90,9 @@ export default {
           this.orderMessage = res.messages;
           if(this.orderNews && this.orderNews.paged) {
             if(this.orderNews.paged.total < res.paged.total) {
-              this.isShowOrder = true;
+              this.changeIsShowOrder(true);
             } else {
-              this.isShowOrder = false;
+              this.changeIsShowOrder(false);
             }
           }
           this.saveOrderNews(res);
@@ -111,9 +112,9 @@ export default {
           this.noticeMessage = res.messages;
          if(this.noticeNews && this.noticeNews.paged) {
            if(this.noticeNews.paged.total < res.paged.total) {
-             this.isShowNotice = true;
+             this.changeIsShowOrder(true);
            } else {
-             this.isShowNotice = false;
+             this.changeIsShowOrder(false);
            }
          }
          this.saveNoticeNews(res);
