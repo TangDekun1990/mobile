@@ -39,7 +39,8 @@ export default {
   methods: {
   	...mapMutations({
       saveMessageTime: "saveMessageTime",
-      changeType: "changeType"
+      changeType: "changeType",
+      changeIsShowOrder: "changeIsShowOrder"
     }),
     goBack() {
       this.$router.go(-1);
@@ -50,7 +51,8 @@ export default {
         if (res) {
           this.NoticeMessage = res.messages;
           this.changeType(true);
-         this.saveMessageTime({ noticeTime: this.NoticeMessage[0].created_at });
+          this.saveMessageTime({ noticeTime: this.NoticeMessage[0].created_at });
+          this.changeIsShowOrder(false);
         }
       });
     },

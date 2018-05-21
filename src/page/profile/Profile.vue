@@ -166,7 +166,7 @@ export default {
 			user: state => state.auth.user,
 			time: state => state.profile.time,
 			type: state => state.profile.type,
-			count: state => state.profile.count,
+			counts: state => state.profile.count,
 			orderStatus: state => state.order.orderStatus
 		}),
 		nickname() {
