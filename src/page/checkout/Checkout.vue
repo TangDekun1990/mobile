@@ -101,7 +101,7 @@ export default {
         goods.goods_id = element.product ? element.product.id : ''
         goods.num = element.amount
         let attrs = new Array()        
-        let selectedAttrs = element.attrs.toString()
+        let selectedAttrs = element.attrs ? element.attrs.toString() : null
         if (selectedAttrs && selectedAttrs.length) {
           if (selectedAttrs.indexOf(',') > -1) {
             attrs = selectedAttrs.split(',')             
