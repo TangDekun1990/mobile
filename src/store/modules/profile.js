@@ -8,8 +8,12 @@ const state = {
 // mutations
 const mutations = {
   saveMessageTime(state, times) {
-    state.time.noticeTime = times.noticeTime
-    state.time.ordertime = times.ordertime
+  	if (times && times.noticeTime) {
+  		state.time.noticeTime = times.noticeTime
+  	}
+  	if (times && times.ordertime) {
+  		state.time.ordertime = times.ordertime
+  	}
   },
   changeType(state, type) {
     state.type = type

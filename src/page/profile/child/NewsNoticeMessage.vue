@@ -3,7 +3,7 @@
     <!-- header -->
     <mt-header class="header" title="通知消息">
       <header-item slot="left" v-bind:isBack=true v-on:onclick="goBack">
-      </header-item>    
+      </header-item>
     </mt-header>
     <!-- body -->
     <div class="body">
@@ -26,6 +26,7 @@ import { HeaderItem } from "../../../components/common";
 import { Header } from "mint-ui";
 import { messageSystemList } from "../../../api/network/message"; //通知消息
 import { openLink } from "../../cardpage/deeplink";
+import { mapState, mapMutations } from "vuex";
 export default {
   data() {
     return {
@@ -36,6 +37,10 @@ export default {
     this.getmessageSystemList();
   },
   methods: {
+  	...mapMutations({
+      saveMessageTime: "saveMessageTime",
+      changeType: "changeType"
+    }),
     goBack() {
       this.$router.go(-1);
     },
@@ -44,6 +49,8 @@ export default {
       messageSystemList(1, 10).then(res => {
         if (res) {
           this.NoticeMessage = res.messages;
+          this.changeType(true);
+         this.saveMessageTime({ noticeTime: this.NoticeMessage[0].created_at });
         }
       });
     },
