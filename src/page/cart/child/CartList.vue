@@ -338,7 +338,7 @@ export default {
 			if (validate.length > 0) {
 				productValidate(JSON.stringify(validate)).then( res => {
 					if (res) {
-						if (res.is_valid) {
+						if (res.is_valid) {							
 							this.saveSelectedCartGoods({ cartGoods: this.cartGoods })
 							this.$router.push({ name: 'checkout' })
 						}
