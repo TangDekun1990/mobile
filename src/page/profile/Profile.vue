@@ -238,6 +238,7 @@ methods: {
     	if (this.user != null) {
     		let after = this.user.joined_at;
     		if (this.type) {
+    			// debugger;
     			if (type == 1 && this.time.noticeTime) {
     				after = this.time.noticeTime;
     			}
@@ -247,7 +248,7 @@ methods: {
     		}
     		messageCount(after, type).then(res => {
     			if (res) {
-    				if (res.count >= 0) {
+    				if (res.count > 0) {
     					this.ishasCount = true;
     				}
     			}

@@ -3,7 +3,7 @@
     <!-- header -->
     <mt-header class="header" title="订单消息">
       <header-item slot="left" v-bind:isBack=true v-on:onclick="goBack">
-      </header-item>    
+      </header-item>
     </mt-header>
     <!-- body -->
     <div class="body">
@@ -12,7 +12,7 @@
         <div class="order-track">
           <div class="arrow-left">
             <span>{{item.title}}</span>
-            <div class="order-status"> 
+            <div class="order-status">
               <div class="orderImage">
                 <img :src="item.photo.thumb" v-if="item.photo != null">
                 <img src="../../../assets/image/change-icon/default_image_02@2x.png" v-if=' item.photo == null'>
@@ -32,6 +32,7 @@ import { HeaderItem } from "../../../components/common";
 import { Header } from "mint-ui";
 import { messageOrderList } from "../../../api/network/message"; //订单消息列表
 import { openLink } from "../../cardpage/deeplink";
+import { mapState, mapMutations } from "vuex";
 export default {
   data() {
     return {
@@ -42,6 +43,10 @@ export default {
     this.getmessageOrderList();
   },
   methods: {
+  	...mapMutations({
+      saveMessageTime: "saveMessageTime",
+      changeType: "changeType"
+    }),
     goBack() {
       this.$router.go(-1);
     },
@@ -50,6 +55,8 @@ export default {
       messageOrderList(1, 10).then(res => {
         if (res) {
           this.orderMessage = res.messages;
+          this.changeType(true);
+      	  this.saveMessageTime({ ordertime: this.orderMessage[0].created_at });
         }
       });
     },

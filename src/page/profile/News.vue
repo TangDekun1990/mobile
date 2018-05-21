@@ -65,7 +65,7 @@ export default {
     ...mapMutations({
       saveMessageTime: "saveMessageTime",
       changeType: "changeType",
-      saveOrderNews: "saveOrderNews",   
+      saveOrderNews: "saveOrderNews",
       saveNoticeNews: "saveNoticeNews"
     }),
     goBack() {
@@ -73,9 +73,8 @@ export default {
     },
     // 订单消息
     getOrderMessage() {
-      this.changeType(true);
-      this.saveMessageTime({ ordertime: this.orderMessage[0].created_at });
       this.$router.push("newsOrderMessage");
+
     },
     // 获取订单消息列表数据
     getmessageOrderList() {
@@ -89,10 +88,6 @@ export default {
     },
     // 通知消息
     getNoticeMessage() {
-      if(this.NoticeMessage) {
-        this.changeType(true);
-        this.saveMessageTime({ noticeTime: this.noticeMessage[0].created_at });
-      }
       this.$router.push("newsNoticeMessage");
     },
 
