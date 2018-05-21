@@ -81,7 +81,6 @@ export default {
     // 订单消息
     getOrderMessage() {
       this.$router.push("newsOrderMessage");
-
     },
     // 获取订单消息列表数据
     getmessageOrderList() {

@@ -34,6 +34,8 @@ export default {
   computed: {
     ...mapState({
       isOnline: state => state.auth.isOnline,
+      time: state => state.profile.time,
+      type: state => state.profile.type
     }),
     isSwitch: {
       get:function() {
@@ -46,7 +48,9 @@ export default {
   methods: {  
     ...mapMutations({
       clearToken: 'signout',
-      changeOpen: 'changeOpen'
+      changeOpen: 'changeOpen',
+      changeType: "changeType",
+      saveMessageTime: "saveMessageTime"
     }),  
     goBack() {
       this.$router.go(-1) 
@@ -65,15 +69,20 @@ export default {
         console.log('domain is ', domain)
         this.$cookie.delete('openid', { domain: domain })
         this.$cookie.delete('token', { domain: domain })
-
         let openid = this.$cookie.get('openid')
         let token = this.$cookie.get('token')       
         console.log('(openid, token) ', openid, token)
+        this.changeType(false);
+        if(this.user != null) {
+          this.saveMessageTime(this.user.joined_at)
+        }
       })
     },
+
     about() {
       this.$router.push('/SettingAbout');
     },
+
     setSwitch() {
       this.changeOpen(!this.isSwitch)
     }
