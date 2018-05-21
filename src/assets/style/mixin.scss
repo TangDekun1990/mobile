@@ -150,7 +150,7 @@
 }
 
 @mixin thin-border() {
-	// #{$parentClass}
+	position: relative;
 	&:after{
 	    content: '';
 	    height: 1px;  //控制边框宽度
