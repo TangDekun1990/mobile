@@ -6,8 +6,8 @@
       </header-item>
     </mt-header>
     <!-- body -->
-    <div class="body">
-      <div class="order-message-body" v-for="(item, index) in orderMessage" v-on:click="getOrderDetail(item.link)">
+    <div class="flex-wrapper body" v-infinite-scroll="getMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
+      <div class="order-message-body" v-for="(item, index) in messageOrderList" v-on:click="getOrderDetail(item.link)">
         <p>{{item.created_at * 1000| convertTime }}</p>
         <div class="order-track">
           <div class="arrow-left">
@@ -29,14 +29,17 @@
 
 <script>
 import { HeaderItem } from "../../../components/common";
-import { Header } from "mint-ui";
+import { Header, Indicator } from "mint-ui";
 import { messageOrderList } from "../../../api/network/message"; //订单消息列表
 import { openLink } from "../../cardpage/deeplink";
 import { mapState, mapMutations } from "vuex";
 export default {
   data() {
     return {
-      orderMessage: []
+      messageOrderList: [],
+      orderMessageParams: { page: 1, per_page: 10 },
+      loading: false,  //是否加载更多
+			isMore: true  //是否有更多
     };
   },
   created() {
@@ -51,18 +54,36 @@ export default {
       this.$router.go(-1);
     },
     // 获取订单消息列表数据
-    getmessageOrderList() {
-      messageOrderList(1, 10).then(res => {
+     getmessageOrderList(ispush) {
+      Indicator.open();
+      let data = this.orderMessageParams;
+      messageOrderList(data.page, data.per_page).then(res => {
         if (res) {
           this.orderMessage = res.messages;
           this.changeType(true);
       	  this.saveMessageTime({ ordertime: this.orderMessage[0].created_at });
+          if (ispush) {
+            this.messageOrderList = this.messageOrderList.concat(res.messages);
+          } else {
+            this.messageOrderList = Object.assign([], this.messageOrderList, res.messages);
+          }
+          this.isMore = res.paged.more == 1 ? true : false;
+          Indicator.close();
         }
       });
     },
     // 从订单消息页面去订单详情页
     getOrderDetail(link) {
       openLink(this.$router, link);
+    },
+    // 无缝滚动加载
+    getMore() {
+      this.loading = true;
+      this.orderMessageParams.page = ++this.orderMessageParams.page;
+      if (this.isMore) {
+        this.loading = false;
+        this.getmessageOrderList(true);
+      }
     }
   }
 };
@@ -92,7 +113,7 @@ export default {
         margin-top: 20px;
         margin-bottom: 10px;
         font-size: 12px;
-        color: #7C7F88;
+        color: #7c7f88;
       }
       .order-track {
         display: flex;
@@ -103,7 +124,7 @@ export default {
         border-radius: 2px;
         margin: 0px 10px;
         .arrow-left {
-           span {
+          span {
             display: inline-block;
             padding: 12px 0px 0px 15px;
           }
@@ -127,11 +148,11 @@ export default {
           }
         }
         .arrow-right {
-            width: 5px;
-            height: 10px;
-            padding-right: 12px;
-            padding-left: 13px;
-          }
+          width: 5px;
+          height: 10px;
+          padding-right: 12px;
+          padding-left: 13px;
+        }
       }
     }
   }

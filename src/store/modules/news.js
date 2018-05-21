@@ -1,7 +1,7 @@
 // news.js
 const state = {
   orderNews: {},
-  noticeNews: {}
+  noticeNews: []
 }
 
 // mutations
