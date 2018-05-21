@@ -22,8 +22,9 @@ import search from './modules/search'
 import profile from './modules/profile'
 import order from './modules/order'
 import tabBar from './modules/tabbar'
-import checkout from './modules/checkout'
+
 import news from './modules/news'
+import checkout from './modules/checkout'
 
 Vue.use(Vuex)
 

@@ -136,15 +136,43 @@
 }
 
 @mixin limit-line($lineCount) {
-	overflow: hidden;	
-	// text-overflow: ellipsis; 
+	overflow: hidden;
+	// text-overflow: ellipsis;
 	// white-space: nowrap;
 	display:-moz-box;
 	display:-webkit-box;
 	display:box;
 	-webkit-line-clamp: $lineCount;
-	-moz-line-clamp: lineCount;	
+	-moz-line-clamp: lineCount;
 	-moz-box-orient:vertical;
 	-webkit-box-orient:vertical;
 	box-orient:vertical;
+}
+
+@mixin thin-border() {
+	// #{$parentClass}
+	&:after{
+	    content: '';
+	    height: 1px;  //控制边框宽度
+	    width: 200%;  //控制边框长度
+	    position: absolute;
+	    left: 0px;
+	    top: auto;
+	    right: auto;
+	    bottom: 0px;
+	    background-color: rgba(232,234,237,1);
+	    border: 0px solid transparent;
+	    border-radius: 0px;
+	    -webkit-border-radius: 0px;
+	    transform: scale(0.5);  //缩放宽度，达到0.5px的效果
+	    -webkit-transform: scale(0.5);
+	    -moz-transform: scale(0.5);
+	    -ms-transform: scale(0.5);
+	    -o-transform: scale(0.5);
+	    transform-origin: top left;  //定义缩放基点
+	    -webkit-transform-origin: top left;
+	    -moz-transform-origin: top left;
+	    -ms-transform-origin: top left;
+	    -o-transform-origin: top left;
+	}
 }
