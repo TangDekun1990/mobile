@@ -7,7 +7,7 @@
 					<img v-bind:src="item.activeBgurl" v-if='currentItem == item.link'>
 					<span v-if="cartNumber <= 100 && cartNumber > 0 && item.link == 'cart' && isOnline">{{ cartNumber }}</span>
 					<span v-if="cartNumber >= 100  && cartNumber > 0 && item.link == 'cart' && isOnline">99+</span>
-					<p v-if="item.name == '我的'"></p>
+					<p v-if="item.name == '我的' && ishasCount == true"></p>
 					<a>{{item.name}}</a>
 				</li>
 			</ul>
@@ -66,7 +66,8 @@ export default {
       currentTabBar: state => state.tabBar.currentTabBar,
       cartNumber: state => state.tabBar.cartNumber,
 			isOnline: state => state.auth.isOnline,
-			messageHint: state => state.tabBar.messageHint
+      messageHint: state => state.tabBar.messageHint,
+      ishasCount: state => state.profile.ishasCount,
     })
   },
 

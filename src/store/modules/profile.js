@@ -3,7 +3,7 @@ const state = {
   time: {'noticeTime': '', 'ordertime': ''},
   type: false, // type == false ? join_at : create_at
   isSwitch: true, // switch == true ? 开 : 关
-  counts: 0
+  ishasCount: false
 }
 
 // mutations
@@ -19,11 +19,10 @@ const mutations = {
   changeType(state, type) {
     state.type = type
   },
-  changeCount(state, index) {
-    state.count = index
+  changeCount(state, value) {
+    state.ishasCount = value
   },
   changeOpen(state, value) {
-    // debugger;
     state.isSwitch = value
   }
 }
