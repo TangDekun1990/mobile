@@ -3,7 +3,7 @@
     <input type="search" placeholder="想找什么？" autocomplete="off" @click="onSearch">      
     <div class="header-item" @click="rightClick">
       <img src="../../../assets/image/change-icon/b0_message@2x.png" class="header-icon">
-      <span></span>				
+      <span v-if="ishasCount == true"></span>				
     </div>		
 	</div>
 </template>
@@ -14,7 +14,8 @@ export default {
   name: "HomeHeader",
   computed: {
     ...mapState({
-      isOnline: state => state.auth.isOnline
+      isOnline: state => state.auth.isOnline,
+      ishasCount: state => state.profile.ishasCount,
     })
   },
   methods: {
