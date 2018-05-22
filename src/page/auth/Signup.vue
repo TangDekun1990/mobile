@@ -38,6 +38,7 @@ import { mapMutations } from 'vuex'
 import * as authMobile from '../../api/network/auth-mobile'
 import * as site from '../../api/network/site'
 import { authMobileVerify } from '../../api/network/auth-mobile';
+import { userProfileGet } from '../../api/network/user'
 export default {
 	props: {
 	},
@@ -54,7 +55,7 @@ export default {
 
 	computed: {
 		getMode: function () {
-			let mode = this.$route.params.mode
+			let mode = this.$route.query.mode
 			if (mode == undefined) {
 				mode = 'signup'
 			} else if(mode == 'bind') {
@@ -99,7 +100,7 @@ export default {
 				})
 		}
 		alert('2837474');
-		alert(this.$router.query);
+		alert(this.$router.query.mode);
 	},
 
 	methods: {
