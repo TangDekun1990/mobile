@@ -82,6 +82,10 @@ export default {
 		},
 	},
 
+	mounted() {
+		this.onAuthSuccess();
+	},
+
 	created: function () {
 		let mode = this.getMode;
 		if (mode === 'signup') {
@@ -94,6 +98,8 @@ export default {
 				(error) => {
 				})
 		}
+		alert('2837474');
+		alert(this.$router.query);
 	},
 
 	methods: {
@@ -253,7 +259,30 @@ export default {
 
   		onAgreement() {
   			this.$router.push({ name: 'webPage', query: { url: this.aggrementUrl, title: '注册协议'}})
-  		}
+  		},
+
+  		onAuthSuccess () {
+		  	let openid = this.$cookie.get('openid')
+		  	let token = this.$cookie.get('token')
+		  	if (openid && openid.length && token && token.length) {
+		  		this.saveToken({ 'token': token })
+		  		Indicator.open()
+		  		userProfileGet().then(response => {
+		  			alert(response);
+	  				Indicator.close()
+	  				if (response && response.user) {
+	  					alert('res');
+	  					this.saveUser(response);
+	  					// this.goBindPhone();
+	  					this.goHome()
+	  				}
+		  		},error => {
+		  			alert('error');
+	  				Indicator.close()
+	  				this.goHome()
+		  		});
+		  	}
+		}
 	}
 }
 </script>

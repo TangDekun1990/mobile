@@ -95,7 +95,7 @@ export default {
 		if (isTokenInvalid) {
 			Toast('登录过期')
 		}
-		this.onAuthSuccess()
+		// this.onAuthSuccess()
 	},
 
 	methods: {
@@ -175,7 +175,8 @@ export default {
 
 	    wxWebAuth() {
 	      	let scope = 'snsapi_userinfo' // 允许获取用户信息
-	      	let ref = window.location.href ? encodeURIComponent(window.location.href) : ''
+	      	// let ref = window.location.href ? encodeURIComponent(window.location.href) : ''
+	      	let ref = encodeURIComponent($window.location.protocol+"//"+$window.location.host + "/#/signup?mode='bind'");
 	      	let locationRef = apiBaseUrl + '/v2/ecapi.auth.web?vendor=' + ENUM.SOCIAL_VENDOR.WEIXIN + '&scope=' + scope + "&referer=" + ref;
 	      	window.location.href = locationRef
 	      	alert(ref);
@@ -193,8 +194,8 @@ export default {
 	  				if (response && response.user) {
 	  					alert('res');
 	  					this.saveUser(response);
-	  					this.goBindPhone();
-	  					// this.goHome()
+	  					// this.goBindPhone();
+	  					this.goHome()
 	  				}
 		  		},error => {
 		  			alert('error');
