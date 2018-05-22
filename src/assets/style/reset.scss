@@ -29,6 +29,11 @@ h1, h2, h3, h4, h5, h6 {
 	font-weight: normal;
 }
 
+input[type='text'],
+input[type='number'] {
+	-webkit-appearance: none;
+}
+
 ::-webkit-search-cancel-button {
 	display: none;
 }
