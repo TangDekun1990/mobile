@@ -11,8 +11,9 @@
 			<div class="top-info-wrapper">
 				<div class="avatar-wrapper" @click="goProfileInfo">
 					<img class="avatar" v-bind:src="user.avatar.thumb" v-if="isOnline && user && user.avatar"/>
-					<img class="avatar" src="../../assets/image/change-icon/e0_head@2x.png" v-if="!isOnline || !user || !user.avatar"/>
+					<img class="avatar" src="../../assets/image/change-icon/e0_head1@2x.png" v-if="!isOnline || !user || !user.avatar"/>
 				</div>
+
 				<label class="nickname" style="-webkit-box-orient:vertical" @click="goProfileInfo">{{nickname}}</label>
 			</div>
 			<div class="info-wrapper">
@@ -166,7 +167,7 @@ export default {
 			user: state => state.auth.user,
 			time: state => state.profile.time,
 			type: state => state.profile.type,
-			count: state => state.profile.count,
+			counts: state => state.profile.count,
 			orderStatus: state => state.order.orderStatus
 		}),
 		nickname() {
@@ -205,7 +206,7 @@ export default {
 			}
 		}
 		if (url === null) {
-			url = require("../../assets/image/change-icon/e0_head@2x.png");
+			url = require("../../assets/image/change-icon/e0_head1@2x.png");
 		}
 		return url;
 	},
