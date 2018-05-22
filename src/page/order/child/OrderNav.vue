@@ -4,9 +4,9 @@
 		<!-- header -->
 		<div class="order-header">
 			<ul>
-				<li class="item" 
-					v-for="(item, index) in ORDERNAV" 
-					v-bind:key="item.id" 
+				<li class="item"
+					v-for="(item, index) in ORDERNAV"
+					v-bind:key="item.id"
 					v-bind:class="{'active': orderStatus == item.id}"
 					v-on:click="setOrderNavActive(item.id)"
 				>{{ item.name }}</li>
@@ -14,75 +14,77 @@
 		</div>
 		<!-- body -->
 		<!-- 无限加载滚动列表 -->
-		<div v-infinite-scroll="getMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
-			<div class="order-body" v-if="orderList.length > 0 ">
-				<div class="list" v-for="(item, index) in orderList" v-bind:key="item.id">
-					<h3 class="title" v-if="item.status != 4">{{ getOrderStatusBy(item.status) }}</h3>
-					<h3 v-if="item.status == 4">
-						<img src="../../../assets/image/change-icon/e3_seal@2x.png">
-					</h3>
-					<div class="order-image" v-if="item.goods.length > 0"  @click="goOrderDetail(item.id)">
-						<img v-bind:src="image.product.photos[0].thumb" v-for="image in item.goods" v-if='image.product.photos.length > 0' data-src='../../../assets/image/change-icon/default_image_02@2x.png'>
-						<img src="../../../assets/image/change-icon/default_image_02@2x.png" v-for="image in item.goods" v-if='image.product.photos.length <= 0'>
-					</div>
-					<div class="price">(共计{{item.goods.length}}件商品) 合计 : AED <i>{{item.total}}</i><i class="freight">(含运费:AED{{ item.shipping.price }})</i>
-					</div>
-					<div class="order-list-opratio">
-						<!-- 待付款 -->
-						<div class="btn" v-if="item.status == 0">
-							<button v-on:click="cancel()">取消订单</button>
-							<mt-popup v-model="popupVisible" position="bottom" class="mint-popup">
-								<div class="cancels">
-									<div class="cancelInfo">
-										<span class="cancel" v-on:click="cancelInfo()">取消</span>
-										<span class="success" v-on:click="complete(item.id, index)">完成</span>
-									</div>
-									<div class="reason">
-										<p v-for="(item, list) in reasonList" v-bind:key="list" v-on:click="getReasonItem(item)">{{item.name }} </p>
-									</div>
-								</div>
-							</mt-popup>
-							<button class="buttonright" v-on:click="payment(item)">去支付</button>
+		<div>
+			<div v-infinite-scroll="getMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
+				<div class="order-body" v-if="orderList.length > 0 ">
+					<div class="list" v-for="(item, index) in orderList" v-bind:key="item.id">
+						<h3 class="title" v-if="item.status != 4">{{ getOrderStatusBy(item.status) }}</h3>
+						<h3 v-if="item.status == 4">
+							<img src="../../../assets/image/change-icon/e3_seal@2x.png">
+						</h3>
+						<div class="order-image" v-if="item.goods.length > 0"  @click="goOrderDetail(item.id)">
+							<img v-bind:src="image.product.photos[0].thumb" v-for="image in item.goods" v-if='image.product.photos.length > 0' data-src='../../../assets/image/change-icon/default_image_02@2x.png'>
+							<img src="../../../assets/image/change-icon/default_image_02@2x.png" v-for="image in item.goods" v-if='image.product.photos.length <= 0'>
 						</div>
-						<!-- 待发货 -->
-						<div class="btn"  v-if="item.status == 1 ? '':checkState">
+						<div class="price">(共计{{item.goods.length}}件商品) 合计 : AED <i>{{item.total}}</i><i class="freight">(含运费:AED{{ item.shipping.price }})</i>
+						</div>
+						<div class="order-list-opratio">
+							<!-- 待付款 -->
+							<div class="btn" v-if="item.status == 0">
+								<button v-on:click="cancel()">取消订单</button>
+								<mt-popup v-model="popupVisible" position="bottom" class="mint-popup">
+									<div class="cancels">
+										<div class="cancelInfo">
+											<span class="cancel" v-on:click="cancelInfo()">取消</span>
+											<span class="success" v-on:click="complete(item.id, index)">完成</span>
+										</div>
+										<div class="reason">
+											<p v-for="(item, list) in reasonList" v-bind:key="list" v-on:click="getReasonItem(item)">{{item.name }} </p>
+										</div>
+									</div>
+								</mt-popup>
+								<button class="buttonright" v-on:click="payment(item)">去支付</button>
+							</div>
+							<!-- 待发货 -->
+							<div class="btn"  v-if="item.status == 1 ? '':checkState">
 
-						</div>
-						<!-- 发货中 -->
-						<div class="btn"  v-if="item.status == 2">
-							<button v-on:click="track(item.id)">查看物流</button>
-							<button class="buttonright" v-on:click="confirm(item,index)">确认收货</button>
-						</div>
-						<!-- 待评价 -->
-						<div class="btn" v-if="item.status == 3" >
-							<button v-on:click="goComment(item)">评价晒单</button>
-							<button class="buttonright" v-on:click="goBuy(item.id)">再次购买</button>
-						</div>
-						<!-- 已完成 -->
-						<div class="btn" v-if="item.status == 4" >
-							<button class="buttonright" v-on:click="goBuy(item.id)">再次购买</button>
-						</div>
-						<!-- 已取消 -->
-						<div class="btn" v-if="item.status == 5" >
-							<button class="buttonright" v-on:click="goBuy(item.id)">再次购买</button>
-						</div>
-						<!-- 配货中 -->
-						<div class="btn" v-if="item.status == 6" >
-							<button v-on:click="track(item.id)">查看物流</button>
-							<button class="buttonright" v-on:click="confirm(item,index)">确认收货</button>
+							</div>
+							<!-- 发货中 -->
+							<div class="btn"  v-if="item.status == 2">
+								<button v-on:click="track(item.id)">查看物流</button>
+								<button class="buttonright" v-on:click="confirm(item,index)">确认收货</button>
+							</div>
+							<!-- 待评价 -->
+							<div class="btn" v-if="item.status == 3" >
+								<button v-on:click="goComment(item)">评价晒单</button>
+								<button class="buttonright" v-on:click="goBuy(item.id)">再次购买</button>
+							</div>
+							<!-- 已完成 -->
+							<div class="btn" v-if="item.status == 4" >
+								<button class="buttonright" v-on:click="goBuy(item.id)">再次购买</button>
+							</div>
+							<!-- 已取消 -->
+							<div class="btn" v-if="item.status == 5" >
+								<button class="buttonright" v-on:click="goBuy(item.id)">再次购买</button>
+							</div>
+							<!-- 配货中 -->
+							<div class="btn" v-if="item.status == 6" >
+								<button v-on:click="track(item.id)">查看物流</button>
+								<button class="buttonright" v-on:click="confirm(item,index)">确认收货</button>
+							</div>
 						</div>
 					</div>
+					<div class="loading-wrapper">
+						<p v-if='!isMore'>没有更多了</p>
+					</div>
 				</div>
-				<div class="loading-wrapper">
-					<p v-if='!isMore'>没有更多了</p>
+				<div class="order-air" v-if="orderList.length <= 0 && !isMore">
+					<img src="../../../assets/image/change-icon/order_empty@2x.png">
+					<p>你的订单为空</p>
+					<button class="button" v-on:click="goVisit()">
+						<label>随便逛逛</label>
+					</button>
 				</div>
-			</div>
-			<div class="order-air" v-if="orderList.length <= 0 && !isMore">
-				<img src="../../../assets/image/change-icon/order_empty@2x.png">
-				<p>你的订单为空</p>
-				<button class="button" v-on:click="goVisit()">
-					<label>随便逛逛</label>
-				</button>
 			</div>
 		</div>
 	</div>
@@ -147,7 +149,7 @@ export default {
       let status = this.$route.params.order;
       let index = this.orderStatus;
       if (status == null) {
-        this.changeStatus(status);   
+        this.changeStatus(status);
       } else {
         this.changeStatus(index);
       }
@@ -176,7 +178,8 @@ export default {
           } else {
             this.orderList = res.orders;
           }
-          this.isMore = res.paged.more == 1 ? true : false;
+          this.isMore = res.paged.more == 1 ? true: false;
+          // this.loading = true;
           Indicator.close();
         }
       });
@@ -197,8 +200,10 @@ export default {
       this.orderListParams.page = ++this.orderListParams.page;
       if(this.isMore) {
         this.loading = false;
+        console.log(this.isMore);
         this.getOrderList(true);
       }
+
     },
 
     // 取消订单
