@@ -1,7 +1,7 @@
 <!-- BackTop.vue 回到顶部 -->
 <template>
 	<div class="ui-back-top">
-		<div class="back-top" v-if="!isTop">
+		<div class="back-top" v-if="!isTop" v-bind:style="{'bottom': bottom + 'px'}">
 			<img src="../../assets/image/change-icon/top@2x.png" @click="goBackTop()">
 		</div>
 	</div>
@@ -16,7 +16,10 @@
 		},
 
 		props: {
-			target: {}
+			target: {},
+			bottom: {
+				default: 0
+			}
 		},
 
 		created() {

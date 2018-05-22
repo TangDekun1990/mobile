@@ -1,5 +1,6 @@
 <template>
 	<div class="container">
+		<home-header class="header"></home-header>
 		<div class="list">
 			<card-group
 				class="section"
@@ -8,7 +9,7 @@
 				:item="item">
 			</card-group>
 		</div>
-		<home-header class="header"></home-header>
+		<back-top v-if="isshowBacktop" :target="target" :bottom="60"></back-top>
 	</div>
 </template>
 
@@ -18,16 +19,38 @@
 	import { cardpageGet } from '../../api/network/cardpage'
 	import CardGroup from '../cardpage/group/CardGroup'
 	import HomeHeader from './child/HomeHeader';
+	import BackTop from '../../components/common/BackTop'
 	export default {
 		name: 'Home',
 		data() {
 			return {
-				cardpage: null
+				cardpage: null,
+				isshowBacktop: false
 			}
 		},
 		components: {
 			CardGroup,
 			HomeHeader,
+			BackTop
+		},
+		mounted() {
+			var element = this.$el;
+			var that = this;
+			var dom = document.querySelector('.list');
+			if (dom) {
+				dom.addEventListener('scroll', (event) => {
+		        	let params = {
+		        		'top': dom.scrollTop,
+		        		'height': dom.scrollHeight
+		        	};
+		        	if (params.top >= 100) {
+		        		this.isshowBacktop = true;
+		        	} else {
+		        		this.isshowBacktop = false;
+		        	}
+	        	});
+			}
+			this.target = document.querySelector('.list');
 		},
 		created: function () {
 			// Indicator.open()
@@ -62,11 +85,16 @@
 
 <style lang="scss" scoped>
 	.container {
-		display: flex;
-		flex-direction: column;
-		justify-content: flex-start;
-		align-items: stretch;
-		background-color: $mainbgColor;
+		height: auto;
+    	position: absolute;
+	    bottom: 45px;
+	    top: 0px;
+	    width: 100%;
+		// display: flex;
+		// flex-direction: column;
+		// justify-content: flex-start;
+		// align-items: stretch;
+		// background-color: $mainbgColor;
 	}
 	.header {
 		background-color: #ffffff;
@@ -77,12 +105,17 @@
 		border-bottom: 1px solid $lineColor;
 	}
 	.list {
-		margin-top: 44px;
-		margin-bottom: 50px;
-		display: flex;
-		flex-direction: column;
-		justify-content: flex-start;
-		align-items: stretch;
+		position: absolute;
+		top: 44px;
+		bottom: 0px;
+		overflow-y: auto;
+		width: 100%;
+		// margin-top: 44px;
+		// margin-bottom: 50px;
+		// display: flex;
+		// flex-direction: column;
+		// justify-content: flex-start;
+		// align-items: stretch;
 	}
 	.section {
 		margin-bottom: 10px;
