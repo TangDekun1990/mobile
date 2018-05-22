@@ -101,8 +101,6 @@ export default {
 				(error) => {
 				})
 		}
-		alert('2837474');
-		alert(this.$router.query.mode);
 	},
 
 	methods: {
