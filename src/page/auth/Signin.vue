@@ -187,9 +187,10 @@ export default {
 		  		this.saveToken({ 'token': token })
 		  		Indicator.open()
 		  		userProfileGet().then(response => {
-		  			alert('resp');
+		  			alert(response);
 	  				Indicator.close()
 	  				if (response && response.user) {
+	  					alert('res');
 	  					this.saveUser(response);
 	  					this.goBindPhone();
 	  					// this.goHome()
@@ -203,7 +204,8 @@ export default {
 		},
 
 		goBindPhone() {
-			this.$router.push({'name':'phone'});
+			alert('跳转路由');
+			this.$router.push({'name':'signup', params: {'mode': 'bind'}});
 		}
 	}
 };
