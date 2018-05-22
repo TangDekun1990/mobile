@@ -205,7 +205,8 @@ export default {
 
 		goBindPhone() {
 			alert('跳转路由');
-			this.$router.push({'name':'signup', params: {'mode': 'bind'}});
+			this.$router.push('/signup')
+			// this.$router.push({'name':'signup', params: {'mode': 'bind'}});
 		}
 	}
 };
