@@ -120,7 +120,6 @@ export default {
 			score: 0,
 			orderCount: {},
 			isShow: true,
-			ishasCount: false,
 			telephone: ''
 		};
 	},
@@ -166,7 +165,7 @@ export default {
 			user: state => state.auth.user,
 			time: state => state.profile.time,
 			type: state => state.profile.type,
-			count: state => state.profile.count,
+			ishasCount: state => state.profile.ishasCount,
 			orderStatus: state => state.order.orderStatus
 		}),
 		nickname() {
@@ -249,10 +248,11 @@ methods: {
     		}
     		messageCount(after, type).then(res => {
     			if (res) {
-						let	counts = this.changeCount(this.count)
-    				if (res.count > this.counts) {
-    					this.ishasCount = true;
-    				}
+    				if (res.count > 0) {
+    					this.changeCount(true);
+    				} else {
+							this.changeCount(false);
+						}
     			}
     		});
     	}
