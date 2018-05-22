@@ -24,7 +24,7 @@
 		</div>
 		<label class="tips">6-20位数字/字母/符号</label>
 		<gk-button type="primary" class="button" v-on:click="onSubmit">{{confirmTitle}}</gk-button>
-		<div class="link-wrapper" v-if="getMode() != 'bind'">
+		<div class="link-wrapper" v-if="mode != 'bind'">
 			<span class="left-text">点击注册表示同意</span>
 			<span class="right-text" @click="onAgreement">《温超商城用户协议》</span>
 		</div>
@@ -50,6 +50,7 @@ export default {
 			password: '',
 			confirmPassword: '',
 			aggrementUrl: '',
+			mode: ''
 		}
 	},
 
@@ -61,6 +62,7 @@ export default {
 			} else if(mode == 'bind') {
 				mode == 'bind'
 			}
+			this.mode = mode;
 			return mode
 		},
 		title: function () {
