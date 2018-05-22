@@ -177,8 +177,8 @@ export default {
 	      	let scope = 'snsapi_userinfo' // 允许获取用户信息
 	      	let ref = window.location.href ? encodeURIComponent(window.location.href) : ''
 	      	let locationRef = apiBaseUrl + '/v2/ecapi.auth.web?vendor=' + ENUM.SOCIAL_VENDOR.WEIXIN + '&scope=' + scope + "&referer=" + ref;
+	      	window.location.href = locationRef
 	      	alert(ref);
-	      	// window.location.href = locationRef
 	  	},
 
 		onAuthSuccess () {
