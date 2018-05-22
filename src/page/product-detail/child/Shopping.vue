@@ -639,7 +639,7 @@
 				}
 				input[type='number'] {
 					width: 40px;
-					border: 1px solid #404245;
+					border: 0.5px solid #404245;
 					border-radius: 0px;
 					border-image-width: 0px;
 					box-shadow: 0px;
