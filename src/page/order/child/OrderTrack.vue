@@ -16,7 +16,8 @@
             <img class="imgthree" src="../../../assets/image/change-icon/e5_dot@2x.png" v-if="index != 0">
             <div>
                 <p>{{item.content}}</p>
-                <span>{{item.datetime * 1000 | convertTime}}</span>
+                <span v-if="item.datetime != null">{{item.datetime * 1000 | convertTime}}</span>
+                <span v-if="item.datetime == null"></span>
             </div>
           </div>
         </div>
