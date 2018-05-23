@@ -60,16 +60,16 @@
 		watch: {
 			detailInfo: function(value) {
 				if(value) {
-						let title = this.detailInfo.name;
-						let imgUrl = '';
-						let desc = '';
-						if (this.detailInfo.photos) {
-							imgUrl = this.detailInfo.photos[0].thumb;
-						}
-						if(this.detailInfo.desc) {
-							desc = this.detailInfo.desc;
-						}
-						this.wxApi.getConfigRes(title, imgUrl, desc);
+					let title = this.detailInfo.name;
+					let imgUrl = '';
+					let desc = '';
+					if (this.detailInfo.photos) {
+						imgUrl = this.detailInfo.photos[0].thumb;
+					}
+					if(this.detailInfo.desc) {
+						desc = this.detailInfo.desc;
+					}
+					this.wxApi.getConfigRes(title, imgUrl, desc);
 				}
 			}
 		},
