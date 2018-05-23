@@ -13,7 +13,7 @@
 					<img src="../../assets/image/change-icon/e12_logistics@2x.png">
 				</div>
 				<div class="flex-right">
-					<h3>订单消息</h3>
+					<h3>订单消息{{ status.isShowOrder }}</h3>
 					<span v-if="orderMessage.length > 0">{{orderMessage[0].content}}</span>
 					<span v-if="orderMessage.length <= 0">暂无信息</span>
 					<span class="prompt" v-if="status.isShowOrder"></span>
@@ -25,7 +25,7 @@
 					<img src="../../assets/image/change-icon/e12_message@2x.png">
 				</div>
 				<div class="flex-right">
-					<h3>通知消息</h3>
+					<h3>通知消息{{ status.isShowNotice }}</h3>
 					<span v-if="noticeMessage.length > 0">{{noticeMessage[0].content}}</span>
 					<span v-if="noticeMessage.length <= 0">暂无信息</span>
 					<span class="prompt" v-if="status.isShowNotice"></span>
@@ -97,9 +97,9 @@ export default {
 	    			this.orderMessage = res.messages;
 	    			if(this.orderNews && this.orderNews.paged) {
 	    				if(this.orderNews.paged.total < res.paged.total) {
-	    					this.changestatus({'isShowOrder': true});
+	    					this.changestatus({'isShowOrder': true, 'isShowNotice': this.status.isShowNotice});
 	    				} else {
-	    					this.changestatus({'isShowOrder': false});
+	    					this.changestatus({'isShowOrder': false, 'isShowNotice': this.status.isShowNotice});
 	    				}
 	    			}
 	    			// this.saveOrderNews(res);
@@ -119,9 +119,9 @@ export default {
 	    			this.noticeMessage = res.messages;
 	    			if(this.noticeNews && this.noticeNews.paged) {
 	    				if(this.noticeNews.paged.total < res.paged.total) {
-	    					this.changestatus({'isShowNotice': true});
+	    					this.changestatus({'isShowNotice': true, 'isShowOrder': this.status.isShowOrder});
 	    				} else {
-	    					this.changestatus({'isShowNotice': false});
+	    					this.changestatus({'isShowNotice': false, 'isShowOrder': this.status.isShowOrder});
 	    				}
 	    			}
 	    			// this.saveNoticeNews(res);
