@@ -65,15 +65,17 @@ export default {
 	    	messageOrderList(data.page, data.per_page).then(res => {
 	    		if (res) {
 	    			this.orderMessage = res.messages;
-	    			this.changeType(true);
-	    			this.saveMessageTime({ ordertime: this.orderMessage[0].created_at });
-	    			if (ispush) {
-	    				this.messageOrderList = this.messageOrderList.concat(res.messages);
-	    			} else {
-	    				this.messageOrderList = Object.assign([], this.messageOrderList, res.messages);
+	    			if (res.messages.length > 0) {
+	    				this.changeType(true);
+		    			this.saveMessageTime({ ordertime: this.orderMessage[0].created_at });
+		    			if (ispush) {
+		    				this.messageOrderList = this.messageOrderList.concat(res.messages);
+		    			} else {
+		    				this.messageOrderList = Object.assign([], this.messageOrderList, res.messages);
+		    			}
+		    			this.isMore = res.paged.more == 1 ? true : false;
+		    			this.changestatus({'isShowOrder': false});
 	    			}
-	    			this.isMore = res.paged.more == 1 ? true : false;
-	    			this.changestatus({'isShowOrder': false});
 	    			Indicator.close();
 	    		}
 	    	});
