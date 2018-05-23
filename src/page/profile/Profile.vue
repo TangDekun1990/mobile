@@ -6,14 +6,13 @@
 			</div>
 			<div class="nav-item" id="right-nav-item" @click="goNews()">
 				<img class="nav-icon" src="../../assets/image/change-icon/e0_message@2x.png" />
-				<span v-show="ishasCount"></span>
+				<span v-if="ishasCount > 0"></span>
 			</div>
 			<div class="top-info-wrapper">
 				<div class="avatar-wrapper" @click="goProfileInfo">
 					<img class="avatar" v-bind:src="user.avatar.thumb" v-if="isOnline && user && user.avatar"/>
 					<img class="avatar" src="../../assets/image/change-icon/e0_head1@2x.png" v-if="!isOnline || !user || !user.avatar"/>
 				</div>
-
 				<label class="nickname" style="-webkit-box-orient:vertical" @click="goProfileInfo">{{nickname}}</label>
 			</div>
 			<div class="info-wrapper">
@@ -102,243 +101,233 @@
 </template>
 
 <script>
-import Tabbar from '../../components/common/Tabbar';
-import InfoItem from './child/InfoItem';
-import OrderItem from './child/OrderItem';
-import { mapState, mapMutations } from 'vuex';
-import { userProfileGet } from '../../api/network/user';
-import { scoreGet } from '../../api/network/score';
-import { ENUM } from '../../config/enum';
-import { orderSubtotal } from '../../api/network/order';
-import { messageCount } from '../../api/network/message';
-import * as site from '../../api/network/site';
-import { MessageBox } from 'mint-ui';
-export default {
-	name: 'profile',
-	data() {
-		return {
-			orderAll: 1,
-			score: 0,
-			orderCount: {},
-			isShow: true,
-			telephone: ''
-		};
-	},
-	components: {
-		Tabbar,
-		OrderItem,
-		InfoItem
-	},
-	created: function() {
-		if (this.isOnline) {
-			userProfileGet().then(
-				response => {
+	import Tabbar from '../../components/common/Tabbar';
+	import InfoItem from './child/InfoItem';
+	import OrderItem from './child/OrderItem';
+	import { mapState, mapMutations } from 'vuex';
+	import { userProfileGet } from '../../api/network/user';
+	import { scoreGet } from '../../api/network/score';
+	import { ENUM } from '../../config/enum';
+	import { orderSubtotal } from '../../api/network/order';
+	import { messageCount } from '../../api/network/message';
+	import * as site from '../../api/network/site';
+	import { MessageBox } from 'mint-ui';
+	export default {
+		name: 'profile',
+		data() {
+			return {
+				orderAll: 1,
+				score: 0,
+				orderCount: {},
+				isShow: true,
+				ishasCount: 0,
+				telephone: ''
+			};
+		},
+		components: {
+			Tabbar,
+			OrderItem,
+			InfoItem
+		},
+		created: function() {
+			if (this.isOnline) {
+				userProfileGet().then( response => {
 					if (response && response.user) {
 						this.saveUser(response);
 					}
+				},error => {}
+				);
+				scoreGet().then( response => {
+						this.score = response.score;
+					},
+					error => {}
+				);
+			}
+			if (this.isOnline) {
+				this.getOrderSubtotal();
+				this.getMessageCount(1);
+				this.getMessageCount(2);
+			}
+			site.siteGet().then( response => {
+					if (response && response.site_info) {
+						this.telephone = response.site_info.telephone;
+					}
 				},
 				error => {}
-				);
-			scoreGet().then(
-				response => {
-					this.score = response.score;
-				},
-				error => {}
-				);
-		}
-		if (this.isOnline) {
-			this.getOrderSubtotal();
-			this.getMessageCount(1);
-			this.getMessageCount(2);
-		}
-		site.siteGet().then(
-			response => {
-				if (response && response.site_info) {
-					this.telephone = response.site_info.telephone;
-				}
-			},
-			error => {}
 			);
-	},
-	computed: {
-		...mapState({
-			isOnline: state => state.auth.isOnline,
-			user: state => state.auth.user,
-			time: state => state.profile.time,
-			type: state => state.profile.type,
-			ishasCount: state => state.profile.ishasCount,
-			orderStatus: state => state.order.orderStatus
-		}),
-		nickname() {
-			let title = '登录/注册';
-			if (this.isOnline) {
-				if (
-					this.user &&
-					typeof this.user != 'undefined' &&
-					JSON.stringify(this.user) != '{}'
-					) {
-					if (this.user.nickname) {
-						title = this.user.nickname;
-					} else if (this.user.username) {
-						title = this.user.username;
-					}
-				}
-			}
-			return title;
 		},
-		getAvatarUrl() {
-			let url = null;
-			if (this.isOnline) {
-				if (
-					this.user &&
-					typeof this.user != 'undefined' &&
-					JSON.stringify(this.user) != '{}'
-					) {
-					let avatar = this.user.avatar;
-				if (avatar) {
-					if (avatar.large && avatar.large) {
-						url = avatar.large;
-					} else if (avatar.thumb && avatar.thumb) {
-						url = avatar.thumb;
+		computed: {
+			...mapState({
+				isOnline: state => state.auth.isOnline,
+				user: state => state.auth.user,
+				time: state => state.profile.time,
+				type: state => state.profile.type,
+				counts: state => state.profile.count,
+				orderStatus: state => state.order.orderStatus
+			}),
+			nickname() {
+				let title = '登录/注册';
+				if (this.isOnline) {
+					if ( this.user && typeof this.user != 'undefined' && JSON.stringify(this.user) != '{}' ) {
+						if (this.user.nickname) {
+							title = this.user.nickname;
+						} else if (this.user.username) {
+							title = this.user.username;
+						}
 					}
 				}
-			}
-		}
-		if (url === null) {
-			url = require("../../assets/image/change-icon/e0_head1@2x.png");
-		}
-		return url;
-	},
-	getScore() {
-		let score = '0';
-		if (this.isOnline) {
-			score = this.score;
-		}
-		return score;
-	}
-},
-methods: {
-	...mapMutations({
-		saveUser: 'saveUser',
-		changeType: 'changeType',
-		saveMessageTime: 'saveMessageTime',
-		changeCount: 'changeCount',
-		changeStatus: 'changeStatus'
-	}),
-    // 获取订单不同状态的数量统计
-    getOrderSubtotal() {
-    	if (this.user != null) {
-    		orderSubtotal().then(res => {
-    			if (res) {
-    				this.orderCount = res.subtotal;
-    			}
-    		});
-    	}
-    },
-    // 获取未读消息数字
-    getMessageCount(type) {
-    	if (this.user != null) {
-    		let after = this.user.joined_at;
-    		if (this.type) {
-    			if (type == 1 && this.time.noticeTime) {
-    				after = this.time.noticeTime;
-    			}
-    			if (type == 2 && this.time.ordertime) {
-    				after = this.time.ordertime;
-    			}
-    		}
-    		messageCount(after, type).then(res => {
-    			if (res) {
-    				if (res.count > 0) {
-    					this.changeCount(true);
-    				} else {
-							this.changeCount(false);
+				return title;
+			},
+			getAvatarUrl() {
+				let url = null;
+				if (this.isOnline) {
+					if ( this.user && typeof this.user != 'undefined' && JSON.stringify(this.user) != '{}' ) {
+						let avatar = this.user.avatar;
+						if (avatar) {
+							if (avatar.large && avatar.large) {
+								url = avatar.large;
+							} else if (avatar.thumb && avatar.thumb) {
+								url = avatar.thumb;
+							}
 						}
-    			}
-    		});
-    	}
-    },
-    showLogin() {
-    	this.$router.push({ name: 'signin' });
-    },
-    goScoreList() {
-    	if (this.isOnline) {
-    		this.$router.push({ name: 'scoreList', query: { index: 0 } });
-    	} else {
-    		this.showLogin();
-    	}
-    },
-    goRecordList() {
-    	if (this.isOnline) {
-    		this.$router.push({ name: 'scoreList', query: { index: 1 } });
-    	} else {
-    		this.showLogin();
-    	}
-    },
-    goProfileInfo() {
-    	if (this.isOnline) {
-    		this.$router.push('/profileInfo');
-    	} else {
-    		this.showLogin();
-    	}
-    },
-    goSetting() {
-    	this.$router.push({ name: 'setting' });
-    },
-    goNews() {
-    	if (this.isOnline) {
-    		this.$router.push('news');
-    	} else {
-    		this.showLogin();
-    	}
-    },
-    goFavourite() {
-    	if (this.isOnline) {
-    		this.$router.push('collection');
-    	} else {
-    		this.showLogin();
-    	}
-    },
-    goAddress() {
-    	if (this.isOnline) {
-    		this.$router.push({ name: 'addressManage' });
-    	} else {
-    		this.showLogin();
-    	}
-    },
-    goCoupon() {
-    	if (this.isOnline) {
-    		this.$router.push({ name: 'couponList', query: { index: 0 } });
-    	} else {
-    		this.showLogin();
-    	}
-    },
-    goHelp() {
-    	this.$router.push('help');
-    },
-    goOrder() {
-    	if (this.isOnline) {
-    		if (this.orderStatus != 10) {
-    			this.changeStatus(10);
-    		}
-    		this.$router.push({
-    			name: 'order',
-    			params: { order: ENUM.ORDER_STATUS.ALL }
-    		});
-    	} else {
-    		this.showLogin();
-    	}
-    },
-    callTelephone() {
-    	let telephone = this.telephone;
-    	MessageBox.confirm(telephone, '拨打电话').then(action => {
-    		if (telephone && telephone.length) {
-    			window.location.href = 'tel://' + telephone;
-    		}
-    	});
-    }
-}
-};
+					}
+				}
+				if (url === null) {
+					url = require("../../assets/image/change-icon/e0_head1@2x.png");
+				}
+				return url;
+			},
+			getScore() {
+				let score = '0';
+				if (this.isOnline) {
+					score = this.score;
+				}
+				return score;
+			}
+		},
+		methods: {
+			...mapMutations({
+				saveUser: 'saveUser',
+				changeType: 'changeType',
+				saveMessageTime: 'saveMessageTime',
+				changeCount: 'changeCount',
+				changeStatus: 'changeStatus'
+			}),
+		    // 获取订单不同状态的数量统计
+		    getOrderSubtotal() {
+		    	if (this.user != null) {
+		    		orderSubtotal().then(res => {
+		    			if (res) {
+		    				this.orderCount = res.subtotal;
+		    			}
+		    		});
+		    	}
+		    },
+		    // 获取未读消息数字
+		    getMessageCount(type) {
+		    	if (this.user != null) {
+		    		let after = this.user.joined_at;
+		    		if (this.type) {
+		    			if (type == 1 && this.time.noticeTime) {
+		    				after = this.time.noticeTime;
+		    			}
+		    			if (type == 2 && this.time.ordertime) {
+		    				after = this.time.ordertime;
+		    			}
+		    		}
+		    		messageCount(after, type).then(res => {
+		    			if (res) {
+		    				this.ishasCount += res.count;
+							// let	counts = this.changeCount(this.count);
+		    	// 			if (res.count > this.counts) {
+		    	// 				this.ishasCount = true;
+		    	// 			}
+		    			}
+		    		});
+
+		    	}
+		    },
+		    showLogin() {
+		    	this.$router.push({ name: 'signin' });
+		    },
+		    goScoreList() {
+		    	if (this.isOnline) {
+		    		this.$router.push({ name: 'scoreList', query: { index: 0 } });
+		    	} else {
+		    		this.showLogin();
+		    	}
+		    },
+		    goRecordList() {
+		    	if (this.isOnline) {
+		    		this.$router.push({ name: 'scoreList', query: { index: 1 } });
+		    	} else {
+		    		this.showLogin();
+		    	}
+		    },
+		    goProfileInfo() {
+		    	if (this.isOnline) {
+		    		this.$router.push('/profileInfo');
+		    	} else {
+		    		this.showLogin();
+		    	}
+		    },
+		    goSetting() {
+		    	this.$router.push({ name: 'setting' });
+		    },
+		    goNews() {
+		    	if (this.isOnline) {
+		    		this.$router.push('news');
+		    	} else {
+		    		this.showLogin();
+		    	}
+		    },
+		    goFavourite() {
+		    	if (this.isOnline) {
+		    		this.$router.push('collection');
+		    	} else {
+		    		this.showLogin();
+		    	}
+		    },
+		    goAddress() {
+		    	if (this.isOnline) {
+		    		this.$router.push({ name: 'addressManage' });
+		    	} else {
+		    		this.showLogin();
+		    	}
+		    },
+		    goCoupon() {
+		    	if (this.isOnline) {
+		    		this.$router.push({ name: 'couponList', query: { index: 0 } });
+		    	} else {
+		    		this.showLogin();
+		    	}
+		    },
+		    goHelp() {
+		    	this.$router.push('help');
+		    },
+		    goOrder() {
+		    	if (this.isOnline) {
+		    		if (this.orderStatus != 10) {
+		    			this.changeStatus(10);
+		    		}
+		    		this.$router.push({
+		    			name: 'order',
+		    			params: { order: ENUM.ORDER_STATUS.ALL }
+		    		});
+		    	} else {
+		    		this.showLogin();
+		    	}
+		    },
+		    callTelephone() {
+		    	let telephone = this.telephone;
+		    	MessageBox.confirm(telephone, '拨打电话').then(action => {
+		    		if (telephone && telephone.length) {
+		    			window.location.href = 'tel://' + telephone;
+		    		}
+		    	});
+		    }
+		}
+	}
 </script>
 
 <style lang="scss" scoped>
@@ -443,6 +432,7 @@ methods: {
 		justify-content: space-around;
 		align-content: stretch;
 		background-color: #fff;
+		@include thin-border();
 	}
 	.order-header-item {
 		flex: 1;
@@ -515,5 +505,3 @@ methods: {
 	}
 }
 </style>
-
-

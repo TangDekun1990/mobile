@@ -9,7 +9,7 @@
 		  	</mt-swipe-item>
 
 		  	<mt-swipe-item v-if='!detailInfo.photos || detailInfo.photos.length <= 0'>
-		  		<img src="../../../assets/image/change-icon/default_image_02@2x.png" class="product-img">
+		  		<img src="../../../assets/image/change-icon/default_image_02@3x.png" class="product-img">
 		  	</mt-swipe-item>
 		</mt-swipe>
 
@@ -88,9 +88,11 @@
 		background-color: #ffffff;
 		.mint-swipe-items-wrap {
 			.mint-swipe-item {
+				text-align: center;
+    			overflow: hidden;
 				img {
 					height: 100%;
-					width: 100%;
+					/* width: auto; */
 				}
 			}
 		}

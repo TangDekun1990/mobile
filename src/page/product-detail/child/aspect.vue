@@ -28,11 +28,16 @@
 	        		'top': element.scrollTop,
 	        		'height': element.scrollHeight
 	        	};
-	        	if( params.height - (params.top + element.offsetHeight + 2) <  0) {
+	        	if (params.top >= 100) {
 	        		this.isshowBacktop = true;
 	        	} else {
 	        		this.isshowBacktop = false;
 	        	}
+	        	// if( params.height - (params.top + element.offsetHeight + 2) <  0) {
+	        	// 	this.isshowBacktop = true;
+	        	// } else {
+	        	// 	this.isshowBacktop = false;
+	        	// }
 
 	        });
 
