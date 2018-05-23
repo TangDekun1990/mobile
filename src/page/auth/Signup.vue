@@ -129,7 +129,7 @@ export default {
 			Indicator.open()
 			let mode = this.getMode;
 		    // 注册时需要先验证手机号是否已存在
-		    if (mode === 'signup') {
+		    if (mode === 'signup' || mode == 'bind') {
 		      	authMobile.authMobileVerify(username).then(
 		      		(response) => {
 		      			this.onSendCode(username)
@@ -274,16 +274,12 @@ export default {
 		  		this.saveToken({ 'token': token })
 		  		Indicator.open()
 		  		userProfileGet().then(response => {
-		  			alert(response);
 	  				Indicator.close()
 	  				if (response && response.user) {
-	  					alert('res');
 	  					this.saveUser(response);
-	  					// this.goBindPhone();
 	  					this.goHome()
 	  				}
 		  		},error => {
-		  			alert('error');
 	  				Indicator.close()
 	  				this.goHome()
 		  		});
