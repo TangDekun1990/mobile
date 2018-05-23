@@ -274,16 +274,12 @@ export default {
 		  		this.saveToken({ 'token': token })
 		  		Indicator.open()
 		  		userProfileGet().then(response => {
-		  			alert(response);
 	  				Indicator.close()
 	  				if (response && response.user) {
-	  					alert('res');
 	  					this.saveUser(response);
-	  					// this.goBindPhone();
 	  					this.goHome()
 	  				}
 		  		},error => {
-		  			alert('error');
 	  				Indicator.close()
 	  				this.goHome()
 		  		});
