@@ -18,14 +18,11 @@ const wxApi = {
 	*/
 	getConfigRes(title, imgUrl, desc, url) {
 		let that = this;
+		debugger;
 		jssdkConfig(url).then(res => {
 			if (res) {
 				let wechatConfig = res.config;
-				// for (const key in configs) {
-				// 	if (key == 'wechat.web') {
-				// 		wechatConfig = configs[key];
-				// 	}
-				// }
+				alert(url)
 				that.wxRegister(wechatConfig, title, imgUrl, desc);
 			}
 		})
