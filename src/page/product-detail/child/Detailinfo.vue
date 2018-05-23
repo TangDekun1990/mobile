@@ -69,7 +69,8 @@
 					if(this.detailInfo.desc) {
 						desc = this.detailInfo.desc;
 					}
-					this.wxApi.getConfigRes(title, imgUrl, desc, window.location.href);
+					let url = ""+window.location.href+""
+					this.wxApi.getConfigRes(title, imgUrl, desc, url);
 				}
 			}
 		},
