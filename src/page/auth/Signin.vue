@@ -7,7 +7,7 @@
 		<div class="top-wrapper">
 			<div class="input-wrapper">
 				<img src="../../assets/image/change-icon/a0_user@2x.png"/>
-				<input v-model="username" placeholder="用户名/邮箱/手机号">
+				<input v-model="username" placeholder="用户名/邮箱/手机号" type="text">
 			</div>
 			<div class="input-wrapper">
 				<img src="../../assets/image/change-icon/a0_key@2x.png"/>

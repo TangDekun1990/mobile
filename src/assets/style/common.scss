@@ -1,5 +1,14 @@
 // 公共样式
-input,input:focus,input:active{user-select: text;}
+input,
+input:focus,
+input:active{
+	user-select: text;
+}
+
+input {
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
 // 购物车数量
 span.cart-number {
     position: absolute;
