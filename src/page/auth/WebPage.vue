@@ -45,7 +45,7 @@ export default {
         this.title = iframe.contentWindow.document.title
       }
       let imgUrl = require('../../assets/image/change-icon/apple-touch-icon.png')
-      this.wxApi.getConfigRes(this.title, imgUrl);
+      this.wxApi.getConfigRes(this.title, imgUrl, '', window.location.href);
     })
   },
 }

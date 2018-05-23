@@ -69,7 +69,7 @@
 					if(this.detailInfo.desc) {
 						desc = this.detailInfo.desc;
 					}
-					this.wxApi.getConfigRes(title, imgUrl, desc);
+					this.wxApi.getConfigRes(title, imgUrl, desc, window.location.href);
 				}
 			}
 		},

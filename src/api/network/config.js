@@ -8,5 +8,7 @@ fetchEndpoint(
   'POST',
   {
   }
-)
+);
+
+export const jssdkConfig = (url) => fetchEndpoint('/v2/ecapi.wechat.jssdkconfig', 'POST', {'url': url})
 
