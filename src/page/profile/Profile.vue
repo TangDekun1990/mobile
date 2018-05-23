@@ -430,6 +430,7 @@
 		justify-content: space-around;
 		align-content: stretch;
 		background-color: #fff;
+		@include thin-border();
 	}
 	.order-header-item {
 		flex: 1;
