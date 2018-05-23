@@ -2,7 +2,7 @@
 const state = {
   orderNews: {},
   noticeNews: {},
-  isShowOrder: false
+  status: {'isShowOrder': false, 'isShowNotice': false}
 }
 
 // mutations
@@ -13,8 +13,11 @@ const mutations = {
   saveNoticeNews(state, value) {
     state.noticeNews = value
   },
-  changeIsShowOrder(state, value) {
-    state.isShowOrder = value
+  changestatus(state, value) {
+  	if (value) {
+  		state.status.isShowOrder = value.isShowOrder;
+  		state.status.isShowNotice = value.isShowNotice;
+  	}
   }
 }
 
