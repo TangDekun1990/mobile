@@ -129,7 +129,7 @@ export default {
 			Indicator.open()
 			let mode = this.getMode;
 		    // 注册时需要先验证手机号是否已存在
-		    if (mode === 'signup') {
+		    if (mode === 'signup' || mode == 'bind') {
 		      	authMobile.authMobileVerify(username).then(
 		      		(response) => {
 		      			this.onSendCode(username)
