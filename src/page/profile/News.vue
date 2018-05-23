@@ -97,9 +97,9 @@ export default {
 	    			this.orderMessage = res.messages;
 	    			if(this.orderNews && this.orderNews.paged) {
 	    				if(this.orderNews.paged.total < res.paged.total) {
-	    					this.changestatus({'isShowOrder': true});
+	    					this.changestatus({'isShowOrder': true, 'isShowNotice': this.status.isShowNotice});
 	    				} else {
-	    					this.changestatus({'isShowOrder': false});
+	    					this.changestatus({'isShowOrder': false, 'isShowNotice': this.status.isShowNotice});
 	    				}
 	    			}
 	    			// this.saveOrderNews(res);
@@ -119,9 +119,9 @@ export default {
 	    			this.noticeMessage = res.messages;
 	    			if(this.noticeNews && this.noticeNews.paged) {
 	    				if(this.noticeNews.paged.total < res.paged.total) {
-	    					this.changestatus({'isShowNotice': true});
+	    					this.changestatus({'isShowNotice': true, 'isShowOrder': this.status.isShowOrder});
 	    				} else {
-	    					this.changestatus({'isShowNotice': false});
+	    					this.changestatus({'isShowNotice': false, 'isShowOrder': this.status.isShowOrder});
 	    				}
 	    			}
 	    			// this.saveNoticeNews(res);

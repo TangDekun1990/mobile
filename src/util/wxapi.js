@@ -1,5 +1,5 @@
 import wx from 'weixin-js-sdk'
-import { configGet } from '../api/network/config'
+import { configGet, jssdkConfig } from '../api/network/config'
 const wxApi = {
 	/*
 	* [isweixin 判断是否微信浏览器]
@@ -16,17 +16,16 @@ const wxApi = {
 	/*
 	* getConfigRes： 获取config微信配置
 	*/
-	getConfigRes(title, imgUrl, desc) {
+	getConfigRes(title, imgUrl, desc, url) {
 		let that = this;
-		configGet().then(res => {
+		jssdkConfig(url).then(res => {
 			if (res) {
-				let configs = res.config,
-					wechatConfig = {};
-				for (const key in configs) {
-					if (key == 'wechat.web') {
-						wechatConfig = configs[key];
-					}
-				}
+				let wechatConfig = res.config;
+				// for (const key in configs) {
+				// 	if (key == 'wechat.web') {
+				// 		wechatConfig = configs[key];
+				// 	}
+				// }
 				that.wxRegister(wechatConfig, title, imgUrl, desc);
 			}
 		})
