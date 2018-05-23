@@ -6,8 +6,8 @@
 			</header-item>
 		</mt-header>
 		<!-- body -->
-		<div class="flex-wrapper body">
-			<div class="order-message-body" v-for="(item, index) in messageOrderList" v-on:click="getOrderDetail(item.link)" v-infinite-scroll="getMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10" v-if="messageOrderList.length > 0">
+		<div class="flex-wrapper body" v-infinite-scroll="getMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
+			<div class="order-message-body" v-for="(item, index) in messageOrderList" v-on:click="getOrderDetail(item.link)" v-if="messageOrderList.length > 0">
 				<p>{{item.created_at * 1000| convertTime }}</p>
 				<div class="order-track">
 					<div class="arrow-left">

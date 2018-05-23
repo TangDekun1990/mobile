@@ -5,8 +5,8 @@
 		  	<header-item slot="left" v-bind:isBack=true v-on:onclick="goBack"></header-item>
 	  	</mt-header>
   		<!-- body -->
-	  	<div class="body">
-		  	<div class="notice-message-body" v-for="(item, index) in NoticeMessage" :key="index" v-on:click="goNotice(item.link)" v-infinite-scroll="getMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
+	  	<div class="body" v-infinite-scroll="getMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
+		  	<div class="notice-message-body" v-for="(item, index) in NoticeMessage" :key="index" v-on:click="goNotice(item.link)" v-if="NoticeMessage.length > 0">
 				<p>{{item.created_at * 1000 | convertTime }}</p>
 				<div class="notice-track">
 					<div class="notice-status">

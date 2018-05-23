@@ -27,7 +27,7 @@
 				<div class="flex-right">
 					<h3>通知消息</h3>
 					<span v-if="noticeMessage.length > 0">{{noticeMessage[0].content}}</span>
-					<span v-if="orderMessage.length <= 0">暂无信息</span>
+					<span v-if="noticeMessage.length <= 0">暂无信息</span>
 					<span class="prompt" v-if="status.isShowNotice"></span>
 				</div>
 			</div>
