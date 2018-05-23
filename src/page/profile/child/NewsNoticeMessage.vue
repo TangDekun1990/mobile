@@ -17,7 +17,7 @@
 					<img class="arrow-right"src="../../../assets/image/change-icon/enter@2x.png">
 				</div>
 			</div>
-			<v-empty-message :imgurl="'../../../assets/image/change-icon/message_empty@2x.png'" :info="'您还没有消息通知'"></v-empty-message>
+			<v-empty-message :info="'您还没有消息通知'" :type="'message'" v-if="NoticeMessage.length <= 0"></v-empty-message>
 		</div>
 	</div>
 </template>

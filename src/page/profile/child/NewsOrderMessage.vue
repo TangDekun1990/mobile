@@ -6,8 +6,8 @@
 			</header-item>
 		</mt-header>
 		<!-- body -->
-		<div class="flex-wrapper body" v-infinite-scroll="getMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
-			<div class="order-message-body" v-for="(item, index) in messageOrderList" v-on:click="getOrderDetail(item.link)">
+		<div class="flex-wrapper body">
+			<div class="order-message-body" v-for="(item, index) in messageOrderList" v-on:click="getOrderDetail(item.link)" v-infinite-scroll="getMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10" v-if="messageOrderList.length > 0">
 				<p>{{item.created_at * 1000| convertTime }}</p>
 				<div class="order-track">
 					<div class="arrow-left">
@@ -23,6 +23,7 @@
 					<img class="arrow-right" src="../../../assets/image/change-icon/enter@2x.png">
 				</div>
 			</div>
+			<v-empty-message :info="'您还没有消息通知'" :type="'message'" v-if="messageOrderList.length <= 0"></v-empty-message>
 		</div>
 	</div>
 </template>
@@ -33,6 +34,7 @@ import { Header, Indicator } from "mint-ui";
 import { messageOrderList } from "../../../api/network/message"; //订单消息列表
 import { openLink } from "../../cardpage/deeplink";
 import { mapState, mapMutations } from "vuex";
+import EmptyMessage from './empty'
 export default {
 	data() {
 		return {
@@ -45,6 +47,10 @@ export default {
 
 	created() {
 		// this.getmessageOrderList();
+	},
+
+	components: {
+		'v-empty-message': EmptyMessage
 	},
 
 	methods: {
