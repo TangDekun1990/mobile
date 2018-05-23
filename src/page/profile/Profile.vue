@@ -6,7 +6,7 @@
 			</div>
 			<div class="nav-item" id="right-nav-item" @click="goNews()">
 				<img class="nav-icon" src="../../assets/image/change-icon/e0_message@2x.png" />
-				<span v-show="ishasCount"></span>
+				<span v-if="ishasCount > 0"></span>
 			</div>
 			<div class="top-info-wrapper">
 				<div class="avatar-wrapper" @click="goProfileInfo">
@@ -120,7 +120,7 @@
 				score: 0,
 				orderCount: {},
 				isShow: true,
-				ishasCount: false,
+				ishasCount: 0,
 				telephone: ''
 			};
 		},
@@ -237,12 +237,14 @@
 		    		}
 		    		messageCount(after, type).then(res => {
 		    			if (res) {
-								let	counts = this.changeCount(this.count)
-		    				if (res.count > this.counts) {
-		    					this.ishasCount = true;
-		    				}
+		    				this.ishasCount += res.count;
+							// let	counts = this.changeCount(this.count);
+		    	// 			if (res.count > this.counts) {
+		    	// 				this.ishasCount = true;
+		    	// 			}
 		    			}
 		    		});
+
 		    	}
 		    },
 		    showLogin() {
