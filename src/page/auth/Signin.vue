@@ -179,7 +179,6 @@ export default {
 	      	let ref = encodeURIComponent(window.location.protocol+"//"+window.location.host + "/#/signup?mode=bind");
 	      	let locationRef = apiBaseUrl + '/v2/ecapi.auth.web?vendor=' + ENUM.SOCIAL_VENDOR.WEIXIN + '&scope=' + scope + "&referer=" + ref;
 	      	window.location.href = locationRef
-	      	alert(ref);
 	  	},
 
 		onAuthSuccess () {
@@ -189,27 +188,16 @@ export default {
 		  		this.saveToken({ 'token': token })
 		  		Indicator.open()
 		  		userProfileGet().then(response => {
-		  			alert(response);
 	  				Indicator.close()
 	  				if (response && response.user) {
-	  					alert('res');
 	  					this.saveUser(response);
-	  					// this.goBindPhone();
 	  					this.goHome()
 	  				}
 		  		},error => {
-		  			alert('error');
 	  				Indicator.close()
 	  				this.goHome()
 		  		});
 		  	}
-		},
-
-		goBindPhone() {
-			alert('跳转路由');
-
-			// this.$router.push('/signup')
-			// this.$router.push({'name':'signup', params: {'mode': 'bind'}});
 		}
 	}
 };

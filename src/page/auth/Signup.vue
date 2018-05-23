@@ -70,7 +70,7 @@ export default {
 			if (mode === 'signup') {
 				return '快速注册'
 			} else if (mode === 'bind') {
-				return '绑定手机'
+				return '绑定手机号'
 			} else if (mode === 'retrieve') {
 				return '找回密码'
 			}
@@ -196,6 +196,10 @@ export default {
   			return true;
   		},
 
+  		goHome() {
+	  		this.$router.push('/home')
+	  	},
+
   		signup() {
   			if (!this.check()) {
   				return;
@@ -220,7 +224,8 @@ export default {
   			Indicator.open()
   			authMobile.authMobileBinding(this.username, this.code, this.password).then(
   				(response) => {
-  					Indicator.close()
+  					Indicator.close();
+  					this.goHome();
   				}, (error) => {
   					Indicator.close()
   					Toast(error.errorMsg)
