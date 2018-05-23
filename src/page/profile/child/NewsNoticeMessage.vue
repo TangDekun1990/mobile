@@ -51,7 +51,8 @@ export default {
 		...mapMutations({
 			saveMessageTime: "saveMessageTime",
 			changeType: "changeType",
-			changestatus: "changestatus"
+			changestatus: "changestatus",
+			saveNoticeNews: "saveNoticeNews"
 		}),
 
 		goBack() {
@@ -73,6 +74,7 @@ export default {
 		    			}
 		    			this.isMore = res.paged.more == 1 ? true : false;
 					}
+					this.saveNoticeNews(res);
 	    			Indicator.close();
 				}
 			});

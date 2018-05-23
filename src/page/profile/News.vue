@@ -102,7 +102,7 @@ export default {
 	    					this.changestatus({'isShowOrder': false});
 	    				}
 	    			}
-	    			this.saveOrderNews(res);
+	    			// this.saveOrderNews(res);
 	    		}
 	    	});
 	    },
@@ -124,7 +124,7 @@ export default {
 	    					this.changestatus({'isShowNotice': false});
 	    				}
 	    			}
-	    			this.saveNoticeNews(res);
+	    			// this.saveNoticeNews(res);
 	    		}
 	    	});
 	    },
