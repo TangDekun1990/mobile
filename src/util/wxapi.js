@@ -34,7 +34,6 @@ const wxApi = {
 		jssdkConfig(window.location.href.split('#')[0]).then(res => {
 			if (res) {
 				let wechatConfig = res.config;
-				console.log(wechatConfig);
 				that.wxRegister(wechatConfig, title, imgUrl, desc);
 			}
 		})
