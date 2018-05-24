@@ -48,18 +48,18 @@
 
 		mounted() {
 			this.$nextTick(() => {
-				if(this.detailInfo) {
-					let title = this.detailInfo.name;
-					let imgUrl = '';
-					let desc = '';
-					if (this.detailInfo.photos) {
-						imgUrl = this.detailInfo.photos[0].thumb;
-					}
-					if(this.detailInfo.desc) {
-						desc = this.detailInfo.desc;
-					}
-					this.wxApi.getConfigRes(title, imgUrl, desc);
-				}
+				// if(this.detailInfo) {
+				// 	let title = this.detailInfo.name;
+				// 	let imgUrl = '';
+				// 	let desc = '';
+				// 	if (this.detailInfo.photos) {
+				// 		imgUrl = this.detailInfo.photos[0].thumb;
+				// 	}
+				// 	if(this.detailInfo.desc) {
+				// 		desc = this.detailInfo.desc;
+				// 	}
+				// 	this.wxApi.getConfigRes(title, imgUrl, desc);
+				// }
 			});
 		},
 
@@ -104,6 +104,16 @@
 				getProductDetail(this.productId).then(res => {
 					if (res) {
 						this.productDetail = res.product;
+						let title = this.detailInfo.name;
+						let imgUrl = '';
+						let desc = '';
+						if (this.detailInfo.photos) {
+							imgUrl = this.detailInfo.photos[0].thumb;
+						}
+						if(this.detailInfo.desc) {
+							desc = this.detailInfo.desc;
+						}
+						this.wxApi.getConfigRes(title, imgUrl, desc);
 						this.saveInfo(res.product);
 					}
 				})
