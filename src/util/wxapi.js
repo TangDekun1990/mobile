@@ -21,7 +21,7 @@ const wxApi = {
 		jssdkConfig(url).then(res => {
 			if (res) {
 				let wechatConfig = res.config;
-				alert(url)
+				console.log(wechatConfig);
 				that.wxRegister(wechatConfig, title, imgUrl, desc, url);
 			}
 		})
