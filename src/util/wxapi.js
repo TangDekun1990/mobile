@@ -64,6 +64,7 @@ const wxApi = {
 				desc: desc, // 分享描述
 				link: window.location.href.split('#')[0]+'#'+window.location.href.split('#')[1],
 				success: function() {
+					// window.history.length = 0;
 					window.alert('已分享给朋友');
 				},
 				error: function () {
