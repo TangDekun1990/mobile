@@ -69,8 +69,9 @@
 					if(this.detailInfo.desc) {
 						desc = this.detailInfo.desc;
 					}
-					let url = window.location.href.split('#')[0];
-					this.wxApi.getConfigRes(title, imgUrl, desc, url);
+					// let url = document.location.href;
+					let url = location.href.split('/#')[0]+"?"+encodeURIComponent(location.href.split('/#')[1]);
+					this.wxApi.getConfigRes(title, imgUrl, desc);
 				}
 			}
 		},
