@@ -3,7 +3,7 @@ const state = {
 	time: {'noticeTime': '', 'ordertime': ''},
 	type: false, // type == false ? join_at : create_at
 	isSwitch: true, // switch == true ? 开 : 关
-	ishasCount: false
+	ishasCount: 0
 }
 
 // mutations

@@ -46,6 +46,7 @@ export default {
 	},
 
 	created() {
+		this.setOrderCount(0);
 		// this.getmessageOrderList();
 	},
 
@@ -58,7 +59,8 @@ export default {
 			saveMessageTime: "saveMessageTime",
 			changeType: "changeType",
 			changestatus: "changestatus",
-			saveOrderNews: "saveOrderNews"
+			saveOrderNews: "saveOrderNews",
+			setOrderCount: 'setOrderCount'
 		}),
 
 		goBack() {

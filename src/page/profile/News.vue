@@ -16,7 +16,7 @@
 					<h3>订单消息</h3>
 					<span v-if="orderMessage.length > 0">{{orderMessage[0].content}}</span>
 					<span v-if="orderMessage.length <= 0">暂无信息</span>
-					<span class="prompt" v-if="status.isShowOrder"></span>
+					<span class="prompt" v-if="orderCount > 0"></span>
 				</div>
 			</div>
 
@@ -28,7 +28,7 @@
 					<h3>通知消息</h3>
 					<span v-if="noticeMessage.length > 0">{{noticeMessage[0].content}}</span>
 					<span v-if="noticeMessage.length <= 0">暂无信息</span>
-					<span class="prompt" v-if="status.isShowNotice"></span>
+					<span class="prompt" v-if="noticeCount > 0"></span>
 				</div>
 			</div>
 
@@ -63,7 +63,9 @@ export default {
 		...mapState({
 			orderNews: state => state.news.orderNews,
 			noticeNews: state => state.news.noticeNews,
-			status: state => state.news.status
+			status: state => state.news.status,
+			orderCount: state => state.news.orderCount,
+			noticeCount: state => state.news.noticeCount
 		})
 	},
 

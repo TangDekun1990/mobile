@@ -40,6 +40,7 @@ export default {
 	},
 
 	created() {
+		this.setNoticeCount(0);
 		// this.getmessageSystemList();
 	},
 
@@ -52,7 +53,8 @@ export default {
 			saveMessageTime: "saveMessageTime",
 			changeType: "changeType",
 			changestatus: "changestatus",
-			saveNoticeNews: "saveNoticeNews"
+			saveNoticeNews: "saveNoticeNews",
+			setNoticeCount: 'setNoticeCount'
 		}),
 
 		goBack() {

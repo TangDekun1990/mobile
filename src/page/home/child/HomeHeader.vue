@@ -1,10 +1,10 @@
 <template>
-	<div class="home-header"> 
-    <input type="search" placeholder="想找什么？" autocomplete="off" @click="onSearch">      
+	<div class="home-header">
+    <input type="search" placeholder="想找什么？" autocomplete="off" @click="onSearch">
     <div class="header-item" @click="rightClick">
       <img src="../../../assets/image/change-icon/b0_message@2x.png" class="header-icon">
-      <span v-if="ishasCount == true"></span>				
-    </div>		
+      <span v-if="ishasCount > 0"></span>
+    </div>
 	</div>
 </template>
 
@@ -15,7 +15,7 @@ export default {
   computed: {
     ...mapState({
       isOnline: state => state.auth.isOnline,
-      ishasCount: state => state.profile.ishasCount,
+      ishasCount: state => state.profile.ishasCount
     })
   },
   methods: {

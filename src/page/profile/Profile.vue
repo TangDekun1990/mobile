@@ -211,7 +211,9 @@
 				changeType: 'changeType',
 				saveMessageTime: 'saveMessageTime',
 				changeCount: 'changeCount',
-				changeStatus: 'changeStatus'
+				changeStatus: 'changeStatus',
+				setOrderCount: 'setOrderCount',
+				setNoticeCount: 'setNoticeCount'
 			}),
 		    // 获取订单不同状态的数量统计
 		    getOrderSubtotal() {
@@ -237,7 +239,14 @@
 		    		}
 		    		messageCount(after, type).then(res => {
 		    			if (res) {
+		    				if (type == 1) {
+		    					this.setNoticeCount(res.count);
+		    				}
+		    				if (type == 2) {
+		    					this.setOrderCount(res.count);
+		    				}
 		    				this.ishasCount += res.count;
+		    				this.changeCount(this.ishasCount);
 							// let	counts = this.changeCount(this.count);
 		    	// 			if (res.count > this.counts) {
 		    	// 				this.ishasCount = true;

@@ -65,15 +65,15 @@ const wxApi = {
 				link: window.location.href.split('#')[0]+'#'+window.location.href.split('#')[1],
 				success: function() {
 					// window.history.length = 0;
-					window.alert('已分享给朋友');
+					// window.alert('已分享给朋友');
 				},
 				error: function () {
-					window.alert('分享失败');
+					// window.alert('分享失败');
 				}
 			});
 		});
 		wx.error(res => {
-			alert('验证失败的信息:' + res.errMsg);
+			// alert('验证失败的信息:' + res.errMsg);
 			// console.log(res);
 		});
 	},
