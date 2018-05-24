@@ -1,9 +1,10 @@
+
 import wx from 'weixin-js-sdk'
 import { configGet, jssdkConfig } from '../api/network/config'
 const wxApi = {
 	/*
-	* [isweixin 判断是否微信浏览器]
-	*/
+	 * [isweixin 判断是否微信浏览器]
+	 */
 	isweixin() {
 		const ua = window.navigator.userAgent.toLowerCase()
 		if (ua.match(/MicroMessenger/i) == 'micromessenger') {
@@ -14,12 +15,12 @@ const wxApi = {
 	},
 
 	/*
-	* getConfigRes： 获取config微信配置
-	*/
-	getConfigRes(title, imgUrl, desc, url) {
+	 * getConfigRes： 获取config微信配置
+	 */
+	getConfigRes(title, imgUrl, desc) {
 		let that = this;
 		// configGet().then(res => {
- 	// 		if (res) {
+ 		// 		if (res) {
 		// 		let configs = res.config,
 		// 			wechatConfig = {};
 		// 		for (const key in configs) {
@@ -30,18 +31,19 @@ const wxApi = {
 		// 		that.wxRegister(wechatConfig, title, imgUrl, desc);
 		// 	}
 		// });
-		jssdkConfig(url).then(res => {
+		jssdkConfig(window.location.href.split('#')[0]).then(res => {
 			if (res) {
 				let wechatConfig = res.config;
 				console.log(wechatConfig);
-				that.wxRegister(wechatConfig, title, imgUrl, desc, url);
+				that.wxRegister(wechatConfig, title, imgUrl, desc);
 			}
 		})
 	},
-	/**
-	* [wxRegister 微信Api初始化]
-	* @param  {Function} callback [ready回调函数]
-	*/
+
+	/*
+	 * [wxRegister 微信Api初始化]
+	 * @param  {Function} callback [ready回调函数]
+	 */
 	wxRegister(config, title, imgUrl, desc, url, callback) {
 		wx.config({
 			debug: false, // 开启调试模式
@@ -62,26 +64,26 @@ const wxApi = {
 				imgUrl: imgUrl, // 分享图标
 				desc: desc, // 分享描述
 				link: window.location.href.split('#')[0]+'#'+window.location.href.split('#')[1],
-				data_url: 'link',
 				success: function() {
-					console.log(url);
+					window.alert('已分享给朋友');
 				},
 				error: function () {
-					console.log('分享失败');
+					window.alert('分享失败');
 				}
 			});
 		});
 		wx.error(res => {
-			console.log('error');
+			alert('验证失败的信息:' + res.errMsg);
+			// console.log(res);
 		});
 	},
 
-	/**
-	* [ShareTimeline 微信分享到朋友圈]
-	* @param {[type]} opstion [分享信息]
-	* @param {[type]} success [成功回调]
-	* @param {[type]} error   [失败回调]
-	*/
+	/*
+	 * [ShareTimeline 微信分享到朋友圈]
+	 * @param {[type]} opstion [分享信息]
+	 * @param {[type]} success [成功回调]
+	 * @param {[type]} error   [失败回调]
+	 */
 	ShareTimeline(opstion) {
 		wx.onMenuShareTimeline({
 			title: opstion.title, // 分享标题
@@ -98,12 +100,12 @@ const wxApi = {
 		})
 	},
 
-	/**
-	* [ShareTimeline 微信分享给朋友]
-	* @param {[type]} option [分享信息]
-	* @param {[type]} success [成功回调]
-	* @param {[type]} error   [失败回调]
-	*/
+	/*
+	 * [ShareTimeline 微信分享给朋友]
+	 * @param {[type]} option [分享信息]
+	 * @param {[type]} success [成功回调]
+	 * @param {[type]} error   [失败回调]
+	 */
 	ShareAppMessage(option) {
 		wx.onMenuShareAppMessage({
 			title: option.title, // 分享标题
@@ -121,12 +123,12 @@ const wxApi = {
 		})
 	},
 
-	/**
-	* [ShareTimeline 微信分享到QQ]
-	* @param {[type]} opstion [分享信息]
-	* @param {[type]} success [成功回调]
-	* @param {[type]} error   [失败回调]
-	*/
+	/*
+	 * [ShareTimeline 微信分享到QQ]
+	 * @param {[type]} opstion [分享信息]
+	 * @param {[type]} success [成功回调]
+	 * @param {[type]} error   [失败回调]
+	 */
 	ShareQQ(opstion) {
 		wx.onMenuShareQQ({
 			title: opstion.title, // 分享标题
@@ -143,12 +145,12 @@ const wxApi = {
 		})
 	},
 
-	/**
-	* [ShareTimeline 微信分享到微博]
-	* @param {[type]} opstion [分享信息]
-	* @param {[type]} success [成功回调]
-	* @param {[type]} error   [失败回调]
-	*/
+	/*
+	 * [ShareTimeline 微信分享到微博]
+	 * @param {[type]} opstion [分享信息]
+	 * @param {[type]} success [成功回调]
+	 * @param {[type]} error   [失败回调]
+	 */
 	ShareWeibo(opstion) {
 		wx.onMenuShareWeibo({
 			title: opstion.title, // 分享标题
