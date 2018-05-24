@@ -59,20 +59,20 @@
 		// TODO
 		watch: {
 			detailInfo: function(value) {
-				if(value) {
-					let title = this.detailInfo.name;
-					let imgUrl = '';
-					let desc = '';
-					if (this.detailInfo.photos) {
-						imgUrl = this.detailInfo.photos[0].thumb;
-					}
-					if(this.detailInfo.desc) {
-						desc = this.detailInfo.desc;
-					}
-					// let url = document.location.href;
-					let url = location.href.split('/#')[0]+"?"+encodeURIComponent(location.href.split('/#')[1]);
-					this.wxApi.getConfigRes(title, imgUrl, desc);
-				}
+				// if(value) {
+				// 	let title = this.detailInfo.name;
+				// 	let imgUrl = '';
+				// 	let desc = '';
+				// 	if (this.detailInfo.photos) {
+				// 		imgUrl = this.detailInfo.photos[0].thumb;
+				// 	}
+				// 	if(this.detailInfo.desc) {
+				// 		desc = this.detailInfo.desc;
+				// 	}
+				// 	// let url = document.location.href;
+				// 	let url = location.href.split('/#')[0]+"?"+encodeURIComponent(location.href.split('/#')[1]);
+				// 	this.wxApi.getConfigRes(title, imgUrl, desc);
+				// }
 			}
 		},
 		created(){
