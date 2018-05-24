@@ -59,6 +59,7 @@ export default {
 		...mapState({
 			config: state => state.config.config,
 			feature: state => state.config.feature,
+			isAuthorized: state => state.auth.isAuthorized
 		}),
 		isShowWechat: function () {
 			if (this.feature && this.feature['signin.qq']) {
@@ -103,6 +104,7 @@ export default {
 			saveAuthInfo: 'signin',
 			saveToken: 'saveToken',
 			saveUser: 'saveUser',
+			saveAuthorized: 'saveAuthorized'
 		}),
 
 		...mapActions({
@@ -158,6 +160,8 @@ export default {
   		},
 
   		onWechat() {
+  			// this.isAuthorized = this.isAuthorized++;
+  			// this.saveAuthorized(++this.isAuthorized);
   			this.wxWebAuth()
   		},
 
@@ -175,8 +179,15 @@ export default {
 
 	    wxWebAuth() {
 	      	let scope = 'snsapi_userinfo' // 允许获取用户信息
-	      	// let ref = window.location.href ? encodeURIComponent(window.location.href) : ''
-	      	let ref = encodeURIComponent(window.location.protocol+"//"+window.location.host + "/#/signup?mode=bind");
+	      	let ref = '';
+	      	alert(this.isAuthorized);
+	      	if (this.isAuthorized == 0) {
+	      		this.saveAuthorized(1);
+	      		ref = encodeURIComponent(window.location.protocol+"//"+window.location.host + "/#/signup?mode=bind");
+	      	} else {
+	      		ref = window.location.href ? encodeURIComponent(window.location.href) : '';
+	      	}
+	      	// let ref = encodeURIComponent(window.location.protocol+"//"+window.location.host + "/#/signup?mode=bind");
 	      	let locationRef = apiBaseUrl + '/v2/ecapi.auth.web?vendor=' + ENUM.SOCIAL_VENDOR.WEIXIN + '&scope=' + scope + "&referer=" + ref;
 	      	window.location.href = locationRef
 	  	},

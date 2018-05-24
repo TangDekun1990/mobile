@@ -257,7 +257,8 @@ export default {
   			if (mode === 'signup') {
   				this.signup()
   			} else if (mode === 'bind') {
-  				this.bind()
+  				// this.bind()
+  				this.signup()
   			} else if (mode === 'retrieve') {
   				this.retrieve()
   			}
