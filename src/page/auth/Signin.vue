@@ -150,11 +150,11 @@ export default {
 	  	},
 
   		onSignup() {
-  			this.$router.push({ name: 'signup', params: { mode: 'signup' } });
+  			this.$router.push({ name: 'signup', query: { mode: 'signup' } });
   		},
 
   		onRetrieve() {
-  			this.$router.push({ name: 'signup', params: { mode: 'retrieve' } });
+  			this.$router.push({ name: 'signup', query: { mode: 'retrieve' } });
   		},
 
   		onWechat() {
