@@ -7,6 +7,7 @@
 		</mt-header>
 		<!-- body -->
 		<div class="flex-wrapper">
+
 			<div class="newslist"  v-on:click="getOrderMessage()">
 				<div class="ui-image-wrapper">
 					<img src="../../assets/image/change-icon/e12_logistics@2x.png">
@@ -14,9 +15,11 @@
 				<div class="flex-right">
 					<h3>订单消息</h3>
 					<span v-if="orderMessage.length > 0">{{orderMessage[0].content}}</span>
+					<span v-if="orderMessage.length <= 0">暂无信息</span>
 					<span class="prompt" v-if="status.isShowOrder"></span>
 				</div>
 			</div>
+
 			<div class="newslist" v-on:click="getNoticeMessage()">
 				<div class="ui-image-wrapper">
 					<img src="../../assets/image/change-icon/e12_message@2x.png">
@@ -24,9 +27,11 @@
 				<div class="flex-right">
 					<h3>通知消息</h3>
 					<span v-if="noticeMessage.length > 0">{{noticeMessage[0].content}}</span>
+					<span v-if="noticeMessage.length <= 0">暂无信息</span>
 					<span class="prompt" v-if="status.isShowNotice"></span>
 				</div>
 			</div>
+
 			<div class="newslist" v-on:click="getServiceMessage()">
 				<div class="ui-image-wrapper">
 					<img src="../../assets/image/change-icon/e12_service@2x.png">
@@ -34,9 +39,9 @@
 				<div class="flex-right">
 					<h3>客服消息</h3>
 					<span>在线客服咨询时间为08:00-22:00 </span>
-					<!-- <span class="prompt"></span> -->
 				</div>
 			</div>
+
 		</div>
 	</div>
 </template>
@@ -92,12 +97,12 @@ export default {
 	    			this.orderMessage = res.messages;
 	    			if(this.orderNews && this.orderNews.paged) {
 	    				if(this.orderNews.paged.total < res.paged.total) {
-	    					this.changestatus({'isShowOrder': true});
+	    					this.changestatus({'isShowOrder': true, 'isShowNotice': this.status.isShowNotice});
 	    				} else {
-	    					this.changestatus({'isShowOrder': false});
+	    					this.changestatus({'isShowOrder': false, 'isShowNotice': this.status.isShowNotice});
 	    				}
 	    			}
-	    			this.saveOrderNews(res);
+	    			// this.saveOrderNews(res);
 	    		}
 	    	});
 	    },
@@ -114,12 +119,12 @@ export default {
 	    			this.noticeMessage = res.messages;
 	    			if(this.noticeNews && this.noticeNews.paged) {
 	    				if(this.noticeNews.paged.total < res.paged.total) {
-	    					this.changestatus({'isShowNotice': true});
+	    					this.changestatus({'isShowNotice': true, 'isShowOrder': this.status.isShowOrder});
 	    				} else {
-	    					this.changestatus({'isShowNotice': false});
+	    					this.changestatus({'isShowNotice': false, 'isShowOrder': this.status.isShowOrder});
 	    				}
 	    			}
-	    			this.saveNoticeNews(res);
+	    			// this.saveNoticeNews(res);
 	    		}
 	    	});
 	    },

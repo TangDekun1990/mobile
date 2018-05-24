@@ -1,24 +1,25 @@
 <template>
-  <div class="container">
-	<!-- header -->
-	<mt-header class="header" title="通知消息">
-	  <header-item slot="left" v-bind:isBack=true v-on:onclick="goBack">
-	  </header-item>
-  </mt-header>
-  <!-- body -->
-  <div class="body" v-infinite-scroll="getMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
-	  <div class="notice-message-body" v-for="(item, index) in NoticeMessage" :key="index" v-on:click="goNotice(item.link)">
-		<p>{{item.created_at * 1000 | convertTime }}</p>
-		<div class="notice-track">
-		  <div class="notice-status">
-			<p class="title">{{item.title}}</p>
-			<p class="content">{{item.content}}</p>
+  	<div class="container">
+		<!-- header -->
+		<mt-header class="header" title="通知消息">
+		  	<header-item slot="left" v-bind:isBack=true v-on:onclick="goBack"></header-item>
+	  	</mt-header>
+  		<!-- body -->
+	  	<div class="body" v-infinite-scroll="getMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
+		  	<div class="notice-message-body" v-for="(item, index) in NoticeMessage" :key="index" v-on:click="goNotice(item.link)" v-if="NoticeMessage.length > 0">
+				<p>{{item.created_at * 1000 | convertTime }}</p>
+				<div class="notice-track">
+					<div class="notice-status">
+						<p class="title">{{item.title}}</p>
+						<p class="content" v-if="item.content">{{item.content}}</p>
+						<p class="content" v-if="!item.content">暂无信息</p>
+					</div>
+					<img class="arrow-right"src="../../../assets/image/change-icon/enter@2x.png">
+				</div>
+			</div>
+			<v-empty-message :info="'您还没有消息通知'" :type="'message'" v-if="NoticeMessage.length <= 0"></v-empty-message>
 		</div>
-		<img class="arrow-right"src="../../../assets/image/change-icon/enter@2x.png">
 	</div>
-</div>
-</div>
-</div>
 </template>
 
 <script>
@@ -27,6 +28,7 @@ import { Header, Indicator } from "mint-ui";
 import { messageSystemList } from "../../../api/network/message"; //通知消息
 import { openLink } from "../../cardpage/deeplink";
 import { mapState, mapMutations } from "vuex";
+import EmptyMessage from './empty'
 export default {
 	data() {
 		return {
@@ -41,11 +43,16 @@ export default {
 		// this.getmessageSystemList();
 	},
 
+	components: {
+		'v-empty-message': EmptyMessage
+	},
+
 	methods: {
 		...mapMutations({
 			saveMessageTime: "saveMessageTime",
 			changeType: "changeType",
-			changestatus: "changestatus"
+			changestatus: "changestatus",
+			saveNoticeNews: "saveNoticeNews"
 		}),
 
 		goBack() {
@@ -58,13 +65,16 @@ export default {
 			let params = this.params;
 			messageSystemList(params.page, params.per_page).then(res => {
 				if (res) {
-					this.changeType(true);
-					this.saveMessageTime({ noticeTime: res.messages[0].created_at });
-					this.changestatus({'isShowNotice': false});
-					if (ispush) {
-	    				this.NoticeMessage = this.NoticeMessage.concat(res.messages);
-	    			}
-	    			this.isMore = res.paged.more == 1 ? true : false;
+					if (res.messages.length > 0) {
+						this.changeType(true);
+						this.saveMessageTime({ noticeTime: res.messages[0].created_at });
+						this.changestatus({'isShowNotice': false});
+						if (ispush) {
+		    				this.NoticeMessage = this.NoticeMessage.concat(res.messages);
+		    			}
+		    			this.isMore = res.paged.more == 1 ? true : false;
+					}
+					this.saveNoticeNews(res);
 	    			Indicator.close();
 				}
 			});

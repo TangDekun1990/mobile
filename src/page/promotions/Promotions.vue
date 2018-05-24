@@ -177,7 +177,7 @@
 	.ui-commmon-header {
 		border-bottom: 1px solid #E8EAED;
 		background-color: #ffffff;
-		position: absolute;
+		position: fixed;
 		top: 0px;
 		width: 100%;
 		padding: 0px;

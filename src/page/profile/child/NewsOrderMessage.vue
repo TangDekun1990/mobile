@@ -7,7 +7,7 @@
 		</mt-header>
 		<!-- body -->
 		<div class="flex-wrapper body" v-infinite-scroll="getMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
-			<div class="order-message-body" v-for="(item, index) in messageOrderList" v-on:click="getOrderDetail(item.link)">
+			<div class="order-message-body" v-for="(item, index) in messageOrderList" v-on:click="getOrderDetail(item.link)" v-if="messageOrderList.length > 0">
 				<p>{{item.created_at * 1000| convertTime }}</p>
 				<div class="order-track">
 					<div class="arrow-left">
@@ -23,6 +23,7 @@
 					<img class="arrow-right" src="../../../assets/image/change-icon/enter@2x.png">
 				</div>
 			</div>
+			<v-empty-message :info="'您还没有消息通知'" :type="'message'" v-if="messageOrderList.length <= 0"></v-empty-message>
 		</div>
 	</div>
 </template>
@@ -33,6 +34,7 @@ import { Header, Indicator } from "mint-ui";
 import { messageOrderList } from "../../../api/network/message"; //订单消息列表
 import { openLink } from "../../cardpage/deeplink";
 import { mapState, mapMutations } from "vuex";
+import EmptyMessage from './empty'
 export default {
 	data() {
 		return {
@@ -47,11 +49,16 @@ export default {
 		// this.getmessageOrderList();
 	},
 
+	components: {
+		'v-empty-message': EmptyMessage
+	},
+
 	methods: {
 		...mapMutations({
 			saveMessageTime: "saveMessageTime",
 			changeType: "changeType",
-			changestatus: "changestatus"
+			changestatus: "changestatus",
+			saveOrderNews: "saveOrderNews"
 		}),
 
 		goBack() {
@@ -65,15 +72,18 @@ export default {
 	    	messageOrderList(data.page, data.per_page).then(res => {
 	    		if (res) {
 	    			this.orderMessage = res.messages;
-	    			this.changeType(true);
-	    			this.saveMessageTime({ ordertime: this.orderMessage[0].created_at });
-	    			if (ispush) {
-	    				this.messageOrderList = this.messageOrderList.concat(res.messages);
-	    			} else {
-	    				this.messageOrderList = Object.assign([], this.messageOrderList, res.messages);
+	    			if (res.messages.length > 0) {
+	    				this.changeType(true);
+		    			this.saveMessageTime({ ordertime: this.orderMessage[0].created_at });
+		    			if (ispush) {
+		    				this.messageOrderList = this.messageOrderList.concat(res.messages);
+		    			} else {
+		    				this.messageOrderList = Object.assign([], this.messageOrderList, res.messages);
+		    			}
+		    			this.isMore = res.paged.more == 1 ? true : false;
+		    			this.changestatus({'isShowOrder': false});
 	    			}
-	    			this.isMore = res.paged.more == 1 ? true : false;
-	    			this.changestatus({'isShowOrder': false});
+	    			this.saveOrderNews(res);
 	    			Indicator.close();
 	    		}
 	    	});
