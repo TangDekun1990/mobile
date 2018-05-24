@@ -42,8 +42,7 @@
 
 		computed: mapState({
 			isHideCart: state => state.detail.isHideCart,
-			isHideHeader: state => state.detail.isHideHeader,
-			detailInfo: state => state.detail.detailInfo
+			isHideHeader: state => state.detail.isHideHeader
 		}),
 
 		mounted() {
@@ -104,17 +103,17 @@
 				getProductDetail(this.productId).then(res => {
 					if (res) {
 						this.productDetail = res.product;
-						let title = this.detailInfo.name;
+						this.saveInfo(res.product);
+						let title = this.productDetail.name;
 						let imgUrl = '';
 						let desc = '';
-						if (this.detailInfo.photos) {
-							imgUrl = this.detailInfo.photos[0].thumb;
+						if (this.productDetail.photos) {
+							imgUrl = this.productDetail.photos[0].thumb;
 						}
-						if(this.detailInfo.desc) {
-							desc = this.detailInfo.desc;
+						if(this.productDetail.desc) {
+							desc = this.productDetail.desc;
 						}
 						this.wxApi.getConfigRes(title, imgUrl, desc);
-						this.saveInfo(res.product);
 					}
 				})
 			}
