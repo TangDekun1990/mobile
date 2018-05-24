@@ -69,7 +69,7 @@
 					if(this.detailInfo.desc) {
 						desc = this.detailInfo.desc;
 					}
-					let url = ""+window.location.href+""
+					let url = window.location.href.split('#')[0];
 					this.wxApi.getConfigRes(title, imgUrl, desc, url);
 				}
 			}

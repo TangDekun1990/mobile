@@ -18,6 +18,18 @@ const wxApi = {
 	*/
 	getConfigRes(title, imgUrl, desc, url) {
 		let that = this;
+		// configGet().then(res => {
+ 	// 		if (res) {
+		// 		let configs = res.config,
+		// 			wechatConfig = {};
+		// 		for (const key in configs) {
+		// 			if (key == 'wechat.web') {
+		// 				wechatConfig = configs[key];
+		// 			}
+		// 		}
+		// 		that.wxRegister(wechatConfig, title, imgUrl, desc);
+		// 	}
+		// });
 		jssdkConfig(url).then(res => {
 			if (res) {
 				let wechatConfig = res.config;
@@ -49,12 +61,19 @@ const wxApi = {
 				title: title, // 分享标题
 				imgUrl: imgUrl, // 分享图标
 				desc: desc, // 分享描述
-				link: url
+				link: window.location.href.split('#')[0]+'#'+window.location.href.split('#')[1],
+				data_url: 'link',
+				success: function() {
+					console.log(url);
+				},
+				error: function () {
+					console.log('分享失败');
+				}
 			});
 		});
 		wx.error(res => {
 			console.log('error');
-		})
+		});
 	},
 
 	/**
