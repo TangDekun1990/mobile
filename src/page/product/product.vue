@@ -80,6 +80,7 @@
 			this.getUrlParams();
 
 			this.$on('change-list', (data) => {
+				document.activeElement.blur();
 				let res = data;
 				this.params.page = 1;
 				this.productList = [];
@@ -91,6 +92,10 @@
 			this.$on('get-cart-quantity', () => {
 				this.$refs.header.getCarNumber();
 			})
+
+			if (this.$route.query.keywords) {
+				document.activeElement.blur();
+			}
 		},
 
 		mounted(){
