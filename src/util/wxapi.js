@@ -48,7 +48,7 @@ const wxApi = {
 			wx.onMenuShareAppMessage({
 				title: title, // 分享标题
 				imgUrl: imgUrl, // 分享图标
-				desc: desc // 分享描述
+				desc: desc, // 分享描述
 				link: url
 			});
 		});
