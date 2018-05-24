@@ -1,5 +1,5 @@
 import wx from 'weixin-js-sdk'
-import { configGet } from '../api/network/config'
+import { configGet, jssdkConfig } from '../api/network/config'
 const wxApi = {
 	/*
 	* [isweixin 判断是否微信浏览器]
@@ -16,18 +16,13 @@ const wxApi = {
 	/*
 	* getConfigRes： 获取config微信配置
 	*/
-	getConfigRes(title, imgUrl, desc) {
+	getConfigRes(title, imgUrl, desc, url) {
 		let that = this;
-		configGet().then(res => {
+		jssdkConfig(url).then(res => {
 			if (res) {
-				let configs = res.config,
-					wechatConfig = {};
-				for (const key in configs) {
-					if (key == 'wechat.web') {
-						wechatConfig = configs[key];
-					}
-				}
-				that.wxRegister(wechatConfig, title, imgUrl, desc);
+				let wechatConfig = res.config;
+				alert(url)
+				that.wxRegister(wechatConfig, title, imgUrl, desc, url);
 			}
 		})
 	},
@@ -35,7 +30,7 @@ const wxApi = {
 	* [wxRegister 微信Api初始化]
 	* @param  {Function} callback [ready回调函数]
 	*/
-	wxRegister(config, title, imgUrl, desc, callback) {
+	wxRegister(config, title, imgUrl, desc, url, callback) {
 		wx.config({
 			debug: false, // 开启调试模式
 			appId: config.app_id, // 必填，公众号的唯一标识
@@ -54,6 +49,7 @@ const wxApi = {
 				title: title, // 分享标题
 				imgUrl: imgUrl, // 分享图标
 				desc: desc // 分享描述
+				link: url
 			});
 		});
 		wx.error(res => {

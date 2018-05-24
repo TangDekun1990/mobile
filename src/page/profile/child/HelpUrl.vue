@@ -2,7 +2,7 @@
   <div class="containers">
     <!-- header -->
     <mt-header class="header" :title="getTitle">
-      <header-item slot="left" v-bind:isBack=true v-on:onclick="goBack()"></header-item>  
+      <header-item slot="left" v-bind:isBack=true v-on:onclick="goBack()"></header-item>
       <!-- <mt-button slot="right" icon="more" v-on:click="getShow()"></mt-button>    -->
     </mt-header>
     <!-- body -->
@@ -21,20 +21,20 @@
             <h3>分享到</h3>
             <div class="image">
               <label v-on:click="goWachat()">
-                <img src="../../../assets/image/change-icon/c7_commodity_list_2@2x.png"> 
+                <img src="../../../assets/image/change-icon/c7_commodity_list_2@2x.png">
                 <p>微信</p>
               </label>
               <label>
-                <img src="../../../assets/image/change-icon/c7_commodity_list_1@2x.png"> 
+                <img src="../../../assets/image/change-icon/c7_commodity_list_1@2x.png">
                 <p>微博</p>
               </label>
               <label>
-                <img src="../../../assets/image/change-icon/c7_commodity_list_3@2x.png"> 
+                <img src="../../../assets/image/change-icon/c7_commodity_list_3@2x.png">
                 <p>QQ</p>
               </label>
             </div>
             <p class="cancel" v-on:click="cancelInfo()">取消</p>
-          </div>     
+          </div>
        </mt-popup>
     <webview :url.asyc="getUrl">
     </webview>
@@ -65,7 +65,7 @@ export default {
   created() {
     let title = this.$route.query.title;
     let imgUrl = require('../../../assets/image/change-icon/apple-touch-icon.png')
-    this.wxApi.getConfigRes(title, imgUrl);
+    this.wxApi.getConfigRes(title, imgUrl, '', window.location.href);
   },
 
   methods: {

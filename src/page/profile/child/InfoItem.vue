@@ -25,13 +25,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .info-item-wrapper {    
+  .info-item-wrapper {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
     background-color: #fff;
-    border-bottom: 1px solid $lineColor; 
+    @include thin-border();
   }
   .item-title {
     font-size: 14px;
@@ -50,7 +50,7 @@ export default {
     width: 7px;
     height: 12px;
     margin-left: 10px;
-    margin-right: 10px;      
+    margin-right: 10px;
   }
 </style>
 
