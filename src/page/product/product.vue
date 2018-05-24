@@ -98,8 +98,10 @@
 			this.target = document.querySelector('.product-body');
 	    	let totalHeight = 89;
 			const target = this.target;
-	    	this.utils.fillTheScreen({target, totalHeight});
-		    this.$nextTick( () => {});
+	    	// this.utils.fillTheScreen({target, totalHeight});
+		    this.$nextTick( () => {
+		    	// this.utils.fillTheScreen({target, totalHeight});
+		    });
 		},
 
 		methods: {
@@ -212,13 +214,14 @@
 		background-color: #ffffff;
 		.product-header {
 			background-color: #ffffff;
-			position: absolute;
+			position: fixed;
 			top: 0px;
 			width: 100%;
 		}
 		div.product-body{
 			position: absolute;
 			top: 89px;
+			bottom: 0px;
 			background-color: #ffffff;
 			width: 100%;
 			height: auto;
