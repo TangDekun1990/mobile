@@ -105,7 +105,8 @@ export default {
 
 	methods: {
 		...mapMutations({
-			saveToken: 'signin'
+			saveToken: 'signin',
+			saveUser: 'saveUser'
 		}),
 
 		goBack() {
@@ -214,6 +215,7 @@ export default {
   				(response) => {
   					this.saveToken({ 'token': response.token, 'user': response.user })
   					Indicator.close()
+  					this.saveUser(response.user);
   					this.goProfile()
   				}, (error) => {
   					Indicator.close()
@@ -230,6 +232,7 @@ export default {
   			authMobile.authMobileBinding(this.username, this.code, this.password).then(
   				(response) => {
   					Indicator.close();
+  					this.saveUser(response.user);
   					this.goHome();
   				}, (error) => {
   					Indicator.close()
