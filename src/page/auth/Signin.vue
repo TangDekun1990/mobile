@@ -96,6 +96,7 @@ export default {
 		if (isTokenInvalid) {
 			Toast('登录过期')
 		}
+		console.log('88');
 		this.onAuthSuccess();
 	},
 
@@ -183,6 +184,7 @@ export default {
 	  	},
 
 	  	onAuthSuccess () {
+	  		debugger;
 			let openid = this.$cookie.get('openid')
 	  		let token = this.$cookie.get('token')
 	  		if (openid && token) {
