@@ -191,6 +191,8 @@ export default {
 	  	onAuthSuccess() {
 			let openid = this.$cookie.get('openid')
 	  		let token = this.$cookie.get('token')
+	  		console.log(openid)
+	  		console.log(token)
 	  		if (openid && token) {
 	  			Indicator.open()
 	  			this.saveToken({ 'token': token, 'isOnline': 'isOnline'})
@@ -206,6 +208,7 @@ export default {
 	  					}
 	  				}
 		  		},error => {
+		  			console.log(error);
 	  				Indicator.close()
 		  		});
 	  		}
