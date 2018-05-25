@@ -17,13 +17,14 @@
 
 		computed: {
 			...mapState({
-		      	detailInfo: state => state.detail.detailInfo
+		      	detailInfo: state => state.detail.detailInfo,
+		      	user: state => state.auth.user
 		    })
 		},
 
 		watch: {
 			detailInfo: function(value) {
-				this.utils.openZhichiManager(value);
+				this.utils.openZhichiManager(value, '', this.user);
 			}
 		},
 
