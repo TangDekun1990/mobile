@@ -147,8 +147,8 @@
 			span.cart-number {
 			  top: 5px;
 			  right: 20px;
-			  width: 18px;
-			  height: 14px;
+			  min-width: 18px;
+			  min-height: 14px;
 			  line-height: 14px;
 			}
 		}

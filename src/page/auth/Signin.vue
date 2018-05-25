@@ -135,6 +135,7 @@ export default {
       		Indicator.open()
       		authBase.authSignin(username, password).then((response) => {
       			Indicator.close()
+      			this.saveToken({ 'isOnline': 'online'})
       			this.saveAuthInfo({ 'token': response.token, 'user': response.user })
       			this.goHome()
       		}, (error) => {

@@ -103,10 +103,10 @@
 			<div class="detail">
 				<div class="number">
 					<label>订单编号：{{orderDetail.order.sn}} &nbsp;
-						<button class="tag-read" :data-clipboard-text="orderDetail.order.sn" v-on:click="getCopy()">复制</button>  
+						<button class="tag-read" :data-clipboard-text="orderDetail.order.sn" v-on:click="getCopy()">复制</button>
 					</label>
 					<p>下单时间：{{orderDetail.order.created_at * 1000 | convertTime}}</p>
-				</div> 
+				</div>
 				<div class="pay">
 					<p>支付方式：货到付款</p>
 				</div>
@@ -148,7 +148,7 @@
 			<!-- 待发货按钮 -->
 			<div class="btn" v-if="orderDetail.order.status == 1 ? '':checkState"></div>
 
-      <!-- 待收货按钮 -->
+	  <!-- 待收货按钮 -->
 			<div class="btn"  v-if="orderDetail.order.status == 2">
 				<button class="buttonbottom" v-on:click="confirm(orderDetail.order.id, index)">确认收货</button>
 			</div>
@@ -189,248 +189,272 @@ import { Toast } from "mint-ui";
 import Clipboard from "clipboard";
 import { mapState, mapMutations } from "vuex";
 export default {
-  mixins: [Promos],
-  data() {
-    return {
-      orderDetail: {},
-      popupVisible: false,
-      reasonList: [],
-      orderCancel: [],
-      checkState: "",
-      ORDERSTATUS: ORDERSTATUS,
-      currentNAVId: "",
-      orderListParams: { page: 0, per_page: 10, status: "" },
-      index: "",
-      order: {},
-      total_price: [],
-      orderIndex: 2,
-      isShow: false,
-      trackList: []
-    };
-  },
-  props: {
-    item: {
-      type: Object
-    }
-  },
-  components: {
-    OrderPrice,
-    CheckoutDesc
-  },
-  computed: {
-    ...mapState({
-      orderItem: state => state.order.orderItem,
-    })
-  },
-  created() {
+	mixins: [Promos],
+
+	data() {
+		return {
+		   orderDetail: {},
+		   popupVisible: false,
+		   reasonList: [],
+		   orderCancel: [],
+		   checkState: "",
+		   ORDERSTATUS: ORDERSTATUS,
+		   currentNAVId: "",
+		   orderListParams: { page: 0, per_page: 10, status: "" },
+		   index: "",
+		   order: {},
+		   total_price: [],
+		   orderIndex: 2,
+		   isShow: false,
+		   trackList: []
+		};
+	},
+
+	props: {
+		item: {
+			type: Object
+		}
+	},
+
+	components: {
+		OrderPrice,
+		CheckoutDesc
+	},
+
+	beforeRouteEnter(to, from, next) {
+		next( (vm) => {
+			if (to.name == 'orderDetail' && from.name) {
+				window.location.reload();
+			}
+		})
+	},
+
+	created() {
 		let id = this.$route.query.id ? this.$route.query.id : null;
-    this.orderInfo(id);
-    this.orderReasonList();
+		this.orderInfo(id);
+		this.orderReasonList();
 		this.getShippingStatusGet(id);
-  },
-  methods: {
-    ...mapMutations({
-      changeItem: "changeItem"
+	},
+
+	methods: {
+		...mapMutations({
+			changeItem: "changeItem"
 		}),
-		
-    // 获取订单详情数据
-    orderInfo(id) {
-      orderGet(id).then(res => {
-        if (res) {
-          this.orderDetail = res;
-          this.order = res.order;
+
+		// 获取订单详情数据
+		orderInfo(id) {
+			orderGet(id).then(res => {
+				if (res) {
+					this.orderDetail = res;
+					this.order = res.order;
 					this.total_price = res.order.goods;
-					this.utils.openZhichiManager(null, this.order);
-        }
-      });
-    },
+					this.utils.openZhichiManager('', this.order, this.user, this.user.id);
+				}
+			});
+		},
 
-    // 取消订单
-    cancel() {
-      this.popupVisible = true;
-    },
+		// 取消订单
+		cancel() {
+			this.popupVisible = true;
+		},
 
-    cancelInfo() {
-      this.popupVisible = false;
-    },
+		cancelInfo() {
+			this.popupVisible = false;
+		},
 
-    complete(id, index) {
-      this.popupVisible = false;
-      this.getordersuccess(id, index);
-      window.location.reload();
-    },
+		complete(id, index) {
+			this.popupVisible = false;
+			this.getordersuccess(id, index);
+			window.location.reload();
+		},
 
-    // 去支付
-    payment() {
-      let order = this.orderDetail ? this.orderDetail.order : null;
-      if (order) {
-        this.$router.push({ name: "payment", params: { order: order } });
-      }
-    },
+		// 去支付
+		payment() {
+			let order = this.orderDetail ? this.orderDetail.order : null;
+			if (order) {
+				this.$router.push({ name: "payment", params: { order: order } });
+			}
+		},
 
-    // 获取退货原因数据
-    orderReasonList() {
-      orderReasonList().then(res => {
-        if (res) {
-          this.reasonList = Object.assign([], this.reasonList, res.reasons);
-        }
-      });
-    },
+		// 获取退货原因数据
+		orderReasonList() {
+			orderReasonList().then(res => {
+				if (res) {
+					this.reasonList = Object.assign([], this.reasonList, res.reasons);
+				}
+			});
+		},
 
-    // 获取取消订单数据
-    getordersuccess(id, index) {
-      orderCancel(id, this.reasonId).then(res => {
-        if (res) {
-          this.orderList = [];
-        }
-      });
-    },
+		// 获取取消订单数据
+		getordersuccess(id, index) {
+			orderCancel(id, this.reasonId).then(res => {
+				if (res) {
+				  this.orderList = [];
+				}
+			});
+		},
 
-    getReasonItem(item) {
-      this.reasonId = item.id;
-    },
+		getReasonItem(item) {
+			this.reasonId = item.id;
+		},
 
-    // 查看物流
-    track(id) {
-      this.$router.push({ name: "orderTrack", params: { orderTrack: id } });
-    },
+		// 查看物流
+		track(id) {
+			this.$router.push({ name: "orderTrack", params: { orderTrack: id } });
+		},
 
-    // 获取物流状态数据
-    getShippingStatusGet(id) {
-      shippingStatusGet(id).then(res => {
-        if (res) {
-          this.trackList = res.status;
-        }
-      });
-    },
+		// 获取物流状态数据
+		getShippingStatusGet(id) {
+			shippingStatusGet(id).then(res => {
+				if (res) {
+				  this.trackList = res.status;
+				}
+			});
+		},
 
-    // 确认收货
-    confirm(id, index) {
-      MessageBox.confirm("是否确认收货？", "确认收货").then(action => {
-        this.orderConfirms(id);
-        // window.location.reload();
-      });
-    },
+		// 确认收货
+		confirm(id, index) {
+			MessageBox.confirm("是否确认收货？", "确认收货").then(action => {
+				this.orderConfirms(id);
+				// window.location.reload();
+			});
+		},
 
-    // 获取确认收货数据
-    orderConfirms(id, index) {
-      orderConfirm(id).then(res => {
-        if (res) {
-          // this.orderDetail = Object.assign({}, res);
-          this.orderDetail.order.status = res.order.status;
-        }
-      });
-    },
+		// 获取确认收货数据
+		orderConfirms(id, index) {
+			orderConfirm(id).then(res => {
+				if (res) {
+				  // this.orderDetail = Object.assign({}, res);
+				  this.orderDetail.order.status = res.order.status;
+				}
+			});
+		},
 
-    // 晒单评价
-    goComment(data) {
-      this.changeItem(data);
-      this.$router.push({ name: "orderComment", query: { order: data.id } });
-    },
+		// 晒单评价
+		goComment(data) {
+			this.changeItem(data);
+			this.$router.push({ name: "orderComment", query: { order: data.id } });
+		},
 
-    // 获取再次购买数据
-    goBuy(id) {
-      Indicator.open({
-        spinnerType: "fading-circle"
-      });
-      orderRebuy(id).then(res => {
-        if (res) {
-          Indicator.close();
-          this.$router.push("/cart");
-        }
-      });
-    },
-    getOrderDiscountPrice(item) {
-      return "AED " + (item.price ? item.price : 0);
-    },
-    getFormatPrice(key) {
-      let price = this.getPriceByKey(key);
-      let priceStr = "AED " + (price ? this.utils.currencyPrice(price) : "");
-      return priceStr;
-    },
-    getPriceByKey(key) {
-      let total = "";
-      let order = this.order;
-      if (order && order[key]) {
-        total = order[key];
-      }
-      return total;
-    },
-    // 计算商品总额
-    goodsTotalPrice() {
-      let totalPrice = 0;
-      let total_price = this.total_price;
-      if (total_price.length > 0) {
-        for (let i = 0, len = total_price.length; i <= len - 1; i++) {
-          if (total_price[i].total_price) {
-            totalPrice += parseFloat(total_price[i].total_price);
-          }
-        }
-        return "AED " + this.utils.currencyPrice(totalPrice);
-      } else {
-        return "AED " + this.utils.currencyPrice(totalPrice);
-      }
-    },
+		// 获取再次购买数据
+		goBuy(id) {
+			Indicator.open({
+				spinnerType: "fading-circle"
+			});
+			orderRebuy(id).then(res => {
+				if (res) {
+					Indicator.close();
+					this.$router.push("/cart");
+				}
+			});
+		},
 
-    // 复制
-    getCopy() {
-      var clipboard = new Clipboard(".tag-read");
-      clipboard.on("success", e => {
-        console.log("复制成功");
-        // 释放内存
-        clipboard.destroy();
-      });
-      clipboard.on("error", e => {
-        // 不支持复制
-        console.log("该浏览器不支持自动复制");
-        // 释放内存
-        clipboard.destroy();
-      });
-      Toast({
-        message: "复制成功",
-        iconClass: "mintui mintui-field-success",
-        duration: 2000
-      });
-    },
+		getOrderDiscountPrice(item) {
+			return "AED " + (item.price ? item.price : 0);
+		},
 
-    // 去商品详情
-    getOrderDetail(orderId) {
-      this.$router.push({ name: "detail", params: { id: orderId } });
-    },
-    // 点击展示所有商品
-    getNumber() {
-      this.orderIndex = this.orderDetail.order.goods.length - 1;
-      this.isShow = true;
-    },
-    // 从订单详情去订单跟踪页面
-    goOrderrack(id) {
-      this.$router.push({ name: "orderTrack", params: { orderTrack: id } });
-    }
-  },
-  computed: {
-    getPromos: function() {
-      return this.getPriceByKey("promos");
-    },
-    getOrderTotalPrice: function() {
-      return this.getFormatPrice("total");
-    },
-    getOrderProductPrice: function() {
-      return this.goodsTotalPrice();
-    },
-    getOrderTaxPrice: function() {
-      return this.getFormatPrice("tax");
-    },
-    getOrderShippingPrice: function() {
-      let priceStr = "";
-      let price = this.getPriceByKey("shipping");
-      if (price) {
-        priceStr = "AED " + this.utils.currencyPrice(price.price);
-      } else {
-        priceStr = "免运费";
-      }
-      return priceStr;
-    }
-  }
+		getFormatPrice(key) {
+			let price = this.getPriceByKey(key);
+			let priceStr = "AED " + (price ? this.utils.currencyPrice(price) : "");
+			return priceStr;
+		},
+
+		getPriceByKey(key) {
+			let total = "";
+			let order = this.order;
+			if (order && order[key]) {
+				total = order[key];
+			}
+			return total;
+		},
+
+		// 计算商品总额
+		goodsTotalPrice() {
+			let totalPrice = 0;
+			let total_price = this.total_price;
+			if (total_price.length > 0) {
+				for (let i = 0, len = total_price.length; i <= len - 1; i++) {
+				  if (total_price[i].total_price) {
+					totalPrice += parseFloat(total_price[i].total_price);
+				  }
+				}
+				return "AED " + this.utils.currencyPrice(totalPrice);
+			} else {
+				return "AED " + this.utils.currencyPrice(totalPrice);
+			}
+		},
+
+		// 复制
+		getCopy() {
+			var clipboard = new Clipboard(".tag-read");
+			clipboard.on("success", e => {
+				console.log("复制成功");
+				// 释放内存
+				clipboard.destroy();
+			});
+			clipboard.on("error", e => {
+				// 不支持复制
+				console.log("该浏览器不支持自动复制");
+				// 释放内存
+				clipboard.destroy();
+			});
+			Toast({
+				message: "复制成功",
+				iconClass: "mintui mintui-field-success",
+				duration: 2000
+			});
+		},
+
+		// 去商品详情
+		getOrderDetail(orderId) {
+			this.$router.push({ name: "detail", params: { id: orderId } });
+		},
+
+		// 点击展示所有商品
+		getNumber() {
+			this.orderIndex = this.orderDetail.order.goods.length - 1;
+			this.isShow = true;
+		},
+
+		// 从订单详情去订单跟踪页面
+		goOrderrack(id) {
+			this.$router.push({ name: "orderTrack", params: { orderTrack: id } });
+		}
+	},
+
+  	computed: {
+  		...mapState({
+			orderItem: state => state.order.orderItem,
+			isOnline: state => state.auth.isOnline,
+			user: state => state.auth.user
+		}),
+		getPromos: function() {
+	  		return this.getPriceByKey("promos");
+		},
+
+		getOrderTotalPrice: function() {
+	  		return this.getFormatPrice("total");
+		},
+
+		getOrderProductPrice: function() {
+	  		return this.goodsTotalPrice();
+		},
+
+		getOrderTaxPrice: function() {
+	  		return this.getFormatPrice("tax");
+		},
+
+		getOrderShippingPrice: function() {
+			let priceStr = "";
+			let price = this.getPriceByKey("shipping");
+			if (price) {
+				priceStr = "AED " + this.utils.currencyPrice(price.price);
+			} else {
+				priceStr = "免运费";
+			}
+			  return priceStr;
+		}
+  	}
 };
 </script>
 <style lang="scss" scoped>
@@ -448,12 +472,12 @@ export default {
   justify-content: flex-start;
   align-items: center;
   img {
-    height: 18px;
-    padding: 0px 12px;
+	height: 18px;
+	padding: 0px 12px;
   }
   span {
-    font-size: 17px;
-    color: #fff;
+	font-size: 17px;
+	color: #fff;
   }
 }
 .receipt {
@@ -465,20 +489,20 @@ export default {
   background-color: #fff;
   margin-bottom: 8px;
   label {
-    display: flex;
-    align-items: center;
+	display: flex;
+	align-items: center;
   }
   img {
-    height: 16px;
-    margin: 0px 15px 0px 10px;
+	height: 16px;
+	margin: 0px 15px 0px 10px;
   }
   .arrow {
-    width: 5px;
-    height: 10px;
+	width: 5px;
+	height: 10px;
   }
   span {
-    font-size: 14px;
-    color: #4e545d;
+	font-size: 14px;
+	color: #4e545d;
   }
 }
 .containers {
@@ -495,8 +519,8 @@ export default {
   text-align: center;
   background-color: #fff;
   p {
-    font-size: 14px;
-    color: #4e545d;
+	font-size: 14px;
+	color: #4e545d;
   }
 }
 .photo {
@@ -561,28 +585,28 @@ export default {
   height: 87px;
   background-color: #fff;
   div {
-    padding: 11px 10px 0px;
+	padding: 11px 10px 0px;
   }
   img {
-    height: 16px;
+	height: 16px;
   }
   span {
-    color: #4e545d;
-    font-size: 16px;
-    &.mobile {
-      padding-left: 21px;
-    }
+	color: #4e545d;
+	font-size: 16px;
+	&.mobile {
+	  padding-left: 21px;
+	}
   }
   p {
-    margin: 5px 18px 11px 32px;
-    font-size: 14px;
-    color: #7c7f88;
+	margin: 5px 18px 11px 32px;
+	font-size: 14px;
+	color: #7c7f88;
 
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;
   }
 }
 
@@ -596,13 +620,13 @@ export default {
   border-bottom: 1px solid $lineColor;
   padding: 0 13px;
   span {
-    font-size: 12px;
-    color: #4e545d;
-    padding-right: 6px;
+	font-size: 12px;
+	color: #4e545d;
+	padding-right: 6px;
   }
   img {
-    width: 12px;
-    height: 13px;
+	width: 12px;
+	height: 13px;
   }
 }
 
@@ -616,39 +640,39 @@ export default {
   margin: 8px 0;
   box-sizing: border-box;
   .number {
-    padding: 14px 12px 12px;
-    border-bottom: 1px solid $lineColor;
-    p {
-      padding-top: 6px;
-      font-size: 14px;
-    }
-    button {
-      color: #7c7f88;
-      height: 20px;
-      background-color: #fff;
-      border: 1px solid #7c7f88;
-      width: 54px;
-      height: 20px;
-      border-radius: 2px;
-      font-size: 14px;
-    }
+	padding: 14px 12px 12px;
+	border-bottom: 1px solid $lineColor;
+	p {
+	  padding-top: 6px;
+	  font-size: 14px;
+	}
+	button {
+	  color: #7c7f88;
+	  height: 20px;
+	  background-color: #fff;
+	  border: 1px solid #7c7f88;
+	  width: 54px;
+	  height: 20px;
+	  border-radius: 2px;
+	  font-size: 14px;
+	}
   }
   .pay {
-    border-bottom: 1px solid $lineColor;
-    p {
-      padding: 13px 15px 12px;
-    }
+	border-bottom: 1px solid $lineColor;
+	p {
+	  padding: 13px 15px 12px;
+	}
   }
   .givetime {
-    padding: 18px 15px 14px;
-    font-size: 14px;
-    :last-child {
-      padding-top: 6px;
-    }
+	padding: 18px 15px 14px;
+	font-size: 14px;
+	:last-child {
+	  padding-top: 6px;
+	}
   }
   input {
-    background-color: #fff;
-    border: 1px solid #7c7f88;
+	background-color: #fff;
+	border: 1px solid #7c7f88;
   }
 }
 .desc {
@@ -662,22 +686,22 @@ export default {
   box-sizing: border-box;
   margin-bottom: 80px;
   .desc-item {
-    flex: 1;
+	flex: 1;
   }
   .amount {
-    display: flex;
-    justify-content: flex-end;
-    font-size: 14px;
-    color: #4e545d;
-    padding-right: 15px;
-    border-top: 1px solid $lineColor;
-    margin-top: 12px;
-    height: 45px;
-    line-height: 45px;
-    span {
-      font-size: 16px;
-      color: #f33c3c;
-    }
+	display: flex;
+	justify-content: flex-end;
+	font-size: 14px;
+	color: #4e545d;
+	padding-right: 15px;
+	border-top: 1px solid $lineColor;
+	margin-top: 12px;
+	height: 45px;
+	line-height: 45px;
+	span {
+	  font-size: 16px;
+	  color: #f33c3c;
+	}
   }
 }
 .btn {
@@ -692,51 +716,51 @@ export default {
   align-items: center;
   border-top: 1px solid #e8eaed;
   button {
-    width: 82px;
-    height: 36px;
-    font-size: 14px;
-    margin-right: 7px;
-    background-color: #fff;
-    border: 1px solid #ccc;
+	width: 82px;
+	height: 36px;
+	font-size: 14px;
+	margin-right: 7px;
+	background-color: #fff;
+	border: 1px solid #ccc;
   }
   .buttonbottom {
-    color: #f23030;
-    border: 1px solid #f23030;
+	color: #f23030;
+	border: 1px solid #f23030;
   }
   .mint-popup {
-    width: 100%;
-    height: 235px;
+	width: 100%;
+	height: 235px;
   }
   .cancels {
-    height: 100%;
-    .cancelInfo {
-      display: flex;
-      flex-wrap: nowrap;
-      justify-content: space-between;
-      span {
-        color: #000;
-        font-size: 14px;
-      }
-      .cancel {
-        padding-left: 15px;
-      }
-      .success {
-        padding-right: 15px;
-      }
-    }
-    .reason {
-      width: 100%;
-      p {
-        height: 16px;
-        line-height: 16px;
-        width: 100%;
-        text-align: center;
-        padding-top: 10px;
-        &:hover {
-          color: red;
-        }
-      }
-    }
+	height: 100%;
+	.cancelInfo {
+	  display: flex;
+	  flex-wrap: nowrap;
+	  justify-content: space-between;
+	  span {
+		color: #000;
+		font-size: 14px;
+	  }
+	  .cancel {
+		padding-left: 15px;
+	  }
+	  .success {
+		padding-right: 15px;
+	  }
+	}
+	.reason {
+	  width: 100%;
+	  p {
+		height: 16px;
+		line-height: 16px;
+		width: 100%;
+		text-align: center;
+		padding-top: 10px;
+		&:hover {
+		  color: red;
+		}
+	  }
+	}
   }
 }
 .ship {

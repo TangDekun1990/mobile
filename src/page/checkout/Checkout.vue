@@ -1,7 +1,7 @@
 <template>
 	<div class="container">
 		<mt-header class="header" fixed title="确认订单">
-			<header-item slot="left" v-bind:isBack=true v-on:onclick="leftClick">
+			<header-item slot="left" v-bind:isBack=true @click="leftClick">
 			</header-item>
 			<header-item slot="right" class="zhiCustomBtns" titleColor="#F23030" title="联系客服">
 			</header-item>
@@ -86,6 +86,8 @@ export default {
 			selectedTime: state => state.delivery.selectedTime,
 			comment: state => state.checkout.comment,
 			cartGoods: state => state.cart.cartGoods,
+			isOnline: state => state.auth.isOnline,
+			user: state => state.auth.user
 		}),
 	    // 获取订单商品数组(计算价格/获取货运公司列表)
 	    getOrderProducts: function () {
@@ -225,7 +227,8 @@ export default {
 		this.getOrderPrice()
 	    // 配送时间列表
 	    this.fetchDeliveryList()
-	    this.utils.openZhichiManager()
+	    console.log(this.user);
+	    this.utils.openZhichiManager('', '', this.user, this.user.id);
 	},
 
 	beforeRouteEnter(to, from, next) {
@@ -259,6 +262,14 @@ export default {
 			fetchCouponUsable: 'fetchCouponUsable',
 			fetchDeliveryList: 'fetchDeliveryList',
 		}),
+
+		openZhiChi() {
+			if (this.isOnline) {
+				this.utils.openZhichiManager('', '', this.user, this.user.id);
+			} else {
+				this.$router.push({'name': 'signin'});
+			}
+		},
 		/***滑动限制***/
 		stop() {
 			var mo = function(e) {
