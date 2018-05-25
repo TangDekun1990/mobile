@@ -23,6 +23,8 @@
 		  			Indicator.open()
 			  		userProfileGet().then(response => {
 		  				Indicator.close()
+		  				console.log(response);
+		  				debugger;
 		  				if (response && response.user) {
 		  					this.saveUser(response.user);
 		  					debugger;
