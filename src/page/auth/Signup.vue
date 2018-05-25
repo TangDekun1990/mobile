@@ -213,7 +213,7 @@ export default {
   			Indicator.open()
   			authMobile.authMobileSignup(this.username, this.code, this.password).then(
   				(response) => {
-  					this.saveToken({ 'token': response.token, 'user': response.user })
+  					this.saveToken({ 'token': response.token})
   					Indicator.close()
   					this.saveUser(response.user);
   					this.goProfile()
@@ -232,6 +232,7 @@ export default {
   			authMobile.authMobileBinding(this.username, this.code, this.password).then(
   				(response) => {
   					Indicator.close();
+  					this.saveToken({ 'token': response.token})
   					this.saveUser(response.user);
   					this.goHome();
   				}, (error) => {
