@@ -111,7 +111,7 @@ export default {
 		goBack() {
 			let mode = this.getMode;
 			if (mode == 'bind') {
-				this.$router.go(-1);
+				this.$router.push({'name': 'signin', 'query': {'type': 'back'}});
 			} else {
 				this.$router.go(-1)
 			}

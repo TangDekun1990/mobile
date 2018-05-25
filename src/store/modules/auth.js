@@ -4,7 +4,7 @@ const state = {
 	token: null,
 	user: null,
 	isTokenInvalid: false,
-	isAuthorized: 0
+	isSingin: false
 }
 
 // mutations
@@ -44,8 +44,8 @@ const mutations = {
 		state.token = null
 	},
 
-	saveAuthorized(state, value) {
-		state.isAuthorized = value;
+	saveIsSingin(state, value) {
+		state.isSingin = value;
 	}
 }
 
