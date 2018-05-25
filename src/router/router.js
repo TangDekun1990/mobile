@@ -16,7 +16,7 @@ import Search from '../page/search/Search'
 import Signin from '../page/auth/Signin'
 import Signup from '../page/auth/Signup'
 import WebPage from '../page/auth/WebPage'
-import Phone from '../page/auth/phone'
+import Authorized from '../page/auth/authorized'
 
 // profile
 import Profile from '../page/profile/Profile'
@@ -352,9 +352,9 @@ export default [
 				component: Promotions
 			},
 			{
-				name: 'phone',
-				path: '/phone',
-				component: Phone
+				name: 'authorized',
+				path: '/authorized',
+				component: Authorized
 			}
 		]
 	}

@@ -268,22 +268,11 @@ export default {
   			this.$router.push({ name: 'webPage', query: { url: this.aggrementUrl, title: '注册协议'}})
   		},
 
-  		onAuthSuccess () {
+  		saveAuthorizedToken () {
 		  	let openid = this.$cookie.get('openid')
 		  	let token = this.$cookie.get('token')
 		  	if (openid && openid.length && token && token.length) {
 		  		this.saveToken({ 'token': token })
-		  		Indicator.open()
-		  		userProfileGet().then(response => {
-	  				Indicator.close()
-	  				if (response && response.user) {
-	  					this.saveUser(response);
-	  					this.goHome()
-	  				}
-		  		},error => {
-	  				Indicator.close()
-	  				this.goHome()
-		  		});
 		  	}
 		}
 	}

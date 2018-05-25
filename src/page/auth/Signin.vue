@@ -96,7 +96,7 @@ export default {
 		if (isTokenInvalid) {
 			Toast('登录过期')
 		}
-		// this.onAuthSuccess()
+		// this.saveAuthorizedToken();
 	},
 
 	methods: {
@@ -179,35 +179,16 @@ export default {
 
 	    wxWebAuth() {
 	      	let scope = 'snsapi_userinfo' // 允许获取用户信息
-	      	let ref = '';
-	      	alert(this.isAuthorized);
-	      	if (this.isAuthorized == 0) {
-	      		this.saveAuthorized(1);
-	      		ref = encodeURIComponent(window.location.protocol+"//"+window.location.host + "/#/signup?mode=bind");
-	      	} else {
-	      		ref = window.location.href ? encodeURIComponent(window.location.href) : '';
-	      	}
-	      	// let ref = encodeURIComponent(window.location.protocol+"//"+window.location.host + "/#/signup?mode=bind");
+	      	let ref = encodeURIComponent(window.location.protocol+"//"+window.location.host + "/#/authorized");
 	      	let locationRef = apiBaseUrl + '/v2/ecapi.auth.web?vendor=' + ENUM.SOCIAL_VENDOR.WEIXIN + '&scope=' + scope + "&referer=" + ref;
 	      	window.location.href = locationRef
 	  	},
 
-		onAuthSuccess () {
+		saveAuthorizedToken () {
 		  	let openid = this.$cookie.get('openid')
 		  	let token = this.$cookie.get('token')
 		  	if (openid && openid.length && token && token.length) {
 		  		this.saveToken({ 'token': token })
-		  		Indicator.open()
-		  		userProfileGet().then(response => {
-	  				Indicator.close()
-	  				if (response && response.user) {
-	  					this.saveUser(response);
-	  					this.goHome()
-	  				}
-		  		},error => {
-	  				Indicator.close()
-	  				this.goHome()
-		  		});
 		  	}
 		}
 	}
