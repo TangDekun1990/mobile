@@ -26,8 +26,8 @@
 		  				console.log(response);
 		  				debugger;
 		  				if (response && response.user) {
-		  					this.saveUser(response.user);
 		  					if (response.user.mobile_binded) {
+		  						this.saveUser(response.user);
 		  						this.goHome();
 		  					} else {
 		  						this.goSignup();
