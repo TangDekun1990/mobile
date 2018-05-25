@@ -109,7 +109,12 @@ export default {
 		}),
 
 		goBack() {
-			this.$router.go(-1)
+			let mode = this.getMode;
+			if (mode == 'bind') {
+				this.$router.go(-2);
+			} else {
+				this.$router.go(-1)
+			}
 		},
 
 		goProfile() {

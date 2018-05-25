@@ -27,9 +27,8 @@
 		  				debugger;
 		  				if (response && response.user) {
 		  					this.saveUser(response.user);
-		  					debugger;
 		  					if (response.user.mobile_binded) {
-		  						this.goSingIn();
+		  						this.goHome();
 		  					} else {
 		  						this.goSignup();
 		  					}
