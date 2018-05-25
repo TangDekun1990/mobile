@@ -275,7 +275,7 @@
 		    },
 		    goProfileInfo() {
 		    	if (this.isOnline) {
-		    		this.$router.push('/profileInfo');
+		    		this.$router.push({'name': 'profileInfo'});
 		    	} else {
 		    		this.showLogin();
 		    	}
