@@ -58,7 +58,8 @@ export default {
 	computed: {
 		...mapState({
 			config: state => state.config.config,
-			feature: state => state.config.feature
+			feature: state => state.config.feature,
+			weixicount: state => state.auth.weixicount
 		}),
 		isShowWechat: function () {
 			if (this.feature && this.feature['signin.qq']) {
@@ -96,14 +97,23 @@ export default {
 			Toast('登录过期')
 		}
 		console.log('88');
-		this.onAuthSuccess();
+		console.log(this.$router)
+		console.log(this.$router.params);
+		if (this.$router.params && this.$router.params.type == 'back') {
+			this.onAuthSuccess();
+		}
+	},
+
+	destroyed() {
+
 	},
 
 	methods: {
 		...mapMutations({
 			saveAuthInfo: 'signin',
 			saveToken: 'saveToken',
-			saveUser: 'saveUser'
+			saveUser: 'saveUser',
+			setCount: 'setCount'
 		}),
 
 		...mapActions({
@@ -159,6 +169,7 @@ export default {
   		},
 
   		onWechat() {
+  			// this.setCount(true)
   			this.wxWebAuth()
   		},
 
