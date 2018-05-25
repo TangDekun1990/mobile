@@ -188,7 +188,7 @@ export default {
 	      	window.location.href = locationRef
 	  	},
 
-	  	onAuthSuccess () {
+	  	onAuthSuccess() {
 			let openid = this.$cookie.get('openid')
 	  		let token = this.$cookie.get('token')
 	  		if (openid && token) {
