@@ -4,7 +4,8 @@ const state = {
 	token: null,
 	user: null,
 	isTokenInvalid: false,
-	isSingin: false
+	isSingin: false,
+	weixicount: false
 }
 
 // mutations
@@ -32,7 +33,7 @@ const mutations = {
 		if (payload.isOnline == 'online') {
 			state.isOnline = true
 		}
-		if (payload.isOnline == 'isonline') {
+		if (payload.isOnline == 'isOnline') {
 			state.isOnline = false
 		}
 	},
@@ -46,6 +47,10 @@ const mutations = {
 
 	saveIsSingin(state, value) {
 		state.isSingin = value;
+	},
+
+	setCount(state, value) {
+		state.weixicount = value
 	}
 }
 
