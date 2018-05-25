@@ -11,7 +11,8 @@
 
 		methods: {
 			...mapMutations({
-				saveUser: 'saveUser'
+				saveUser: 'saveUser',
+				saveToken: 'saveToken'
 			}),
 
 			onAuthSuccess () {
