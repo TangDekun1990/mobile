@@ -29,6 +29,12 @@ const mutations = {
 	saveToken(state, payload) {
 		state.isOnline = true
 		state.token = payload.token
+		if (payload.isOnline == 'online') {
+			state.isOnline = true
+		}
+		if (payload.isOnline == 'isonline') {
+			state.isOnline = false
+		}
 	},
 	clearUser(state) {
 		state.user = null

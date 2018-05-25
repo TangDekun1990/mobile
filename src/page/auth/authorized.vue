@@ -20,6 +20,7 @@
 		  		let token = this.$cookie.get('token')
 		  		if (openid && token) {
 		  			Indicator.open()
+		  			this.saveToken({ 'token': token, 'isOnline': 'isOnline'})
 			  		userProfileGet().then(response => {
 		  				Indicator.close()
 		  				console.log(response);
@@ -27,7 +28,7 @@
 		  				if (response && response.user) {
 		  					if (response.user.mobile_binded) {
 		  						this.saveUser(response.user);
-		  						this.saveToken({ 'token': token })
+		  						this.saveToken({ 'token': token, 'isOnline': 'online'})
 		  						this.goHome();
 		  					} else {
 		  						this.goSignup();
@@ -35,7 +36,7 @@
 		  				}
 			  		},error => {
 		  				Indicator.close()
-		  				this.goHome()
+		  				// this.goHome()
 			  		});
 		  		}
 			},
