@@ -189,11 +189,12 @@ export default {
 	  			this.saveToken({ 'token': token, 'isOnline': 'isOnline'})
 		  		userProfileGet().then(response => {
 	  				Indicator.close()
+	  				console.log(response)
 	  				if (response && response.user) {
 	  					if (response.user.mobile_binded) {
 	  						this.saveToken({ 'token': token, 'isOnline': 'online'})
 	  						this.goHome();
-	  					} else if ( this.$router.query.type == 'back') {
+	  					} else if ( this.$router.query && this.$router.query.type == 'back') {
 	  						console.log('back')
 	  					} else {
 	  						this.goSignup();
