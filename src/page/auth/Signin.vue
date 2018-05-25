@@ -59,7 +59,8 @@ export default {
 		...mapState({
 			config: state => state.config.config,
 			feature: state => state.config.feature,
-			weixicount: state => state.auth.weixicount
+			weixicount: state => state.auth.weixicount,
+			flage: state => state.auth.flage
 		}),
 		isShowWechat: function () {
 			if (this.feature && this.feature['signin.qq']) {
@@ -89,16 +90,16 @@ export default {
 
 	created: function () {
 		this.fetchConfig();
-		if (this.$router.query && this.$router.query.type == 'back') {
-		} else {
-			this.onAuthSuccess();
-		}
 	},
 
 	mounted () {
 		let isTokenInvalid = this.$route.params.isTokenInvalid
 		if (isTokenInvalid) {
 			Toast('登录过期')
+		}
+		if (this.flage) {
+			this.onAuthSuccess();
+			this.changeFlage(false);
 		}
 	},
 
@@ -107,7 +108,8 @@ export default {
 			saveAuthInfo: 'signin',
 			saveToken: 'saveToken',
 			saveUser: 'saveUser',
-			setCount: 'setCount'
+			setCount: 'setCount',
+			changeFlage: 'changeFlage'
 		}),
 
 		...mapActions({
@@ -180,6 +182,7 @@ export default {
     	onQQ() {},
 
 	    wxWebAuth() {
+	    	this.changeFlage(true);
 	      	let scope = 'snsapi_userinfo' // 允许获取用户信息
 	      	let ref = encodeURIComponent(window.location.protocol+"//"+window.location.host + "/#/signin");
 	      	let locationRef = apiBaseUrl + '/v2/ecapi.auth.web?vendor=' + ENUM.SOCIAL_VENDOR.WEIXIN + '&scope=' + scope + "&referer=" + ref;

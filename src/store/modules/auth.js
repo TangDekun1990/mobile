@@ -5,7 +5,8 @@ const state = {
 	user: null,
 	isTokenInvalid: false,
 	isSingin: false,
-	weixicount: false
+	weixicount: false,
+	flage: false
 }
 
 // mutations
@@ -51,6 +52,10 @@ const mutations = {
 
 	setCount(state, value) {
 		state.weixicount = value
+	},
+
+	changeFlage(state, value) {
+		state.flage = value;
 	}
 }
 
