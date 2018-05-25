@@ -58,8 +58,7 @@ export default {
 	computed: {
 		...mapState({
 			config: state => state.config.config,
-			feature: state => state.config.feature,
-			isAuthorized: state => state.auth.isAuthorized
+			feature: state => state.config.feature
 		}),
 		isShowWechat: function () {
 			if (this.feature && this.feature['signin.qq']) {
@@ -104,8 +103,7 @@ export default {
 		...mapMutations({
 			saveAuthInfo: 'signin',
 			saveToken: 'saveToken',
-			saveUser: 'saveUser',
-			saveAuthorized: 'saveAuthorized'
+			saveUser: 'saveUser'
 		}),
 
 		...mapActions({
@@ -184,7 +182,6 @@ export default {
 	  	},
 
 	  	onAuthSuccess () {
-	  		debugger;
 			let openid = this.$cookie.get('openid')
 	  		let token = this.$cookie.get('token')
 	  		if (openid && token) {
@@ -194,9 +191,10 @@ export default {
 	  				Indicator.close()
 	  				if (response && response.user) {
 	  					if (response.user.mobile_binded) {
-	  						// this.saveUser(response.user);
 	  						this.saveToken({ 'token': token, 'isOnline': 'online'})
 	  						this.goHome();
+	  					} else if ( this.$router.query.type == 'back') {
+	  						console.log('back')
 	  					} else {
 	  						this.goSignup();
 	  					}
@@ -209,11 +207,7 @@ export default {
 
 		goSignup() {
 			this.$router.push({'name': 'signup', 'query': {'mode': 'bind'}})
-		},
-
-		goHome() {
-  			this.$router.push('/home')
-  		}
+		}
 	}
 };
 </script>
