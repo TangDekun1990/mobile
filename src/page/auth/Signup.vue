@@ -86,7 +86,6 @@ export default {
 	},
 
 	mounted() {
-		this.onAuthSuccess();
 	},
 
 	created: function () {
@@ -112,7 +111,7 @@ export default {
 		goBack() {
 			let mode = this.getMode;
 			if (mode == 'bind') {
-				this.$router.go(-2);
+				this.$router.go(-1);
 			} else {
 				this.$router.go(-1)
 			}

@@ -228,7 +228,7 @@
 		    // 获取未读消息数字
 		    getMessageCount(type) {
 		    	if (this.user != null) {
-		    		let after = this.user.joined_at;
+		    		let after = this.user.joined_at ? this.user.joined_at : Date.parse( new Date()) / 1000;
 		    		if (this.type) {
 		    			if (type == 1 && this.time.noticeTime) {
 		    				after = this.time.noticeTime;
