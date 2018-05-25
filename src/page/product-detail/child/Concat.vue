@@ -1,6 +1,6 @@
 <!-- Concat.vue -->
 <template>
-	<div class="ui-concat-wrapper ui-detail-common zhiCustomBtns" v-if="detailInfo">
+	<div class="ui-concat-wrapper ui-detail-common zhiCustomBtns" v-if="detailInfo" @click="openZhiChi()">
 		<div class="header">
 			<p>点击联系客服</p>
 			<img src="../../../assets/image/change-icon/e5_service@2x.png">
@@ -18,13 +18,13 @@
 		computed: {
 			...mapState({
 		      	detailInfo: state => state.detail.detailInfo,
-		      	user: state => state.auth.user
+		      	user: state => state.auth.user,
+		      	isOnline: state => state.auth.isOnline
 		    })
 		},
 
 		watch: {
 			detailInfo: function(value) {
-				this.utils.openZhichiManager(value, '', this.user);
 			}
 		},
 
@@ -34,7 +34,15 @@
 
 		created(){},
 
-		methods: {}
+		methods: {
+			openZhiChi() {
+				if (this.isOnline) {
+					this.utils.openZhichiManager(this.detailInfo, '', this.user, this.user.id);
+				} else {
+					this.$router.push({'name': 'signin'});
+				}
+			}
+		}
 	}
 </script>
 

@@ -181,7 +181,7 @@ export default {
 	/*
 	 * 调用智齿
 	 */
-	openZhichiManager(detail, order, user) {
+	openZhichiManager(detail, order, user, partnerId) {
 		let zhiManager = (getzhiSDKInstance());
 		zhiManager.on('load', function () {
 			zhiManager.init();
@@ -191,6 +191,9 @@ export default {
 			zhiManger.set('satDegree_A', true);
 			zhiManger.set('isFeedBackFlag', true);
 			zhiManager.set('robotHelloWord', '您好! 我是机器人小超， 有什么吩咐您请说哦！');
+			if (partnerId) {
+				zhiManager.set('partnerId', partnerId)
+			}
 			if (user) {
 				zhiManager.set('userinfo', {
 				  uname: user.nickname ? user.nickname : user.username,   //昵称
@@ -198,6 +201,7 @@ export default {
 				  user_id: user.id ? user.id : ''
 				});
 			}
+
 		});
 		if (detail || order) {
 			let thumbnail_info = '';
