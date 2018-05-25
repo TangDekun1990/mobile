@@ -78,7 +78,7 @@ axios.interceptors.request.use(config => {
             // xSign格式: sign,timestamp
             let xSign = sign + ',' + timestamp;
             let token = null;
-            if (store.getters.isOnline && store.getters.token) {
+            if (store.getters.token) {
                 token = store.getters.token;
             }
 
@@ -149,7 +149,7 @@ axios.interceptors.response.use(response => {
                         let name = router.currentRoute.name
                         if (name && (name !== 'home' && name !== 'category')) {
                             router.push({ name: 'signin', params: { isTokenInvalid: true } })
-                        }                        
+                        }
                     }
                     return Promise.reject({ 'errorCode': errorCode, 'errorMsg': errorMessage });
                 }
