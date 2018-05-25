@@ -97,11 +97,7 @@ export default {
 			Toast('登录过期')
 		}
 		console.log('88');
-		console.log(this.$router)
-		console.log(this.$router.params);
-		if (this.$router.params && this.$router.params.type == 'back') {
-			this.onAuthSuccess();
-		}
+		this.onAuthSuccess();
 	},
 
 	destroyed() {
@@ -205,8 +201,6 @@ export default {
 	  					if (response.user.mobile_binded) {
 	  						this.saveToken({ 'token': token, 'isOnline': 'online'})
 	  						this.goHome();
-	  					} else if ( this.$router.query && this.$router.query.type == 'back') {
-	  						console.log('back')
 	  					} else {
 	  						this.goSignup();
 	  					}
