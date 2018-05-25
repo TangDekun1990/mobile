@@ -36,7 +36,6 @@
 		  				}
 			  		},error => {
 		  				Indicator.close()
-		  				// this.goHome()
 			  		});
 		  		}
 			},

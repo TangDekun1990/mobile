@@ -89,6 +89,10 @@ export default {
 
 	created: function () {
 		this.fetchConfig();
+		if (this.$router.query && this.$router.query.type == 'back') {
+		} else {
+			this.onAuthSuccess();
+		}
 	},
 
 	mounted () {
@@ -96,12 +100,6 @@ export default {
 		if (isTokenInvalid) {
 			Toast('登录过期')
 		}
-		console.log('88');
-		this.onAuthSuccess();
-	},
-
-	destroyed() {
-
 	},
 
 	methods: {
@@ -209,6 +207,7 @@ export default {
 	  				}
 		  		},error => {
 		  			console.log(error);
+		  			Toast(error.errorMsg);
 	  				Indicator.close()
 		  		});
 	  		}
