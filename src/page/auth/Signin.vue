@@ -96,7 +96,7 @@ export default {
 		if (isTokenInvalid) {
 			Toast('登录过期')
 		}
-		// this.saveAuthorizedToken();
+		this.onAuthSuccess();
 	},
 
 	methods: {
@@ -160,8 +160,6 @@ export default {
   		},
 
   		onWechat() {
-  			// this.isAuthorized = this.isAuthorized++;
-  			// this.saveAuthorized(++this.isAuthorized);
   			this.wxWebAuth()
   		},
 
@@ -179,18 +177,41 @@ export default {
 
 	    wxWebAuth() {
 	      	let scope = 'snsapi_userinfo' // 允许获取用户信息
-	      	let ref = encodeURIComponent(window.location.protocol+"//"+window.location.host + "/#/authorized");
+	      	let ref = encodeURIComponent(window.location.protocol+"//"+window.location.host + "/#/signin");
 	      	let locationRef = apiBaseUrl + '/v2/ecapi.auth.web?vendor=' + ENUM.SOCIAL_VENDOR.WEIXIN + '&scope=' + scope + "&referer=" + ref;
 	      	window.location.href = locationRef
 	  	},
 
-		saveAuthorizedToken () {
-		  	let openid = this.$cookie.get('openid')
-		  	let token = this.$cookie.get('token')
-		  	if (openid && openid.length && token && token.length) {
-		  		this.saveToken({ 'token': token })
-		  	}
-		}
+	  	onAuthSuccess () {
+			let openid = this.$cookie.get('openid')
+	  		let token = this.$cookie.get('token')
+	  		if (openid && token) {
+	  			Indicator.open()
+	  			this.saveToken({ 'token': token, 'isOnline': 'isOnline'})
+		  		userProfileGet().then(response => {
+	  				Indicator.close()
+	  				if (response && response.user) {
+	  					if (response.user.mobile_binded) {
+	  						// this.saveUser(response.user);
+	  						this.saveToken({ 'token': token, 'isOnline': 'online'})
+	  						this.goHome();
+	  					} else {
+	  						this.goSignup();
+	  					}
+	  				}
+		  		},error => {
+	  				Indicator.close()
+		  		});
+	  		}
+		},
+
+		goSignup() {
+			this.$router.push({'name': 'signup', 'query': {'mode': 'bind'}})
+		},
+
+		goHome() {
+  			this.$router.push('/home')
+  		}
 	}
 };
 </script>
