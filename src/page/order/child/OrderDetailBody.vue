@@ -418,7 +418,7 @@ export default {
 
 		// 从订单详情去订单跟踪页面
 		goOrderrack(id) {
-			this.$router.push({ name: "orderTrack", params: { orderTrack: id } });
+			this.$router.push({ name: "orderTrack", params: { orderTrack: id, isTrack: true } });
 		}
 	},
 
