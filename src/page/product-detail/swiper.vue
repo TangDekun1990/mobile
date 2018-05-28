@@ -48,7 +48,7 @@
 	.ui-detail-swiper {
 		position: absolute;
 		width: auto;
-		top: 60px;
+		top: 44px;
 		bottom: 50px;
 		left: 0px;
 		right: 0px;

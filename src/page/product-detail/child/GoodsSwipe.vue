@@ -1,6 +1,6 @@
 <!-- GoodsSwipe.vue -->
 <template>
-	<div class="swipe ui-common-swiper" v-if="detailInfo">
+	<div class="swipe-wrapper ui-common-swiper" v-if="detailInfo">
 		<!-- 轮播图 -->
 		<mt-swipe :auto="0" class='ui-common-swiper' :prevent=false :stop-propagation=true @change="handleChange">
 		  	<mt-swipe-item v-for="(item,index) in detailInfo.photos" v-bind:key="index" v-if='detailInfo.photos && detailInfo.photos.length > 0'>
@@ -94,6 +94,7 @@
 			.mint-swipe-item {
 				text-align: center;
     			overflow: hidden;
+    			background-color: #fff;
 				img {
 					height: 100%;
 					width: auto;
@@ -113,6 +114,10 @@
 </style>
 
 <style lang="scss" scoped="true">
+	.swipe-wrapper {
+		background-color:#fff;
+		width: 100%;
+	}
 	.mint-popup {
 		width: 100%;
 		height: 100%;
