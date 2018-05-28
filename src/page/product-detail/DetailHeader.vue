@@ -3,7 +3,7 @@
 	<div class="ui-detail-header">
 		<img src="../../assets/image/change-icon/back@2x.png" v-on:click='goBack()'>
 		<div class="navbar-wrapper">
-			<div v-for="(item, key) in data" v-bind:class="{'active': key == index}" v-on:click='changeEvent(key)'>{{ item.name}}</div>
+			<div v-for="(item, key) in data" v-bind:class="{'navbar_active': key == index}" v-on:click='changeEvent(key)'>{{item.name}}</div>
 		</div>
 	</div>
 </template>
@@ -52,13 +52,11 @@ export default {
 		color: #55595F;
 		font-size: 17px;
 		width: auto;
-
 		display: flex;
 		justify-content: center;
 		align-content: center;
 		align-items: center;
 	    flex-basis: auto;
-
 	    z-index: 1;
 	    position: fixed;
 	    top: 0px;
@@ -79,7 +77,7 @@ export default {
 	    		display: inline-block;
 	    		margin-right: 48px;
 	    		color: #55595F;
-				&.active {
+				&.navbar_active {
 					color: #FC2E39;
 					border-bottom: 2px solid #FC2E39;
 				}
@@ -87,7 +85,7 @@ export default {
 					margin-right: 0px;
 				}
 				&:focus {
-					outline:  none;
+					outline: none;
 				}
 			}
 		}
