@@ -30,6 +30,7 @@
 
 <script>
 	import { productAccessoryList } from '../../../api/network/product';
+	import { mapState, mapMutations } from 'vuex';
 	export default {
 		data() {
 			return{
@@ -38,16 +39,24 @@
 				currentIndex: 0
 			}
 		},
+
 		created() {
 			this.getRecommendList();
 		},
+
+		computed: {
+	      	...mapState({
+				currentProductId: state => state.detail.currentProductId
+			})
+		},
+
 		methods: {
 			/*
 				getRecommendList: 获取推荐商品
 			*/
 			getRecommendList() {
 				let params = {
-                	"product": this.$route.params.id ? this.$route.params.id : '',
+                	"product": this.currentProductId ? this.currentProductId : '',
                 	"page": 1,
                 	"per_page": 10
 				};

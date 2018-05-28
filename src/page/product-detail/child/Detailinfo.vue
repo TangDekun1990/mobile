@@ -5,9 +5,7 @@
 			<h3><span v-if="detailInfo.self_employed">自营</span>{{ detailInfo.name }}</h3>
 			<div>
 				<img src="../../../assets/image/change-icon/b2_comment@2x.png" @click="getCommentStatus()">
-
 				<img src="../../../assets/image/change-icon/b2_unfavorite@2x.png" v-on:click='productLike()' v-if='!detailInfo.is_liked'>
-
 				<img src="../../../assets/image/change-icon/b2-favorite@2x.png" v-on:click='productUnlike()' v-if='detailInfo.is_liked'>
 			</div>
 		</div>
@@ -29,7 +27,6 @@
 				服务：由温超物流发货，并提供售后服务。{{orderTime }}前完成下单，预计{{arrivalsTitle}}({{arrivalsTime}}){{arrivalsRange}}送达
 			</p>
 		</div>
-
 	</div>
 </template>
 
@@ -44,46 +41,34 @@
 				arrivalsTime: '',  //到达时间
 				arrivalsTitle: '', // 到达时间的标题
 				arrivalsRange: '',  //到达时间区间,
-				isShowDesc: false,  // 商品简介是否显示更多
-				productId: this.$route.params.id ? this.$route.params.id : '',
+				isShowDesc: false  // 商品简介是否显示更多
 			}
 		},
 
 		computed: {
 	      	...mapState({
 				detailInfo: state => state.detail.detailInfo,
+				currentProductId: state => state.detail.currentProductId,
 				user: state => state.auth.user
 			})
 		},
 
-		// TODO
-		watch: {
-			detailInfo: function(value) {
-				// if(value) {
-				// 	let title = this.detailInfo.name;
-				// 	let imgUrl = '';
-				// 	let desc = '';
-				// 	if (this.detailInfo.photos) {
-				// 		imgUrl = this.detailInfo.photos[0].thumb;
-				// 	}
-				// 	if(this.detailInfo.desc) {
-				// 		desc = this.detailInfo.desc;
-				// 	}
-				// 	// let url = document.location.href;
-				// 	let url = location.href.split('/#')[0]+"?"+encodeURIComponent(location.href.split('/#')[1]);
-				// 	this.wxApi.getConfigRes(title, imgUrl, desc);
-				// }
-			}
-		},
 		created(){
 			this.getCurrentDate();
 		},
 
 		methods: {
 			...mapMutations({
-				'commentStatus': 'changeIsComment',
-				'saveInfo': 'saveDetailInfo'
+				'changeIndex': 'changeIndex'
 			}),
+
+			/*
+			 * getCommentStatus： 去到评论页面
+			 */
+			getCommentStatus() {
+				this.changeIndex(2);
+			},
+
 			/*
 				getCurrentDate: 获取当前时间
 			*/
@@ -91,7 +76,7 @@
 				let date = new Date();
 				let month = date.getMonth() + 1,
         			data = date.getDate(),
-								hour = date.getHours() < 10 ? "0" + date.getHours() : date.getHours(),
+					hour = date.getHours() < 10 ? "0" + date.getHours() : date.getHours(),
 		            minute = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes(),
 		            second = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
 		        this.getTimeRange(hour, minute, month, data);
@@ -137,7 +122,6 @@
 				productLike： 收藏商品
 			*/
 			productLike() {
-				var that = this;
 				if (this.user) {
 					let id = this.detailInfo.id;
 					productLike(id).then( res => {
@@ -155,7 +139,6 @@
 				productUnlike： 取消收藏
 			*/
 			productUnlike() {
-				var that = this;
 				if (this.user) {
 					let id = this.detailInfo.id;
 					productUnlike(id).then( res => {
@@ -173,18 +156,11 @@
 				getDetail: 获取商品详情， 并且存入状态管理
 			*/
 			getDetail() {
-				getProductDetail(this.productId).then(res => {
+				getProductDetail(this.currentProductId).then(res => {
 					if (res) {
 						this.detailInfo.collector = Object.assign([], res.product.collector);
 					}
 				})
-			},
-
-			/*
-				评论
-			 */
-			getCommentStatus() {
-				this.commentStatus(true);
 			},
 
 			/*

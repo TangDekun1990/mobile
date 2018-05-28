@@ -45,8 +45,7 @@
 					</div>
 				</div>
 
-				<div class="info-footer" v-on:click='addShoppingCart()' v-if="!type">确定</div>
-				<div class="info-footer" v-on:click='addShoppingCart()' v-if="type">加入购物车</div>
+				<div class="info-footer" v-on:click='addShoppingCart()'>{{ type }}</div>
 
 			</div>
 		</div>
@@ -65,7 +64,7 @@
 	data(){
 		return {
 			numbers: this.$store.state.detail.number > 0 ? this.$store.state.detail.number : 1,  //todo 临时解决
-			productId: this.$route.params.id ? this.$route.params.id : '',
+			productId: this.$store.state.detail.currentProductId,
 			toastConfig: {
 				message: '商品达到每单限购数量',
 				position: 'middle'

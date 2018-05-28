@@ -3,7 +3,7 @@
 	<div class="ui-recommend-wrapper" v-if="list.length > 0">
 
 		<div class="wrapper-swipe">
-			<mt-swipe :auto="0" :show-indicators="false" @change="handleChange" :default-index="currentIndex" :stop-propagation='true' :speed='100'>
+			<mt-swipe :auto="0" :show-indicators="false" @change="handleChange" :stop-propagation='true' :speed='100'>
 			  	<mt-swipe-item v-for="(item, index) in list" :key="index">
 			  		<div class="image-swipe-wrapper">
 						<div v-for="image in item[0]" @click="goDetail(image.id)">
@@ -31,6 +31,7 @@
 
 <script>
 	import { getRecommendProduct } from '../../../api/network/product';
+	import { mapState, mapMutations } from 'vuex';
 	export default {
 		data() {
 			return{
@@ -39,19 +40,24 @@
 				currentIndex: 0
 			}
 		},
+
 		created() {
 			this.getRecommendList();
 		},
+
+		computed: {
+	      	...mapState({
+				currentProductId: state => state.detail.currentProductId
+			})
+		},
+
 		methods: {
 			/*
 				getRecommendList: 获取推荐商品
 			*/
 			getRecommendList() {
 				let params = {
-					"brand": this.$route.params.brand ? this.$route.params.brand : '',
-                	"category": this.$route.params.category ? this.$route.params.category : '',
-                	"shop": this.$route.params.shop ? this.$route.params.shop : '',
-                	"product": this.$route.params.id ? this.$route.params.id : '',
+                	"product": this.currentProductId ? this.currentProductId : '',
                 	"page": 1,
                 	"per_page": 10
 				};

@@ -3,9 +3,8 @@
 	<div class="ui-detail-header">
 		<img src="../../assets/image/change-icon/back@2x.png" v-on:click='goBack()'>
 		<div class="navbar-wrapper">
-			<div v-for="(item, index) in data" v-bind:class="{'active': index == currentIndex}" v-on:click='changeEvent(index)'>{{ item.name}}</div>
+			<div v-for="(item, key) in data" v-bind:class="{'active': key == index}" v-on:click='changeEvent(key)'>{{ item.name}}</div>
 		</div>
-		<!-- <img src="../../assets/image/change-icon/b0_share@2x.png"> -->
 	</div>
 </template>
 
@@ -15,35 +14,25 @@ import { mapState, mapMutations } from 'vuex'
 export default {
 	data(){
 		return {
-			data: header,
-			currentIndex: this.$store.state.detail.currentSwiperIndex
+			data: header
 		}
 	},
 
-	computed: mapState({
-		currentSwiperIndex: state => state.detail.currentSwiperIndex
-	}),
-
-	created(){
-		this.currentIndex = this.currentSwiperIndex;
+	computed: {
+		...mapState({
+			index: state => state.detail.index
+		})
 	},
 
-	watch: {
-		currentSwiperIndex: function(index) {
-			this.currentIndex = index;
-		}
-	},
+	created(){},
 
 	methods: {
 		...mapMutations({
-			'setSwiperIndex': 'setCurrentSwiperIndex',
-			saveNumber: 'saveNumber',
-			saveInfo: 'saveDetailInfo',
-			saveChooseInfo: 'saveChooseInfo'
+			'changeIndex': 'changeIndex',
 		}),
 
 		changeEvent(index) {
-			this.setSwiperIndex(index);
+			this.changeIndex(index);
 		},
 
 		goBack() {
@@ -60,7 +49,6 @@ export default {
 		height:44px;
 		background:rgba(255,255,255,1);
 		border-bottom: 0.5px solid rgba(232,234,237,1);
-		/* box-shadow: 0px -0.5px 0px 0px rgba(232,234,237,1); */
 		color: #55595F;
 		font-size: 17px;
 		width: auto;
@@ -72,7 +60,7 @@ export default {
 	    flex-basis: auto;
 
 	    z-index: 1;
-	    position: absolute;
+	    position: fixed;
 	    top: 0px;
 	    left: 0px;
 	    right: 0px;
@@ -89,14 +77,17 @@ export default {
 	    		line-height: 42px;
 	    		border-bottom: 2px solid transparent;
 	    		display: inline-block;
-	    		cursor: pointer;
 	    		margin-right: 48px;
+	    		color: #55595F;
 				&.active {
 					color: #FC2E39;
 					border-bottom: 2px solid #FC2E39;
 				}
 				&:last-child {
 					margin-right: 0px;
+				}
+				&:focus {
+					outline:  none;
 				}
 			}
 		}

@@ -82,7 +82,7 @@
 			// 加入购物车
 			addShopping(value) {
 				this.saveCartState(value);
-				this.changeType(false);
+				this.changeType('确定');
 			},
 
 			// 获取购物车总数
@@ -112,7 +112,7 @@
 		border-top: 0.5px solid #e8eaed;
 		width: auto;
 
-		position: absolute;
+		position: fixed;
 		bottom: 0px;
 		left: 0px;
 		right: 0px;

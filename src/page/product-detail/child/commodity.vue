@@ -1,6 +1,6 @@
 <template>
 	<!-- 商品 -->
-	<div class="commodity-wrapper" v-bind:class="{'hide-commodity': isHideCommodity, 'sroller-commodity': !isHideCommodity}">
+	<div class="commodity-wrapper">
 		<!-- 轮播图 -->
 		<v-goods-swipe></v-goods-swipe>
 		<!-- 商品信息 -->
@@ -21,8 +21,6 @@
 		<v-goods-recommend></v-goods-recommend>
 		<!-- 商品搭配 -->
 		<v-goods-with></v-goods-with>
-		<!-- 详情 -->
-		<!-- <v-goods-aspect v-if='isShowDetail'></v-goods-aspect> -->
 	</div>
 </template>
 
@@ -30,7 +28,6 @@
 	import goodsSwipe from './GoodsSwipe';
 	import detailInfo from './Detailinfo';
 	import promotions from './promotions';
-
 	import promotionTime from './Time';
 	import detailBuy from './Buy';
 	import detailConcat from './Concat';
@@ -39,17 +36,13 @@
 	import recommend from './recommend';
 	import withproduct from './with'
 
-	import aspect from './aspect';
-
 	import { mapState, mapMutations } from 'vuex';
-	//  todo
-	import { getProductDetail } from '../../../api/network/product';
+
 	export default {
 		data() {
-			return{
-				productId: this.$route.params.id ? this.$route.params.id : ''
-			}
+			return{}
 		},
+
 		created(){},
 
 		components: {
@@ -62,48 +55,19 @@
 			'v-goods-like': detailLike,
 			'v-goods-review': goodsReview,
 			'v-goods-recommend': recommend,
-			'v-goods-with': withproduct,
-			'v-goods-aspect': aspect
-		},
-		computed: mapState({
-			isHideCommodity: state => state.detail.isHideCommodity,
-			isShowDetail: state => state.detail.isShowDetail
-		}),
-
-		mounted() {
-			// 添加滚动事件
-			var element = this.$el;
-			var that = this;
-	        element.addEventListener('scroll', (event) => {
-	        	let params = {
-	        		'top': element.scrollTop,
-	        		'height': element.scrollHeight
-	        	};
-	        	if( params.height - (params.top + element.offsetHeight + 2) <  0) {
-	        		this.changeStatus();
-	        	}
-	        });
+			'v-goods-with': withproduct
 		},
 
-		methods: {
-			...mapMutations({
-				setCurrentSwiperIndex: 'setCurrentSwiperIndex'
-			}),
+		computed: mapState({}),
 
-			changeStatus() {
-				this.setCurrentSwiperIndex(1);
-			}
-		}
+		mounted() {},
+
+		methods: {}
 	}
 </script>
 
 <style lang='scss' scoped>
-	.hide-commodity{
-		overflow: hidden;
-		height: -webkit-fill-available;
-	}
-	.sroller-commodity{
+	.commodity-wrapper {
 		height: 100%;
-		overflow: auto;
 	}
 </style>

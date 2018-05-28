@@ -79,6 +79,8 @@ import With from '../page/recommend/with' // TODO: CODE REVIW (rename)
 import Promotions from '../page/promotions/Promotions'
 //
 import updateinfo from '../page/profile/child/Update'
+
+import demo from '../page/demo/demo'
 export default [
 	{
 		path: '/',
@@ -352,9 +354,9 @@ export default [
 				component: Promotions
 			},
 			{
-				name: 'authorized',
-				path: '/authorized',
-				component: Authorized
+				name: 'demo',
+				path: '/demo',
+				component: demo
 			}
 		]
 	}

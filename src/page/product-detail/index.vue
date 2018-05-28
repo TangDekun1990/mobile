@@ -1,13 +1,12 @@
 <!-- 商品详情 -->
 <template>
 	<div class="product-detail-wrapper" v-if="productDetail">
-		<!-- <div>ufeufheuhfegfyegfye</div> -->
 		<!-- header  -->
-		<v-detail-nav v-if='!isHideHeader'></v-detail-nav>
+		<v-detail-nav></v-detail-nav>
 		<!-- body -->
 		<v-detail-swiper :isStock="productDetail.good_stock"></v-detail-swiper>
 		<!-- footer -->
-		<v-detail-footer v-if='!isHideCart'></v-detail-footer>
+		<v-detail-footer></v-detail-footer>
 	</div>
 </template>
 
@@ -42,25 +41,10 @@
 		},
 
 		computed: mapState({
-			isHideCart: state => state.detail.isHideCart,
-			isHideHeader: state => state.detail.isHideHeader
 		}),
 
 		mounted() {
-			this.$nextTick(() => {
-				// if(this.detailInfo) {
-				// 	let title = this.detailInfo.name;
-				// 	let imgUrl = '';
-				// 	let desc = '';
-				// 	if (this.detailInfo.photos) {
-				// 		imgUrl = this.detailInfo.photos[0].thumb;
-				// 	}
-				// 	if(this.detailInfo.desc) {
-				// 		desc = this.detailInfo.desc;
-				// 	}
-				// 	this.wxApi.getConfigRes(title, imgUrl, desc);
-				// }
-			});
+			this.$nextTick(() => {});
 		},
 
 		beforeRouteEnter(to, from, next) {
@@ -84,23 +68,18 @@
 			next();
 		},
 
-		// watch: {
-		//     $route (to, from) {
-		//     	window.location.reload();
-		//     }
-		// },
-
 		methods: {
 			...mapMutations({
 				saveInfo: 'saveDetailInfo',
-				saveCartState: 'saveCartState'
+				saveCartState: 'saveCartState',
+				setCurrentProductId: 'setCurrentProductId'
 			}),
 
 			/*
 				getDetail: 获取商品详情， 并且存入状态管理
 			*/
 			getDetail() {
-				this.saveInfo();
+				this.setCurrentProductId(this.productId);
 				getProductDetail(this.productId).then(res => {
 					if (res) {
 						this.productDetail = res.product;
