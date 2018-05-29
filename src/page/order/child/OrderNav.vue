@@ -14,9 +14,9 @@
 		</div>
 		<!-- body -->
 		<!-- 无限加载滚动列表 -->
-		<div>
-			<div v-infinite-scroll="getMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
-				<div class="order-body" v-if="orderList.length > 0 ">
+		<!-- <div > -->
+			<div v-infinite-scroll="getMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10" class="order-body">
+				<div v-if="orderList.length > 0 ">
 					<div class="list" v-for="(item, index) in orderList" v-bind:key="item.id">
 						<h3 class="title" v-if="item.status != 4">{{ getOrderStatusBy(item.status) }}</h3>
 						<h3 v-if="item.status == 4">
@@ -86,7 +86,7 @@
 					</button>
 				</div>
 			</div>
-		</div>
+		<!-- </div> -->
 	</div>
 </template>
 
@@ -350,6 +350,7 @@ export default {
     position: absolute;
     width: 100%;
     top: 89px;
+    border: 1px solid red;
     .list {
       width: 100%;
       margin-top: 11px;
