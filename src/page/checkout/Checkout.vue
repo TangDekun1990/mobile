@@ -227,8 +227,7 @@ export default {
 		this.getOrderPrice()
 	    // 配送时间列表
 	    this.fetchDeliveryList()
-	    console.log(this.user);
-	    this.utils.openZhichiManager('', '', this.user, this.user.id);
+	    this.utils.openZhichiManager('', '');
 	},
 
 	beforeRouteEnter(to, from, next) {
@@ -263,13 +262,6 @@ export default {
 			fetchDeliveryList: 'fetchDeliveryList',
 		}),
 
-		openZhiChi() {
-			if (this.isOnline) {
-				this.utils.openZhichiManager('', '', this.user, this.user.id);
-			} else {
-				this.$router.push({'name': 'signin'});
-			}
-		},
 		/***滑动限制***/
 		stop() {
 			var mo = function(e) {

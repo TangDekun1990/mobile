@@ -37,7 +37,7 @@ export default {
 	},
 
 	created() {
-		let value = this.utils.openZhichiManager('', '', this.user, this.user.id);
+		let value = this.utils.openZhichiManager('', '');
 		this.utils.getunreadCount(value, this, "key");
 	},
 
