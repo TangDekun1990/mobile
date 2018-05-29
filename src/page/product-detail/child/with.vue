@@ -109,7 +109,7 @@
 			 */
 			goRecommend() {
 				let params = {};
-				params.product = currentProductId
+				params.product = this.currentProductId
 				this.$router.push({'name': 'with', 'query': params});
 			},
 
