@@ -206,7 +206,7 @@ export default {
 		if (detail || order) {
 			let thumbnail_info = '';
 			if (detail) {
-				thumbnail_info = detail.photos ? detail.photos[0].thumb : '';
+				thumbnail_info = detail.photos &&  detail.photos.length > 0 ? detail.photos[0].thumb : '';
 			}
 			if (order) {
 				thumbnail_info = order.goods.length > 0 ? order.goods[0].product.photos[0].thumb : '';

@@ -119,9 +119,7 @@
 				if (this.$route.params.shop) {
 					params.shop = this.$route.params.shop;
 				}
-				if (this.$route.params.id) {
-					params.product = this.$route.params.id;
-				}
+				params.product = currentProductId;
 				this.$router.push({'name': 'recommend', 'params': params});
 			},
 

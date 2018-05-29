@@ -21,6 +21,7 @@
 		<v-goods-recommend></v-goods-recommend>
 		<!-- 商品搭配 -->
 		<v-goods-with></v-goods-with>
+		<div style="height: 5px; background-color: #F0F2F5"></div>
 	</div>
 </template>
 

@@ -109,9 +109,7 @@
 			 */
 			goRecommend() {
 				let params = {};
-				if (this.$route.params.id) {
-					params.product = this.$route.params.id;
-				}
+				params.product = currentProductId
 				this.$router.push({'name': 'with', 'query': params});
 			},
 

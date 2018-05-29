@@ -60,7 +60,7 @@ const wxApi = {
 		wx.ready(function () {
 			wx.onMenuShareAppMessage({
 				title: title, // 分享标题
-				imgUrl: imgUrl, // 分享图标
+				imgUrl: imgUrl ? imgUrl : require('../assets/image/change-icon/apple-touch-icon.png'), // 分享图标
 				desc: desc, // 分享描述
 				link: window.location.href.split('#')[0]+'#'+window.location.href.split('#')[1],
 				success: function() {

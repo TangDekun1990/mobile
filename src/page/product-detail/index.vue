@@ -2,11 +2,13 @@
 <template>
 	<div class="product-detail-wrapper" v-if="productDetail">
 		<!-- header  -->
-		<v-detail-nav></v-detail-nav>
+		<v-detail-nav v-if='!isPreviewPicture'></v-detail-nav>
 		<!-- body -->
 		<v-detail-swiper :isStock="productDetail.good_stock"></v-detail-swiper>
 		<!-- footer -->
-		<v-detail-footer></v-detail-footer>
+		<v-detail-footer v-if="!isPreviewPicture"></v-detail-footer>
+		<!-- 预览图片 -->
+		<v-picture v-if="isPreviewPicture" :defaultindex="swipeId" :isshow="isPreviewPicture"></v-picture>
 	</div>
 </template>
 
@@ -17,22 +19,25 @@
 	import detailSwiper from './swiper';
 	// footer
 	import detailFooter from './footer';
+	import PreviewPicture from './child/PreviewPicture';
 	// 获取详情
 	import { getProductDetail } from '../../api/network/product';
 	import { mapState, mapMutations } from 'vuex';
 	export default {
 		data(){
 			return {
-				productId: this.$route.params.id ? this.$route.params.id : '',
+				productId: this.$route.query.id ? this.$route.query.id : '',
 				productDetail: {},
-				hideFooter: false
+				hideFooter: false,
+				popupVisible: true
 			}
 		},
 
 		components: {
 			'v-detail-nav': detailHeader,
 			'v-detail-swiper': detailSwiper,
-			'v-detail-footer': detailFooter
+			'v-detail-footer': detailFooter,
+			'v-picture': PreviewPicture
 		},
 
 		created(){
@@ -41,6 +46,8 @@
 		},
 
 		computed: mapState({
+			isPreviewPicture: state => state.detail.isPreviewPicture,
+			swipeId: state => state.detail.swipeId
 		}),
 
 		mounted() {
@@ -87,7 +94,7 @@
 						let title = this.productDetail.name;
 						let imgUrl = '';
 						let desc = '';
-						if (this.productDetail.photos) {
+						if (this.productDetail.photos && this.productDetail.photos.length > 0 ) {
 							imgUrl = this.productDetail.photos[0].thumb;
 						}
 						if(this.productDetail.desc) {
@@ -105,6 +112,5 @@
 	.product-detail-wrapper {
 		height: 100%;
 		width: auto;
-		position: relative;
 	}
 </style>

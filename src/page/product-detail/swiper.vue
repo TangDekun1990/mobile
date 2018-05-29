@@ -1,6 +1,6 @@
 <!-- 商品详情  -->
 <template>
-	<div class="ui-detail-swiper" v-bind:class="{'hide-promotion-bottom': ispromotion}">
+	<div class="ui-detail-swiper" v-bind:class="{'hide-promotion-bottom': ispromotion, 'has-goods-stock': isStock <= 0}">
 		<commodity v-if="index == 0"></commodity>
 		<aspect v-if="index == 1"></aspect>
 		<review v-if="index == 2"></review>
@@ -47,24 +47,20 @@
 <style lang='scss' scoped>
 	.ui-detail-swiper {
 		position: absolute;
-		width: auto;
-		top: 44px;
+		width: 100%;
+		top: 45px;
 		bottom: 50px;
 		left: 0px;
 		right: 0px;
 		overflow: auto;
+		z-index: 0;
+		/* border: 1px solid red; */
 		background: rgba(240,242,245,1);
 		&.has-goods-stock {
 			bottom: 82px;
 		}
 		&.hide-promotion-bottom {
 			bottom: 0px;
-		}
-	}
-	.swiper-container {
-		height: 100%;
-		.swiper-slide {
-			overflow: auto;
 		}
 	}
 </style>

@@ -60,22 +60,18 @@
 		}),
 
 		created(){
-			// this.getShoppingTotal();
 			this.$on('start-addcart-animation', () => {
 				this.isAnimation = true;
 			});
 			this.$on('end-addcart-animation', () => {
 				this.isAnimation = false;
 				this.saveCartState(false);
-				this.hideCommodity(false);
-				// this.getShoppingTotal();
 			});
 		},
 
 		methods: {
 			...mapMutations({
 				saveCartState: 'saveCartState',
-				hideCommodity: 'setIsHideCommodity',
 				changeType: 'changeType'
 			}),
 
@@ -111,13 +107,11 @@
 		background:rgba(255,255,255,1);
 		border-top: 0.5px solid #e8eaed;
 		width: auto;
-
-		position: fixed;
+		position: absolute;
 		bottom: 0px;
 		left: 0px;
 		right: 0px;
-		z-index: 1;
-
+		z-index: 0;
 		&.hidden-cart-footer {
 			display: none;
 		}

@@ -67,7 +67,6 @@ import OrderSubmit from '../page/order/child/OrderSubmit'
 
 // 商品详情
 import Detail from '../page/product-detail/index'
-import redetail from '../page/product-detail/redetail'
 
 // 购物车
 import Cart from '../page/cart/cart'
@@ -79,8 +78,6 @@ import With from '../page/recommend/with' // TODO: CODE REVIW (rename)
 import Promotions from '../page/promotions/Promotions'
 //
 import updateinfo from '../page/profile/child/Update'
-
-import demo from '../page/demo/demo'
 export default [
 	{
 		path: '/',
@@ -344,19 +341,9 @@ export default [
 				component: ScoreRule
 			},
 			{
-				name: 'redetail',
-				path: '/redetail/:id?',
-				component: redetail
-			},
-			{
 				name: 'promotions',
 				path: '/promotions',
 				component: Promotions
-			},
-			{
-				name: 'demo',
-				path: '/demo',
-				component: demo
 			}
 		]
 	}

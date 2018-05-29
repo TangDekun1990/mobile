@@ -1,22 +1,18 @@
 const initState = {
-	isHideCart: false,
-	isHideHeader: false,
-	detailInfo: {},
-	isShowcartInfo: false,
-	currentSwiperIndex: 0,
-	isHideCommodity: false,
-	number: 0,
-	isComment: false,
-	isShowDetail: false,
-	ispromotion: false,
-	type: '确定',
+	detailInfo: {},  //商品详情
+	isShowcartInfo: false,  //是否显示购物车
+	number: 0,   //选择商品的数量
+	ispromotion: false,  //点击促销， 根据该值来判断弹出框距离底部的距离
+	type: '确定',  //点击购买和加入购物车， 购买浮层的按钮显示
 	chooseinfo: {
 		specification:[],
 		ids: []
-	},
-	properties: [],
-	index: 0,
-	currentProductId: ''
+	},  //选择该商品的ids和属性名称
+	properties: [],  //多属性商品的属性名称值
+	index: 0,  //当前点击的type值
+	currentProductId: '',  //当前商品的id
+	isPreviewPicture: false, //当前是否是预览大图
+	swipeId: 0  //当前滑动的swiperid值
 }
 // initial state
 const state = {
@@ -24,29 +20,6 @@ const state = {
 	initState(){
         return initState
     }
-	// isHideCart: false,  // 点击看大图隐藏脚部
-	// isHideHeader: false, // 点击看大图隐藏头部
-
-	// detailInfo: {},    //保存商品详情
-
-	// isShowcartInfo: false,  //是否显示购物车浮层
-
-	// currentSwiperIndex: 0, //当前滑动的id
-
-	// isHideCommodity: false, //点击查看大图，隐藏商品展示
-
-	// number: 0,
-
-	// isComment: false,
-
-	// isShowDetail: false,
-
-	// ispromotion: false,
-	// type: false,
-	// chooseinfo: {
-	// 	specification:[],
-	// 	ids: []
-	// }  //选择口味的信息
 }
 
 // mutations
@@ -92,16 +65,6 @@ const mutations = {
 		state.ispromotion = data;
 	},
 
-
-	//评论
-	changeIsComment(state, value) {
-		state.isComment = value;
-	},
-
-	changeShowDetail(state, value) {
-		state.isShowDetail = value;
-	},
-
 	saveChooseInfo(state, info) {
 		state.chooseinfo = info;
 	},
@@ -109,6 +72,15 @@ const mutations = {
 	saveProperties(state, value) {
 		state.properties = value;
 	},
+
+	// 改变当前是否是预览大图的值
+	setisPreviewPicture(state, value) {
+		state.isPreviewPicture = value;
+	},
+
+	setSwiperId(state, value) {
+		state.swipeId = value;
+	}
 }
 
 export default {

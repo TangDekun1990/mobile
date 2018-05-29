@@ -57,8 +57,7 @@ export default {
 		align-content: center;
 		align-items: center;
 	    flex-basis: auto;
-	    z-index: 1;
-	    position: fixed;
+	    position: absolute;
 	    top: 0px;
 	    left: 0px;
 	    right: 0px;
@@ -77,6 +76,7 @@ export default {
 	    		display: inline-block;
 	    		margin-right: 48px;
 	    		color: #55595F;
+	    		background-color: #fff;
 				&.navbar_active {
 					color: #FC2E39;
 					border-bottom: 2px solid #FC2E39;
