@@ -248,7 +248,7 @@ export default {
 					this.orderDetail = res;
 					this.order = res.order;
 					this.total_price = res.order.goods;
-					this.utils.openZhichiManager('', this.order, this.user, this.user.id);
+					this.utils.openZhichiManager('', this.order);
 				}
 			});
 		},

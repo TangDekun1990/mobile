@@ -1,3 +1,4 @@
+import store from '../store/index'
 export default {
 
 	fetch(key) {
@@ -181,7 +182,7 @@ export default {
 	/*
 	 * 调用智齿
 	 */
-	openZhichiManager(detail, order, user, partnerId) {
+	openZhichiManager(detail, order) {
 		let zhiManager = (getzhiSDKInstance());
 		zhiManager.on('load', function () {
 			zhiManager.init();
@@ -191,18 +192,17 @@ export default {
 			zhiManger.set('satDegree_A', true);
 			zhiManger.set('isFeedBackFlag', true);
 			zhiManager.set('robotHelloWord', '您好! 我是机器人小超， 有什么吩咐您请说哦！');
-			if (partnerId) {
-				zhiManager.set('partnerId', partnerId)
-			}
-			if (user) {
-				zhiManager.set('userinfo', {
-				  uname: user.nickname ? user.nickname : user.username,   //昵称
-				  face: user.avatar ? user.avatar.thumb : '',   //头像URL
-				  user_id: user.id ? user.id : ''
-				});
-			}
-
 		});
+		if (store.getters.getUser) {
+			let userinfo = store.getters.getUser;
+			console.log(store.getters.getUser.id);
+			zhiManager.set('partnerId', store.getters.getUser.id);
+			zhiManager.set('userinfo', {
+				uname: userinfo.nickname ? userinfo.nickname : userinfo.username,   //昵称
+				face: userinfo.avatar ? userinfo.avatar.thumb : '',   //头像URL
+				user_id: userinfo.id ? userinfo.id : ''
+			});
+		}
 		if (detail || order) {
 			let thumbnail_info = '';
 			if (detail) {

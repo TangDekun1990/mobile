@@ -79,11 +79,8 @@ export default {
 		    			this.saveMessageTime({ ordertime: this.orderMessage[0].created_at });
 		    			if (ispush) {
 		    				this.messageOrderList = this.messageOrderList.concat(res.messages);
-		    			} else {
-		    				this.messageOrderList = Object.assign([], this.messageOrderList, res.messages);
-		    			}
+		    			} 
 		    			this.isMore = res.paged.more == 1 ? true : false;
-		    			this.changestatus({'isShowOrder': false});
 	    			}
 	    			this.saveOrderNews(res);
 	    			Indicator.close();
@@ -93,7 +90,9 @@ export default {
 
 	    // 从订单消息页面去订单详情页
 	    getOrderDetail(link) {
-	    	openLink(this.$router, link);
+	    	if(link && link.length) {
+					openLink(this.$router, link);
+				}
 	    },
 
 	    // 无缝滚动加载

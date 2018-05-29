@@ -32,7 +32,7 @@
 				</div>
 			</div>
 
-			<div class="newslist" v-on:click="getServiceMessage()">
+			<div class="newslist zhiCustomBtns" >
 				<div class="ui-image-wrapper">
 					<img src="../../assets/image/change-icon/e12_service@2x.png">
 				</div>
@@ -53,11 +53,15 @@ export default {
 	data() {
 		return {
 			noticeMessage: [],
-			orderMessage: []
+			orderMessage: [],
+			key: ""
 		};
 	},
 
-	created() {},
+	created() {
+		let value = this.utils.openZhichiManager('', '', this.user, this.user.id);
+		this.utils.getunreadCount(value, this, "key");
+	},
 
 	computed: {
 		...mapState({
@@ -65,7 +69,9 @@ export default {
 			noticeNews: state => state.news.noticeNews,
 			status: state => state.news.status,
 			orderCount: state => state.news.orderCount,
-			noticeCount: state => state.news.noticeCount
+			noticeCount: state => state.news.noticeCount,
+			isOnline: state => state.auth.isOnline,
+			user: state => state.auth.user
 		})
 	},
 
@@ -130,10 +136,6 @@ export default {
 	    		}
 	    	});
 	    },
-	    // 客服消息
-	    getServiceMessage() {
-	    	this.$router.push("newsServiceMessage");
-	    }
 	}
 };
 </script>

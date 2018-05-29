@@ -2,7 +2,7 @@ const initState = {
 	detailInfo: {},  //商品详情
 	isShowcartInfo: false,  //是否显示购物车
 	number: 0,   //选择商品的数量
-	ispromotion: false,  //点击促销， 根据该值来判断弹出框距离底部的距离
+	// ispromotion: false,  //点击促销， 根据该值来判断弹出框距离底部的距离
 	type: '确定',  //点击购买和加入购物车， 购买浮层的按钮显示
 	chooseinfo: {
 		specification:[],
@@ -12,7 +12,8 @@ const initState = {
 	index: 0,  //当前点击的type值
 	currentProductId: '',  //当前商品的id
 	isPreviewPicture: false, //当前是否是预览大图
-	swipeId: 0  //当前滑动的swiperid值
+	swipeId: 0,  //当前滑动的swiperid值
+	promoPopstatus: false
 }
 // initial state
 const state = {
@@ -80,6 +81,10 @@ const mutations = {
 
 	setSwiperId(state, value) {
 		state.swipeId = value;
+	},
+
+	changePopstatus(state, value) {
+		state.promoPopstatus = value;
 	}
 }
 

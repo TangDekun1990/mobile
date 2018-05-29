@@ -9,6 +9,8 @@
 		<v-detail-footer v-if="!isPreviewPicture"></v-detail-footer>
 		<!-- 预览图片 -->
 		<v-picture v-if="isPreviewPicture" :defaultindex="swipeId" :isshow="isPreviewPicture"></v-picture>
+		<!-- 促销信息 -->
+		<v-promotion-pop v-if="promoPopstatus" :promo-popstatus="promoPopstatus"></v-promotion-pop>
 	</div>
 </template>
 
@@ -19,7 +21,9 @@
 	import detailSwiper from './swiper';
 	// footer
 	import detailFooter from './footer';
+
 	import PreviewPicture from './child/PreviewPicture';
+	import PromotionPopup from './child/PromotionPopup'
 	// 获取详情
 	import { getProductDetail } from '../../api/network/product';
 	import { mapState, mapMutations } from 'vuex';
@@ -37,7 +41,8 @@
 			'v-detail-nav': detailHeader,
 			'v-detail-swiper': detailSwiper,
 			'v-detail-footer': detailFooter,
-			'v-picture': PreviewPicture
+			'v-picture': PreviewPicture,
+			'v-promotion-pop': PromotionPopup
 		},
 
 		created(){
@@ -47,7 +52,8 @@
 
 		computed: mapState({
 			isPreviewPicture: state => state.detail.isPreviewPicture,
-			swipeId: state => state.detail.swipeId
+			swipeId: state => state.detail.swipeId,
+			promoPopstatus: state => state.detail.promoPopstatus
 		}),
 
 		mounted() {

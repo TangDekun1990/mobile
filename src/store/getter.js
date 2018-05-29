@@ -5,3 +5,7 @@ export const isOnline = (state) => {
 export const token = (state) => {
   return state.auth.token
 }
+
+export const getUser = (state) => {
+  return state.auth.user
+}
