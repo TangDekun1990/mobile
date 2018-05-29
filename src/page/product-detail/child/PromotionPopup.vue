@@ -1,25 +1,7 @@
-<!-- promotions.vue -->
-
+<!-- PromotionPopup.vue -->
 <template>
-	<div class="ui-promotions-wrapper ui-detail-common" v-if="detailInfo && detailInfo.promos && detailInfo.promos.length > 0">
-		<!-- header -->
-		<div class="promotions-header header" v-on:click='openPopup()'>
-			<h3>促销信息{{detailInfo.promos.length}}</h3>
-			<img src="../../../assets/image/change-icon/enter@2x.png">
-		</div>
-		<!-- 展示促销信息 -->
-		<div class="promotions-body">
-			<div class="body-list" v-for="(item, index) in detailInfo.promos" :key="index" v-if="index <= 1">
-				<span class="name">{{ item.name }}</span>
-				<span class="title">{{item.promo}}</span>
-				<div class="content" v-if="item.desc">
-					<p>{{item.desc}}</p>
-				</div>
-			</div>
-		</div>
-
-		<!-- body -->
-		<!-- <mt-popup v-model="popupvisible" position="bottom">
+	<div v-if="detailInfo && detailInfo.promos && detailInfo.promos.length > 0">
+		<mt-popup v-model="promoPopstatus" position="bottom" v-bind:close-on-click-modal=false>
 			<div class="detail-promotions">
 				<div class="header">
 					<h3>促销信息</h3>
@@ -35,7 +17,7 @@
 					</div>
 				</div>
 			</div>
-		</mt-popup> -->
+		</mt-popup>
 	</div>
 </template>
 
@@ -44,6 +26,13 @@
 	export default {
 		data() {
 			return {}
+		},
+
+		props: {
+			promoPopstatus: {
+				type: Boolean,
+				default: false
+			}
 		},
 
 		computed: {
@@ -57,32 +46,37 @@
 				changePopstatus: 'changePopstatus'
 			}),
 
-			/*
-				openPopup:
-			*/
-			openPopup(){
-				this.changePopstatus(true);
+			close() {
+				this.changePopstatus(false);
 			}
 		}
 	}
 </script>
 
 <style lang="scss" scoped>
-.ui-promotions-wrapper {
-	height: auto;
-	.promotions-header {
-		border-bottom: 0.5px solid #E8EAED;
-		height: 50px;
-		h3 {
-			font-size:16px;
+.detail-promotions {
+	padding: 0px 12px;
+	div.header {
+		position: relative;
+		h3{
+    		font-size:15px;
 			color:rgba(78,84,93,1);
 			padding: 0px;
-    		margin: 0px;
-		}
-		img {
-			width:5px;
-			height:10px;
-		}
+			margin: 0px;
+			height: 44px;
+			line-height: 44px;
+			text-align: center;
+			border-bottom: 0.5px solid rgba(232,234,237,1);
+			width: 100%;
+    	}
+    	img {
+			position: absolute;
+		    top: 14px;
+		    right: 10px;
+		    width: 16px;
+		    height: 16px;
+		    opacity: 1;
+    	}
 	}
 	.promotions-body {
 		background:rgba(255,255,255,1);
@@ -122,32 +116,6 @@
 				    background:rgba(255,244,244,1);
 				}
 			}
-		}
-	}
-
-	.detail-promotions {
-		padding: 0px 12px;
-		div.header {
-			position: relative;
-			h3{
-	    		font-size:15px;
-				color:rgba(78,84,93,1);
-				padding: 0px;
-				margin: 0px;
-				height: 44px;
-				line-height: 44px;
-				text-align: center;
-				border-bottom: 0.5px solid rgba(232,234,237,1);
-				width: 100%;
-	    	}
-	    	img {
-				position: absolute;
-			    top: 14px;
-			    right: 10px;
-			    width: 16px;
-			    height: 16px;
-			    opacity: 1;
-	    	}
 		}
 	}
 }

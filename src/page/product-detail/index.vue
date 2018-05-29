@@ -1,13 +1,16 @@
 <!-- 商品详情 -->
 <template>
 	<div class="product-detail-wrapper" v-if="productDetail">
-		<!-- <div>ufeufheuhfegfyegfye</div> -->
 		<!-- header  -->
-		<v-detail-nav v-if='!isHideHeader'></v-detail-nav>
+		<v-detail-nav v-if='!isPreviewPicture'></v-detail-nav>
 		<!-- body -->
 		<v-detail-swiper :isStock="productDetail.good_stock"></v-detail-swiper>
 		<!-- footer -->
-		<v-detail-footer v-if='!isHideCart'></v-detail-footer>
+		<v-detail-footer v-if="!isPreviewPicture"></v-detail-footer>
+		<!-- 预览图片 -->
+		<v-picture v-if="isPreviewPicture" :defaultindex="swipeId" :isshow="isPreviewPicture"></v-picture>
+		<!-- 促销信息 -->
+		<v-promotion-pop v-if="promoPopstatus" :promo-popstatus="promoPopstatus"></v-promotion-pop>
 	</div>
 </template>
 
@@ -18,22 +21,28 @@
 	import detailSwiper from './swiper';
 	// footer
 	import detailFooter from './footer';
+
+	import PreviewPicture from './child/PreviewPicture';
+	import PromotionPopup from './child/PromotionPopup'
 	// 获取详情
 	import { getProductDetail } from '../../api/network/product';
 	import { mapState, mapMutations } from 'vuex';
 	export default {
 		data(){
 			return {
-				productId: this.$route.params.id ? this.$route.params.id : '',
+				productId: this.$route.query.id ? this.$route.query.id : '',
 				productDetail: {},
-				hideFooter: false
+				hideFooter: false,
+				popupVisible: true
 			}
 		},
 
 		components: {
 			'v-detail-nav': detailHeader,
 			'v-detail-swiper': detailSwiper,
-			'v-detail-footer': detailFooter
+			'v-detail-footer': detailFooter,
+			'v-picture': PreviewPicture,
+			'v-promotion-pop': PromotionPopup
 		},
 
 		created(){
@@ -42,25 +51,13 @@
 		},
 
 		computed: mapState({
-			isHideCart: state => state.detail.isHideCart,
-			isHideHeader: state => state.detail.isHideHeader
+			isPreviewPicture: state => state.detail.isPreviewPicture,
+			swipeId: state => state.detail.swipeId,
+			promoPopstatus: state => state.detail.promoPopstatus
 		}),
 
 		mounted() {
-			this.$nextTick(() => {
-				// if(this.detailInfo) {
-				// 	let title = this.detailInfo.name;
-				// 	let imgUrl = '';
-				// 	let desc = '';
-				// 	if (this.detailInfo.photos) {
-				// 		imgUrl = this.detailInfo.photos[0].thumb;
-				// 	}
-				// 	if(this.detailInfo.desc) {
-				// 		desc = this.detailInfo.desc;
-				// 	}
-				// 	this.wxApi.getConfigRes(title, imgUrl, desc);
-				// }
-			});
+			this.$nextTick(() => {});
 		},
 
 		beforeRouteEnter(to, from, next) {
@@ -84,23 +81,18 @@
 			next();
 		},
 
-		// watch: {
-		//     $route (to, from) {
-		//     	window.location.reload();
-		//     }
-		// },
-
 		methods: {
 			...mapMutations({
 				saveInfo: 'saveDetailInfo',
-				saveCartState: 'saveCartState'
+				saveCartState: 'saveCartState',
+				setCurrentProductId: 'setCurrentProductId'
 			}),
 
 			/*
 				getDetail: 获取商品详情， 并且存入状态管理
 			*/
 			getDetail() {
-				this.saveInfo();
+				this.setCurrentProductId(this.productId);
 				getProductDetail(this.productId).then(res => {
 					if (res) {
 						this.productDetail = res.product;
@@ -108,7 +100,7 @@
 						let title = this.productDetail.name;
 						let imgUrl = '';
 						let desc = '';
-						if (this.productDetail.photos) {
+						if (this.productDetail.photos && this.productDetail.photos.length > 0 ) {
 							imgUrl = this.productDetail.photos[0].thumb;
 						}
 						if(this.productDetail.desc) {
@@ -126,6 +118,5 @@
 	.product-detail-wrapper {
 		height: 100%;
 		width: auto;
-		position: relative;
 	}
 </style>

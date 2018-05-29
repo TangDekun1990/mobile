@@ -27,17 +27,17 @@
 		    })
 		},
 
+
 		watch: {
 			detailInfo: function(value) {
 				if (this.isOnline) {
-					this.utils.openZhichiManager(value, '', this.user, this.user.id);
+					this.utils.openZhichiManager(value, '');
 				}
 			}
 		},
 
 		mounted() {
-			this.$nextTick( () => {
-			});
+			this.$nextTick( () => {});
 		},
 
 		created(){},

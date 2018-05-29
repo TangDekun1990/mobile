@@ -44,15 +44,13 @@
 		methods: {
 			...mapMutations({
 				saveCartState: 'saveCartState',
-				setIsHideCommodity: 'setIsHideCommodity',
 				saveChooseInfo: 'saveChooseInfo',
 				changeType: 'changeType'
 			}),
 
 			changeCartState() {
 				this.saveCartState(true);
-				this.setIsHideCommodity(true);
-				this.changeType(true);
+				this.changeType('加入购物车');
 			},
 
 			setSpecification() {
@@ -77,7 +75,6 @@
 			}
 			p {
 				font-size:16px;
-				font-family:'PingFangSC-Regular';
 				color:rgba(78,84,93,1);
 				line-height:20px;
 				padding: 0px;

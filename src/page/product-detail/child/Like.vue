@@ -30,8 +30,6 @@
 		created() {
 		},
 
-		// props:['count'],
-
 		computed: {
 			...mapState({
 		      	detailInfo: state => state.detail.detailInfo
