@@ -115,7 +115,7 @@
 
 			goDetail(id) {
 				let data = Object.assign({}, {'id':id});
-				this.$router.push({'name': 'detail', 'params': {'id':id}});
+				this.$router.push({'name': 'detail', 'query': {'id':id}});
 			}
 		}
 	}
