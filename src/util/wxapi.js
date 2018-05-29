@@ -31,7 +31,7 @@ const wxApi = {
 		// 		that.wxRegister(wechatConfig, title, imgUrl, desc);
 		// 	}
 		// });
-		jssdkConfig(window.location.href.split('#')[0]).then(res => {			
+		jssdkConfig(window.location.href).then(res => {
 			if (res) {
 				let wechatConfig = res.config;
 				that.wxRegister(wechatConfig, title, imgUrl, desc);
@@ -45,7 +45,7 @@ const wxApi = {
 	 */
 	wxRegister(config, title, imgUrl, desc, url, callback) {
 		wx.config({
-			debug: false, // 开启调试模式
+			debug: true, // 开启调试模式
 			appId: config.app_id, // 必填，公众号的唯一标识
 			timestamp: config.timestamp, // 必填，生成签名的时间戳
 			nonceStr: config.nonceStr, // 必填，生成签名的随机串
