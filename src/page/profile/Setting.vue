@@ -55,19 +55,18 @@ export default {
 			MessageBox.confirm('确认退出', '').then(action => {
 				this.clearToken()
 				this.goBack()
+				
+				// 清除cookie
 				let host = window.location.host
 				let parts = host.split('.')
 				let domain = ''
 				for (let i = 1; i < parts.length; i++) {
 					const element = parts[i];
 					domain = domain + '.' + element
-				}
-				console.log('domain is ', domain)
+				}				
 				this.$cookie.delete('openid', { domain: domain })
 				this.$cookie.delete('token', { domain: domain })
-				let openid = this.$cookie.get('openid')
-				let token = this.$cookie.get('token')
-				console.log('(openid, token) ', openid, token)
+				
 				this.changeType(false);
 				if(this.user != null) {
 					this.saveMessageTime(this.user.joined_at)
