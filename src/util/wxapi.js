@@ -28,10 +28,11 @@ const wxApi = {
 		// 				wechatConfig = configs[key];
 		// 			}
 		// 		}
-		// 		that.wxRegister(wechatConfig, title, imgUrl, desc);						
+		// 		that.wxRegister(wechatConfig, title, imgUrl, desc);
 		// 	}
 		// });
-		jssdkConfig(window.location.href.split('#')[0]).then(res => {			
+		let url = window.location.href.split('#')[0] + '?#' + window.location.href.split('#')[1];
+		jssdkConfig(window.location.href.split('#')[0]).then(res => {
 			if (res) {
 				let wechatConfig = res.config;
 				that.wxRegister(wechatConfig, title, imgUrl, desc);
@@ -60,7 +61,7 @@ const wxApi = {
 
 		wx.ready(function () {
 			let imgUrl = imgUrl ? imgUrl : require('../assets/image/change-icon/apple-touch-icon.png')
-			let link = window.location.href.split('#')[0] + '#' + window.location.href.split('#')[1]					
+			let link = window.location.href.split('#')[0] + '#' + window.location.href.split('#')[1]
 			wx.onMenuShareAppMessage({
 				title: title, // 分享标题
 				imgUrl: imgUrl, // 分享图标
@@ -80,10 +81,10 @@ const wxApi = {
 				link: link, // 分享链接
 				imgUrl: imgUrl, // 分享图标
 				success() {
-					// 用户成功分享后执行的回调函数					
+					// 用户成功分享后执行的回调函数
 				},
 				cancel() {
-					// 用户取消分享后执行的回调函数					
+					// 用户取消分享后执行的回调函数
 				}
 			})
 
@@ -93,10 +94,10 @@ const wxApi = {
 				imgUrl: imgUrl, // 分享图标
 				desc: desc,
 				success() {
-					// 用户成功分享后执行的回调函数					
+					// 用户成功分享后执行的回调函数
 				},
 				cancel() {
-					// 用户取消分享后执行的回调函数					
+					// 用户取消分享后执行的回调函数
 				}
 			})
 
@@ -105,10 +106,10 @@ const wxApi = {
 				link: link, // 分享链接
 				imgUrl: imgUrl, // 分享图标
 				success() {
-					// 用户成功分享后执行的回调函数					
+					// 用户成功分享后执行的回调函数
 				},
 				cancel() {
-					// 用户取消分享后执行的回调函数					
+					// 用户取消分享后执行的回调函数
 				}
 			})
 		});

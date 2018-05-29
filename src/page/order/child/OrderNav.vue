@@ -350,7 +350,6 @@ export default {
     position: absolute;
     width: 100%;
     top: 89px;
-    border: 1px solid red;
     .list {
       width: 100%;
       margin-top: 11px;
