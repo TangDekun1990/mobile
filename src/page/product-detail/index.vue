@@ -60,26 +60,27 @@
 			this.$nextTick(() => {});
 		},
 
-		beforeRouteEnter(to, from, next) {
-			next( (vm) => {
-				if (to.name == 'detail' && from.name) {
-					window.location.reload();
-				}
-			})
-		},
+		// beforeRouteEnter(to, from, next) {
+		// 	next( (vm) => {
+		// 		if (to.name == 'detail' && from.name) {
+		// 			window.location.reload();
+		// 		}
+		// 	})
+		// },
 
-		beforeRouteUpdate (to, from, next) {
-			console.log('beforeRouteUpdate');
-			next();
-			window.location.reload();
-		},
+		// beforeRouteUpdate (to, from, next) {
+		// 	console.log('beforeRouteUpdate');
+		// 	next();
+		// 	window.location.reload();
+		// },
 
-		beforeRouteLeave (to, from , next) {
-			if (from.name == 'detail' && to.name != 'recommend' && to.name != 'with' && to.name != 'signin' && to.name != 'cart') {
-				window.location.reload();
-			}
-			next();
-		},
+		// beforeRouteLeave (to, from , next) {
+		// 	if (from.name == 'detail' && to.name != 'recommend' && to.name != 'with' && to.name != 'signin' && to.name != 'cart') {
+		// 		window.location.reload();
+		// 	}
+		// 	next();
+		// },
+		// window.location.href = window.location.href;
 
 		methods: {
 			...mapMutations({
