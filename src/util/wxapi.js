@@ -31,7 +31,7 @@ const wxApi = {
 		// 		that.wxRegister(wechatConfig, title, imgUrl, desc);
 		// 	}
 		// });
-		jssdkConfig(window.location.href.split('#')[0]).then(res => {
+		jssdkConfig(window.location.href.split('#')[0]).then(res => {			
 			if (res) {
 				let wechatConfig = res.config;
 				that.wxRegister(wechatConfig, title, imgUrl, desc);
@@ -80,89 +80,89 @@ const wxApi = {
 
 	/*
 	 * [ShareTimeline 微信分享到朋友圈]
-	 * @param {[type]} opstion [分享信息]
+	 * @param {[type]} options [分享信息]
 	 * @param {[type]} success [成功回调]
 	 * @param {[type]} error   [失败回调]
 	 */
-	ShareTimeline(opstion) {
+	ShareTimeline(options) {
 		wx.onMenuShareTimeline({
-			title: opstion.title, // 分享标题
-			link: opstion.link, // 分享链接
-			imgUrl: opstion.imgUrl, // 分享图标
+			title: options.title, // 分享标题
+			link: options.link, // 分享链接
+			imgUrl: options.imgUrl, // 分享图标
 			success() {
 				// 用户成功分享后执行的回调函数
-				opstion.success()
+				options.success()
 			},
 			cancel() {
 				// 用户取消分享后执行的回调函数
-				opstion.error()
+				options.error()
 			}
 		})
 	},
 
 	/*
 	 * [ShareTimeline 微信分享给朋友]
-	 * @param {[type]} option [分享信息]
+	 * @param {[type]} options [分享信息]
 	 * @param {[type]} success [成功回调]
 	 * @param {[type]} error   [失败回调]
 	 */
-	ShareAppMessage(option) {
+	ShareAppMessage(options) {
 		wx.onMenuShareAppMessage({
-			title: option.title, // 分享标题
-			desc: option.desc ? option.desc : '', // 分享描述
-			link: option.link ? option.link : '', // 分享链接
-			imgUrl: option.imgUrl ? option.imgUrl : '', // 分享图标
+			title: options.title, // 分享标题
+			desc: options.desc ? options.desc : '', // 分享描述
+			link: options.link ? options.link : '', // 分享链接
+			imgUrl: options.imgUrl ? options.imgUrl : '', // 分享图标
 			success() {
 				// 用户成功分享后执行的回调函数
-				option.success()
+				options.success()
 			},
 			cancel() {
 				// 用户取消分享后执行的回调函数
-				option.error()
+				options.error()
 			}
 		})
 	},
 
 	/*
 	 * [ShareTimeline 微信分享到QQ]
-	 * @param {[type]} opstion [分享信息]
+	 * @param {[type]} options [分享信息]
 	 * @param {[type]} success [成功回调]
 	 * @param {[type]} error   [失败回调]
 	 */
-	ShareQQ(opstion) {
+	ShareQQ(options) {
 		wx.onMenuShareQQ({
-			title: opstion.title, // 分享标题
-			link: opstion.link, // 分享链接
-			imgUrl: opstion.imgUrl, // 分享图标
+			title: options.title, // 分享标题
+			link: options.link, // 分享链接
+			imgUrl: options.imgUrl, // 分享图标
 			success() {
 				// 用户成功分享后执行的回调函数
-				opstion.success()
+				options.success()
 			},
 			cancel() {
 				// 用户取消分享后执行的回调函数
-				opstion.error()
+				options.error()
 			}
 		})
 	},
 
 	/*
 	 * [ShareTimeline 微信分享到微博]
-	 * @param {[type]} opstion [分享信息]
+	 * @param {[type]} options [分享信息]
 	 * @param {[type]} success [成功回调]
 	 * @param {[type]} error   [失败回调]
 	 */
-	ShareWeibo(opstion) {
+	ShareWeibo(options) {
 		wx.onMenuShareWeibo({
-			title: opstion.title, // 分享标题
-			link: opstion.link, // 分享链接
-			imgUrl: opstion.imgUrl, // 分享图标
+			title: options.title, // 分享标题
+			link: options.link, // 分享链接
+			imgUrl: options.imgUrl, // 分享图标
 			success() {
 				// 用户成功分享后执行的回调函数
-				opstion.success()
+				options.success()
 			},
 			cancel() {
 				// 用户取消分享后执行的回调函数
-				opstion.error()
+				options.error()
 			}
 		})
 	}
