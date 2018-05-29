@@ -43,7 +43,7 @@ export default {
     },
   methods: {  
     goBack() {
-      let isTrack = this.$route.params.isTrack;
+      let isTrack = this.$route.params.isTrack ? this.$route.params.isTrack : '';
       if(isTrack) {
         this.$router.go(-1);
       } else {
