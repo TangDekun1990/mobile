@@ -48,8 +48,8 @@
 
 <style lang="scss" scoped>
 .detail-back-top {
-	position: absolute;
-	bottom: 50px;
+	position: fixed;
+	bottom: 60px;
 	width: 50px;
 	height: 50px;
 	right: 10px;

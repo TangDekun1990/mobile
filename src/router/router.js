@@ -67,7 +67,6 @@ import OrderSubmit from '../page/order/child/OrderSubmit'
 
 // 商品详情
 import Detail from '../page/product-detail/index'
-import redetail from '../page/product-detail/redetail'
 
 // 购物车
 import Cart from '../page/cart/cart'
@@ -342,19 +341,9 @@ export default [
 				component: ScoreRule
 			},
 			{
-				name: 'redetail',
-				path: '/redetail/:id?',
-				component: redetail
-			},
-			{
 				name: 'promotions',
 				path: '/promotions',
 				component: Promotions
-			},
-			{
-				name: 'authorized',
-				path: '/authorized',
-				component: Authorized
 			}
 		]
 	}

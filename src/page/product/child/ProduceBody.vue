@@ -55,7 +55,7 @@ export default{
 		 */
 		goDetail() {
 			let data = Object.assign({}, {'id': this.productId}, this.requestparams)
-			this.$router.push({'name': 'detail', 'params': data});
+			this.$router.push({'name': 'detail', 'query': {'id': this.productId}});
 		},
 
 		/*

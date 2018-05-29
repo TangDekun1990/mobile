@@ -1,158 +1,142 @@
 <!-- PreviewPicture.vue -->
 <template>
-	<div class="preview-picture">
-		<div class="picture-header" v-show='isShowHeader'>
-			<span v-on:click='closeModel()'>{{ title }}</span>
-			<span>{{currentIndex +1}} / {{ data.length }}</span>
-		</div>
+	<div v-if="detailInfo">
+		<mt-popup v-model="isshow"  popup-transition="popup-fade">
+			<div class="preview-picture">
+				<div class="picture-header" v-on:click='closePopup()'  v-if="!isshowPopHeader">
+					<span>商品详情</span><span v-if="detailInfo.photos">{{defaultindex + 1}} / {{ detailInfo.photos.length }}</span>
+				</div>
 
-		<div class="picture-body">
-			<mt-swipe :auto="0" :show-indicators="false" @change="handleChange" :default-index="currentIndex" class='ui-common-swiper' :prevent=false :stop-propagation=true>
-			  	<mt-swipe-item v-for="(item,index) in data" v-bind:key="index">
-			  		<img v-bind:src="item.thumb" v-on:click='showHeader($event)'>
-			  	</mt-swipe-item>
-			</mt-swipe>
-		</div>
-
-		<div class="picture-footer" v-if='indicatorArray.length > 0'>
-			<div class="ui-indicator">
-				<div class="indicator-item" v-for='(item,index) in indicatorArray' v-bind:class="{'active': item.index == currentIndex}"></div>
+				<div class="picture-body">
+					<mt-swipe :auto="0" :show-indicators=true :default-index='defaultindex' class='ui-common-swiper' :prevent=false :stop-propagation=true @change="handleChange">
+					  	<mt-swipe-item v-for="(item,index) in detailInfo.photos" v-bind:key="index" >
+					  		<img v-bind:src="item.thumb" @click="setPopHeader()">
+					  	</mt-swipe-item>
+					  	<mt-swipe-item v-if='!detailInfo.photos || detailInfo.photos.length <= 0'>
+					  		<img src="../../../assets/image/change-icon/default_image_02@3x.png" class="product-img" @click="setPopHeader()">
+					  	</mt-swipe-item>
+					</mt-swipe>
+				</div>
 			</div>
-		</div>
+		</mt-popup>
 	</div>
 </template>
 
 <script>
 	import { mapState, mapMutations } from 'vuex';
 	export default {
-		data() {
+		data(){
 			return {
-				indicatorArray: [],
-				isShowHeader: true
+				isshowPopHeader: false
 			}
 		},
 
-		props: ['data', 'currentIndex', 'title'],
+		props: {
+			isshow:{
+				type: Boolean,
+				default: false
+			},
+			defaultindex: {
+				type: Number,
+				default: 0
+			}
+		},
 
-		created(){
-			this.buildSwipeIndicators();
+		computed: {
+	      	...mapState({
+				detailInfo: state => state.detail.detailInfo
+			})
 		},
 
 		methods: {
 			...mapMutations({
-				change: 'changeStatus',
-				hideCommodity: 'setIsHideCommodity'
+				setisPreviewPicture: 'setisPreviewPicture'
 			}),
 
 			/*
-				buildSwipeIndicators: 根据轮播图的长度计算位于底部的按钮的个数
-			*/
-			buildSwipeIndicators() {
-				let photos = this.data;
-				for (let i = 0, len = photos.length-1; i <= len; i++) {
-					photos[i].index = i;
-					this.indicatorArray.push(photos[i]);
-				}
-			},
-
-			/*
-				handleChange: 查看大图的时候滑动大图设置位于底部的按钮的选中状态同时隐藏查看大图的头部信息
-				@params: index 当前滑动的图片的index
+				handleChange: 轮播图改变时设置是否阻止事件冒泡
+				@params: index 当前滑动的index
 			 */
 			handleChange(index) {
-				this.currentIndex = index;
-				this.isShowHeader = false;
+				this.defaultindex = index;
 			},
 
 			/*
-				closeModel: 关闭查看大图，向父级组件发送事件，同时改变父级组件header的显示
-			*/
-			closeModel() {
-				this.$parent.$emit('close-preview-picture');
-				this.change(false);
-				this.hideCommodity(false);
-			},
-
-			/*
-				showHeader: 点击图片， 关闭查看大图的header
+			 *  closePopup: 关闭图片预览
 			 */
-			showHeader(ev) {
-				ev.preventDefault();
-				ev.stopPropagation();
-				this.isShowHeader = !this.isShowHeader;
+			closePopup() {
+				this.setisPreviewPicture(false);
+				this.$parent.$emit('hide-priview-picture', false);
+			},
+
+			/*
+			 * setPopHeader: 预览大图点击图片切换header
+			 */
+			setPopHeader(ev) {
+				this.isshowPopHeader = !this.isshowPopHeader;
 			}
-		}
 	}
+}
 </script>
 
-<style lang='scss'>
-	.preview-picture {
-		position: fixed;
+<style lang='scss' scoped>
+.swipe-wrapper {
+	width: 100%;
+}
+.mint-popup {
+	width: 100%;
+	height: 100%;
+	background-color: #000;
+}
+
+.mint-swipe, .mint-swipe-items-wrap {
+	position: static;
+}
+.preview-picture {
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	z-index: 10;
+	top: 0px;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+	background-color: #000;
+	.picture-header {
+		height: 44px;
+		color: #000;
+		background-color: #fff;
+		display: flex;
+		justify-content: center;
+		align-content: center;
+		align-items: center;
 		width: 100%;
-		height: 100%;
-		background: #000;
 		top: 0px;
-		.picture-header{
-			height: 44px;
-		    background-color: #fff;
-		    display: flex;
-		    justify-content: center;
-		    align-content: center;
-		    align-items: center;
-		    position: fixed;
-		    width: 100%;
-		    top: 0px;
-		    span{
-		    	font-size: 14px;
-		    	font-family: 'PingFangSC';
-		    	font-weight: normal;
-		    	&:first-child {
-		    		cursor: pointer;
-		    		position: absolute;
-    				left: 15px;
-    				background: url('../../../assets/image/change-icon/back@2x.png') no-repeat 0px center;
-    				background-size: 24px;
-    				display: inline-block;
-    				padding-left: 30px;
-    				height: 44px;
-    				line-height: 44px;
-		    	}
-		    }
-		}
-		.picture-body {
-			height: 100%;
-			width: 100%;
-			display: flex;
-			display: -webkit-flex;
-			display: -moz-flex;
-			justify-content: center;
-			align-content: center;
-			align-items: center;
-		}
-		.picture-footer {
-			position: absolute;
-			bottom: 10px;
-			width: 100%;
-			.ui-indicator {
-				display: flex;
-				display: -webkit-flex;
-				display: -moz-flex;
-				width: 100%;
-				/*border: 1px solid;*/
-				justify-content: center;
-				align-content: center;
-				align-items: center;
-				.indicator-item {
-					width: 10px;
-					height: 10px;
-					border-radius: 50%;
-					background-color: #EFEFF4;
-					margin-left: 10px;
-					&.active {
-						background-color: #EF3338;
-					}
-				}
+		span{
+			font-size: 14px;
+			font-weight: normal;
+			&:first-child {
+				cursor: pointer;
+				position: absolute;
+				left: 15px;
+				background: url('../../../assets/image/change-icon/back@2x.png') no-repeat 0px center;
+				background-size: 24px;
+				display: inline-block;
+				padding-left: 30px;
+				height: 44px;
+				line-height: 44px;
 			}
 		}
 	}
+	.picture-body {
+		position: absolute;
+		top: 44px;
+		bottom: 0px;
+		width: 100%;
+		display: flex;
+		justify-content: center;
+		align-content: center;
+		align-items: center;
+	}
+}
 </style>

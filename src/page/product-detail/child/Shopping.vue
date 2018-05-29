@@ -1,8 +1,7 @@
 <!-- Shopping.vue -->
 <template>
-	<!-- <mt-popup  v-model="isShowcartInfo" position="bottom" v-if="detailInfo"> -->
+	<mt-popup  v-model="isShowcartInfo" position="bottom" v-if="detailInfo"  v-bind:close-on-click-modal=false>
 		<div class="ui-add-shopping" v-if="detailInfo">
-
 			<div class="shopping-info">
 
 				<div class="info-header">
@@ -39,18 +38,17 @@
 					<div class="info-body" id="info-body">
 						<p>数量</p>
 						<div class="ui-number">
-							<!-- <div class="reduce ui-common" v-on:click='reduceNumber()'>-</div><input type="number" min="1" class="number" value='1' v-model="numbers" v-on:keyup ='getInputNumber($event)'><div class="add ui-common" v-on:click='addNumber()'>+</div> -->
-							<img src="../../../assets/image/change-icon/b3_minus_dis@2x.png" v-if="numbers <= 1" v-on:click='reduceNumber()'><img src="../../../assets/image/change-icon/b3_minus@2x.png" v-if="numbers > 1" v-on:click='reduceNumber()'><input type="number" min="1" class="number" value='1' v-model="numbers" v-on:focus='keyDown($event)'><img src="../../../assets/image/change-icon/b3_plus@2x.png" v-on:click='addNumber()'>
+							<!-- <img src="../../../assets/image/change-icon/b3_minus_dis@2x.png" v-if="numbers <= 1" v-on:click='reduceNumber()'><img src="../../../assets/image/change-icon/b3_minus@2x.png" v-if="numbers > 1" v-on:click='reduceNumber()'><input type="number" min="1" class="number" value='1' v-model="numbers" v-on:focus='keyDown($event)'><img src="../../../assets/image/change-icon/b3_plus@2x.png" v-on:click='addNumber()'> -->
+							<ul class="count">
+			                    <li><img src="../../../assets/image/change-icon/b3_minus_dis@2x.png" v-if="numbers <= 1" v-on:click='reduceNumber()'><img src="../../../assets/image/change-icon/b3_minus@2x.png" v-if="numbers > 1" v-on:click='reduceNumber()'></li><li><input type="number" min="1" class="number" value='1' v-model="numbers" v-on:focus='keyDown($event)'></li><li><img src="../../../assets/image/change-icon/b3_plus@2x.png" v-on:click='addNumber()'></li>
+			                </ul>
 						</div>
 					</div>
 				</div>
-
-				<div class="info-footer" v-on:click='addShoppingCart()' v-if="!type">确定</div>
-				<div class="info-footer" v-on:click='addShoppingCart()' v-if="type">加入购物车</div>
-
+				<div class="info-footer" v-on:click='addShoppingCart()'>{{ type }}</div>
 			</div>
 		</div>
-		<!-- </mt-popup> -->
+		</mt-popup>
 	</template>
 
 <script>
@@ -65,7 +63,7 @@
 	data(){
 		return {
 			numbers: this.$store.state.detail.number > 0 ? this.$store.state.detail.number : 1,  //todo 临时解决
-			productId: this.$route.params.id ? this.$route.params.id : '',
+			productId: this.$store.state.detail.currentProductId,
 			toastConfig: {
 				message: '商品达到每单限购数量',
 				position: 'middle'
@@ -123,7 +121,6 @@
 	methods: {
 			...mapMutations({
 				saveCartState: 'saveCartState',
-				hideCommodity: 'setIsHideCommodity',
 				saveNumber: 'saveNumber',
 				saveChooseInfo: 'saveChooseInfo',
 				saveProperties: 'saveProperties',
@@ -133,7 +130,6 @@
 			// 关闭购物车浮层
 			closeCartInfo(value) {
 				this.saveCartState(value);
-				this.hideCommodity(value);
 			},
 
 			/*
@@ -466,24 +462,29 @@
 </script>
 
 <style lang='scss' scoped>
+
+.mint-popup-bottom {
+	overflow: initial;
+	height: 70%;
+}
 .ui-add-shopping {
-	position: fixed;
+	/* position: fixed;
 	top: 0px;
 	bottom: 0px;
 	left: 0px;
 	right: 0px;
 	width: 100%;
-	height: 100%;
-	background:rgba(0,0,0, 0.4);
+	height: 100%; */
+	/* z-index: 200; */
+	/* background:rgba(0,0,0, 0.4); */
 	.shopping-info {
 		background:rgba(255,255,255,1);
-		height: 70%;
+		height: 100%;
 		position: absolute;
 		width: -webkit-fill-available;
-		bottom: 0px;
+		/* bottom: 0px; */
 		z-index: 10;
 		width: 100%;
-		/* overflow: hidden; */
 		.info-header {
 			padding: 15px;
 			display: flex;
@@ -555,6 +556,7 @@
 			position: absolute;
 			top: 104px;
 			bottom: 44px;
+			/* height: 100%; */
 		}
 		div.goods-properties {
 			padding: 30px 0px 0px 0px;
@@ -608,46 +610,50 @@
 			}
 			div.ui-number{
 				height: 30px;
-				img {
-					width: 31px;
-				    cursor: pointer;
-				}
-				input{
+				ul {
+					list-style: none;
 					height: 28px;
-					text-align: center;
+					line-height: 28px;
+					text-align: left;
 					color: #404245;
-					display: inline-block;
+					overflow: hidden;
 					padding: 0px;
 					margin:  0px;
-					border:  0px;
-					outline-offset: 0px;
-					text-shadow: none;
-				}
-				.ui-common {
-					line-height: 27px;
-					width: 30px;
-					height: 28px;
-					border: 0.5px solid #404245;
-					cursor: pointer;
-				}
-				.reduce {
-					opacity:0.4;
-					border-right: 0px;
-				}
-				.add {
-					border-left: 0px;
-				}
-				input[type='number'] {
-					width: 40px;
-					border: 0.5px solid #404245;
-					border-radius: 0px;
-					border-image-width: 0px;
-					box-shadow: 0px;
-					vertical-align: bottom;
-					border-left: 0px;
-    				border-right: 0px;
-					&:focus {
-						outline: none;
+					input{
+						height: 100%;
+						padding: 0px;
+						margin:  0px;
+						border:  0px;
+						outline-offset: 0px;
+						text-shadow: none;
+					}
+					li {
+						display: inline-block;
+						width: 30px;
+					    text-align: center;
+					    float: left;
+						img {
+							width: 100%;
+							height: 100%;
+						}
+						input {
+							width: 40px;
+							height: 27px;
+							text-align: center;
+							border: 0.5px solid #404245;
+							border-radius: 0px;
+							border-image-width: 0px;
+							box-shadow: 0px;
+							vertical-align: bottom;
+							border-left: 0px;
+		    				border-right: 0px;
+							&:focus {
+								outline: none;
+							}
+						}
+						&:nth-child(2) {
+							width: auto;
+						}
 					}
 				}
 			}

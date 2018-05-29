@@ -39,7 +39,7 @@
 		data() {
 			return{
 				staticData: evaluation,
-				id: this.$route.params.id ? this.$route.params.id : '',
+				id: this.$store.state.detail.currentProductId ? this.$store.state.detail.currentProductId : '',
 				currentTag: "total",
 				grade: 0,
 				subTotal: {},

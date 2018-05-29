@@ -36,8 +36,7 @@
 		},
 
 		mounted() {
-			this.$nextTick( () => {
-			});
+			this.$nextTick( () => {});
 		},
 
 		created(){},

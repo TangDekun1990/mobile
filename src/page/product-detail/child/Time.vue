@@ -71,12 +71,7 @@
                    return `0${time}`
                 }
             }
-        },
-
-        destroyed() {
-        	// clearInterval(this.time);
         }
-
 	}
 </script>
 

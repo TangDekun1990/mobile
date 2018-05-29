@@ -43,7 +43,12 @@ export default {
     },
   methods: {  
     goBack() {
-      this.$router.push({ name: 'order', params: { order: ENUM.ORDER_STATUS.DELIVERING }});
+      let isTrack = this.$route.params.isTrack;
+      if(isTrack) {
+        this.$router.go(-1);
+      } else {
+        this.$router.push({ name: 'order', params: { order: ENUM.ORDER_STATUS.DELIVERING }});
+      }
     },
     // 获取物流状态查询
     getShippingStatusGet(id) {

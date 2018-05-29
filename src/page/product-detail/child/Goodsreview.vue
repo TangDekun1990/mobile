@@ -20,9 +20,14 @@
 	export default {
 		data() {
 			return{
-				id: this.$route.params.id ? this.$route.params.id : '',
 				reviewList: []
 			}
+		},
+
+		computed: {
+	      	...mapState({
+				currentProductId: state => state.detail.currentProductId
+			})
 		},
 
 		components: {
@@ -35,12 +40,12 @@
 
 		methods: {
 			...mapMutations({
-				'commentStatus': 'changeIsComment'
+				'changeIndex': 'changeIndex'
 			}),
 
 			getReviewList() {
 				let params = {
-					"product": this.id,
+					"product": this.currentProductId,
                 	"grade":'',
                 	"page": 1,
 					"per_page": 10
@@ -54,7 +59,7 @@
 
 			/* 评论 */
 			getCommentStatus() {
-				this.commentStatus(true);
+				this.changeIndex(2);
 			}
 		}
 	}
