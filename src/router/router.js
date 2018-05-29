@@ -28,7 +28,6 @@ import HelpUrl from '../page/profile/child/HelpUrl'
 import News from '../page/profile/News'
 import NewsOrderMessage from '../page/profile/child/NewsOrderMessage'
 import NewsNoticeMessage from '../page/profile/child/NewsNoticeMessage'
-import NewsServiceMessage from '../page/profile/child/NewsServiceMessage'
 import Collection from '../page/profile/Collection'
 
 // cardpage
@@ -169,7 +168,10 @@ export default [
 			{
 				name: 'News',
 				path: '/news',
-				component: News
+				component: News,
+				meta: {
+					keepAlive: true
+				}
 			},
 			{
 				name: 'NewsOrderMessage',
@@ -180,14 +182,6 @@ export default [
 				name: 'newsNoticeMessage',
 				path: '/newsNoticeMessage',
 				component: NewsNoticeMessage
-			},
-			{
-				name: 'NewsServiceMessage',
-				path: '/newsServiceMessage',
-				component: NewsServiceMessage,
-				meta: {
-					keepAlive: true
-				}
 			},
 			{
 				name: 'Collection',
