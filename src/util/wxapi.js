@@ -19,24 +19,24 @@ const wxApi = {
 	 */
 	getConfigRes(title, imgUrl, desc) {
 		let that = this;
-		configGet().then(res => {
- 				if (res) {
-				let configs = res.config,
-					wechatConfig = {};
-				for (const key in configs) {
-					if (key == 'wechat.web') {
-						wechatConfig = configs[key];
-					}
-				}
-				that.wxRegister(wechatConfig, title, imgUrl, desc);						
-			}
-		});
-		// jssdkConfig(window.location.href.split('#')[0]).then(res => {			
-		// 	if (res) {
-		// 		let wechatConfig = res.config;
-		// 		that.wxRegister(wechatConfig, title, imgUrl, desc);
+		// configGet().then(res => {
+ 		// 		if (res) {
+		// 		let configs = res.config,
+		// 			wechatConfig = {};
+		// 		for (const key in configs) {
+		// 			if (key == 'wechat.web') {
+		// 				wechatConfig = configs[key];
+		// 			}
+		// 		}
+		// 		that.wxRegister(wechatConfig, title, imgUrl, desc);						
 		// 	}
-		// })
+		// });
+		jssdkConfig(window.location.href.split('#')[0]).then(res => {			
+			if (res) {
+				let wechatConfig = res.config;
+				that.wxRegister(wechatConfig, title, imgUrl, desc);
+			}
+		})
 	},
 
 	/*
