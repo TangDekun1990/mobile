@@ -80,7 +80,7 @@ export const openLink = (router, link) => {
             params = { name: 'product', params: { isFromHome: true } }
           } else {
             // 商品详情
-            params = { name: 'detail', params: { id: action } }
+            params = { name: 'detail', query: { id: action } }
           }
         } else if (where === 'notice/scanner') {
           // 二维码界面 // TODO:								

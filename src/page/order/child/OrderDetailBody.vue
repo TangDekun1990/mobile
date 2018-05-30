@@ -407,7 +407,7 @@ export default {
 
 		// 去商品详情
 		getOrderDetail(orderId) {
-			this.$router.push({ name: "detail", params: { id: orderId } });
+			this.$router.push({ name: "detail", query: { id: orderId } });
 		},
 
 		// 点击展示所有商品

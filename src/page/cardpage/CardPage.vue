@@ -5,8 +5,8 @@
       </header-item> 
 			<div slot="right" class="right-item">
 				<img src="../../assets/image/change-icon/b2_cart@2x.png" class="ui-cart" v-on:click='rightClick'>
-				<span class="cart-number" v-if="count > 0 && count <= 100">{{ count }}</span>
-				<span class="cart-number" v-if="count >= 100 ">99+</span>
+				<span class="cart-number" v-if="cartNumber > 0 && cartNumber <= 100">{{ cartNumber }}</span>
+				<span class="cart-number" v-if="cartNumber >= 100 ">99+</span>
 			</div>              
     </mt-header>
 		<div class="list" v-bind:style="getTopMargin">
@@ -30,8 +30,7 @@
     name: 'CardPage',
 		data() {
 			return {        
-				cardpage: null,
-				count: 10,
+				cardpage: null
 			}
 		},
 		components: {			
@@ -45,13 +44,6 @@
 					Indicator.close()
 					if (response && response.cardpage) {
             this.cardpage = response.cardpage
-            // for (let i = 0; i < this.cardpage.groups.length; i++) {
-						// 	const element = this.cardpage.groups[i];
-						// 	let layout = element ? element.layout : null
-						// 	console.log('====================================');
-						// 	console.log('layout is :', layout);
-						// 	console.log('====================================');
-						// }
 					}
 				}, (error) => {
 					Indicator.close()
@@ -60,7 +52,8 @@
 		},
 		computed: {
 			...mapState({
-				isOnline: state => state.auth.isOnline
+				isOnline: state => state.auth.isOnline,
+				cartNumber: state => state.tabBar.cartNumber,
 			}),
       getTitle () {
         return this.cardpage ? this.cardpage.title : ''

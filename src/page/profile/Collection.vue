@@ -89,7 +89,7 @@ export default {
     },
     // 去商品详情
     goOrderDetail(orderId) {
-      this.$router.push({ name: "detail", params: { id: orderId } });
+      this.$router.push({ name: "detail", query: { id: orderId } });
     },
     // 取消收藏商品数据
     getCancelCollection(productId) {

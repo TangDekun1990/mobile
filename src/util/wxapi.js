@@ -31,7 +31,8 @@ const wxApi = {
 		// 		that.wxRegister(wechatConfig, title, imgUrl, desc);
 		// 	}
 		// });
-		jssdkConfig(window.location.href).then(res => {
+		let url = window.location.href.split('#')[0] + '?#' + window.location.href.split('#')[1];
+		jssdkConfig(window.location.href.split('#')[0]).then(res => {
 			if (res) {
 				let wechatConfig = res.config;
 				that.wxRegister(wechatConfig, title, imgUrl, desc);
@@ -45,7 +46,7 @@ const wxApi = {
 	 */
 	wxRegister(config, title, imgUrl, desc, url, callback) {
 		wx.config({
-			debug: true, // 开启调试模式
+			debug: false, // 开启调试模式
 			appId: config.app_id, // 必填，公众号的唯一标识
 			timestamp: config.timestamp, // 必填，生成签名的时间戳
 			nonceStr: config.nonceStr, // 必填，生成签名的随机串
@@ -56,13 +57,16 @@ const wxApi = {
 				'onMenuShareQQ', // 获取“分享到QQ”按钮点击状态及自定义分享内容接口
 				'onMenuShareWeibo' // 获取“分享到微博”按钮点击状态及自定义分享内容接口
 			] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
-		});
+		})
+
 		wx.ready(function () {
+			let imgUrl = imgUrl ? imgUrl : require('../assets/image/change-icon/apple-touch-icon.png')
+			let link = window.location.href.split('#')[0] + '#' + window.location.href.split('#')[1]
 			wx.onMenuShareAppMessage({
 				title: title, // 分享标题
-				imgUrl: imgUrl ? imgUrl : require('../assets/image/change-icon/apple-touch-icon.png'), // 分享图标
+				imgUrl: imgUrl, // 分享图标
 				desc: desc, // 分享描述
-				link: window.location.href.split('#')[0]+'#'+window.location.href.split('#')[1],
+				link: link,
 				success: function() {
 					// window.history.length = 0;
 					// window.alert('已分享给朋友');
@@ -70,102 +74,51 @@ const wxApi = {
 				error: function () {
 					// window.alert('分享失败');
 				}
-			});
+			})
+
+			wx.onMenuShareTimeline({
+				title: title, // 分享标题
+				link: link, // 分享链接
+				imgUrl: imgUrl, // 分享图标
+				success() {
+					// 用户成功分享后执行的回调函数
+				},
+				cancel() {
+					// 用户取消分享后执行的回调函数
+				}
+			})
+
+			wx.onMenuShareQQ({
+				title: title, // 分享标题
+				link: link, // 分享链接
+				imgUrl: imgUrl, // 分享图标
+				desc: desc,
+				success() {
+					// 用户成功分享后执行的回调函数
+				},
+				cancel() {
+					// 用户取消分享后执行的回调函数
+				}
+			})
+
+			wx.onMenuShareWeibo({
+				title: title, // 分享标题
+				link: link, // 分享链接
+				imgUrl: imgUrl, // 分享图标
+				success() {
+					// 用户成功分享后执行的回调函数
+				},
+				cancel() {
+					// 用户取消分享后执行的回调函数
+				}
+			})
 		});
+
 		wx.error(res => {
 			// alert('验证失败的信息:' + res.errMsg);
 			// console.log(res);
 		});
 	},
-
-	/*
-	 * [ShareTimeline 微信分享到朋友圈]
-	 * @param {[type]} options [分享信息]
-	 * @param {[type]} success [成功回调]
-	 * @param {[type]} error   [失败回调]
-	 */
-	ShareTimeline(options) {
-		wx.onMenuShareTimeline({
-			title: options.title, // 分享标题
-			link: options.link, // 分享链接
-			imgUrl: options.imgUrl, // 分享图标
-			success() {
-				// 用户成功分享后执行的回调函数
-				options.success()
-			},
-			cancel() {
-				// 用户取消分享后执行的回调函数
-				options.error()
-			}
-		})
-	},
-
-	/*
-	 * [ShareTimeline 微信分享给朋友]
-	 * @param {[type]} options [分享信息]
-	 * @param {[type]} success [成功回调]
-	 * @param {[type]} error   [失败回调]
-	 */
-	ShareAppMessage(options) {
-		wx.onMenuShareAppMessage({
-			title: options.title, // 分享标题
-			desc: options.desc ? options.desc : '', // 分享描述
-			link: options.link ? options.link : '', // 分享链接
-			imgUrl: options.imgUrl ? options.imgUrl : '', // 分享图标
-			success() {
-				// 用户成功分享后执行的回调函数
-				options.success()
-			},
-			cancel() {
-				// 用户取消分享后执行的回调函数
-				options.error()
-			}
-		})
-	},
-
-	/*
-	 * [ShareTimeline 微信分享到QQ]
-	 * @param {[type]} options [分享信息]
-	 * @param {[type]} success [成功回调]
-	 * @param {[type]} error   [失败回调]
-	 */
-	ShareQQ(options) {
-		wx.onMenuShareQQ({
-			title: options.title, // 分享标题
-			link: options.link, // 分享链接
-			imgUrl: options.imgUrl, // 分享图标
-			success() {
-				// 用户成功分享后执行的回调函数
-				options.success()
-			},
-			cancel() {
-				// 用户取消分享后执行的回调函数
-				options.error()
-			}
-		})
-	},
-
-	/*
-	 * [ShareTimeline 微信分享到微博]
-	 * @param {[type]} options [分享信息]
-	 * @param {[type]} success [成功回调]
-	 * @param {[type]} error   [失败回调]
-	 */
-	ShareWeibo(options) {
-		wx.onMenuShareWeibo({
-			title: options.title, // 分享标题
-			link: options.link, // 分享链接
-			imgUrl: options.imgUrl, // 分享图标
-			success() {
-				// 用户成功分享后执行的回调函数
-				options.success()
-			},
-			cancel() {
-				// 用户取消分享后执行的回调函数
-				options.error()
-			}
-		})
-	}
 }
 
 export default wxApi

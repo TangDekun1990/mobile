@@ -294,7 +294,7 @@ export default [
 			},
 			{
 				name: 'detail',
-				path: '/detial/:id?/:productId?',
+				path: '/detail/:id?/:productId?',
 				component: Detail
 			},
 			{

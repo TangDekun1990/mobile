@@ -1,5 +1,5 @@
 <template>
-  <div class="group-a3xxh-container">    
+  <div class="group-a3xxh-container" id="list">    
     <card-item 
       v-bind:style="getItemStyle" 
       v-for="(item, index) in getItems" 
@@ -19,6 +19,11 @@ export default {
   components: {
     CardItem,
   },
+  data () {
+    return {
+      timer: null,
+    }
+  },
   computed: {
     getItemStyle: function () {
       const { width, height } = window.screen
@@ -33,9 +38,6 @@ export default {
       let seperatorWidth = (columnCount - 0) * 1 // 分割线宽度
       itemWidth = (width - seperatorWidth) / columnCount  
       itemHeight = itemWidth / ratio
-      console.log('====================================');
-      console.log(itemWidth, itemHeight);
-      console.log('====================================');
       return {
         'width': itemWidth + 'px',
         'height': itemHeight + 'px',
@@ -44,9 +46,41 @@ export default {
         'flex-basis': itemWidth + 'px',              
       }     
     },
+  }, 
+  mounted () {
+    this.start()    
+
+    var element = this.$el;      
+    element.addEventListener('touchmove', (event) => {      
+      this.doOnTouchMove(event);
+    });
   },
-  methods: {    
-  }
+  destroyed () {
+    this.stop()    
+  },
+  methods: {
+    start () {
+      this.timer = setInterval(() => {
+        this.autoScrollList()
+      }, 40)
+    },
+    stop () {
+      this.timer && clearTimeout(this.timer)
+    },
+    autoScrollList () {      
+      let element = document.getElementById('list')
+      if (element) {
+        element.scrollLeft += 1
+        let scrollWidth = element.scrollWidth - window.screen.width
+        if (element.scrollLeft >= scrollWidth) {
+          this.stop()
+        } 
+      }                  
+    },
+    doOnTouchMove(event) {      
+      this.stop()
+    },
+  },
 }
 </script>
 

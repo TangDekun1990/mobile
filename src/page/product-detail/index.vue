@@ -62,9 +62,10 @@
 
 		beforeRouteEnter(to, from, next) {
 			next( (vm) => {
-				if (to.name == 'detail' && from.name) {
-					window.location.reload();
-				}
+				window.location.href = window.location.href;
+				// if (to.name == 'detail' && from.name) {
+				// 	window.location.reload();
+				// }
 			})
 		},
 

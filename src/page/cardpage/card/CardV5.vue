@@ -45,8 +45,8 @@
 import Common from './Common'
 import PhotoV from './PhotoV'
 import { Indicator, Toast } from 'mint-ui'
-import { cartAdd } from '../../../api/network/cart'
-import { mapState } from 'vuex'
+import { cartAdd, cartQuantity } from '../../../api/network/cart'
+import { mapState, mapMutations } from 'vuex'
 export default {
   name: 'CardV5',
   mixins: [ Common, PhotoV ],  
@@ -112,7 +112,10 @@ export default {
       }
     } 
   },
-  methods: {   
+  methods: { 
+    ...mapMutations({
+			setCartNumber: 'setCartNumber'
+    }),  
     isProductItem () {
       if (this.item && this.item.product && this.item.product.id) {        
         return true
@@ -164,14 +167,24 @@ export default {
       cartAdd(productId, property, amount).then(
         (response) => {
           Indicator.close()
+          // 添加购物车成功后，刷新购物车数量          
           if (window.WebViewJavascriptBridge && window.WebViewJavascriptBridge.isInApp()) {
             wenchaoApp.addCartSucceed()
+          } else {
+            this.getCartNumber()
           }
         }, (error) => {
           Indicator.close()
           Toast(error.errorMsg)
         })
-    }, 
+    },
+    getCartNumber() {
+			cartQuantity().then( res => {
+				if (res) {
+					this.setCartNumber(res.quantity);
+				}
+			})
+		} 
   },
 }
 </script>
