@@ -101,8 +101,8 @@
 						let title = this.productDetail.name;
 						let imgUrl = '';
 						let desc = '';
-						if (this.productDetail.photos && this.productDetail.photos.length > 0 ) {
-							imgUrl = this.productDetail.photos[0].thumb;
+						if (res.product.photos && res.product.photos.length > 0 ) {
+							imgUrl = res.product.photos[0].thumb;
 						}
 						if(this.productDetail.desc) {
 							desc = this.productDetail.desc;
