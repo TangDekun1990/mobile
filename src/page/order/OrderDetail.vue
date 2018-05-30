@@ -29,6 +29,7 @@ export default {
         this.$router.push({name: 'orderTrade', query: { 'id': id }});
       } else {
         this.$router.go(-1);
+        // this.$router.push({name: 'order', query: { 'id' : id}});
       }
     },    
   },

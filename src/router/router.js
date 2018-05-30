@@ -169,7 +169,7 @@ export default [
 				path: '/news',
 				component: News,
 				meta: {
-					keepAlive: true
+					keepAlive: false
 				}
 			},
 			{
@@ -269,7 +269,7 @@ export default [
 				path: '/orderDetail/:orderDetail?',
 				component: OrderDetail,
 				meta: {
-					keepAlive: false,
+					keepAlive: true,
 				}
 			},
 			{

@@ -63,6 +63,27 @@ export default {
 		this.utils.getunreadCount(value, this, "key");
 	},
 
+	beforeRouteEnter(to, from, next) {
+		next( (vm) => {
+			if (to.name == 'news' && from.name) {
+				window.location.reload();
+			}
+		})
+	},
+
+	beforeRouteUpdate (to, from, next) {
+		console.log('beforeRouteUpdate');
+		next();
+		window.location.reload();
+	},
+
+	beforeRouteLeave (to, from , next) {
+		if (from.name == 'news' && to.name != 'newsOrderMessage' && to.name != 'newsNoticeMessage') {
+			window.location.reload();
+		}
+		next();
+	},
+
 	computed: {
 		...mapState({
 			orderNews: state => state.news.orderNews,

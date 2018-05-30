@@ -196,7 +196,7 @@ export default {
 		if (store.getters.getUser) {
 			let userinfo = store.getters.getUser;
 			console.log(store.getters.getUser.id);
-			zhiManager.set('partnerId', store.getters.getUser.id);
+			zhiManager.set('partnerId', userinfo.id);
 			zhiManager.set('userinfo', {
 				uname: userinfo.nickname ? userinfo.nickname : userinfo.username,   //昵称
 				face: userinfo.avatar ? userinfo.avatar.thumb : '',   //头像URL
