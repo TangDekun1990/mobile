@@ -23,6 +23,7 @@ const wxApi = {
 		jssdkConfig(window.location.href.split('#')[0]).then(res => {
 			if (res) {
 				let wechatConfig = res.config;
+				console.log(desc);
 				that.wxRegister(wechatConfig, title, imgUrl, desc);
 			}
 		})
@@ -50,7 +51,8 @@ const wxApi = {
 		wx.ready(function () {
 			imgUrl = imgUrl ? imgUrl : require('../assets/image/change-icon/apple-touch-icon.png');
 			let link = window.location.href.split('#')[0] + '#' + window.location.href.split('#')[1];
-			desc = desc ? desc : '';
+			desc = desc ? desc : ' ';
+			alert(desc);
 			wx.onMenuShareAppMessage({
 				title: title, // 分享标题
 				imgUrl: imgUrl, // 分享图标
