@@ -86,12 +86,13 @@
 				}
 				img{
 					position: absolute;
-					top: 10px;
+					top: 9px;
 					right: 5px;
 					width: 16px;
 					height: 16px;
 					line-height: 16px;
 					cursor: pointer;
+					padding: 1px 0px;
 				}
 			}
 			span {
