@@ -24,7 +24,6 @@ export default {
     justify-content: flex-start;
     align-items: center;
     background-color: $cardbgColor; 
-    background-color: red;
     .title {
       font-size: $h4;
       color: $titleTextColor; 

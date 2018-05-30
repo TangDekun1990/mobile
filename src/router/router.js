@@ -269,7 +269,7 @@ export default [
 				path: '/orderDetail/:orderDetail?',
 				component: OrderDetail,
 				meta: {
-					keepAlive: false,
+					keepAlive: true,
 				}
 			},
 			{
