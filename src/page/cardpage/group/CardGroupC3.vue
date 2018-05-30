@@ -3,7 +3,7 @@
     <img class="icon" src="../../../assets/image/change-icon/b0_activty@2x.png" />
     <div class="line">
     </div>
-    <swiper :options="swiperOption" v-bind:style="getItemStyle">
+    <swiper :options="swiperOption" allowClick v-bind:style="getItemStyle">
       <swiper-slide v-for="(item, index) in getItems" :key="index" >
         <card-item 
           class="item" 
