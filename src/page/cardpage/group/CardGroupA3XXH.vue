@@ -56,7 +56,7 @@ export default {
     });
   },
   destroyed () {
-    this.stop()
+    this.stop()    
   },
   methods: {
     start () {
@@ -69,14 +69,15 @@ export default {
     },
     autoScrollList () {      
       let element = document.getElementById('list')
-      element.scrollLeft += 1
-      let scrollWidth = element.scrollWidth - window.screen.width
-      if (element.scrollLeft >= scrollWidth) {
-        this.stop()
-      }      
+      if (element) {
+        element.scrollLeft += 1
+        let scrollWidth = element.scrollWidth - window.screen.width
+        if (element.scrollLeft >= scrollWidth) {
+          this.stop()
+        } 
+      }                  
     },
-    doOnTouchMove(event) {
-      console.log('touchmove');
+    doOnTouchMove(event) {      
       this.stop()
     },
   },
