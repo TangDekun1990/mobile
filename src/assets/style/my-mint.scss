@@ -6,14 +6,24 @@
   color: #404245;
   font-weight: 400;
 }
+.mint-msgbox-content {
+  padding: 10px 20px 15px;
+  border-bottom: 0.5px solid $lineColor;
+  min-height: 36px;
+  position: relative;
+}
 .mint-msgbox-message {
   color: #404245;
   font-size: 14px;
 }
+.mint-msgbox-btns {
+  height: 43px;
+  line-height: 43px;
+}
 .mint-msgbox-cancel {
   font-size: 16px;
   color: #404245;
-  border-right: 1px solid $lineColor;
+  border-right: 0.5px solid $lineColor;
 }
 .mint-msgbox-cancel:active {
   font-size: 16px;

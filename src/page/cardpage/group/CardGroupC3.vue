@@ -92,11 +92,13 @@ export default {
       } 
       let item = items[index]     
       let link = item.link
-      if (window.WebViewJavascriptBridge && window.WebViewJavascriptBridge.isInApp()) {
-        wenchaoApp.openLink(link)
-      } else {
-        openLink(this.$router, link)
-      }
+      if (link && link.length) {
+        if (window.WebViewJavascriptBridge && window.WebViewJavascriptBridge.isInApp()) {
+          wenchaoApp.openLink(link)
+        } else {
+          openLink(this.$router, link)
+        } 
+      }      
     }, 
   }
 }

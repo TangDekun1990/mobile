@@ -66,10 +66,10 @@ export const openLink = (router, link) => {
             // 分类详情(商品列表)             
             params = { name: 'product', query: { category: action, isFromHome: true } }
           }
-        } else if (where === 'notice/all') {
+        } else if (where === 'notice') {
           if (action === 'all') {
             // 公告列表
-            params = { name: 'News' }
+            // params = { name: 'News' }
           }
         } else if (where === 'promotions') {
           // 组合促销列表 
