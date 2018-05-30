@@ -227,23 +227,8 @@ export default {
 		this.getOrderPrice()
 	    // 配送时间列表
 	    this.fetchDeliveryList()
-	    this.utils.openZhichiManager('', '');
 	},
 
-	beforeRouteEnter(to, from, next) {
-		next( (vm) => {
-			if (to.name == 'checkout' && from.name) {
-				window.location.reload();
-			}
-		})
-	},
-
-	beforeRouteLeave (to, from, next) {
-		if (to.name === 'cart') {
-			this.clearSelectedInfo()
-		}
-		next()
-	},
 	methods: {
 		...mapMutations({
 			saveAddressItems: 'saveAddressItems',
@@ -315,13 +300,11 @@ export default {
 		  	this.clearSelectedCartGoods()
 		},
 
-	  	leftClick() {				
+	  	leftClick() {
 	  		this.goBack()
 	  	},
 
 	  	rightClick() {
-	      	// TODO:
-	      	// this.utils.openZhichiManager();
 	  	},
 
 	  	goAddress() {

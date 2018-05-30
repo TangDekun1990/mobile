@@ -54,7 +54,7 @@ export default new Vuex.Store({
 	plugins: [
 		createPersistedState({
 			key: 'vuex',
-			paths: ['auth', 'config', 'region', 'address', 'shipping','coupon', 'cart', 'checkout', 'delivery', 'invoice']
+			paths: ['auth', 'config', 'region', 'address', 'shipping','coupon', 'cart', 'checkout', 'delivery', 'invoice', 'profile', 'news']
 		})
 	]
 })

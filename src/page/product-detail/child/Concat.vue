@@ -29,11 +29,6 @@
 
 
 		watch: {
-			detailInfo: function(value) {
-				if (this.isOnline) {
-					this.utils.openZhichiManager(value, '');
-				}
-			}
 		},
 
 		mounted() {

@@ -54,6 +54,8 @@ export default {
 
 <style lang="scss" scoped>
   .container {
+  	    width: 100%;
+  	    border: 1px solid red;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -68,6 +70,7 @@ export default {
     border: none;
     width: 100%;
     height: 100%;
+    border: 1px solid;
   }
 </style>
 

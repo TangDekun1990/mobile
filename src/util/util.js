@@ -183,6 +183,7 @@ export default {
 	 * 调用智齿
 	 */
 	openZhichiManager(detail, order) {
+
 		let zhiManager = (getzhiSDKInstance());
 		zhiManager.on('load', function () {
 			zhiManager.init();

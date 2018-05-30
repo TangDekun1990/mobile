@@ -12,7 +12,7 @@
 		<!-- 购买 -->
 		<v-goods-buy></v-goods-buy>
 		<!-- 联系客服-->
-		<v-goods-concat></v-goods-concat>
+		<!-- <v-goods-concat></v-goods-concat> -->
 		<!-- 评论 -->
 		<v-goods-review></v-goods-review>
 		<!-- 点赞 -->
