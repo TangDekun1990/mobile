@@ -169,7 +169,7 @@ export default [
 				path: '/news',
 				component: News,
 				meta: {
-					keepAlive: true
+					keepAlive: false
 				}
 			},
 			{
