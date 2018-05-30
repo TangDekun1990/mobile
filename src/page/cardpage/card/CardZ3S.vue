@@ -1,5 +1,5 @@
 <template>
-  <div class="card-z3s-container" @click="onClick">
+  <div class="card-z3s-container">
     <label class="title" style="-webkit-box-orient:vertical">{{getTitle}}</label>    
   </div>
 </template>
@@ -8,11 +8,7 @@
 import Common from './Common'
 export default {
   name: 'CardZ3S',
-  mixins: [ Common ],   
-  computed: {            
-  },
-  methods: {            
-  },
+  mixins: [ Common ],  
 }
 </script>
 
