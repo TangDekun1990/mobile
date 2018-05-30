@@ -3,7 +3,11 @@
     <img class="icon" src="../../../assets/image/change-icon/b0_activty@2x.png" />
     <div class="line">
     </div>
-    <swiper :options="swiperOption" allowClick v-bind:style="getItemStyle">
+    <swiper 
+      ref='swiper'
+      :options="swiperOption" 
+      @click.native="slideClicked()" 
+      v-bind:style="getItemStyle">
       <swiper-slide v-for="(item, index) in getItems" :key="index" >
         <card-item 
           class="item" 
@@ -20,6 +24,7 @@ import CardItem from '../card/CardItem'
 import { ENUM } from '../../../config/enum'
 import Common from './Common'
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
+import { openLink } from '../deeplink'
 export default {
   name: 'CardGroupC3',
   mixins: [ Common ],
@@ -34,13 +39,10 @@ export default {
       swiperOption: {
         direction: 'vertical',
         loop: true,
+        loopAdditionalSlides : this.getItems?this.getItems.length:0,
         autoplay: {
           delay: 2500,
           disableOnInteraction: false
-        },  
-        pagination: {
-          el: '.swiper-pagination',
-          clickable: true
         },      
       }
     }
@@ -70,7 +72,7 @@ export default {
     },
     top() {
       return - this.activeIndex * 50 + 'px';
-    }
+    },
   },
   mounted() {
     setInterval( () => {
@@ -79,7 +81,23 @@ export default {
       } else {
         this.activeIndex = 0;
       }
-    }, 1000);
+    }, 1000);    
+  },
+  methods: {
+    slideClicked () {
+      let index = this.$refs.swiper._data.swiper.activeIndex - 1
+      let items = this.getItems
+      if (items && items.length && index === items.length ) {
+        index = 0
+      } 
+      let item = items[index]     
+      let link = item.link
+      if (window.WebViewJavascriptBridge && window.WebViewJavascriptBridge.isInApp()) {
+        wenchaoApp.openLink(link)
+      } else {
+        openLink(this.$router, link)
+      }
+    }, 
   }
 }
 </script>
