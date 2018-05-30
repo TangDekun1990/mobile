@@ -19,18 +19,6 @@ const wxApi = {
 	 */
 	getConfigRes(title, imgUrl, desc) {
 		let that = this;
-		// configGet().then(res => {
- 		// 		if (res) {
-		// 		let configs = res.config,
-		// 			wechatConfig = {};
-		// 		for (const key in configs) {
-		// 			if (key == 'wechat.web') {
-		// 				wechatConfig = configs[key];
-		// 			}
-		// 		}
-		// 		that.wxRegister(wechatConfig, title, imgUrl, desc);
-		// 	}
-		// });
 		let url = window.location.href.split('#')[0] + '?#' + window.location.href.split('#')[1];
 		jssdkConfig(window.location.href.split('#')[0]).then(res => {
 			if (res) {
@@ -60,20 +48,17 @@ const wxApi = {
 		})
 
 		wx.ready(function () {
-			let imgUrl = imgUrl ? imgUrl : require('../assets/image/change-icon/apple-touch-icon.png')
-			let link = window.location.href.split('#')[0] + '#' + window.location.href.split('#')[1]
-			let desc = desc ? desc : ''
+			imgUrl = imgUrl ? imgUrl : require('../assets/image/change-icon/apple-touch-icon.png');
+			let link = window.location.href.split('#')[0] + '#' + window.location.href.split('#')[1];
+			desc = desc ? desc : '暂无商品描述';
 			wx.onMenuShareAppMessage({
 				title: title, // 分享标题
 				imgUrl: imgUrl, // 分享图标
 				desc: desc, // 分享描述
 				link: link,
 				success: function() {
-					// window.history.length = 0;
-					// window.alert('已分享给朋友');
 				},
 				error: function () {
-					// window.alert('分享失败');
 				}
 			})
 

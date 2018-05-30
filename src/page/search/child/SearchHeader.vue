@@ -86,7 +86,7 @@
 				}
 				img{
 					position: absolute;
-					top: 11px;
+					top: 10px;
 					right: 5px;
 					width: 16px;
 					height: 16px;
