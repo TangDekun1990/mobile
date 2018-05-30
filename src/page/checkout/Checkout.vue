@@ -3,8 +3,8 @@
 		<mt-header class="header" fixed title="确认订单">
 			<header-item slot="left" v-bind:isBack=true v-on:onclick="leftClick">
 			</header-item>
-			<header-item slot="right" class="zhiCustomBtns" titleColor="#F23030" title="联系客服">
-			</header-item>
+			<!-- <header-item slot="right" class="zhiCustomBtns" titleColor="#F23030" title="联系客服">
+			</header-item> -->
 		</mt-header>
 		<div class="body">
 			<checkout-address class="address" v-on:onclick="goAddress" v-bind:item="selectedAddress">
