@@ -86,10 +86,11 @@
 				}
 				img{
 					position: absolute;
-					top: 9px;
+					top: 11px;
 					right: 5px;
 					width: 16px;
 					height: 16px;
+					line-height: 16px;
 					cursor: pointer;
 				}
 			}
