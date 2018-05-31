@@ -2,32 +2,34 @@
 <template>
   <div class="container">
     <!-- header -->
-    <mt-header class="header" title="评价宝贝">
+    <mt-header fixed class="header" title="评价宝贝">
       <header-item slot="left" v-bind:isBack=true v-on:onclick="goBack()">
       </header-item> 
       <header-item slot="right" title="提交" v-on:onclick="submit()">
       </header-item>        
     </mt-header>
     <!-- body -->
-    <div class="order-comment-body" v-for="(item, index) in orderItem.goods" v-if="orderItem.goods.length > 0">
-      <div class="body-list">
-        <div class="image">
-          <img v-bind:src="item.product.photos[0].thumb" v-if="item.product.photos.length > 0">
-          <img src="../../../assets/image/change-icon/default_image_02@2x.png" v-if="item.product.photos.length <= 0">
+    <div class="body">
+      <div class="order-comment-body" v-for="(item, index) in orderItem.goods" v-if="orderItem.goods.length > 0">
+        <div class="body-list">
+          <div class="image">
+            <img v-bind:src="item.product.photos[0].thumb" v-if="item.product.photos.length > 0">
+            <img src="../../../assets/image/change-icon/default_image_02@2x.png" v-if="item.product.photos.length <= 0">
+          </div>
+          <div class="comment">
+            <span>{{item.product.name }}</span>
+            <ul>
+              <li class="good" v-for="(image, indexs) in item.IMAGE" v-on:click="changeImage(item, image.id, index)"> 
+                <img :src="image.img" v-if="item.currentIndex != image.id">
+                <img :src="image.activeImg" v-if="item.currentIndex == image.id">
+                <label>{{image.name}}</label>
+              </li>
+            </ul>
+          </div>
         </div>
-        <div class="comment">
-          <span>{{item.product.name }}</span>
-          <ul>
-            <li class="good" v-for="(image, indexs) in item.IMAGE" v-on:click="changeImage(item, image.id, index)"> 
-              <img :src="image.img" v-if="item.currentIndex != image.id">
-              <img :src="image.activeImg" v-if="item.currentIndex == image.id">
-              <label>{{image.name}}</label>
-            </li>
-          </ul>
+        <div class="enter">
+          <textarea placeholder="请在此输入评价" v-model="item.content"></textarea>
         </div>
-      </div>
-      <div class="enter">
-        <textarea placeholder="请在此输入评价" v-model="item.content"></textarea>
       </div>
     </div>
   </div>
@@ -118,67 +120,72 @@ export default {
     @include header;
     border-bottom: 1px solid #e8eaed;
   }
-  .order-comment-body {
-    background: rgba(255, 255, 255, 1);
-    height: 226px;
-    padding: 15px;
-    .body-list {
-      display: flex;
-      justify-content: left;
-      align-content: center;
-      align-items: center;
-      padding-bottom:15px;
-      border-bottom: 1px solid #E8EAED;
-    }
-    .image {
-      width: 75px;
-      height: 75px;
-      flex-shrink: 0;
-      img {
-        width: 100%;
-        height: 100%;
-      }
-    }
-    .comment {
-      flex-basis: 100%;
-      padding-left: 15px;
-      span {
-        font-size: 16px;
-        color: #7c7f88;
-        text-align: left;
-      }
-      ul {
+  .body {
+    position: absolute;
+    top:44px;
+    width:100%;
+    .order-comment-body {
+      background: rgba(255, 255, 255, 1);
+      height: 226px;
+      padding: 15px;
+      .body-list {
         display: flex;
-        justify-content: space-between;
+        justify-content: left;
         align-content: center;
         align-items: center;
-        margin-top: 24px;
-        li {
-          img {
-            width: 19px;
-            height: 19px;
-            flex-shrink: 0;
-          }
-          label {
-            font-size: 14px;
-            color: rgba(78, 84, 93, 1);
-            font-weight: normal;
+        padding-bottom:15px;
+        border-bottom: 1px solid #E8EAED;
+      }
+      .image {
+        width: 75px;
+        height: 75px;
+        flex-shrink: 0;
+        img {
+          width: 100%;
+          height: 100%;
+        }
+      }
+      .comment {
+        flex-basis: 100%;
+        padding-left: 15px;
+        span {
+          font-size: 16px;
+          color: #7c7f88;
+          text-align: left;
+        }
+        ul {
+          display: flex;
+          justify-content: space-between;
+          align-content: center;
+          align-items: center;
+          margin-top: 24px;
+          li {
+            img {
+              width: 19px;
+              height: 19px;
+              flex-shrink: 0;
+            }
+            label {
+              font-size: 14px;
+              color: rgba(78, 84, 93, 1);
+              font-weight: normal;
+            }
           }
         }
       }
-    }
-    .enter {
-      padding-top: 15px;
-      textarea {
-        width: 100%;
-        height: 120px;
-        background: rgba(247, 249, 250, 1);
-        border: 1px solid #f7f9fa;
-        box-sizing: border-box;
-        padding: 10px 0px 0px 10px;
-        font-size: 14px;
-        -webkit-appearance: none;
-        outline: none;
+      .enter {
+        padding-top: 15px;
+        textarea {
+          width: 100%;
+          height: 120px;
+          background: rgba(247, 249, 250, 1);
+          border: 1px solid #f7f9fa;
+          box-sizing: border-box;
+          padding: 10px 0px 0px 10px;
+          font-size: 14px;
+          -webkit-appearance: none;
+          outline: none;
+        }
       }
     }
   }
