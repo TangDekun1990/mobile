@@ -78,10 +78,10 @@
 				</div>
 				<p style="-webkit-box-orient: vertical; -webkit-line-clamp: 2;">{{orderDetail.order.consignee.address}}</p>
 			</div>
-			<div class="contact zhiCustomBtns">
+			<!-- <div class="contact zhiCustomBtns">
 				<span>联系客服</span>
 				<img src="../../../assets/image/change-icon/e5_service@2x.png">
-			</div>
+			</div> -->
 
 			<div class="containers" v-for="(item, index) in orderDetail.order.goods" v-bind:key="item.id" v-on:click="getOrderDetail(item.product.id)" v-if="index <= orderIndex">
 				<img class="photo" src="../../../assets/image/change-icon/default_image_02@2x.png" v-if='item.product.photos <= 0'>
@@ -221,14 +221,6 @@ export default {
 		CheckoutDesc
 	},
 
-	beforeRouteEnter(to, from, next) {
-		next( (vm) => {
-			if (to.name == 'orderDetail' && from.name) {
-				window.location.reload();
-			}
-		})
-	},
-
 	created() {
 		let id = this.$route.query.id ? this.$route.query.id : null;
 		this.orderInfo(id);
@@ -248,7 +240,6 @@ export default {
 					this.orderDetail = res;
 					this.order = res.order;
 					this.total_price = res.order.goods;
-					this.utils.openZhichiManager('', this.order);
 				}
 			});
 		},

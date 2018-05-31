@@ -3,8 +3,8 @@
 		<mt-header class="header" fixed title="确认订单">
 			<header-item slot="left" v-bind:isBack=true v-on:onclick="leftClick">
 			</header-item>
-			<header-item slot="right" class="zhiCustomBtns" titleColor="#F23030" title="联系客服">
-			</header-item>
+			<!-- <header-item slot="right" class="zhiCustomBtns" titleColor="#F23030" title="联系客服">
+			</header-item> -->
 		</mt-header>
 		<div class="body">
 			<checkout-address class="address" v-on:onclick="goAddress" v-bind:item="selectedAddress">
@@ -227,23 +227,8 @@ export default {
 		this.getOrderPrice()
 	    // 配送时间列表
 	    this.fetchDeliveryList()
-	    this.utils.openZhichiManager('', '');
 	},
 
-	beforeRouteEnter(to, from, next) {
-		next( (vm) => {
-			if (to.name == 'checkout' && from.name) {
-				window.location.reload();
-			}
-		})
-	},
-
-	beforeRouteLeave (to, from, next) {
-		if (to.name === 'cart') {
-			this.clearSelectedInfo()
-		}
-		next()
-	},
 	methods: {
 		...mapMutations({
 			saveAddressItems: 'saveAddressItems',
@@ -315,13 +300,11 @@ export default {
 		  	this.clearSelectedCartGoods()
 		},
 
-	  	leftClick() {				
+	  	leftClick() {
 	  		this.goBack()
 	  	},
 
 	  	rightClick() {
-	      	// TODO:
-	      	// this.utils.openZhichiManager();
 	  	},
 
 	  	goAddress() {

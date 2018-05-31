@@ -32,15 +32,17 @@
 				</div>
 			</div>
 
-			<div class="newslist zhiCustomBtns" >
-				<div class="ui-image-wrapper">
-					<img src="../../assets/image/change-icon/e12_service@2x.png">
+			<!-- <a href="https://www.sobot.com/chat/h5/index.html?sysNum=5b696ae2d5394f06b558e64ebbaf3be7?partnerId=''"> -->
+				<div class="newslist zhiCustomBtns" >
+					<div class="ui-image-wrapper">
+						<img src="../../assets/image/change-icon/e12_service@2x.png">
+					</div>
+					<div class="flex-right">
+						<h3>客服消息</h3>
+						<span>在线客服咨询时间为08:00-22:00 </span>
+					</div>
 				</div>
-				<div class="flex-right">
-					<h3>客服消息</h3>
-					<span>在线客服咨询时间为08:00-22:00 </span>
-				</div>
-			</div>
+			<!-- </a> -->
 
 		</div>
 	</div>
@@ -59,30 +61,30 @@ export default {
 	},
 
 	created() {
-		let value = this.utils.openZhichiManager('', '', this.user, this.user.id);
+		let value = this.utils.openZhichiManager('', '');
 		this.utils.getunreadCount(value, this, "key");
 	},
 
 	beforeRouteEnter(to, from, next) {
 		next( (vm) => {
-			if (to.name == 'news' && from.name) {
+			if (to.name == 'News' && from.name) {
 				window.location.reload();
 			}
 		})
 	},
 
-	beforeRouteUpdate (to, from, next) {
-		console.log('beforeRouteUpdate');
-		next();
-		window.location.reload();
-	},
+	// beforeRouteUpdate (to, from, next) {
+	// 	console.log('beforeRouteUpdate');
+	// 	next();
+	// 	window.location.reload();
+	// },
 
-	beforeRouteLeave (to, from , next) {
-		if (from.name == 'news' && to.name != 'newsOrderMessage' && to.name != 'newsNoticeMessage') {
-			window.location.reload();
-		}
-		next();
-	},
+	// beforeRouteLeave (to, from , next) {
+	// 	if (from.name == 'news' && to.name != 'newsOrderMessage' && to.name != 'newsNoticeMessage') {
+	// 		window.location.reload();
+	// 	}
+	// 	next();
+	// },
 
 	computed: {
 		...mapState({
@@ -157,6 +159,10 @@ export default {
 	    		}
 	    	});
 	    },
+
+	    openzhichi() {
+
+	    }
 	}
 };
 </script>
