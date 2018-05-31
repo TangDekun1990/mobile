@@ -65,8 +65,8 @@
 			getReviewList() {
 				let params = {
 					"product": this.id,
-                	"grade": this.grade,
-                	"page": this.page,
+					"grade": this.grade,
+					"page": this.page,
 					"per_page": 10
 				};
 				getReviewList(params).then(res => {

@@ -1,4 +1,4 @@
-<!-- ProduceBody.vue -->
+<!-- ProductListBody.vue -->
 <template>
 	<div class="ui-product-body">
 		<div class="list" v-on:click='goDetail()'>
@@ -55,7 +55,7 @@ export default{
 		 */
 		goDetail() {
 			let data = Object.assign({}, {'id': this.productId}, this.requestparams)
-			this.$router.push({'name': 'detail', 'query': {'id': this.productId}});
+			this.$router.push({'name': 'product', 'query': {'id': this.productId}});
 		},
 
 		/*

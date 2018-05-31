@@ -22,7 +22,7 @@
 			return {
 			}
 		},
-		props:['url', 'unqie'],
+		props:['url', 'unqie'], // CODE REVIEW: WHTAT'S unqie???
 		created(){
 		},
 		methods: {

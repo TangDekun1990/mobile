@@ -309,7 +309,7 @@ export default {
 		 *  goDetail: 跳转到详情
 		 */
 		goDetail(id) {
-		  this.$router.push({name: 'detail', query: {'id': id}});
+		  this.$router.push({name: 'product', query: {'id': id}});
 		},
 
 		/*

@@ -56,9 +56,9 @@
 			*/
 			getRecommendList() {
 				let params = {
-                	"product": this.currentProductId ? this.currentProductId : '',
-                	"page": 1,
-                	"per_page": 10
+					"product": this.currentProductId ? this.currentProductId : '',
+					"page": 1,
+					"per_page": 10
 				};
 				productAccessoryList(params.product, params.page, params.per_page).then(res => {
 					if (res) {
@@ -115,7 +115,7 @@
 
 			goDetail(id) {
 				let data = Object.assign({}, {'id':id});
-				this.$router.push({'name': 'detail', 'query': {'id':id}});
+				this.$router.push({'name': 'product', 'query': {'id':id}});
 			}
 		}
 	}

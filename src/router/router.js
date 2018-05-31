@@ -6,8 +6,20 @@ import Home from '../page/home/Home'
 // category
 import Category from '../page/category/Category'
 
-// product
-import Product from '../page/product/Product'
+// product list
+import ProductList from '../page/product-list/ProductList'
+
+// product detail
+import ProductDetail from '../page/product-detail/ProductDetail'
+
+// 购物车
+import Cart from '../page/cart/cart'
+
+// 查看推荐商品
+import Recommend from '../page/recommend/Recommend'
+import With from '../page/recommend/with' // TODO: CODE REVIW (rename)
+
+import Promotions from '../page/promotions/Promotions'
 
 // search
 import Search from '../page/search/Search'
@@ -16,7 +28,6 @@ import Search from '../page/search/Search'
 import Signin from '../page/auth/Signin'
 import Signup from '../page/auth/Signup'
 import WebPage from '../page/auth/WebPage'
-import Authorized from '../page/auth/authorized'
 
 // profile
 import Profile from '../page/profile/Profile'
@@ -64,17 +75,6 @@ import OrderTrade from '../page/order/child/OrderTrade'
 import OrderComment from '../page/order/child/OrderComment'
 import OrderSubmit from '../page/order/child/OrderSubmit'
 
-// 商品详情
-import Detail from '../page/product-detail/index'
-
-// 购物车
-import Cart from '../page/cart/cart'
-
-// 查看推荐商品
-import Recommend from '../page/recommend/Recommend'
-import With from '../page/recommend/with' // TODO: CODE REVIW (rename)
-
-import Promotions from '../page/promotions/Promotions'
 //
 import updateinfo from '../page/profile/child/Update'
 export default [
@@ -104,12 +104,9 @@ export default [
 				},
 			},
 			{
-				name: 'product',
-				path: '/product',
-				component: Product,
-				meta: {
-					keepAlive: false
-				}
+				name: 'products',
+				path: '/products',
+				component: ProductList,
 			},
 			{
 				name: 'search',
@@ -293,9 +290,9 @@ export default [
 				component: OrderSubmit
 			},
 			{
-				name: 'detail',
-				path: '/detail/:id?/:productId?',
-				component: Detail
+				name: 'product',
+				path: '/product/:id?/:productId?',
+				component: ProductDetail
 			},
 			{
 				name: 'cart',

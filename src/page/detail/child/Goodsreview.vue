@@ -30,8 +30,8 @@
 			getReviewList() {
 				let params = {
 					"product": this.id,
-                	"grade":'',
-                	"page": 1,
+					"grade":'',
+					"page": 1,
 					"per_page": 10
 				};
 				getReviewList(params).then(res => {

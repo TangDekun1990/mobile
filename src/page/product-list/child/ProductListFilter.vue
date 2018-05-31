@@ -1,4 +1,4 @@
-<!-- ProductFilter.vue -->
+<!-- ProductListFilter.vue -->
 <template>
 	<div class="ui-product-filter">
 		<ul class="filter-list">

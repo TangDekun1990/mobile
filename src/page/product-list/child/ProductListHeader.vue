@@ -1,4 +1,4 @@
-<!-- ProduceHeader.vue -->
+<!-- ProductListHeader.vue -->
 <template>
 	<div class="ui-product-header">
 		<form action="#" v-on:submit.prevent="search($event)">

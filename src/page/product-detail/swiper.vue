@@ -26,7 +26,7 @@
 		},
 
 		computed: {
-	      	...mapState({
+	    ...mapState({
 				index: state => state.detail.index,
 				ispromotion: state => state.detail.ispromotion
 			})

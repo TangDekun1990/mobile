@@ -34,17 +34,12 @@
 
 <script>
 	import { mapState, mapMutations } from 'vuex';
-
-	// CODE REVIEW 'produce 改为 product'
-	import productHeader from './child/ProduceHeader';
-	import productBody from './child/ProduceBody';
-	import productFilter from './child/ProductFilter';
-
+	import productHeader from './child/ProductListHeader';
+	import productBody from './child/ProductListBody';
+	import productFilter from './child/ProductListFilter';
 	import { productList } from '../../api/network/product';
 	import { searchProductList } from '../../api/network/search';
-
 	import BackTop from '../../components/common/BackTop';
-
 	export default {
 		components: {
 			productHeader,

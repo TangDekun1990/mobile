@@ -27,7 +27,7 @@
 	import { cartQuantity } from '../../api/network/cart'
 	import { productActivity } from '../../api/network/product'
 	import { mapState, mapMutations } from 'vuex'
-	import productList from '../product/child/ProduceBody';
+	import productList from '../product-list/child/ProductListBody';
 	export default {
 		data() {
 			return {

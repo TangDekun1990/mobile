@@ -35,7 +35,7 @@
 					let data = this.utils.arrayFilter(this.currenKeywords);
 					this.utils.save('keyword', data);
 				}
-				this.$router.push({'name': 'product', 'query': {'keywords': this.keywords}});
+				this.$router.push({ name: 'products', query: { keywords: this.keywords }});
 				if (e) {
 					this.utils.stopPrevent(e);
 				}

@@ -1,6 +1,6 @@
-
 import wx from 'weixin-js-sdk'
 import { configGet, jssdkConfig } from '../api/network/config'
+
 const wxApi = {
 	/*
 	 * [isweixin 判断是否微信浏览器]

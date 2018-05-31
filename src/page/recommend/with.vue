@@ -18,7 +18,7 @@
 <script>
 	import { productAccessoryList } from '../../api/network/product';
 	import { cartQuantity } from '../../api/network/cart';
-	import productList from '../product/child/ProduceBody';
+	import productList from '../product-list/child/ProductListBody';
 	import { mapState, mapMutations } from 'vuex';
 	export default {
 		data() {

@@ -64,7 +64,7 @@ export const openLink = (router, link) => {
             params = { name: 'category', params: { isFromHome: true } }
           } else {
             // 分类详情(商品列表)             
-            params = { name: 'product', query: { category: action, isFromHome: true } }
+            params = { name: 'products', query: { category: action, isFromHome: true } }
           }
         } else if (where === 'notice') {
           if (action === 'all') {
@@ -77,10 +77,10 @@ export const openLink = (router, link) => {
         } else if (where === 'product') {
           if (action === 'all') {
             // 商品列表 
-            params = { name: 'product', params: { isFromHome: true } }
+            params = { name: 'products', params: { isFromHome: true } }
           } else {
             // 商品详情
-            params = { name: 'detail', query: { id: action } }
+            params = { name: 'product', query: { id: action } }
           }
         } else if (where === 'notice/scanner') {
           // 二维码界面 // TODO:								
@@ -188,7 +188,7 @@ export const openLink = (router, link) => {
       } else if (path === 'search') {
         if (where === 'product') {
           let k = queryParams['k']
-          params = { name: 'product', query: { 'keywords': k } }
+          params = { name: 'products', query: { 'keywords': k } }
         }
       } else if (path === 'preview') {
         if (where === 'site') {

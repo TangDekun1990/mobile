@@ -34,11 +34,11 @@
 			getRecommendList() {
 				let params = {
 					"brand": this.$route.params.brand ? this.$route.params.brand : '',
-                	"category": this.$route.params.category ? this.$route.params.category : '',
-                	"shop": this.$route.params.shop ? this.$route.params.shop : '',
-                	"product": this.$route.params.id ? this.$route.params.id : '',
-                	"page": 1,
-                	"per_page": 10
+					"category": this.$route.params.category ? this.$route.params.category : '',
+					"shop": this.$route.params.shop ? this.$route.params.shop : '',
+					"product": this.$route.params.id ? this.$route.params.id : '',
+					"page": 1,
+					"per_page": 10
 				};
 				getRecommendProduct(params).then(res => {
 					if (res) {
