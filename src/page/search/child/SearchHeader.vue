@@ -92,7 +92,6 @@
 					height: 16px;
 					line-height: 16px;
 					cursor: pointer;
-					padding: 1px 0px;
 				}
 			}
 			span {
