@@ -12,7 +12,7 @@
 		>
 			<!-- 无限加载滚动列表 -->
 			<div class="flex-wrapper" v-infinite-scroll="getMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
-				<product-body :item="item" v-for='(item, index) in productList' v-bind:key='item.id' :productId="item.id" :requestparams="params"></product-body>
+				<product-body :item="item" v-for='(item) in productList' v-bind:key='item.id' :productId="item.id" :requestparams="params"></product-body>
 				<div class="loading-wrapper">
 					<p v-if='!isMore'>没有更多了</p>
 					<mt-spinner type="fading-circle" color='#26a2ff' :size='60' v-if='isMore'></mt-spinner>
